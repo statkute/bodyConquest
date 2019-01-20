@@ -20,6 +20,7 @@ public class Client extends Thread{
     }
 
     public void run(){
+        System.out.println("client running");
         while (true){
             byte [] data = new byte [1024]; //the data sent to and from the server
             DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -28,7 +29,9 @@ public class Client extends Thread{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("Server > " + Arrays.toString(packet.getData()));
+            String message = new String(packet.getData());
+
+            System.out.println("Server > " + message.trim());
         }
     }
 

@@ -16,6 +16,7 @@ public class Server extends Thread{
     }
 
     public void run(){
+        System.out.println("server running");
         while (true){
             byte [] data = new byte [1024]; //the data sent to and from the server
             DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -25,9 +26,10 @@ public class Server extends Thread{
                 e.printStackTrace();
             }
 
-            String message = Arrays.toString(packet.getData());
-            if (message.equalsIgnoreCase("ping")) {
-                System.out.println("Client > " + message);
+            String message = new String(packet.getData());
+            System.out.println(message.trim());
+            if (message.trim().equalsIgnoreCase("ping")) {
+                System.out.println("Client > " + message.trim());
                 sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
             }
         }
