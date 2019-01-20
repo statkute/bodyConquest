@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest;
+package com.cauldron.bodyconquest.renderer;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
