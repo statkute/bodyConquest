@@ -68,6 +68,9 @@ project(":core") {
         testCompile 'junit:junit:4.12'
         compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
         compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+        compile group: 'com.googlecode.soundlibs', name: 'tritonus-share', version: '0.3.7-1'
+        compile group: 'com.googlecode.soundlibs', name: 'mp3spi', version: '1.9.5-1'
+        compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
         
     }
 }
