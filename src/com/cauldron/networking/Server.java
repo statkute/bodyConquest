@@ -2,14 +2,13 @@ package com.cauldron.networking;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.Arrays;
 
 public class Server extends Thread{
     private DatagramSocket socket;
 
     public Server(){
         try {
-            this.socket = new DatagramSocket(1331);
+            this.socket = new DatagramSocket(4445);
         } catch (SocketException e) {
             e.printStackTrace();
         }
@@ -27,9 +26,8 @@ public class Server extends Thread{
             }
 
             String message = new String(packet.getData());
-            System.out.println(message.trim());
             if (message.trim().equalsIgnoreCase("ping")) {
-                System.out.println("Client > " + message.trim());
+                System.out.println("Client " + packet.getAddress() + ":" + packet.getPort() + " > " + message.trim());
                 sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
             }
         }
