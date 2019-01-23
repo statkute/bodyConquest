@@ -75,11 +75,11 @@ public class Animator implements ApplicationListener {
         spriteBatch.end();
 
         if (currentPosition1 != Gdx.graphics.getWidth()-80){
-            currentPosition1++;
+            currentPosition1+=5;
         }
 
         if (currentPosition2 != Gdx.graphics.getWidth()-80){
-            currentPosition2++;
+            currentPosition2+=5;
         }
 
         if (currentPosition3 != Gdx.graphics.getWidth()-80){
