@@ -5,10 +5,10 @@ import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Entity {
 
-    private Rectangle space;
+    protected Rectangle space;
     private String type;
     private int health;
-    private Texture texture;
+    protected Texture texture;
 
     public Entity(String type, int health){
         this.type = type;
