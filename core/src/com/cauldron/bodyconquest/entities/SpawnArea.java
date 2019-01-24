@@ -1,9 +1,8 @@
-package com.cauldron.bodyconquest.enities;
+package com.cauldron.bodyconquest.entities;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class SpawnArea extends Actor {

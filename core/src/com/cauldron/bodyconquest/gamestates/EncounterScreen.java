@@ -2,25 +2,16 @@ package com.cauldron.bodyconquest.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cauldron.bodyconquest.enities.Bacteria;
-import com.cauldron.bodyconquest.enities.HUD;
-import com.cauldron.bodyconquest.enities.MapObject;
-import com.cauldron.bodyconquest.enities.SpawnArea;
+import com.cauldron.bodyconquest.entities.Bacteria;
+import com.cauldron.bodyconquest.entities.HUD;
+import com.cauldron.bodyconquest.entities.MapObject;
+import com.cauldron.bodyconquest.entities.SpawnArea;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 
