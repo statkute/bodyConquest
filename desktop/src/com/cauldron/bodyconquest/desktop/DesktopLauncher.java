@@ -8,12 +8,14 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.cauldron.bodyconquest.tests.DragAndDropTest;
 import com.cauldron.bodyconquest.tests.GdxTest;
+import com.cauldron.bodyconquest.Animator;
+import com.cauldron.bodyconquest.Game;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		config.title = "BodyConquest";
+		config.title = "Body Wars";
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -38,7 +40,7 @@ public class DesktopLauncher {
 		config.foregroundFPS = 0; // Setting to 0 disables foreground fps throttling
 		config.backgroundFPS = 0; // Setting to 0 disables background fps throttling
 
-		new LwjglApplication(new BodyConquest(), config);
+		new LwjglApplication(new Animator(), config);
 		//new LwjglApplication(new DragAndDropTest(), config);
 	}
 }
