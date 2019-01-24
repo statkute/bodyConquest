@@ -7,6 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 
+/*
+The core of the rendering engine, hosts the sprite batch for the current screen,
+calls all act methods for actors in stages of children and calls all render functions
+for implementing screens.
+ */
 public class BodyConquest extends Game {
 
 	//private static final Logger log = Logger.getLogger(MyGdxGame.class);

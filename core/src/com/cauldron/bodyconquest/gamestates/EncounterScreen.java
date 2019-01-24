@@ -16,7 +16,10 @@ import com.cauldron.bodyconquest.enities.MapObject;
 import com.cauldron.bodyconquest.enities.SpawnArea;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
-
+/*
+The screen where the encounters occurs, hosts a number of actors including,
+the health bar, unitButtons, resourceBars and player information.
+ */
 public class EncounterScreen implements Screen {
 
     public enum Lanes{
