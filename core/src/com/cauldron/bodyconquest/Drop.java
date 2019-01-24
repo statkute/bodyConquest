@@ -90,6 +90,7 @@ public class Drop extends ApplicationAdapter {
         }
         batch.end();
 
+        // Mouse
         if(Gdx.input.isTouched()){
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
@@ -97,6 +98,7 @@ public class Drop extends ApplicationAdapter {
             bucket.x = touchPos.x -64/2;
         }
 
+        // Left and right RROW KEYS
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             bucket.x -= 200* Gdx.graphics.getDeltaTime(); // time between the last and current time frame
 
@@ -107,6 +109,7 @@ public class Drop extends ApplicationAdapter {
 
         }
 
+        // no out of bounds
         if(bucket.x <0){
             bucket.x = 0;
         }
@@ -115,10 +118,12 @@ public class Drop extends ApplicationAdapter {
             bucket.x = 800-64;
         }
 
+        // time units
         if(TimeUtils.nanoTime() - lastDropTime > 1000000000){
             spawnRaindrops();
         }
 
+        // raindrops
         for(Iterator<Rectangle> iter = raindrops.iterator(); iter.hasNext();){
             Rectangle raindrop = iter.next();
             raindrop.y -= 200*Gdx.graphics.getDeltaTime();
