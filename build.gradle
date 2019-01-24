@@ -71,6 +71,7 @@ project(":core") {
         compile group: 'com.googlecode.soundlibs', name: 'tritonus-share', version: '0.3.7-1'
         compile group: 'com.googlecode.soundlibs', name: 'mp3spi', version: '1.9.5-1'
         compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
+        compile "org.mini2Dx:universal-tween-engine:6.3.3"
         
     }
 }

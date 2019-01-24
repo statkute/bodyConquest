@@ -1,16 +1,24 @@
 package com.cauldron.bodyconquest.enities;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
 import java.awt.Rectangle;
 
-public abstract class MapObject {
+public abstract class MapObject extends Actor {
+
+    //public static final MapObject emptyUnit = new MapObject();
 
     // Does x refer to bottom right corner or horizontal centre of object
 
     // Vectors
-    private double x;
-    private double y;
-    private double dx;
-    private double dy;
+    //protected double x;
+    //private double y;
+    //private double dx;
+    //private double dy;
+    protected float speed;
 
     //private Dimension dimension;
     private int width;
@@ -19,35 +27,13 @@ public abstract class MapObject {
     private int cwidth;
     private int cheight;
 
+    public Image sprite;
+    protected TextureRegion region;
 
-    public MapObject() {
+    public MapObject() {}
 
-    }
-
-    //public boolean intersects(MapObject obj) {}
-
-    // Using java.awt.Rectangle, gdx Rectangle is available
-    public Rectangle getRectangle() {
-        return new Rectangle((int) x, (int) y, cwidth, cheight);
-    }
-
-    // May need to add assertions depending on what information is available
-    // Assertions may happen at a previous stage
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
+   public void moveRight(float delta) {
+       setX(getX() + (delta * speed));
+   }
 
 }
