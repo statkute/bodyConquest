@@ -16,6 +16,9 @@ public class Bacteria extends MapObject {
         //sprite.setColor(Color.BLUE);
         Texture texture = new Texture("core/assets/Default Sprite (Green).png");
         region = new TextureRegion(texture);
+
+        // maybe better to use Rectangle class? instead of Image class (found in Tutorials)
+
         sprite = new Image(texture);
     }
 
