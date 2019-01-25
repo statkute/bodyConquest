@@ -3,6 +3,7 @@ package com.cauldron.networking;
 import java.io.IOException;
 import java.net.*;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Client extends Thread{
     private InetAddress ipAddress; //ip adress of the server
@@ -42,5 +43,10 @@ public class Client extends Thread{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        new Client(sc.nextLine());
     }
 }
