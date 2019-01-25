@@ -9,6 +9,7 @@ import javax.sound.sampled.Clip;
 
 //import org.apache.log4j.Logger;
 
+/* Controls audio within the game*/
 public class AudioPlayer {
 
     //private static final Logger log = Logger.getLogger(AudioPlayer.class);

@@ -2,38 +2,37 @@ package com.cauldron.bodyconquest.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import java.awt.Rectangle;
+/*
+Contains all the properties and methods that all map objects must have.
+It also extends Actor.
+*/
+
 
 public abstract class MapObject extends Actor {
 
     //public static final MapObject emptyUnit = new MapObject();
 
-    // Does x refer to bottom right corner or horizontal centre of object
-
-    // Vectors
-    //protected double x;
-    //private double y;
-    //private double dx;
-    //private double dy;
-    protected float speed;
-
     //private Dimension dimension;
-    private int width;
-    private int height;
-
-    private int cwidth;
-    private int cheight;
+    private float cwidth;
+    private float cheight;
 
     public Image sprite;
     protected TextureRegion region;
 
-    public MapObject() {}
+    protected float speed;
 
-   public void moveRight(float delta) {
-       setX(getX() + (delta * speed));
-   }
+    public MapObject() { }
+
+    public float getCwidth() { return cwidth; }
+    public float getCheight() { return cheight; }
+
+    public void moveUp(float delta) { setY(getY() - (delta * speed)); }
+    public void moveDown(float delta) { setY(getY() - (delta * speed)); }
+    public void moveLeft(float delta) { setX(getX() - (delta * speed)); }
+    public void moveRight(float delta) {
+        setX(getX() + (delta * speed));
+    }
 
 }
