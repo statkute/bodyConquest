@@ -10,9 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.*;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
@@ -47,20 +49,20 @@ public class HUD {
         //unitList = new List<MapObject>();
 
         // Health Bar
-        healthBar = new HealthBar();
-        stage.addActor(healthBar);
+        //healthBar = new HealthBar();
+        //stage.addActor(healthBar);
 
         final Skin skin = new Skin();
         skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         skin.add("badlogic", new Texture("core/assets/badlogic.jpg"));
 
-        Image sourceImage = new Image(new Texture("core/assets/Default Sprite (Green).png"));
+        /*Image sourceImage = new Image(new Texture("core/assets/Default Sprite (Green).png"));
         sourceImage.setBounds(unitBar.getWidth() / 4, unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2), 25, 25);
-        stage.addActor(sourceImage);
+        stage.addActor(sourceImage);*/
 
-        Bacteria bacteria = new Bacteria();
+        /*Bacteria bacteria = new Bacteria();
         bacteria.sprite = sourceImage;
-        bacteria.setBounds(sourceImage.getX(), sourceImage.getY(), sourceImage.getWidth(), sourceImage.getHeight());
+        bacteria.setBounds(sourceImage.getX(), sourceImage.getY(), sourceImage.getWidth(), sourceImage.getHeight());*/
 
         Image validTargetImage = new Image(skin, "badlogic");
         validTargetImage.setBounds(BodyConquest.V_WIDTH / 4, 50, 100, 100);
@@ -71,13 +73,24 @@ public class HUD {
         stage.addActor(invalidTargetImage);
 
 
+        // REALLY BAD PRACTICE (Wasting memory)
+        ImageButton unitButton = new ImageButton(new Bacteria().sprite.getDrawable());
+        float unitButtonSize = unitBar.getWidth() * (3/4);
+        //unitButton.setSize(unitButtonSize, unitButtonSize);
+        //unitButton.setSize(100, 100);
+        unitButton.setBounds(unitBar.getWidth() / 4, unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2), 25, 25);
+        unitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                screen.spawnUnit(new Bacteria(), EncounterScreen.Lanes.BOT);
+            }
+        });
+        //unitButton.setPosition(20, (BodyConquest.V_HEIGHT / 2) - (unitButton.getHeight() / 2));
+        stage.addActor(unitButton);
 
-        ImageButton unitButton = new ImageButton(bacteria.sprite.getDrawable());
-        //unitButton.setSize();
-
-        Table unitBarTable = new Table();
-        unitBarTable.setBounds(unitBar.getX(), unitBar.getY(), unitBar.getWidth(), unitBar.getHeight());
-        unitBarTable.add(unitButton);
+        //Table unitBarTable = new Table();
+        //unitBarTable.setBounds(unitBar.getX(), unitBar.getY(), unitBar.getWidth(), unitBar.getHeight());
+        //unitBarTable.add(unitButton);
 
         DragAndDrop dragAndDrop = new DragAndDrop();
         dragAndDrop.addSource(new Source(unitButton) {

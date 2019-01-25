@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 /*
 Contains all the properties and methods that all map objects must have.
 It also extends Actor.
+
 */
 
 

@@ -37,30 +37,7 @@ public class BodyConquest extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		setScreen(new EncounterScreen(this));
-		/*if(!loaded) {
-			//AudioPlayer.init();
-			//AudioPlayer.load("/Bounce SFX.mp3", "bounce");
-		}*/
-
-
-		/*batch = new SpriteBatch();
-		//img = new Texture("core/assets/badlogic.jpg");
-		img = new Texture("core/assets/Default Sprite (Green).png");
-
-		stage = new Stage(new ScreenViewport());
-		*//*Texture spriteTexture = new Texture("core/assets/sprite.jpg");
-		Image spriteImage = new Image(spriteTexture);
-		spriteImage.setSize(100, 100);
-		spriteImage.setPosition(
-				Gdx.graphics.getWidth() / 3 - spriteImage.getWidth() / 2,
-				Gdx.graphics.getHeight() * 2 / 3 - spriteImage.getHeight() / 2);
-		stage.addActor(spriteImage);*//*
-		Bacteria bct1 = new Bacteria();
-		stage.addActor(bct1);*/
 	}
-
-	private float posX = 0;
-	private float speed = 100;
 
 	@Override
 	public void render () {

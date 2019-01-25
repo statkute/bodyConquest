@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
@@ -44,6 +45,11 @@ public class EncounterScreen implements Screen {
     Stage stage;
     Bacteria bct1;
 
+    private float laneWidth;
+
+    private float botLaneX;
+    private float botLaneY;
+
     public EncounterScreen(BodyConquest game) {
         this.game = game;
         gameCamera = new OrthographicCamera();
@@ -51,7 +57,6 @@ public class EncounterScreen implements Screen {
         gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
         stage = new Stage(gamePort);
         Gdx.input.setInputProcessor(stage);
-        //activeUnits = new List<MapObject>();
         spawnArea = new SpawnArea();
 
         hud = new HUD(game.batch, this);
@@ -62,6 +67,10 @@ public class EncounterScreen implements Screen {
         mapWidth = mapHeight;
         map.setBounds((BodyConquest.V_WIDTH / 2) - (mapWidth / 2), topOfUnitBar, mapWidth, mapHeight);
         stage.addActor(map);
+
+        // Lanes
+        botLaneX = 500;
+        botLaneY = 85;
     }
 
     @Override
@@ -69,19 +78,44 @@ public class EncounterScreen implements Screen {
 
     }
 
+    public void update(float dt) {
+        // Handle Input
+
+        /* MULTIPLAYER */
+        // Send inputs to server
+
+        // Receive update from server
+
+        /* SINGLE PLAYER */
+        // Update Player Units
+
+        // Update Enemy Units
+    }
+
     @Override
     public void render(float delta) {
+
+        update(delta);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //game.batch.draw(map,(BodyConquest.V_WIDTH / 2) - (mapWidth / 2), hud.unitBar.getTop());
+        stage.act();
         stage.draw();
         hud.stage.draw();
-        spawnArea.draw(game.batch, 1);
+        //spawnArea.draw(game.batch, 1);
         game.batch.begin();
         //game.batch.draw();
         game.batch.end();
+
+        // Mouse
+        if(Gdx.input.isTouched()){
+            Vector3 touchPos = new Vector3();
+            touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);
+            gameCamera.unproject(touchPos);
+            System.out.println("X: " + touchPos.x + "\tY: " + touchPos.y);
+        }
     }
 
     @Override
@@ -116,6 +150,11 @@ public class EncounterScreen implements Screen {
 
     public void spawnUnit(MapObject unit, Lanes lane) {
 
+        // Too hard coded
+        if(lane.equals(Lanes.BOT)) {
+            unit.setPosition( botLaneX - (unit.getWidth() / 2) , botLaneY - (unit.getHeight() / 2));
+        }
+        stage.addActor(unit);
     }
 
 }

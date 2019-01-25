@@ -2,7 +2,7 @@ package com.cauldron.bodyconquest.entities;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.cauldron.bodyconquest.rendering.BodyConquest;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import java.util.ArrayList;
 
