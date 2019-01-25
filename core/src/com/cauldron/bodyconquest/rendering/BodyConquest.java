@@ -54,25 +54,6 @@ public class BodyConquest extends Game {
 	@Override
 	public void render () {
 		super.render();
-		/*if (Gdx.input.isKeyPressed(Keys.ESCAPE)) Gdx.app.exit();
-		//if (Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT) && Gdx.input.isKeyJustPressed(Keys.M)) AudioPlayer.toggleMute();
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act();
-		stage.draw();
-		//batch.begin();
-		float delta = Gdx.graphics.getDeltaTime();
-		posX += delta * speed;
-		//log.info(posX + img.getWidth());
-		//aslog.info(Gdx.graphics.getWidth());
-		if((posX + img.getWidth()) >= Gdx.graphics.getWidth() || (posX <= 0)) {
-			speed = speed * -1;
-			//AudioPlayer.play("bounce");
-		}
-		fpsLogger.log();
-
-		//batch.draw(img, posX, 0);
-		//batch.end();*/
 	}
 
 	@Override

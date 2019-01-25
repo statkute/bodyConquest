@@ -9,7 +9,7 @@ import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.cauldron.bodyconquest.tests.DragAndDropTest;
 import com.cauldron.bodyconquest.tests.GdxTest;
 import com.cauldron.bodyconquest.Animator;
-import com.cauldron.bodyconquest.Game;
+import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -40,7 +40,7 @@ public class DesktopLauncher {
 		config.foregroundFPS = 0; // Setting to 0 disables foreground fps throttling
 		config.backgroundFPS = 0; // Setting to 0 disables background fps throttling
 
-		new LwjglApplication(new Animator(), config);
+		new LwjglApplication(new BodyConquest(), config);
 		//new LwjglApplication(new DragAndDropTest(), config);
 	}
 }

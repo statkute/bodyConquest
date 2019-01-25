@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.cauldron.bodyconquest.audio.AudioPlayer;
 
 public class GameScreen implements Screen {
 
@@ -43,14 +44,18 @@ public class GameScreen implements Screen {
         dropImage = new Texture(Gdx.files.internal("core/assets/droplet.png"));
         bucketImage = new Texture(Gdx.files.internal("core/assets/bucket.png"));
 
+        //AudioPlayer.init();
 
         // sounds
         dropSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/waterDrop.wav"));
+        //AudioPlayer.load("core/assets/waterDrop", "rainMusic.mp3");
         //rainMusic = Gdx.audio.newMusic(Gdx.files.internal("core/assets/rain.mp3"));
+
 
         // play music
         //rainMusic.setLooping(true);
         //rainMusic.play();
+        //AudioPlayer.loop("rainMusic");
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,800,480);
