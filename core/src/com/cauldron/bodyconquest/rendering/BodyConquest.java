@@ -3,6 +3,7 @@ package com.cauldron.bodyconquest.rendering;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
@@ -22,9 +23,14 @@ public class BodyConquest extends Game {
 
 	private boolean loaded = false;
 
+
+	// so that we could add text
+	public BitmapFont font;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		font = new BitmapFont();
 		setScreen(new EncounterScreen(this));
 		/*if(!loaded) {
 			//AudioPlayer.init();

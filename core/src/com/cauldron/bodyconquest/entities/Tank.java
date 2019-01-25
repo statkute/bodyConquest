@@ -1,13 +1,15 @@
 package com.cauldron.bodyconquest.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class Tank extends Entity {
+public class Tank extends MapObject {
 
-    public Tank(String type, int health) {
-        super(type, health);
+    public Tank(){
+
     }
 
 
