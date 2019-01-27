@@ -1,0 +1,5 @@
+<root>
+    <item name='java.net.MulticastSocket'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>
