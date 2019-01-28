@@ -19,18 +19,27 @@ public class Bacteria extends Unit {
         Texture texture = new Texture("core/assets/Default Sprite (Green).png");
         region = new TextureRegion(texture);
 
-        // maybe better to use Rectangle class? instead of Image class (found in Tutorials)
+    // maybe better to use Rectangle class? instead of Image class (found in Tutorials)
 
-        sprite = new Image(texture);
-    }
+    sprite = new Image(texture);
+  }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        Color color = getColor();
-        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-        batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),
-                getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-    }
+  @Override
+  public void draw(Batch batch, float parentAlpha) {
+    Color color = getColor();
+    batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+    batch.draw(
+        region,
+        getX(),
+        getY(),
+        getOriginX(),
+        getOriginY(),
+        getWidth(),
+        getHeight(),
+        getScaleX(),
+        getScaleY(),
+        getRotation());
+  }
 
     @Override
     public void act(float delta) {

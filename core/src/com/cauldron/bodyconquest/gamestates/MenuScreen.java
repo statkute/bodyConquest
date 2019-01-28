@@ -49,16 +49,15 @@ public class MenuScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-//        game.batch.begin();
-//        game.batch.draw(background,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        game.batch.draw(playButtonMultiplayer); // playMulti
-//        game.batch.draw(playButtonSinglePlayer); // playMulti
-//        game.batch.draw(settingsButton); // playMulti
-//        game.batch.draw(creditsButton); // playMulti
+    //        game.batch.begin();
+    //        game.batch.draw(background,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    //        game.batch.draw(playButtonMultiplayer); // playMulti
+    //        game.batch.draw(playButtonSinglePlayer); // playMulti
+    //        game.batch.draw(settingsButton); // playMulti
+    //        game.batch.draw(creditsButton); // playMulti
 
-        // add bounds to check if pressed
-        game.batch.end();
-
+    // add bounds to check if pressed
+    game.batch.end();
     }
 
     @Override

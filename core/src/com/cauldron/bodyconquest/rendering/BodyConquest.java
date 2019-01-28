@@ -20,17 +20,16 @@ public class BodyConquest extends Game {
 	public static final int V_WIDTH = 800;
 	public static final int V_HEIGHT = 600;
 
-	private FPSLogger fpsLogger = new FPSLogger();
-	public SpriteBatch batch;
-	private Texture img;
+  private FPSLogger fpsLogger = new FPSLogger();
+  public SpriteBatch batch;
+  private Texture img;
 
-	private Stage stage;
+  private Stage stage;
 
-	private boolean loaded = false;
+  private boolean loaded = false;
 
-
-	// so that we could add text
-	public BitmapFont font;
+  // so that we could add text
+  public BitmapFont font;
 
 	@Override
 	public void create () {
@@ -44,11 +43,10 @@ public class BodyConquest extends Game {
 		super.render();
 	}
 
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
-		stage.dispose();
-	}
-
+  @Override
+  public void dispose() {
+    batch.dispose();
+    img.dispose();
+    stage.dispose();
+  }
 }

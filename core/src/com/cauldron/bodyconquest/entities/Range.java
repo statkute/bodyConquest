@@ -8,10 +8,5 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class Range extends MapObject {
 
-    public Range(){
-
-    }
-
-
-
+  public Range() {}
 }
