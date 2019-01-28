@@ -124,9 +124,9 @@ public class EncounterScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         stage.draw();
         hud.stage.draw();
-        game.batch.begin();
-        //game.batch.draw();
-        game.batch.end();
+    game.batch.begin();
+    // game.batch.draw();
+    game.batch.end();
     }
 
     @Override

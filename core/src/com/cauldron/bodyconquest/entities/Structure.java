@@ -1,4 +1,3 @@
 package com.cauldron.bodyconquest.entities;
 
-public class Structure extends MapObject{
-}
+public class Structure extends MapObject {}
