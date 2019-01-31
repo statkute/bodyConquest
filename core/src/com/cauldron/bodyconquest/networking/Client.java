@@ -14,7 +14,15 @@ public class Client {
     ClientReceiver clientReceiver = new ClientReceiver();
     clientSender.start();
     clientReceiver.start();
-    clientSender.sendPacket("This is a message from the client");
+    clientSender.sendPacket("connected");
+    clientSender.sendPacket("a00000001first");
+    clientSender.sendPacket("a00000004fourth");
+    clientSender.sendPacket("a00000003third");
+    clientSender.sendPacket("a00000002second");
+    clientSender.sendPacket("a00000006sixth");
+    clientSender.sendPacket("a00000005fifth");
+    clientSender.sendPacket("a00000007seventh");
+    clientSender.sendPacket("a00000008eighth");
   }
 
   public static String getInetAddress() throws IOException {
