@@ -4,23 +4,59 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.cauldron.bodyconquest.gamestates.EncounterScreen;
+import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
+
+import java.util.ArrayList;
 
 public class Bacteria extends Unit {
 
+  private EncounterScreen map;
+  private PlayerType playerType;
+  private Lane lane;
+  // Some above head health bar?
+  // private UnitHealthBar healthBar;
 
+  // States
+  // Maybe should be in the unit class
+  //private boolean moving;
+  //private boolean attacking;
 
-    public Bacteria() {
-        setSize(50, 50);
-        speed = 100;
-        // Images and Animations
-        //sprite = new Image(new Texture("core/assets/Default Sprite (Green).png"));
-        //sprite.setColor(Color.BLUE);
-        Texture texture = new Texture("core/assets/Default Sprite (Green).png");
-        region = new TextureRegion(texture);
+  private Rectangle collisionBox; // + Sprite for now at least
+
+  /*
+  Each moving unit could be given a queue of checkpoints to reach
+  and then one left at the enemy base it would be within range and attack
+  */
+  public Bacteria(EncounterScreen map, PlayerType playerType, Lane lane) {
+    this.playerType = playerType;
+    this.lane = lane;
+    this.map = map;
+
+    // Dimensions
+    setSize(50, 50);
+
+    // Images and Animations
+    // sprite = new Image(new Texture("core/assets/Default Sprite (Green).png"));
+    // sprite.setColor(Color.BLUE);
+    Texture texture = new Texture("core/assets/Default Sprite (Green).png");
+    region = new TextureRegion(texture);
+
+    // Unit Stats
+    health = maxHealth = 100;
+    speed = 100;
+    attackable = true;
+    moving = true;
+    attacking = false;
+    //attackCooldown = 20;
+    cooldown = 1000; // Milliseconds
+    lastAttack = 0;
+    range = 100;
+    damage = 30;
 
     // maybe better to use Rectangle class? instead of Image class (found in Tutorials)
-
     sprite = new Image(texture);
   }
 
@@ -41,9 +77,76 @@ public class Bacteria extends Unit {
         getRotation());
   }
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        moveLeft(delta);
+  @Override
+  public void act(float delta) {
+    super.act(delta);
+
+    if (health == 0) remove();
+
+    // Reduce cooldown
+    //cooldown = delta
+
+    // ADD COLLISION DETECTION AND ATTACK RANGE DETECTION
+    //if(inRange())
+
+    if (moving) {
+      if (playerType == PlayerType.BOT_PLAYER) {
+        if (lane == Lane.BOT) {
+          //System.out.println("X: " + getX() + "\tCentre X: " + getCentreX() + "\tOrigin X: " + getOriginX() + "\tScale X: " + getScaleX());
+          if (getX() > map.getBotTurnPointX()) {
+            moveLeft(delta);
+          } else {
+            moveUp(delta);
+          }
+        } else if (lane == Lane.MID) {
+
+        }
+      } else if (playerType == PlayerType.TOP_PLAYER) {
+        if (lane.equals(Lane.BOT)) {
+          if (getY() > map.getBotTurnPointY()) {
+            moveDown(delta);
+          } else {
+            moveRight(delta);
+          }
+        }
+      }
     }
+  }
+
+  private void attack(Unit unit) {
+    unit.hit(damage);
+    System.out.println("ATTACKING");
+  }
+
+  public void checkAttack(ArrayList<Unit> enemies) {
+    Unit closestEnemy = null;
+    for (Unit enemy : enemies) {
+      //System.out.println("THER ARE ENMSA");
+      if (closestEnemy == null) closestEnemy = enemy;
+
+        // Attack closest enemy
+        closestEnemy = distFrom(enemy) < distFrom(closestEnemy) ? enemy : closestEnemy;
+
+    }
+
+    if (closestEnemy != null && closestEnemy.isAttackable() && inRange(closestEnemy)) {
+      //System.out.println("ATTAK");
+      setMoving(false);
+      long time = System.currentTimeMillis();
+      //System.out.println("Time left: " + ((lastAttack + cooldown) - time));
+      if (!attacking && (time > lastAttack + cooldown)) {
+        System.out.println("IN HERE");
+        attack(closestEnemy);
+        lastAttack = time;
+      }
+    } else {
+      if(!moving) setMoving(true);
+    }
+    //cooldown
+  }
+
+
+  public Rectangle getCollisionBox() {
+    return collisionBox;
+  }
 }

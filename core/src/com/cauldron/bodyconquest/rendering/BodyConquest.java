@@ -16,10 +16,10 @@ for implementing screens.
  */
 public class BodyConquest extends Game {
 
-	//private static final Logger log = Logger.getLogger(MyGdxGame.class);
+  // private static final Logger log = Logger.getLogger(MyGdxGame.class);
 
-	public static final int V_WIDTH = 800;
-	public static final int V_HEIGHT = 600;
+  public static final int V_WIDTH = 800;
+  public static final int V_HEIGHT = 600;
 
   private FPSLogger fpsLogger = new FPSLogger();
   public SpriteBatch batch;
@@ -32,18 +32,18 @@ public class BodyConquest extends Game {
   // so that we could add text
   public BitmapFont font;
 
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		font = new BitmapFont();
-		setScreen(new EncounterScreen(this));
-        //setScreen(new MenuScreen(this)); uncomment this to check the screen
-	}
+  @Override
+  public void create() {
+    batch = new SpriteBatch();
+    font = new BitmapFont();
+    setScreen(new EncounterScreen(this, EncounterScreen.PlayerType.BOT_PLAYER));
+    //setScreen(new MenuScreen(this)); //uncomment this to check the screen
+  }
 
-	@Override
-	public void render () {
-		super.render();
-	}
+  @Override
+  public void render() {
+    super.render();
+  }
 
   @Override
   public void dispose() {
