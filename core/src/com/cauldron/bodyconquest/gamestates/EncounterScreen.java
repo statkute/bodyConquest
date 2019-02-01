@@ -50,6 +50,13 @@ public class EncounterScreen implements Screen {
     private float botLaneX;
     private float botLaneY;
 
+    private float midLaneX;
+    private float midLaneY;
+
+    private float topLaneX;
+    private float topLaneY;
+
+
     public EncounterScreen(BodyConquest game) {
         this.game = game;
         gameCamera = new OrthographicCamera();
@@ -71,6 +78,12 @@ public class EncounterScreen implements Screen {
         // Lanes
         botLaneX = 500;
         botLaneY = 85;
+
+        midLaneX = 505;
+        midLaneY = 185;
+
+        topLaneX = 600;
+        topLaneY = 225;
     }
 
     @Override
@@ -153,6 +166,10 @@ public class EncounterScreen implements Screen {
         // Too hard coded
         if(lane.equals(Lanes.BOT)) {
             unit.setPosition( botLaneX - (unit.getWidth() / 2) , botLaneY - (unit.getHeight() / 2));
+        } else if (lane.equals(Lanes.MID)){
+            unit.setPosition( midLaneX - (unit.getWidth() / 2) , midLaneY - (unit.getHeight() / 2));
+        } else if (lane.equals(Lanes.TOP)){
+            unit.setPosition( topLaneX - (unit.getWidth() / 2) , topLaneY - (unit.getHeight() / 2));
         }
         stage.addActor(unit);
     }
