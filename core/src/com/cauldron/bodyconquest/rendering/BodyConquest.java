@@ -37,7 +37,7 @@ public class BodyConquest extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		setScreen(new EncounterScreen(this));
-        //setScreen(new MenuScreen(this)); uncomment this to check the screen
+        //setScreen(new MenuScreen(this)); //uncomment this to check the screen
 	}
 
 	@Override

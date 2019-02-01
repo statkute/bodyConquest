@@ -110,9 +110,9 @@ public class MenuScreen implements Screen {
         //              dispose();
       }
       if (creditsBounds.contains(tmp.x, tmp.y)) {
-        System.out.println("Credits Is touched");
-        //              game.setScreen(new CreditsScreen(game));
-        //              dispose();
+        //System.out.println("Credits Is touched");
+                      game.setScreen(new CreditsScreen(game));
+                      dispose();
 
       }
     }
@@ -132,7 +132,6 @@ public class MenuScreen implements Screen {
 
   @Override
   public void dispose() {
-    game.dispose();
     background.dispose();
     playButtonSinglePlayer.dispose();
     playButtonMultiplayer.dispose();
