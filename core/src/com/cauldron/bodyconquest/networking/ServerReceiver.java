@@ -114,8 +114,64 @@ public class ServerReceiver extends Thread {
         try {
           socket.receive(packet);
           String received = new String(packet.getData());
-          System.out.println("Server received -> " + received.trim());
-          serverSender.sendMessage("This is a response from the server");
+          char clientId = received.trim().charAt(0);
+          int receivedId = Integer.parseInt(received.trim().substring(1, 9));
+
+          if (clientId == 'a') {
+            if (receivedId != aCount + 1) {
+              try {
+                serverSender.sendMessage("repeat a" + df.format(aCount + 1));
+                aMessages.put(receivedId, received);
+
+                getLostPacket(receivedId, packet, aCount, aMessages);
+                while (aMessages.size() > 0) {
+                  if (aMessages.containsKey(aCount + 1)) {
+                    aCount++;
+                    System.out.println("Server received -> " + aMessages.get(aCount).trim());
+                    serverSender.sendMessage(
+                        "This is a response from the server: " + aMessages.get(aCount).trim());
+                    aMessages.remove(aCount);
+                  } else {
+                    serverSender.sendMessage("repeat a" + df.format(aCount + 1));
+                    getLostPacket(receivedId, packet, aCount, aMessages);
+                  }
+                }
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            } else {
+              System.out.println("Server received -> " + received.trim() + "   ID: " + receivedId);
+              serverSender.sendMessage("This is a response from the server: " + received.trim());
+              aCount++;
+            }
+          } else if (clientId == 'b') {
+            if (receivedId != bCount + 1) {
+              try {
+                serverSender.sendMessage("repeat b" + df.format(bCount + 1));
+                bMessages.put(receivedId, received);
+
+                getLostPacket(receivedId, packet, bCount, bMessages);
+                while (bMessages.size() > 0) {
+                  if (bMessages.containsKey(bCount + 1)) {
+                    bCount++;
+                    System.out.println("Server received -> " + bMessages.get(bCount).trim());
+                    serverSender.sendMessage(
+                        "This is a response from the server: " + bMessages.get(bCount).trim());
+                    bMessages.remove(bCount);
+                  } else {
+                    serverSender.sendMessage("repeat b" + df.format(bCount + 1));
+                    getLostPacket(receivedId, packet, bCount, bMessages);
+                  }
+                }
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            } else {
+              System.out.println("Server received -> " + received.trim() + "   ID: " + receivedId);
+              serverSender.sendMessage("This is a response from the server: " + received.trim());
+              bCount++;
+            }
+          }
         } catch (IOException e) {
           e.printStackTrace();
         }

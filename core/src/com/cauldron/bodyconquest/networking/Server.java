@@ -12,7 +12,7 @@ public class Server {
     String inetAddress = getInetAddress();
 
     ServerSender serverSender = new ServerSender(inetAddress);
-    ServerReceiver serverReceiver = new ServerReceiver(serverSender, "singleplayer");
+    ServerReceiver serverReceiver = new ServerReceiver(serverSender, "multiplayer");
     serverSender.start();
     serverReceiver.start();
   }

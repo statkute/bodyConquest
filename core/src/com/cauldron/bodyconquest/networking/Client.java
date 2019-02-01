@@ -15,14 +15,24 @@ public class Client {
     clientSender.start();
     clientReceiver.start();
     clientSender.sendPacket("connected");
-    clientSender.sendPacket("a00000001first");
-    clientSender.sendPacket("a00000004fourth");
-    clientSender.sendPacket("a00000003third");
-    clientSender.sendPacket("a00000002second");
-    clientSender.sendPacket("a00000006sixth");
-    clientSender.sendPacket("a00000005fifth");
-    clientSender.sendPacket("a00000007seventh");
-    clientSender.sendPacket("a00000008eighth");
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    for (int i = 1; i < 10000; i ++){
+      String formattedNum = String.format("%08d", i);
+      clientSender.sendPacket("a" + formattedNum + "message");
+    }
+
+//    clientSender.sendPacket("a00000001first");
+//    clientSender.sendPacket("a00000004fourth");
+//    clientSender.sendPacket("a00000003third");
+//    clientSender.sendPacket("a00000002second");
+//    clientSender.sendPacket("a00000006sixth");
+//    clientSender.sendPacket("a00000005fifth");
+//    clientSender.sendPacket("a00000007seventh");
+//    clientSender.sendPacket("a00000008eighth");
   }
 
   public static String getInetAddress() throws IOException {
