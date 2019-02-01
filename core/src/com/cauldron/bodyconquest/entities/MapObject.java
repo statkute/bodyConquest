@@ -29,7 +29,7 @@ public abstract class MapObject extends Actor {
     public float getCwidth() { return cwidth; }
     public float getCheight() { return cheight; }
 
-    public void moveUp(float delta) { setY(getY() - (delta * speed)); }
+    public void moveUp(float delta) { setY(getY() + (delta * speed)); }
     public void moveDown(float delta) { setY(getY() - (delta * speed)); }
     public void moveLeft(float delta) { setX(getX() - (delta * speed)); }
     public void moveRight(float delta) {
