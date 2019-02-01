@@ -109,7 +109,7 @@ public class EncounterScreen implements Screen {
         //game.batch.draw();
         game.batch.end();
 
-        // Mouse
+        // Mouse (Development tool)
         if(Gdx.input.isTouched()){
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(),Gdx.input.getY(),0);

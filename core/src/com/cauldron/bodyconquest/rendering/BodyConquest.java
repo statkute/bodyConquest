@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
+import com.cauldron.bodyconquest.gamestates.MenuScreen;
 
 /*
 The core of the rendering engine, hosts the sprite batch for the current screen,
@@ -36,6 +37,7 @@ public class BodyConquest extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		setScreen(new EncounterScreen(this));
+        //setScreen(new MenuScreen(this)); //uncomment this to check the screen
 	}
 
 	@Override
