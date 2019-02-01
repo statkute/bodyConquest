@@ -10,16 +10,17 @@ public class Client {
   public static void main(String[] args) throws IOException {
     String inetAddress = getInetAddress();
 
-    ClientSender clientSender = new ClientSender(inetAddress);
     ClientReceiver clientReceiver = new ClientReceiver();
+    ClientSender clientSender = new ClientSender(inetAddress, clientReceiver);
+
     clientSender.start();
     clientReceiver.start();
     clientSender.sendPacket("connected");
-    try {
-      Thread.sleep(3000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+//    try {
+//      Thread.sleep(3000);
+//    } catch (InterruptedException e) {
+//      e.printStackTrace();
+//    }
     for (int i = 1; i < 10000; i ++){
       String formattedNum = String.format("%08d", i);
       clientSender.sendPacket("a" + formattedNum + "message");

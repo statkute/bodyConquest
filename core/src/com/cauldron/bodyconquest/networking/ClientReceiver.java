@@ -6,10 +6,12 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientReceiver extends Thread {
   MulticastSocket socket;
   InetAddress address;
+  AtomicBoolean clientAllowedToSend = new AtomicBoolean();
 
   public ClientReceiver() throws IOException {
     socket = new MulticastSocket(4445);
@@ -37,6 +39,10 @@ public class ClientReceiver extends Thread {
         socket.receive(packet);
         String received = new String(packet.getData());
         System.out.println("Server replied -> " + received.trim());
+
+        if (received.trim().equals("start game")){
+          this.clientAllowedToSend.set(true);
+        }
       } catch (IOException e) {
         e.printStackTrace();
       }

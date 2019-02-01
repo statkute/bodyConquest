@@ -65,7 +65,7 @@ public class ServerReceiver extends Thread {
           if (receivedId != aCount + 1) {
             serverSender.sendMessage("repeat " + df.format(aCount + 1));
             aMessages.put(receivedId, received);
-            getLostPacket(receivedId, packet, aCount, aMessages);
+            getLostPacketOne(receivedId, packet, aCount, aMessages);
             while (aMessages.size() > 0) {
               if (aMessages.containsKey(aCount + 1)) {
                 aCount++;
@@ -75,7 +75,7 @@ public class ServerReceiver extends Thread {
                 aMessages.remove(aCount);
               } else {
                 serverSender.sendMessage("repeat " + df.format(aCount + 1));
-                getLostPacket(receivedId, packet, aCount, aMessages);
+                getLostPacketOne(receivedId, packet, aCount, aMessages);
               }
             }
           } else {
@@ -120,10 +120,11 @@ public class ServerReceiver extends Thread {
           if (clientId == 'a') {
             if (receivedId != aCount + 1) {
               try {
-                serverSender.sendMessage("repeat a" + df.format(aCount + 1));
                 aMessages.put(receivedId, received);
-
-                getLostPacket(receivedId, packet, aCount, aMessages);
+                if (!aMessages.containsKey(aCount + 1)){
+                  serverSender.sendMessage("repeat a" + df.format(aCount + 1));
+                  getLostPacketTwo(receivedId, packet, aCount, clientId);
+                }
                 while (aMessages.size() > 0) {
                   if (aMessages.containsKey(aCount + 1)) {
                     aCount++;
@@ -133,7 +134,7 @@ public class ServerReceiver extends Thread {
                     aMessages.remove(aCount);
                   } else {
                     serverSender.sendMessage("repeat a" + df.format(aCount + 1));
-                    getLostPacket(receivedId, packet, aCount, aMessages);
+                    getLostPacketTwo(receivedId, packet, aCount, clientId);
                   }
                 }
               } catch (IOException e) {
@@ -147,10 +148,11 @@ public class ServerReceiver extends Thread {
           } else if (clientId == 'b') {
             if (receivedId != bCount + 1) {
               try {
-                serverSender.sendMessage("repeat b" + df.format(bCount + 1));
                 bMessages.put(receivedId, received);
-
-                getLostPacket(receivedId, packet, bCount, bMessages);
+                if (!aMessages.containsKey(aCount + 1)){
+                  serverSender.sendMessage("repeat b" + df.format(bCount + 1));
+                  getLostPacketTwo(receivedId, packet, bCount, clientId);
+                }
                 while (bMessages.size() > 0) {
                   if (bMessages.containsKey(bCount + 1)) {
                     bCount++;
@@ -160,7 +162,7 @@ public class ServerReceiver extends Thread {
                     bMessages.remove(bCount);
                   } else {
                     serverSender.sendMessage("repeat b" + df.format(bCount + 1));
-                    getLostPacket(receivedId, packet, bCount, bMessages);
+                    getLostPacketTwo(receivedId, packet, bCount, clientId);
                   }
                 }
               } catch (IOException e) {
@@ -179,7 +181,7 @@ public class ServerReceiver extends Thread {
     }
   }
 
-  public void getLostPacket(
+  public void getLostPacketOne(
       int receivedId, DatagramPacket packet, int count, HashMap<Integer, String> messages)
       throws IOException {
     while (receivedId != count + 1) {
@@ -189,6 +191,28 @@ public class ServerReceiver extends Thread {
       byte[] buf = new byte[256];
       packet = new DatagramPacket(buf, buf.length);
       messages.put(receivedId, received);
+    }
+  }
+
+  public void getLostPacketTwo(
+      int receivedId, DatagramPacket packet, int count, char charId)
+      throws IOException {
+    while (receivedId != count + 1) {
+      socket.receive(packet);
+      String received = new String(packet.getData());
+      char clientId = received.trim().charAt(0);
+
+      if (charId == clientId){
+        receivedId = Integer.parseInt(received.trim().substring(1, 9));
+      }
+      byte[] buf = new byte[256];
+      packet = new DatagramPacket(buf, buf.length);
+
+      if (charId == 'a'){
+        aMessages.put(receivedId, received);
+      } else{
+        bMessages.put(receivedId, received);
+      }
     }
   }
 }

@@ -8,11 +8,13 @@ public class ClientSender extends Thread {
   InetAddress address;
   MulticastSocket socket;
   String inetAddress;
+  ClientReceiver clientReceiver;
 
-  public ClientSender(String inetAddress) throws IOException {
+  public ClientSender(String inetAddress, ClientReceiver clientReceiver) throws IOException {
     address = InetAddress.getByName("239.255.255.255");
     socket = new MulticastSocket();
     this.inetAddress = inetAddress;
+    this.clientReceiver = clientReceiver;
   }
 
   public void sendPacket(String message) throws IOException {
@@ -39,6 +41,9 @@ public class ClientSender extends Thread {
         }
       }
     }
+
+    while (clientReceiver.clientAllowedToSend.get() == false) {}
+
   }
 
   public void run() {
