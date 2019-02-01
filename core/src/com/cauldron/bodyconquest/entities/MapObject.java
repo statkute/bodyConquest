@@ -23,7 +23,11 @@ public abstract class MapObject extends Actor {
 
   protected float speed;
 
-  public MapObject() {}
+  public MapObject() {
+    // This might be a mistake
+    setWidth(0);
+    setHeight(0);
+  }
 
   public float getCwidth() {
     return cwidth;

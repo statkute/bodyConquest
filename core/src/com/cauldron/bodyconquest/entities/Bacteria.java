@@ -81,10 +81,9 @@ public class Bacteria extends Unit {
   public void act(float delta) {
     super.act(delta);
 
-    if (health == 0) remove();
+    //if (health == 0) remove();
 
     // Reduce cooldown
-    //cooldown = delta
 
     // ADD COLLISION DETECTION AND ATTACK RANGE DETECTION
     //if(inRange())
@@ -98,9 +97,9 @@ public class Bacteria extends Unit {
           } else {
             moveUp(delta);
           }
-        } else if (lane == Lane.MID) {
+        } /*else if (lane == Lane.MID) {
 
-        }
+        }*/
       } else if (playerType == PlayerType.TOP_PLAYER) {
         if (lane.equals(Lane.BOT)) {
           if (getY() > map.getBotTurnPointY()) {
@@ -115,7 +114,7 @@ public class Bacteria extends Unit {
 
   private void attack(Unit unit) {
     unit.hit(damage);
-    System.out.println("ATTACKING");
+    //System.out.println("ATTACKING");
   }
 
   public void checkAttack(ArrayList<Unit> enemies) {
@@ -135,16 +134,15 @@ public class Bacteria extends Unit {
       long time = System.currentTimeMillis();
       //System.out.println("Time left: " + ((lastAttack + cooldown) - time));
       if (!attacking && (time > lastAttack + cooldown)) {
-        System.out.println("IN HERE");
+        //System.out.println("IN HERE");
         attack(closestEnemy);
         lastAttack = time;
       }
     } else {
       if(!moving) setMoving(true);
     }
-    //cooldown
-  }
 
+  }
 
   public Rectangle getCollisionBox() {
     return collisionBox;

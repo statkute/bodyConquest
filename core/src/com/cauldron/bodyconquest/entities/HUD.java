@@ -38,12 +38,13 @@ public class HUD {
   private PlayerType playerType;
 
   //
-  public HUD(SpriteBatch sb, final EncounterScreen screen) {
+  public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     viewport =
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
     stage = new Stage(viewport, sb);
     Gdx.input.setInputProcessor(stage);
     this.screen = screen;
+    this.playerType = playerType;
 
     // Main Bar
     unitBar = new Image(new Texture("core/assets/Action Bar v1.png"));
@@ -60,25 +61,25 @@ public class HUD {
     skin.add("badlogic", new Texture("core/assets/badlogic.jpg"));
 
     Image validTargetImage = new Image(skin, "badlogic");
-    validTargetImage.setBounds(BodyConquest.V_WIDTH / 4, 50, 100, 100);
+    validTargetImage.setBounds(BodyConquest.V_WIDTH / 4.0f, 50, 100, 100);
     //stage.addActor(validTargetImage);
 
     Image invalidTargetImage = new Image(skin, "badlogic");
-    invalidTargetImage.setBounds((BodyConquest.V_WIDTH / 4) * 3, 50, 100, 100);
+    invalidTargetImage.setBounds((BodyConquest.V_WIDTH / 4.0f) * 3, 50, 100, 100);
     //stage.addActor(invalidTargetImage);
 
     // REALLY BAD PRACTICE (Wasting memory)
     ImageButton unitButton = new ImageButton(new Bacteria(screen, null, null).sprite.getDrawable());
-    float unitButtonSize = unitBar.getWidth() * (3 / 4);
+    float unitButtonSize = unitBar.getWidth() * (3.0f / 4.0f);
     // unitButton.setSize(unitButtonSize, unitButtonSize);
     // unitButton.setSize(100, 100);
     unitButton.setBounds(
-        unitBar.getWidth() / 4, unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2), 25, 25);
+        unitBar.getWidth() / 4, unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2.0f), 25, 25);
     unitButton.addListener(
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent event, Actor actor) {
-            screen.spawnUnit(UnitType.BACTERIA, Lane.BOT);
+            screen.spawnUnit(UnitType.BACTERIA, Lane.BOT, playerType);
           }
         });
     // unitButton.setPosition(20, (BodyConquest.V_HEIGHT / 2) - (unitButton.getHeight() / 2));

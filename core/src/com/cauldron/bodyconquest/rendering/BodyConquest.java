@@ -1,6 +1,8 @@
 package com.cauldron.bodyconquest.rendering;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -23,7 +25,6 @@ public class BodyConquest extends Game {
 
   private FPSLogger fpsLogger = new FPSLogger();
   public SpriteBatch batch;
-  private Texture img;
 
   private Stage stage;
 
@@ -36,19 +37,18 @@ public class BodyConquest extends Game {
   public void create() {
     batch = new SpriteBatch();
     font = new BitmapFont();
-    setScreen(new EncounterScreen(this, EncounterScreen.PlayerType.BOT_PLAYER));
+    setScreen(new EncounterScreen(this));
     //setScreen(new MenuScreen(this)); //uncomment this to check the screen
   }
 
   @Override
   public void render() {
     super.render();
+    if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
   }
 
   @Override
   public void dispose() {
     batch.dispose();
-    img.dispose();
-    stage.dispose();
   }
 }

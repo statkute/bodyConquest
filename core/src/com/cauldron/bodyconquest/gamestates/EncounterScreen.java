@@ -24,12 +24,16 @@ the health bar, unitButtons, resourceBars and player information.
  */
 public class EncounterScreen implements Screen {
 
-  // Probably make this final
-  private float botLaneSpawnX;
-  private float botLaneSpawnY;
-  //If kept final change to all caps
+
+  // If kept final change to all caps
   private final float botTurnPointX = 140;
   private final float botTurnPointY = 100;
+
+  // Probably make this final
+  private final float botLaneBPSpawnX = 500;
+  private final float botLaneBPSpawnY = 85;
+  private final float botLaneTPSpawnX = 140;
+  private final float botLaneTPSpawnY = 490;
 
   public enum PlayerType {
     BOT_PLAYER,
@@ -53,6 +57,7 @@ public class EncounterScreen implements Screen {
   public SpawnArea spawnArea;
 
   private Image map;
+  private float mapSize;
   private float mapHeight;
   private float mapWidth;
 
@@ -61,14 +66,11 @@ public class EncounterScreen implements Screen {
 
   private float laneWidth;
 
-  private PlayerType playerType;
-
   // Unit Arrays
   private ArrayList<Unit> botLaneP1;
   private ArrayList<Unit> botLaneP2;
 
-  public EncounterScreen(BodyConquest game, PlayerType playerType) {
-    this.playerType = playerType;
+  public EncounterScreen(BodyConquest game) {
     this.game = game;
     gameCamera = new OrthographicCamera();
     // gamePort = new StretchViewport(800, 480, gameCamera);
@@ -80,21 +82,17 @@ public class EncounterScreen implements Screen {
     botLaneP1 = new ArrayList<Unit>();
     botLaneP2 = new ArrayList<Unit>();
 
-    hud = new HUD(game.batch, this);
+    hud = new HUD(game.batch, this, PlayerType.BOT_PLAYER);
 
     map = new Image(new Texture("core/assets/Basic Map v2.png"));
     float topOfUnitBar = hud.unitBar.getTop();
-    mapHeight = BodyConquest.V_HEIGHT - topOfUnitBar;
-    mapWidth = mapHeight;
-    map.setBounds((BodyConquest.V_WIDTH / 2) - (mapWidth / 2), topOfUnitBar, mapWidth, mapHeight);
+    mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
+
+    map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
 
     // Initialise spawn locations for different player types
-    if (playerType.equals(PlayerType.BOT_PLAYER)) {
-      // Lane
-      botLaneSpawnX = 500;
-      botLaneSpawnY = 85;
-    }
+    new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
   }
 
   @Override
@@ -109,30 +107,29 @@ public class EncounterScreen implements Screen {
     // Receive update from server
 
     /* SINGLE PLAYER */
+
+    BasicTestAI ai = new BasicTestAI(this, PlayerType.TOP_PLAYER);
+
     // Update Player Units
-    ArrayList<Unit> temp1 = new ArrayList<Unit>();
-    for(Unit unit : botLaneP1) {
-      if (unit.isDead()) {
-        temp1.add(unit);
-        //botLaneP1.remove(unit);
-        unit.remove();
-        continue;
-      }
-      unit.checkAttack(botLaneP2);
-    }
-    ArrayList<Unit> temp2 = new ArrayList<Unit>();
-    for(Unit unit : botLaneP2) {
-      if (unit.isDead()) {
-        temp2.add(unit);
-        //botLaneP2.remove(unit);
-        unit.remove();
-        continue;
-      }
-      unit.checkAttack(botLaneP1);
-    }
-    for(Unit u : temp1) botLaneP1.remove(u);
-    for(Unit u : temp2) botLaneP2.remove(u);
+    checkLanes(botLaneP1, botLaneP2);
+    checkLanes(botLaneP2, botLaneP1);
+
     // Update Enemy Units
+  }
+
+  private void checkLanes(ArrayList<Unit> laneP1, ArrayList<Unit> laneP2) {
+    ArrayList<Unit> deadUnits = new ArrayList<Unit>();
+    for (Unit unit : laneP1) {
+      if (unit.isDead()) {
+        deadUnits.add(unit);
+        unit.remove();
+        continue;
+      }
+      unit.checkAttack(laneP2);
+    }
+    // This gives particular players a very slight advantage because certain units will be deleted
+    // first if they both die
+    for (Unit u : deadUnits) laneP1.remove(u);
   }
 
   @Override
@@ -157,7 +154,11 @@ public class EncounterScreen implements Screen {
       Vector3 touchPos = new Vector3();
       touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
       gameCamera.unproject(touchPos);
-      System.out.println("X: " + (touchPos.x - gamePort.getLeftGutterWidth()) + "\tY: " + (touchPos.y - gamePort.getBottomGutterHeight()));
+      System.out.println(
+          "X: "
+              + (touchPos.x - gamePort.getLeftGutterWidth())
+              + "\tY: "
+              + (touchPos.y - gamePort.getBottomGutterHeight()));
     }
   }
 
@@ -185,48 +186,37 @@ public class EncounterScreen implements Screen {
     return activeUnits;
   }
 
-  public void spawnUnit(UnitType unitType, Lane lane) {
+  public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
 
     Unit unit = null;
-    if(unitType.equals(UnitType.BACTERIA)) {
+    if (unitType.equals(UnitType.BACTERIA)) {
       unit = new Bacteria(this, playerType, lane);
     }
 
+    if (unit == null || lane == null || playerType == null) return;
+
     // This shouldn't be necessary if play spawn areas are initialised in the constructor
     if (playerType.equals(PlayerType.BOT_PLAYER)) {
       // Too hard coded
-      if (lane.equals(Lane.BOT)) {
-        unit.setPosition(botLaneSpawnX - (unit.getWidth() / 2), botLaneSpawnY - (unit.getHeight() / 2));
+      if (lane == Lane.BOT) {
+        unit.setPosition(
+            botLaneBPSpawnX - (unit.getWidth() / 2), botLaneBPSpawnY - (unit.getHeight() / 2));
         botLaneP1.add(unit);
-        Unit testEnemy = new Bacteria(this, PlayerType.TOP_PLAYER, lane);
-        testEnemy.setPosition(140 - (testEnemy.getWidth() / 2), 490 - (testEnemy.getHeight() / 2));
-        botLaneP2.add(testEnemy);
-        stage.addActor(testEnemy);
       }
-      stage.addActor(unit);
     }
 
     if (playerType.equals(PlayerType.TOP_PLAYER)) {
-
-    }
-  }
-
-  /*public void spawnUnit(){
-
-    switch(unitClass) {
-      case Bacteria.class:{
-    }
-    // This shouldn't be necessary if play spawn areas are initialised in the constructor
-    if (playerType.equals(PlayerType.BOT_PLAYER)) {
-      // Too hard coded
-      if (lane.equals(Lane.BOT)) {
-        unit.setPosition(botLaneX - (unit.getWidth() / 2), botLaneY - (unit.getHeight() / 2));
+      if (lane == Lane.BOT) {
+        unit.setPosition(
+            botLaneTPSpawnX - (unit.getWidth() / 2), botLaneTPSpawnY - (unit.getHeight() / 2));
+        botLaneP2.add(unit);
       }
-      stage.addActor(unit);
     }
 
-    if (playerType.equals(PlayerType.TOP_PLAYER)) {}
-  }*/
+    // Maybe add unit to data structure containing all units
+
+    stage.addActor(unit);
+  }
 
   public float getBotTurnPointX() {
     return botTurnPointX;
@@ -235,5 +225,4 @@ public class EncounterScreen implements Screen {
   public float getBotTurnPointY() {
     return botTurnPointY;
   }
-
 }
