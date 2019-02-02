@@ -100,9 +100,9 @@ public class MenuScreen implements Screen {
         //              dispose();
       }
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
-        System.out.println("SinglePlayer Is touched");
-        //              game.setScreen(new RaceSelectionScreen(game));
-        //              dispose();
+        //System.out.println("SinglePlayer Is touched");
+                      game.setScreen(new RaceSelection(game));
+                      dispose();
       }
       if (settingsBounds.contains(tmp.x, tmp.y)) {
         System.out.println("Settings Is touched");
