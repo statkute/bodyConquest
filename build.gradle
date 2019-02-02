@@ -1,0 +1,80 @@
+buildscript {
+    
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
+        google()
+    }
+    dependencies {
+
+//        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
+//        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+//        testCompile 'junit:junit:4.12'
+        
+
+    }
+}
+
+allprojects {
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+
+    version = '1.0'
+    ext {
+        appName = "Body Conquest I"
+        gdxVersion = '1.9.9'
+        roboVMVersion = '2.3.5'
+        box2DLightsVersion = '1.4'
+        ashleyVersion = '1.7.0'
+        aiVersion = '1.8.0'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+}
+
+project(":desktop") {
+    apply plugin: "java"
+
+
+    dependencies {
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-controllers-desktop:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        
+    }
+}
+
+project(":core") {
+    apply plugin: "java"
+
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        testCompile 'junit:junit:4.12'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+        compile group: 'com.googlecode.soundlibs', name: 'tritonus-share', version: '0.3.7-1'
+        compile group: 'com.googlecode.soundlibs', name: 'mp3spi', version: '1.9.5-1'
+        compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
+        
+    }
+}
+
+tasks.eclipse.doLast {
+    delete ".project"
+}
