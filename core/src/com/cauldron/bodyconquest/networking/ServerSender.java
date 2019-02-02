@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.Enumeration;
 import java.util.HashMap;
 
+/** ServerReceiver class is responsible for sending packets to the clients */
 public class ServerSender extends Thread {
   InetAddress group;
   MulticastSocket socket;
@@ -13,30 +14,38 @@ public class ServerSender extends Thread {
   HashMap<Integer, String> sentMessages = new HashMap<Integer, String>();
   boolean startNumeration = false;
 
-
+  /**
+   * ServerSender class constructor
+   *
+   * @param inetAddress Selected ip address for communications
+   * @throws IOException
+   */
   public ServerSender(String inetAddress) throws IOException {
     group = InetAddress.getByName("239.255.255.255");
     socket = new MulticastSocket();
     this.inetAddress = inetAddress;
   }
 
+  /**
+   * sends a package containing some message to all clients
+   *
+   * @param message the message that needs to be sent to all clients
+   */
   public void sendMessage(String message) {
     String temp = message;
     byte[] buf = message.getBytes();
 
-    if (startNumeration){
+    if (startNumeration) {
       startNumeration = true;
       sentCounter++;
       sentMessages.put(sentCounter, message);
       message = String.format("%08d", sentCounter) + message;
-
     }
 
-    if (temp.equals("start game")){
+    if (temp.equals("start game")) {
       startNumeration = true;
       buf = message.getBytes();
     }
-
 
     DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4445);
 

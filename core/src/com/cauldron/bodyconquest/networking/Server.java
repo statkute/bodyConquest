@@ -8,7 +8,12 @@ import java.util.Enumeration;
 import java.util.Scanner;
 
 public class Server {
-  // setup receiver
+  /**
+   * Starts ServerReceiver and ServerSender threads
+   *
+   * @param args
+   * @throws IOException
+   */
   public static void main(String[] args) throws IOException {
     String inetAddress = getInetAddress();
 
@@ -27,6 +32,11 @@ public class Server {
     }
   }
 
+  /**
+   * Selects one ip Adress that is available for multicasting and returns it
+   * @return  selected IP address in String format
+   * @throws IOException
+   */
   public static String getInetAddress() throws IOException {
     MulticastSocket socket = new MulticastSocket(4445);
     Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();

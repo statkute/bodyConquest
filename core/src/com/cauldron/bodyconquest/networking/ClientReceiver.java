@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.cauldron.bodyconquest.networking.ServerReceiver.df;
 
+/** The class that is responsible for receiving packets from the server */
 public class ClientReceiver extends Thread {
   MulticastSocket socket;
   InetAddress address;
@@ -19,8 +20,12 @@ public class ClientReceiver extends Thread {
   int serverCountTracker = 0;
   HashMap<Integer, String> serverResponses = new HashMap<Integer, String>();
   AtomicInteger repeatServerPacketId = new AtomicInteger(0);
-  AtomicInteger clientCharId = new AtomicInteger(0);
 
+  /**
+   * ClientReceiver constructor that establishes communication with the server
+   *
+   * @throws IOException
+   */
   public ClientReceiver() throws IOException {
     socket = new MulticastSocket(4445);
     address = InetAddress.getByName("239.255.255.255");
@@ -39,25 +44,30 @@ public class ClientReceiver extends Thread {
     }
   }
 
+  /** Run method that while the thread is running receives incoming packages from the server */
   public void run() {
     while (true) {
       byte[] buf = new byte[256];
       DatagramPacket packet = new DatagramPacket(buf, buf.length);
       try {
-        socket.receive(packet);
+        socket.receive(packet); // receive an incoming packet from the server
         String received = new String(packet.getData());
-        if (received.trim().contains("repeat")){
+        if (received.trim().contains("repeat")) {
           System.out.println("ATTENTION: " + received.trim());
           continue;
         }
 
         if (this.clientAllowedToSend.get()) {
-          int receivedId = Integer.parseInt(received.trim().substring(0, 8));
+          int receivedId =
+              Integer.parseInt(
+                  received.trim().substring(0, 8)); // gets the numerical ID of the packet
 
-          if (receivedId != serverCountTracker + 1) {
+          if (receivedId != serverCountTracker + 1) { // if there is a missing packet
             repeatServerPacketId.set(serverCountTracker + 1);
-            serverResponses.put(receivedId, received);
-            getLostPacketOne(receivedId, packet, serverCountTracker, serverResponses);
+            serverResponses.put(
+                receivedId, received); // store a packet that arrived in the wrong order
+            getLostPacketOne(
+                receivedId, packet, serverCountTracker, serverResponses); // get the missing packet
             while (serverResponses.size() > 0) {
               if (serverResponses.containsKey(serverCountTracker + 1)) {
                 serverCountTracker++;
@@ -67,17 +77,13 @@ public class ClientReceiver extends Thread {
                 getLostPacketOne(receivedId, packet, serverCountTracker, serverResponses);
               }
             }
-          } else {
+          } else { // if the packet has arrived in the right order
             serverCountTracker++;
           }
         }
 
         if (received.trim().equals("start game")) {
           this.clientAllowedToSend.set(true);
-        } else if (received.trim().equals("a")){
-          clientCharId.set(1);
-        } else if (received.trim().equals("b")){
-          clientCharId.set(2);
         }
       } catch (IOException e) {
         e.printStackTrace();
@@ -85,16 +91,24 @@ public class ClientReceiver extends Thread {
     }
   }
 
+  /**
+   * Receive all incoming packets and store them until the missing one comes in
+   *
+   * @param receivedId the latest received packet's ID
+   * @param packet the latest received packet
+   * @param count the number of packets received and accepted in the right order
+   * @throws IOException
+   */
   public void getLostPacketOne(
       int receivedId, DatagramPacket packet, int count, HashMap<Integer, String> messages)
       throws IOException {
-    while (receivedId != count + 1) {
+    while (receivedId != count + 1) { // while the missing packet has not been received
       socket.receive(packet);
       String received = new String(packet.getData());
       receivedId = Integer.parseInt(received.trim().substring(1, 9));
       byte[] buf = new byte[256];
       packet = new DatagramPacket(buf, buf.length);
-      messages.put(receivedId, received);
+      messages.put(receivedId, received); // store the packet
     }
   }
 }

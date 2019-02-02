@@ -9,6 +9,12 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Client {
+  /**
+   * Starts ClientReceiver and ClientSender threads
+   *
+   * @param args
+   * @throws IOException
+   */
   public static void main(String[] args) throws IOException {
     String inetAddress = getInetAddress();
 
@@ -30,6 +36,12 @@ public class Client {
     }
   }
 
+  /**
+   * Selects one ip Adress that is available for multicasting and returns it
+   *
+   * @return selected IP address in String format
+   * @throws IOException
+   */
   public static String getInetAddress() throws IOException {
     MulticastSocket socket = new MulticastSocket(4445);
     Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();
