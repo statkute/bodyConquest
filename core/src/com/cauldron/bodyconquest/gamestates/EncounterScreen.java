@@ -26,14 +26,14 @@ public class EncounterScreen implements Screen {
 
 
   // If kept final change to all caps
-  private final float botTurnPointX = 140;
-  private final float botTurnPointY = 100;
+  private final float botTurnPointX = 85;
+  private final float botTurnPointY = 60;
 
   // Probably make this final
-  private final float botLaneBPSpawnX = 500;
-  private final float botLaneBPSpawnY = 85;
-  private final float botLaneTPSpawnX = 140;
-  private final float botLaneTPSpawnY = 490;
+  private final float botLaneBPSpawnX = 535;
+  private final float botLaneBPSpawnY = 90;
+  private final float botLaneTPSpawnX = 170;
+  private final float botLaneTPSpawnY = 470;
 
   public enum PlayerType {
     BOT_PLAYER,
@@ -108,7 +108,6 @@ public class EncounterScreen implements Screen {
 
     /* SINGLE PLAYER */
 
-    BasicTestAI ai = new BasicTestAI(this, PlayerType.TOP_PLAYER);
 
     // Update Player Units
     checkLanes(botLaneP1, botLaneP2);
@@ -135,10 +134,10 @@ public class EncounterScreen implements Screen {
   @Override
   public void render(float delta) {
 
+    gameCamera.update();
     update(delta);
     Gdx.gl.glClearColor(0, 0, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
     game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
     // game.batch.draw(map,(BodyConquest.V_WIDTH / 2) - (mapWidth / 2), hud.unitBar.getTop());
     stage.act();
@@ -153,12 +152,12 @@ public class EncounterScreen implements Screen {
     if (Gdx.input.isTouched()) {
       Vector3 touchPos = new Vector3();
       touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-      gameCamera.unproject(touchPos);
+      gameCamera.unproject(touchPos, gamePort.getScreenX(), gamePort.getScreenY(), gamePort.getScreenWidth(), gamePort.getScreenHeight());
       System.out.println(
           "X: "
-              + (touchPos.x - gamePort.getLeftGutterWidth())
+              + (touchPos.x /*- gamePort.getLeftGutterWidth()*/)
               + "\tY: "
-              + (touchPos.y - gamePort.getBottomGutterHeight()));
+              + (touchPos.y /*- gamePort.getBottomGutterHeight()*/));
     }
   }
 

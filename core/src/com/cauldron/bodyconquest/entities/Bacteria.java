@@ -64,7 +64,7 @@ public class Bacteria extends Unit {
   public void draw(Batch batch, float parentAlpha) {
     Color color = getColor();
     batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-    batch.draw(
+   /* batch.draw(
         region,
         getX(),
         getY(),
@@ -74,7 +74,8 @@ public class Bacteria extends Unit {
         getHeight(),
         getScaleX(),
         getScaleY(),
-        getRotation());
+        getRotation());*/
+    batch.draw(region, getX(), getY());
   }
 
   @Override
@@ -91,8 +92,8 @@ public class Bacteria extends Unit {
     if (moving) {
       if (playerType == PlayerType.BOT_PLAYER) {
         if (lane == Lane.BOT) {
-          //System.out.println("X: " + getX() + "\tCentre X: " + getCentreX() + "\tOrigin X: " + getOriginX() + "\tScale X: " + getScaleX());
-          if (getX() > map.getBotTurnPointX()) {
+          System.out.println("X: " + getX() + "\tCentre X: " + getCentreX() + "\tOrigin X: " + getOriginX() + "\tScale X: " + getScaleX());
+          if (getCentreX() > map.getBotTurnPointX()) {
             moveLeft(delta);
           } else {
             moveUp(delta);
@@ -101,8 +102,9 @@ public class Bacteria extends Unit {
 
         }*/
       } else if (playerType == PlayerType.TOP_PLAYER) {
+        //System.out.println("Centre X: " + getCentreX() + "\tCentre Y: " + getCentreY());
         if (lane.equals(Lane.BOT)) {
-          if (getY() > map.getBotTurnPointY()) {
+          if (getCentreY() > map.getBotTurnPointY()) {
             moveDown(delta);
           } else {
             moveRight(delta);
