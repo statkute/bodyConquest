@@ -105,7 +105,7 @@ public class ClientReceiver extends Thread {
     while (receivedId != count + 1) { // while the missing packet has not been received
       socket.receive(packet);
       String received = new String(packet.getData());
-      receivedId = Integer.parseInt(received.trim().substring(1, 9));
+      receivedId = Integer.parseInt(received.trim().substring(0, 8));
       byte[] buf = new byte[256];
       packet = new DatagramPacket(buf, buf.length);
       messages.put(receivedId, received); // store the packet
