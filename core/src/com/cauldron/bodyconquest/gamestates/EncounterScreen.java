@@ -172,6 +172,7 @@ public class EncounterScreen implements Screen {
             unit.setPosition( topLaneX - (unit.getWidth() / 2) , topLaneY - (unit.getHeight() / 2));
         }
         stage.addActor(unit);
+
     }
 
 }
