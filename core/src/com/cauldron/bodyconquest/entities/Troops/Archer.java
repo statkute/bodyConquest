@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.enities.Troops;
+package com.cauldron.bodyconquest.entities.Troops;
 
 public class Archer extends Troop {
   public Archer() {

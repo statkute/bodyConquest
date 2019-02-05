@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.enities.Troops;
+package com.cauldron.bodyconquest.entities.Troops;
 
 public abstract class Troop {
   private double damagePerHit;
