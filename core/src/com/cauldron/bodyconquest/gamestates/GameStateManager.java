@@ -1,4 +1,3 @@
 package com.cauldron.bodyconquest.gamestates;
 
-public class GameStateManager {
-}
+public class GameStateManager {}
