@@ -14,6 +14,7 @@ public class CreditsScreen implements Screen {
   private BodyConquest game;
   private Texture backButton;
   private Texture background;
+  private Rectangle backBounds;
 
   OrthographicCamera camera;
 
@@ -24,6 +25,7 @@ public class CreditsScreen implements Screen {
 
     background = new Texture("core/assets/logocredits.png");
     backButton = new Texture("core/assets/back.png");
+    backBounds = new Rectangle(550, 30, backButton.getWidth(), backButton.getHeight());
   }
 
   @Override
@@ -45,10 +47,9 @@ public class CreditsScreen implements Screen {
 
   public void checkPressed() {
 
-    Rectangle backBounds = new Rectangle(550, 30, backButton.getWidth(), backButton.getHeight());
-    Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-    camera.unproject(tmp);
     if (Gdx.input.isTouched()) {
+      Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+      camera.unproject(tmp);
       if (backBounds.contains(tmp.x, tmp.y)) {
         game.setScreen(new MenuScreen(game));
         dispose();

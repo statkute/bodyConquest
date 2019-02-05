@@ -18,6 +18,10 @@ public class MenuScreen implements Screen {
   private Texture playButtonSinglePlayer;
   private Texture settingsButton;
   private Texture creditsButton;
+  private Rectangle multiplayerBounds;
+  private Rectangle singleplayerBounds;
+  private Rectangle settingsBounds;
+  private Rectangle creditsBounds;
 
   OrthographicCamera camera;
 
@@ -31,6 +35,31 @@ public class MenuScreen implements Screen {
     playButtonSinglePlayer = new Texture("core/assets/singleplayer.png");
     settingsButton = new Texture("core/assets/settings.png");
     creditsButton = new Texture("core/assets/Credits.png");
+
+    multiplayerBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
+            336,
+            playButtonMultiplayer.getWidth(),
+            playButtonMultiplayer.getHeight());
+    singleplayerBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
+            226,
+            playButtonSinglePlayer.getWidth(),
+            playButtonSinglePlayer.getHeight());
+    settingsBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
+            126,
+            settingsButton.getWidth(),
+            settingsButton.getHeight());
+    creditsBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
+            30,
+            creditsButton.getWidth(),
+            creditsButton.getHeight());
   }
 
   @Override
@@ -54,10 +83,8 @@ public class MenuScreen implements Screen {
         playButtonSinglePlayer,
         BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
         226);
-    game.batch.draw(
-        settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 126);
-    game.batch.draw(
-        creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 30);
+    game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 126);
+    game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 30);
 
     checkPressed();
 
@@ -66,30 +93,6 @@ public class MenuScreen implements Screen {
 
   public void checkPressed() {
 
-    Rectangle multiplayerBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-            336,
-            playButtonMultiplayer.getWidth(),
-            playButtonMultiplayer.getHeight());
-    Rectangle singleplayerBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-            226,
-            playButtonSinglePlayer.getWidth(),
-            playButtonSinglePlayer.getHeight());
-    Rectangle settingsBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
-            126,
-            settingsButton.getWidth(),
-            settingsButton.getHeight());
-    Rectangle creditsBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
-            30,
-            creditsButton.getWidth(),
-            creditsButton.getHeight());
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
     if (Gdx.input.isTouched()) {
@@ -100,9 +103,8 @@ public class MenuScreen implements Screen {
         //              dispose();
       }
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
-        //System.out.println("SinglePlayer Is touched");
-                      game.setScreen(new RaceSelection(game));
-                      dispose();
+        game.setScreen(new RaceSelection(game));
+        dispose();
       }
       if (settingsBounds.contains(tmp.x, tmp.y)) {
         System.out.println("Settings Is touched");
@@ -110,10 +112,8 @@ public class MenuScreen implements Screen {
         //              dispose();
       }
       if (creditsBounds.contains(tmp.x, tmp.y)) {
-        //System.out.println("Credits Is touched");
-                      game.setScreen(new CreditsScreen(game));
-                      dispose();
-
+        game.setScreen(new CreditsScreen(game));
+        dispose();
       }
     }
   }
