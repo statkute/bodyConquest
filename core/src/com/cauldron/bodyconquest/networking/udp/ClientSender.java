@@ -1,9 +1,10 @@
-package com.cauldron.bodyconquest.networking;
+package com.cauldron.bodyconquest.networking.udp;
+
+import com.cauldron.bodyconquest.networking.udp.ClientReceiver;
 
 import java.io.IOException;
 import java.net.*;
 import java.util.Enumeration;
-import java.util.HashMap;
 
 /** The class that is responsible for sending messages from the client to the server */
 public class ClientSender extends Thread {

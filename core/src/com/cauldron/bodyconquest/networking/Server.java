@@ -1,58 +1,36 @@
 package com.cauldron.bodyconquest.networking;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
-import java.util.Scanner;
+import java.net.*;
 
 public class Server {
-  /**
-   * Starts ServerReceiver and ServerSender threads
-   *
-   * @param args
-   * @throws IOException
-   */
-  public static void main(String[] args) throws IOException {
-    String inetAddress = getInetAddress();
+  public static void main(String args[]) throws Exception {
+    ServerSocket serverSocket = new ServerSocket(4446);
 
-    ServerSender serverSender = new ServerSender(inetAddress);
-    ServerReceiver serverReceiver = new ServerReceiver(serverSender, "singleplayer");
-    serverSender.start();
-    serverReceiver.start();
+    Ping ping = new Ping();
+    ping.start();
 
-    Scanner reader;
-    for (int i = 1; i < 10000; i ++){
-      String formattedNum = String.format("%08d", i);
-      reader = new Scanner(System.in);
-      System.out.println("Enter a message: ");
-      String message = reader.nextLine();
-      serverSender.sendMessage(message);
-    }
-  }
-
-  /**
-   * Selects one ip Adress that is available for multicasting and returns it
-   * @return  selected IP address in String format
-   * @throws IOException
-   */
-  public static String getInetAddress() throws IOException {
-    MulticastSocket socket = new MulticastSocket(4445);
-    Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();
-
-    while (faces.hasMoreElements()) {
-      NetworkInterface iface = faces.nextElement();
-      if (iface.isLoopback() || !iface.isUp()) continue;
-
-      Enumeration<InetAddress> addresses = iface.getInetAddresses();
-
-      while (addresses.hasMoreElements()) {
-        InetAddress addr = addresses.nextElement();
-        return (addr.toString());
-      }
+    while (true){
+      DatagramSocket ds = new DatagramSocket(3000);
+      String message = "This is a message from the server";
+      byte[] buf = new byte[1024];
+      DatagramPacket dp = new DatagramPacket(buf, 1024);
+      ds.receive(dp);
+      String str = new String(dp.getData(), 0, dp.getLength());
+      System.out.println("Server received -> " + str);
+      DatagramPacket packet = new DatagramPacket(message.getBytes(), message.length(), dp.getAddress(), 3001);
+      ds.send(packet);
+      ds.close();
     }
 
-    return "";
+    // while (true) {
+    // Socket connectionSocket = serverSocket.accept();
+    // DataInputStream inFromClient = new DataInputStream(connectionSocket.getInputStream());
+    // DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+    // String clientSentence = inFromClient.readUTF();
+    // System.out.println("Received: " + clientSentence);
+    // String capitalizedSentence = clientSentence.toUpperCase() + '\n';
+    // outToClient.writeUTF(capitalizedSentence);
+    // outToClient.flush();
+    // }
   }
 }

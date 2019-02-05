@@ -1,63 +1,62 @@
 package com.cauldron.bodyconquest.networking;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
-import java.net.NetworkInterface;
+import java.net.*;
 import java.util.Enumeration;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Client {
-  /**
-   * Starts ClientReceiver and ClientSender threads
-   *
-   * @param args
-   * @throws IOException
-   */
-  public static void main(String[] args) throws IOException {
-    String inetAddress = getInetAddress();
+class Client {
+  public static void main(String argv[]) throws Exception {
 
-    ClientReceiver clientReceiver = new ClientReceiver();
-    ClientSender clientSender = new ClientSender(inetAddress, clientReceiver);
+    MulticastSocket socket = new MulticastSocket(4446);
+    InetAddress group = InetAddress.getByName("239.255.255.255");
 
-    clientSender.start();
-    clientReceiver.start();
-    clientSender.sendPacket("connected");
-
-    Scanner reader = new Scanner(System.in);
-    System.out.println("Enter your id: ");
-    char id = reader.nextLine().charAt(0);
-
-    for (int i = 1; i < 10000; i++) {
-      System.out.println("Enter a message: ");
-      String message = reader.nextLine();
-      clientSender.sendPacket(id + message);
-    }
-  }
-
-  /**
-   * Selects one ip Adress that is available for multicasting and returns it
-   *
-   * @return selected IP address in String format
-   * @throws IOException
-   */
-  public static String getInetAddress() throws IOException {
-    MulticastSocket socket = new MulticastSocket(4445);
-    Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();
-
-    while (faces.hasMoreElements()) {
-      NetworkInterface iface = faces.nextElement();
+    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+    while (interfaces.hasMoreElements()) {
+      NetworkInterface iface = interfaces.nextElement();
       if (iface.isLoopback() || !iface.isUp()) continue;
 
       Enumeration<InetAddress> addresses = iface.getInetAddresses();
-
       while (addresses.hasMoreElements()) {
         InetAddress addr = addresses.nextElement();
-        return (addr.toString());
+        socket.setInterface(addr);
+        socket.joinGroup(group);
       }
     }
 
-    return "";
+    byte[] buf = new byte[256];
+    DatagramPacket packet = new DatagramPacket(buf, buf.length);
+    socket.receive(packet);
+    System.out.println("Received from: " + packet.getAddress());
+
+    String received = new String(packet.getData());
+    System.out.println(received);
+
+    DatagramSocket ds = new DatagramSocket(3001);
+
+    String message = "this is a message from a client";
+    DatagramPacket dp = new DatagramPacket(message.getBytes(), message.length(), packet.getAddress(), 3000);
+    ds.send(dp);
+
+    buf = new byte[1024];
+    dp = new DatagramPacket(buf, 1024);
+    ds.receive(dp);
+    String r = new String(dp.getData(), 0, dp.getLength());
+    System.out.println(r);
+    ds.close();
+
+    // String sentence;
+    // String modifiedSentence;
+
+    // BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+    // Socket clientSocket = new Socket(packet.getAddress(), 4446);
+    // DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+    // DataInputStream inFromServer = new DataInputStream(clientSocket.getInputStream());
+
+    // sentence = "hello server\n";
+    // outToServer.writeUTF(sentence);
+    // outToServer.flush();
+    // System.out.println("Sent hello to server.");
+    // modifiedSentence = inFromServer.readUTF();
+    // System.out.println("FROM SERVER: " + modifiedSentence);
+    // clientSocket.close();
   }
 }

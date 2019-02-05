@@ -1,11 +1,10 @@
-package com.cauldron.bodyconquest.networking;
+package com.cauldron.bodyconquest.networking.udp;
 
 import java.io.IOException;
 import java.net.*;
 import java.text.DecimalFormat;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /** ServerReceiver class is responsible for receiving packets from clients */
 public class ServerReceiver extends Thread {

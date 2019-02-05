@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.networking;
+package com.cauldron.bodyconquest.networking.udp;
 
 import java.io.IOException;
 import java.net.*;
