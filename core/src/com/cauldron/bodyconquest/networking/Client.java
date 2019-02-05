@@ -4,39 +4,60 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Client {
-    public static void main(String[] args) throws IOException {
-        String inetAddress = getInetAddress();
-        System.out.println("SELECTED INETADDRESS: " + inetAddress);
+  /**
+   * Starts ClientReceiver and ClientSender threads
+   *
+   * @param args
+   * @throws IOException
+   */
+  public static void main(String[] args) throws IOException {
+    String inetAddress = getInetAddress();
 
-        ClientSender clientSender = new ClientSender(inetAddress);
-        ClientReceiver clientReceiver = new ClientReceiver();
-        clientSender.start();
-        clientReceiver.start();
-        clientSender.sendPacket("This is a message from the client");
+    ClientReceiver clientReceiver = new ClientReceiver();
+    ClientSender clientSender = new ClientSender(inetAddress, clientReceiver);
+
+    clientSender.start();
+    clientReceiver.start();
+    clientSender.sendPacket("connected");
+
+    Scanner reader = new Scanner(System.in);
+    System.out.println("Enter your id: ");
+    char id = reader.nextLine().charAt(0);
+
+    for (int i = 1; i < 10000; i++) {
+      System.out.println("Enter a message: ");
+      String message = reader.nextLine();
+      clientSender.sendPacket(id + message);
+    }
+  }
+
+  /**
+   * Selects one ip Adress that is available for multicasting and returns it
+   *
+   * @return selected IP address in String format
+   * @throws IOException
+   */
+  public static String getInetAddress() throws IOException {
+    MulticastSocket socket = new MulticastSocket(4445);
+    Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();
+
+    while (faces.hasMoreElements()) {
+      NetworkInterface iface = faces.nextElement();
+      if (iface.isLoopback() || !iface.isUp()) continue;
+
+      Enumeration<InetAddress> addresses = iface.getInetAddresses();
+
+      while (addresses.hasMoreElements()) {
+        InetAddress addr = addresses.nextElement();
+        return (addr.toString());
+      }
     }
 
-    public static String getInetAddress() throws IOException {
-        MulticastSocket socket = new MulticastSocket(4445);
-        Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();
-
-        while (faces.hasMoreElements()) {
-            NetworkInterface iface = faces.nextElement();
-            if (iface.isLoopback() || !iface.isUp())
-                continue;
-
-            Enumeration<InetAddress> addresses = iface.getInetAddresses();
-
-            while (addresses.hasMoreElements()) {
-                InetAddress addr = addresses.nextElement();
-                return (addr.toString());
-            }
-        }
-
-        return "";
-    }
+    return "";
+  }
 }
