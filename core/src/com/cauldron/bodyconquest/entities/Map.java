@@ -22,10 +22,9 @@ public class Map {
         return map;
     }
 
-
     /*
-        Gotta come back to this, define what is accessible
-     */
+       Gotta come back to this, define what is accessible
+    */
     public boolean isAccessible(Location l) {
         return l.getType() == LocationType.EMPTY;
     }
@@ -45,5 +44,4 @@ public class Map {
     public int getMaxY() {
         return MAP_HEIGHT;
     }
-
 }

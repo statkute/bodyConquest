@@ -41,7 +41,8 @@ public class Pathfinder {
                 cell[x][y] = new Node(x, y);
                 if (map.isAccessible(new Location(x, y))) {
                     // Assigning the Manhattan Heuristic value
-                    cell[x][y].hValue = (Math.abs(x - finalLocation.getX()) + Math.abs(y - finalLocation.getY()));
+                    cell[x][y].hValue =
+                            (Math.abs(x - finalLocation.getX()) + Math.abs(y - finalLocation.getY()));
                 } else {
                     // If the boolean value is false, then assigning -1 instead of the absolute
                     // length
@@ -53,14 +54,17 @@ public class Pathfinder {
 
     private void findPath() {
         generateNodeMap();
-        PriorityQueue<Node> openList = new PriorityQueue<Node>(11, new Comparator<Object>() {
-            @Override
-            // Compares 2 Node objects stored in the PriorityQueue and Reorders the Queue
-            // according to the object which has the lowest fValue
-            public int compare(Object cell1, Object cell2) {
+        PriorityQueue<Node> openList =
+                new PriorityQueue<Node>(
+                        11,
+                        new Comparator<Object>() {
+                            @Override
+                            // Compares 2 Node objects stored in the PriorityQueue and Reorders the Queue
+                            // according to the object which has the lowest fValue
+                            public int compare(Object cell1, Object cell2) {
                 return Double.compare(((Node) cell1).fValue, ((Node) cell2).fValue);
-            }
-        });
+                            }
+                        });
         // Adds the starting node inside the openList
         openList.add(cell[initialLocation.getX()][initialLocation.getY()]);
 
@@ -89,7 +93,8 @@ public class Pathfinder {
             // checking neighbours
             // Left Cell
             try {
-                if (cell[node.x][node.y - 1].hValue != -1 && !openList.contains(cell[node.x][node.y - 1])
+                if (cell[node.x][node.y - 1].hValue != -1
+                        && !openList.contains(cell[node.x][node.y - 1])
                         && !closedList.contains(cell[node.x][node.y - 1])) {
                     cell[node.x][node.y - 1].gValue = gCost + 1;
                     cell[node.x][node.y - 1].fValue =
@@ -104,7 +109,8 @@ public class Pathfinder {
 
             // Right Cell
             try {
-                if (cell[node.x][node.y + 1].hValue != -1 && !openList.contains(cell[node.x][node.y + 1])
+                if (cell[node.x][node.y + 1].hValue != -1
+                        && !openList.contains(cell[node.x][node.y + 1])
                         && !closedList.contains(cell[node.x][node.y + 1])) {
                     cell[node.x][node.y + 1].gValue = gCost + 1;
                     cell[node.x][node.y + 1].fValue =
@@ -119,12 +125,12 @@ public class Pathfinder {
 
             // Bottom Cell
             try {
-                if (cell[node.x + 1][node.y].hValue != -1 && !openList.contains(cell[node.x + 1][node.y])
+                if (cell[node.x + 1][node.y].hValue != -1
+                        && !openList.contains(cell[node.x + 1][node.y])
                         && !closedList.contains(cell[node.x + 1][node.y])) {
                     cell[node.x + 1][node.y].gValue = gCost + 1;
                     cell[node.x + 1][node.y].fValue =
                             cell[node.x + 1][node.y].gValue + cell[node.x + 1][node.y].hValue;
-
 
                     openList.add(cell[node.x + 1][node.y]);
                     cell[node.x + 1][node.y].parent = node;
@@ -135,7 +141,8 @@ public class Pathfinder {
 
             // Top Cell
             try {
-                if (cell[node.x - 1][node.y].hValue != -1 && !openList.contains(cell[node.x - 1][node.y])
+                if (cell[node.x - 1][node.y].hValue != -1
+                        && !openList.contains(cell[node.x - 1][node.y])
                         && !closedList.contains(cell[node.x - 1][node.y])) {
                     cell[node.x - 1][node.y].gValue = gCost + 1;
                     cell[node.x - 1][node.y].fValue =
@@ -148,13 +155,12 @@ public class Pathfinder {
                 System.out.println("Top cell out of bounds");
             }
 
-            //when going to the next neighbour, the cost of getting there increases by 1
+            // when going to the next neighbour, the cost of getting there increases by 1
             gCost++;
         }
         // constructing the path
         // Assigns the last Object in the closedList to the endNode variable
         Node endNode = closedList.get(closedList.size() - 1);
-
 
         /*
          * Checks whether the endNode variable currently has a parent Node. if it
@@ -170,11 +176,10 @@ public class Pathfinder {
             endNode = endNode.parent;
         }
 
-        //adding the initial node
-        //pathList.add(cell[initialLocation.getX()][initialLocation.getY()]);
+        // adding the initial node
+        // pathList.add(cell[initialLocation.getX()][initialLocation.getY()]);
 
         // Clears the openList
         openList.clear();
     }
 }
-

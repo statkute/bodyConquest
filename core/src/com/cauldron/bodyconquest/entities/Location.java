@@ -3,9 +3,9 @@ package com.cauldron.bodyconquest.entities;
 public class Location {
 
     /*
-        Need to store the x and y coordinates of this location on the map for reverse retrieval:
-        When trying to get the location of an entity
-     */
+       Need to store the x and y coordinates of this location on the map for reverse retrieval:
+       When trying to get the location of an entity
+    */
     private final int x;
     private final int y;
     private LocationType type;
