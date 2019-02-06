@@ -92,6 +92,9 @@ public class Bacteria extends Unit {
           }
         }*/
 
+        // Turn values are too hard coded, have turn points sent in the EncounterScreen that this can access so every
+        // Unit conforms to the same turn location
+        // And the unit should turn when the centre of the unit has passed the respective turn point
         if (lane == Lane.BOT) {
           if (getX() > 150) {
             moveLeft(delta);

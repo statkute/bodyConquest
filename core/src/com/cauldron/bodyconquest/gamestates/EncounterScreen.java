@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cauldron.bodyconquest.entities.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.cauldron.bodyconquest.entities.Unit;
 import com.cauldron.bodyconquest.entities.Unit.*;
@@ -31,12 +30,6 @@ public class EncounterScreen implements Screen {
   public enum PlayerType {
     BOT_PLAYER,
     TOP_PLAYER
-  }
-
-  public enum Lanes {
-    TOP,
-    BOT,
-    MID
   }
 
   public enum Lane {
@@ -78,6 +71,7 @@ public class EncounterScreen implements Screen {
 
   private final float botLaneTPSpawnX = 170;
   private final float botLaneTPSpawnY = 470;
+
   // Not yet intialised
   private float midLaneTPSpawnX;
   private float topLaneTPSpawnX;
@@ -264,7 +258,7 @@ public class EncounterScreen implements Screen {
         unit.setPosition(
             midLaneBPSpawnX - (unit.getWidth() / 2), midLaneBPSpawnY - (unit.getHeight() / 2));
         midLaneP1.add(unit);
-      } else if (lane == Lane.BOT) {
+      } else if (lane == Lane.TOP) {
         unit.setPosition(
             topLaneBPSpawnX - (unit.getWidth() / 2), topLaneBPSpawnY - (unit.getHeight() / 2));
         topLaneP1.add(unit);
