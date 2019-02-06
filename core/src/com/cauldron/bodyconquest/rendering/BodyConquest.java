@@ -1,6 +1,8 @@
 package com.cauldron.bodyconquest.rendering;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,14 +18,13 @@ for implementing screens.
  */
 public class BodyConquest extends Game {
 
-	//private static final Logger log = Logger.getLogger(MyGdxGame.class);
+  // private static final Logger log = Logger.getLogger(MyGdxGame.class);
 
-	public static final int V_WIDTH = 800;
-	public static final int V_HEIGHT = 600;
+  public static final int V_WIDTH = 800;
+  public static final int V_HEIGHT = 600;
 
   private FPSLogger fpsLogger = new FPSLogger();
   public SpriteBatch batch;
-  private Texture img;
 
   private Stage stage;
 
@@ -32,23 +33,22 @@ public class BodyConquest extends Game {
   // so that we could add text
   public BitmapFont font;
 
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		font = new BitmapFont();
-		//setScreen(new EncounterScreen(this));
-        setScreen(new MenuScreen(this)); //uncomment this to check the screen
-	}
+  @Override
+  public void create() {
+    batch = new SpriteBatch();
+    font = new BitmapFont();
+    //setScreen(new EncounterScreen(this));
+    setScreen(new MenuScreen(this)); //uncomment this to check the screen
+  }
 
-	@Override
-	public void render () {
-		super.render();
-	}
+  @Override
+  public void render() {
+    super.render();
+    if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
+  }
 
   @Override
   public void dispose() {
     batch.dispose();
-    img.dispose();
-    stage.dispose();
   }
 }

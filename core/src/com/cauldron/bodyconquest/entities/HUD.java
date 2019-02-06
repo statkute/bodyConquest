@@ -18,7 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
+import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
+import com.cauldron.bodyconquest.entities.Unit.UnitType;
 
 public class HUD {
 
@@ -32,16 +34,16 @@ public class HUD {
   public HealthBar healthBar;
 
   private Image spawnArea;
-  Bacteria bct1;
+  private PlayerType playerType;
 
   //
-  public HUD(SpriteBatch sb, final EncounterScreen screen) {
+  public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     viewport =
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
     stage = new Stage(viewport, sb);
-
-    this.screen = screen;
     Gdx.input.setInputProcessor(stage);
+    this.screen = screen;
+    this.playerType = playerType;
 
     // Main Bar
     unitBar = new Image(new Texture("core/assets/Action Bar v1.png"));
@@ -82,7 +84,7 @@ public class HUD {
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent event, Actor actor) {
-            screen.spawnUnit(new Bacteria(), EncounterScreen.Lanes.BOT);
+            screen.spawnUnit(UnitType.BACTERIA, Lane.BOT, playerType);
           }
         });
     stage.addActor(unitButton);
@@ -113,7 +115,6 @@ public class HUD {
           }
         });
 
-
     // adding troop spawn dnd target BOTTOM
     dragAndDrop.addTarget(
         new Target(bottomSpawnPoint) {
@@ -128,7 +129,7 @@ public class HUD {
 
           public void drop(Source source, Payload payload, float x, float y, int pointer) {
             System.out.println("SPAWN HERE");
-            screen.spawnUnit(new Bacteria(), EncounterScreen.Lanes.BOT);
+            screen.spawnUnit(UnitType.BACTERIA, Lane.BOT, playerType);
           }
         });
 
@@ -146,7 +147,7 @@ public class HUD {
 
           public void drop(Source source, Payload payload, float x, float y, int pointer) {
             System.out.println("SPAWN HERE");
-            screen.spawnUnit(new Bacteria("MID"), EncounterScreen.Lanes.MID);
+            screen.spawnUnit(UnitType.BACTERIA, Lane.MID, playerType);
           }
         });
 
@@ -164,7 +165,7 @@ public class HUD {
 
           public void drop(Source source, Payload payload, float x, float y, int pointer) {
             System.out.println("SPAWN HERE");
-            screen.spawnUnit(new Bacteria("TOP"), EncounterScreen.Lanes.TOP);
+            screen.spawnUnit(UnitType.BACTERIA, Lane.TOP, playerType);
           }
         });
   }

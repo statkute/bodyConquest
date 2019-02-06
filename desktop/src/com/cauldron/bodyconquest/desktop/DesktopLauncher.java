@@ -6,9 +6,6 @@ import java.awt.Toolkit;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
-import com.cauldron.bodyconquest.tests.DragAndDropTest;
-import com.cauldron.bodyconquest.tests.GdxTest;
-import com.cauldron.bodyconquest.Animator;
 
 public class DesktopLauncher {
   public static void main(String[] arg) {
@@ -35,11 +32,11 @@ public class DesktopLauncher {
 
     // config.foregroundFPS = 120;
 
-    config.vSyncEnabled = false; // Setting to false disables vertical sync
+    config.vSyncEnabled = true; // Setting to false disables vertical sync
     config.foregroundFPS = 0; // Setting to 0 disables foreground fps throttling
     config.backgroundFPS = 0; // Setting to 0 disables background fps throttling
 
-		new LwjglApplication(new BodyConquest(), config);
-		//new LwjglApplication(new DragAndDropTest(), config);
-	}
+    new LwjglApplication(new BodyConquest(), config);
+    // new LwjglApplication(new DragAndDropTest(), config);
+  }
 }
