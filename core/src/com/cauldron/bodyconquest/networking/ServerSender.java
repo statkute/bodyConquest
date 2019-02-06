@@ -18,7 +18,7 @@ public class ServerSender extends Thread {
 
   public void sendMessage(String message) {
     try {
-      for (InetAddress address : connectedClients){
+      for (InetAddress address : connectedClients) {
         DatagramPacket packet =
             new DatagramPacket(message.getBytes(), message.length(), address, 3001);
         socket.send(packet);

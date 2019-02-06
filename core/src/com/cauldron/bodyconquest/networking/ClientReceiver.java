@@ -17,7 +17,7 @@ public class ClientReceiver extends Thread {
     id = new AtomicInteger(0);
   }
 
-  public InetAddress getIpAddress(){
+  public InetAddress getIpAddress() {
     try {
       MulticastSocket mSocket = new MulticastSocket(4446);
       group = InetAddress.getByName("239.255.255.255");
@@ -42,14 +42,15 @@ public class ClientReceiver extends Thread {
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         socket.receive(packet);
         String received = new String(packet.getData()).trim();
-        System.out.println("Received Message: " + received.trim() + " ------ from: " + packet.getAddress());
+        System.out.println(
+            "Received Message: " + received.trim() + " ------ from: " + packet.getAddress());
       } catch (IOException e) {
         e.printStackTrace();
       }
     }
   }
 
-  public void gameSetup(){
+  public void gameSetup() {
     String received = "";
     while (!received.equals("start game")) {
       try {
@@ -57,10 +58,10 @@ public class ClientReceiver extends Thread {
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         socket.receive(packet);
         received = new String(packet.getData()).trim();
-        if (id.toString().equals("0") && received.startsWith("ID: ")){
-          if (received.endsWith("a")){
+        if (id.toString().equals("0") && received.startsWith("ID: ")) {
+          if (received.endsWith("a")) {
             id = new AtomicInteger(1);
-          } else if (received.endsWith("b")){
+          } else if (received.endsWith("b")) {
             id = new AtomicInteger(2);
           }
         }
@@ -68,9 +69,9 @@ public class ClientReceiver extends Thread {
         e.printStackTrace();
       }
     }
-    System.out.println("THIS CLIENT HAS CONNECTED AND JOINED THE GAME, CLIENT ID: " + id.toString());
+    System.out.println(
+        "THIS CLIENT HAS CONNECTED AND JOINED THE GAME, CLIENT ID: " + id.toString());
   }
-
 
   private static void joinGroup(MulticastSocket socket, InetAddress group) throws IOException {
     Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();

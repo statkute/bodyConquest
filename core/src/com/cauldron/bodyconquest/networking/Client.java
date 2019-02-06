@@ -8,10 +8,10 @@ class Client {
     clientReceiver.start();
     clientSender.start();
 
-//    Thread.sleep(5000);
+    //    Thread.sleep(5000);
 
     clientSender.sendMessage("connected");
-        Thread.sleep(500);
+    Thread.sleep(500);
     clientSender.sendMessage("This is a message sent just after the game has started");
     // String sentence;
     // String modifiedSentence;

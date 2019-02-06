@@ -7,13 +7,16 @@ public class Server {
 
     ServerSender serverSender = new ServerSender();
     ServerReceiver serverReceiver = new ServerReceiver(serverSender);
+    ServerLogic serverLogic = new ServerLogic(serverReceiver);
 
     serverSender.start();
     serverReceiver.start();
+    serverLogic.start();
 
     setupSinglePlayer(serverSender);
 
-    serverSender.sendMessage("This is a message from the server sent just after the game has started");
+    serverSender.sendMessage(
+        "This is a message from the server sent just after the game has started");
   }
 
   public static void setupSinglePlayer(ServerSender serverSender) {
