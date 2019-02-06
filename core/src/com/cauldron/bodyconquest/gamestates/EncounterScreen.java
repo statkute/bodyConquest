@@ -17,6 +17,11 @@ import com.cauldron.bodyconquest.entities.Unit;
 import com.cauldron.bodyconquest.entities.Unit.*;
 
 import java.util.ArrayList;
+import com.cauldron.bodyconquest.entities.Bacteria;
+import com.cauldron.bodyconquest.entities.HUD;
+import com.cauldron.bodyconquest.entities.MapObject;
+import com.cauldron.bodyconquest.entities.SpawnArea;
+import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 /*
 The screen where the encounters occurs, hosts a number of actors including,
@@ -24,6 +29,49 @@ the health bar, unitButtons, resourceBars and player information.
  */
 public class EncounterScreen implements Screen {
 
+  public enum PlayerType {
+    BOT_PLAYER,
+    TOP_PLAYER
+  }
+
+  public enum Lanes{
+        TOP, BOT, MID
+    }
+
+  public enum Lane {
+    TOP,
+    BOT,
+    MID
+  }
+
+    private BodyConquest game;
+    private OrthographicCamera gameCamera;
+    private Viewport gamePort;
+
+
+    private List<MapObject> activeUnits;
+
+    private HUD hud;
+
+    public SpawnArea spawnArea;
+
+    private Image map;
+    private float mapSize;
+    private float mapHeight;
+    private float mapWidth;
+
+    private Stage stage;
+
+    private float laneWidth;
+
+    private float botLaneX;
+    private float botLaneY;
+
+    private float midLaneX;
+    private float midLaneY;
+
+    private float topLaneX;
+    private float topLaneY;
 
   // If kept final change to all caps
   private final float botTurnPointX = 85;
@@ -35,65 +83,44 @@ public class EncounterScreen implements Screen {
   private final float botLaneTPSpawnX = 170;
   private final float botLaneTPSpawnY = 470;
 
-  public enum PlayerType {
-    BOT_PLAYER,
-    TOP_PLAYER
-  }
-
-  public enum Lane {
-    TOP,
-    BOT,
-    MID
-  }
-
-  private BodyConquest game;
-  private OrthographicCamera gameCamera;
-  private Viewport gamePort;
-
-  private List<MapObject> activeUnits;
-
-  private HUD hud;
-
-  public SpawnArea spawnArea;
-
-  private Image map;
-  private float mapSize;
-  private float mapHeight;
-  private float mapWidth;
-
-  Stage stage;
-  // Bacteria bct1;
-
-  private float laneWidth;
-
   // Unit Arrays
   private ArrayList<Unit> botLaneP1;
   private ArrayList<Unit> botLaneP2;
 
-  public EncounterScreen(BodyConquest game) {
-    this.game = game;
-    gameCamera = new OrthographicCamera();
-    // gamePort = new StretchViewport(800, 480, gameCamera);
-    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
-    stage = new Stage(gamePort);
-    Gdx.input.setInputProcessor(stage);
-    spawnArea = new SpawnArea();
+    public EncounterScreen(BodyConquest game) {
+        this.game = game;
+        gameCamera = new OrthographicCamera();
+        //gamePort = new StretchViewport(800, 480, gameCamera);
+        gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
+        stage = new Stage(gamePort);
+        Gdx.input.setInputProcessor(stage);
+        spawnArea = new SpawnArea();
+      botLaneP1 = new ArrayList<Unit>();
+      botLaneP2 = new ArrayList<Unit>();
 
-    botLaneP1 = new ArrayList<Unit>();
-    botLaneP2 = new ArrayList<Unit>();
+      hud = new HUD(game.batch, this, PlayerType.BOT_PLAYER);
 
-    hud = new HUD(game.batch, this, PlayerType.BOT_PLAYER);
+        map = new Image(new Texture("core/assets/Basic Map v2.png"));
+        float topOfUnitBar = hud.unitBar.getTop();
+      mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
 
-    map = new Image(new Texture("core/assets/Basic Map v2.png"));
-    float topOfUnitBar = hud.unitBar.getTop();
-    mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
+      map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
+      stage.addActor(map);
 
-    map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
-    stage.addActor(map);
+      // Initialise spawn locations for different player types
+      new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
+        // Lanes
+        botLaneX = 500;
+        botLaneY = 85;
 
-    // Initialise spawn locations for different player types
-    new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
-  }
+        midLaneX = 505;
+        midLaneY = 185;
+
+        topLaneX = 600;
+        topLaneY = 225;
+    }
+
+
 
   @Override
   public void show() {}
@@ -181,10 +208,6 @@ public class EncounterScreen implements Screen {
     game.dispose();
   }
 
-  public List<MapObject> getActiveUnits() {
-    return activeUnits;
-  }
-
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
 
     Unit unit = null;
@@ -210,6 +233,16 @@ public class EncounterScreen implements Screen {
             botLaneTPSpawnX - (unit.getWidth() / 2), botLaneTPSpawnY - (unit.getHeight() / 2));
         botLaneP2.add(unit);
       }
+    }
+
+
+    // Too hard coded
+    if(lane.equals(Lanes.BOT)) {
+      unit.setPosition( botLaneX - (unit.getWidth() / 2) , botLaneY - (unit.getHeight() / 2));
+    } else if (lane.equals(Lanes.MID)){
+      unit.setPosition( midLaneX - (unit.getWidth() / 2) , midLaneY - (unit.getHeight() / 2));
+    } else if (lane.equals(Lanes.TOP)){
+      unit.setPosition( topLaneX - (unit.getWidth() / 2) , topLaneY - (unit.getHeight() / 2));
     }
 
     // Maybe add unit to data structure containing all units

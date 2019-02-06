@@ -6,9 +6,6 @@ import java.awt.Toolkit;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
-import com.cauldron.bodyconquest.tests.DragAndDropTest;
-import com.cauldron.bodyconquest.tests.GdxTest;
-import com.cauldron.bodyconquest.Animator;
 
 public class DesktopLauncher {
   public static void main(String[] arg) {
