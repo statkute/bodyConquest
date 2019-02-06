@@ -11,6 +11,8 @@ class Client {
 //    Thread.sleep(5000);
 
     clientSender.sendMessage("connected");
+        Thread.sleep(500);
+    clientSender.sendMessage("This is a message sent just after the game has started");
     // String sentence;
     // String modifiedSentence;
 

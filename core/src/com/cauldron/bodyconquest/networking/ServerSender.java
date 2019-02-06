@@ -5,7 +5,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ServerSender extends Thread {
@@ -27,7 +26,6 @@ public class ServerSender extends Thread {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    System.out.println("sent message");
   }
 
   public void run() {

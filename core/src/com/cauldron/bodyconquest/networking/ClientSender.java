@@ -7,7 +7,8 @@ import java.net.SocketException;
 
 public class ClientSender extends Thread {
   public DatagramSocket socket;
-  ClientReceiver clientReceiver;
+  public ClientReceiver clientReceiver;
+
 
   public ClientSender(ClientReceiver clientReceiver) throws SocketException {
     socket = new DatagramSocket();
@@ -15,6 +16,12 @@ public class ClientSender extends Thread {
   }
 
   public void sendMessage(String message){
+    if (clientReceiver.id.toString().equals("1")){
+      message = "a" + message;
+    } else if (clientReceiver.toString().equals("2")){
+      message = "b" + message;
+    }
+
     try {
       DatagramPacket packet = new DatagramPacket(message.getBytes(), message.length(), clientReceiver.address, 3000);
       socket.send(packet);

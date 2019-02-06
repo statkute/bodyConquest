@@ -1,7 +1,5 @@
 package com.cauldron.bodyconquest.networking;
 
-import java.net.*;
-
 public class Server {
   public static void main(String args[]) throws Exception {
     Ping ping = new Ping();
@@ -13,25 +11,22 @@ public class Server {
     serverSender.start();
     serverReceiver.start();
 
-    while(serverSender.connectedClients.isEmpty()){
+    setupSinglePlayer(serverSender);
 
-    }
+    serverSender.sendMessage("This is a message from the server sent just after the game has started");
+  }
 
-    serverSender.sendMessage("THIS IS A MESSAGE FROM THE SERVER");
+  public static void setupSinglePlayer(ServerSender serverSender) {
+    while (serverSender.connectedClients.isEmpty()) {}
+    serverSender.sendMessage("ID: a");
+    serverSender.sendMessage("start game");
+  }
 
-//    DatagramSocket ds = new DatagramSocket(3000);
-//    byte[] buf = new byte[1024];
-//    DatagramPacket dp = new DatagramPacket(buf, 1024);
-//    System.out.println("*************trying to receive a message***********");
-//    ds.receive(dp);
-//    String str = new String(dp.getData(), 0, dp.getLength());
-//    System.out.println("Server received -> " + str);
-
-//    String message = "This is a message from the server";
-//    DatagramPacket packet =
-//        new DatagramPacket(message.getBytes(), message.length(), dp.getAddress(), 3001);
-//    ds.send(packet);
-//    System.out.println("sent message");
-    //    ds.close();
+  public static void setupMultiPlayer(ServerSender serverSender) {
+    while (serverSender.connectedClients.isEmpty()) {}
+    serverSender.sendMessage("ID: a");
+    while (serverSender.connectedClients.size() < 2) {}
+    serverSender.sendMessage("ID: b");
+    serverSender.sendMessage("start game");
   }
 }

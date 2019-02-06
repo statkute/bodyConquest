@@ -19,7 +19,6 @@ public class ServerReceiver extends Thread {
       try {
         byte[] buf = new byte[1024];
         DatagramPacket packet = new DatagramPacket(buf, 1024);
-        System.out.println("*************trying to receive a message***********");
         socket.receive(packet);
         String str = new String(packet.getData(), 0, packet.getLength());
         System.out.println("Server received -> " + str + "------- from: " + packet.getAddress());
