@@ -1,9 +1,5 @@
 package com.cauldron.bodyconquest.networking;
 
-import java.io.IOException;
-import java.net.*;
-import java.util.Enumeration;
-
 class Client {
   public static void main(String argv[]) throws Exception {
     ClientReceiver clientReceiver = new ClientReceiver();
@@ -14,9 +10,7 @@ class Client {
 
 //    Thread.sleep(5000);
 
-    System.out.println("CLIENT IS TRYING TO SEND A MESSAGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-    clientSender.sendMessage("I just sent this from the client");
+    clientSender.sendMessage("connected");
     // String sentence;
     // String modifiedSentence;
 

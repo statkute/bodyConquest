@@ -39,7 +39,6 @@ public class ClientReceiver extends Thread {
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         System.out.println("*************trying to receive a message***********");
         socket.receive(packet);
-        System.out.println("Received from: " + packet.getAddress());
         String received = new String(packet.getData()).trim();
         System.out.println("Received Message: " + received.trim() + " ------ from: " + packet.getAddress());
       } catch (IOException e) {
