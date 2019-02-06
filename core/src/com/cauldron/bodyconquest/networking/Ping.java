@@ -13,13 +13,12 @@ public class Ping extends Thread {
       InetAddress group = InetAddress.getByName("239.255.255.255");
 
       byte[] buf;
-      String message = "Hi";
+      String message = "Pinging";
       buf = message.getBytes();
       DatagramPacket sending = new DatagramPacket(buf, 0, buf.length, group, 4446);
 
       while (true) {
         Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();
-        a:
         while (faces.hasMoreElements()) {
           NetworkInterface iface = faces.nextElement();
           if (iface.isLoopback() || !iface.isUp()) continue;
