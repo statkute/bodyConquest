@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public abstract class Unit extends MapObject {
 
   public static enum UnitType {
-    BACTERIA
+    BACTERIA,
+    VIRUS,
+    MONSTER
   }
 
   public static final int NO_HEALTH = 0;
@@ -43,7 +45,7 @@ public abstract class Unit extends MapObject {
     return health;
   }
 
-  public int getDamge() {
+  public int getDamage() {
     return damage;
   }
 

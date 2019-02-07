@@ -38,6 +38,12 @@ public class EncounterScreen implements Screen {
     MID
   }
 
+//  public enum DiseaseType { have similar thing in unit
+//    VIRUS,
+//    BACTERIA,
+//    MONSTER
+//  }
+
   private BodyConquest game;
   private OrthographicCamera gameCamera;
   private Viewport gamePort;
