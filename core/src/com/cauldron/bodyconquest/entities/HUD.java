@@ -36,6 +36,8 @@ public class HUD {
   private Image spawnArea;
   private PlayerType playerType;
 
+  private Base baseBottom;
+
   //
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     viewport =
@@ -59,6 +61,10 @@ public class HUD {
     skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     skin.add("badlogic", new Texture("core/assets/badlogic.jpg"));
     skin.add("spawnpoint", new Texture("core/assets/droplet.png"));
+
+    baseBottom = new Base(PlayerType.BOT_PLAYER, UnitType.BACTERIA);
+    baseBottom.setPosition(630, 120);
+    stage.addActor(baseBottom);
 
     // BOTTOM spawn point placeholder
     Image bottomSpawnPoint = new Image(skin, "spawnpoint");

@@ -92,7 +92,7 @@ public class EncounterScreen implements Screen {
 
   // Base
 
-  private Base baseBottom;
+//  private Base baseBottom;
 
   public EncounterScreen(BodyConquest game) {
     this.game = game;
@@ -125,8 +125,8 @@ public class EncounterScreen implements Screen {
     topLaneP1 = new ArrayList<Unit>();
     topLaneP2 = new ArrayList<Unit>();
 
-    baseBottom = new Base(PlayerType.BOT_PLAYER, UnitType.BACTERIA);
-    baseBottom.setPosition(630, 120);
+//    baseBottom = new Base(PlayerType.BOT_PLAYER, UnitType.BACTERIA);
+//    baseBottom.setPosition(630, 120);
 
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
