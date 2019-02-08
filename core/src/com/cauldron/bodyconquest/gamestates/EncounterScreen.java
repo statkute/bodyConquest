@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.entities.*;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
+import com.cauldron.bodyconquest.entities.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.cauldron.bodyconquest.entities.Troop.*;
 
@@ -34,6 +35,12 @@ public class EncounterScreen implements Screen {
     BOT,
     MID
   }
+
+//  public enum DiseaseType { have similar thing in unit
+//    VIRUS,
+//    BACTERIA,
+//    MONSTER
+//  }
 
   private BodyConquest game;
   private OrthographicCamera gameCamera;
@@ -88,6 +95,10 @@ public class EncounterScreen implements Screen {
   private ArrayList<Projectile> projectilesP1;
   private ArrayList<Projectile> projectilesP2;
 
+  // Base
+
+  private Base baseBottom;
+
   public EncounterScreen(BodyConquest game) {
     this.game = game;
     gameCamera = new OrthographicCamera();
@@ -132,6 +143,10 @@ public class EncounterScreen implements Screen {
     botLaneP2.add(topBase);
     midLaneP2.add(topBase);
     topLaneP2.add(topBase);
+
+    //baseBottom = new Base(PlayerType.BOT_PLAYER, UnitType.BACTERIA);
+    //baseBottom.setPosition(630, 120);
+
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
   }

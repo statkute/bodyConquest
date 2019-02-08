@@ -7,6 +7,12 @@ import java.util.ArrayList;
 
 public abstract class Troop extends MapObject {
 
+  public static enum UnitType {
+    BACTERIA,
+    VIRUS,
+    MONSTER
+  }
+
   /*
   May change to float depending on final implementation
    */
@@ -65,10 +71,6 @@ public abstract class Troop extends MapObject {
 
   public int getRange() {
     return range;
-  }
-
-  public static enum UnitType {
-    BACTERIA
   }
 
   protected PlayerType playerType;

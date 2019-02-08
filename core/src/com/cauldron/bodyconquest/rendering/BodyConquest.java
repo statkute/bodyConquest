@@ -50,5 +50,6 @@ public class BodyConquest extends Game {
   @Override
   public void dispose() {
     batch.dispose();
+    font.dispose();
   }
 }

@@ -7,7 +7,9 @@ import java.util.ArrayList;
 public abstract class Troop extends MapObject {
 
   public static enum UnitType {
-    BACTERIA
+    BACTERIA,
+    VIRUS,
+    MONSTER
   }
 
   protected PlayerType playerType;
@@ -39,6 +41,11 @@ public abstract class Troop extends MapObject {
     this.health = health;
   }
 
+  public void changeHealth(int difference){
+
+    this.health -= difference;
+  }
+
   public int getMaxHealth() {
     return maxHealth;
   }
@@ -47,7 +54,7 @@ public abstract class Troop extends MapObject {
     return health;
   }
 
-  public int getDamge() {
+  public int getDamage() {
     return damage;
   }
 
