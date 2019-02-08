@@ -11,15 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.entities.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
-import com.cauldron.bodyconquest.entities.Unit;
 import com.cauldron.bodyconquest.entities.Unit.*;
 
 import java.util.ArrayList;
-import com.cauldron.bodyconquest.entities.Bacteria;
-import com.cauldron.bodyconquest.entities.HUD;
-import com.cauldron.bodyconquest.entities.MapObject;
-import com.cauldron.bodyconquest.entities.SpawnArea;
 
 /*
 The screen where the encounters occurs, hosts a number of actors including,
@@ -94,6 +90,10 @@ public class EncounterScreen implements Screen {
   private ArrayList<Unit> topLaneP1;
   private ArrayList<Unit> topLaneP2;
 
+  // Base
+
+  private Base baseBottom;
+
   public EncounterScreen(BodyConquest game) {
     this.game = game;
     gameCamera = new OrthographicCamera();
@@ -124,6 +124,10 @@ public class EncounterScreen implements Screen {
 
     topLaneP1 = new ArrayList<Unit>();
     topLaneP2 = new ArrayList<Unit>();
+
+    baseBottom = new Base(PlayerType.BOT_PLAYER, UnitType.BACTERIA);
+    baseBottom.setPosition(630, 120);
+
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
   }

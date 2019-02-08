@@ -37,6 +37,11 @@ public abstract class Unit extends MapObject {
     this.health = health;
   }
 
+  public void changeHealth(int difference){
+
+    this.health -= difference;
+  }
+
   public int getMaxHealth() {
     return maxHealth;
   }
