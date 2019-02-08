@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.entities.FluProjectile;
-import com.cauldron.bodyconquest.entities.Troop;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType;

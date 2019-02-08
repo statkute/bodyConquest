@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -110,7 +111,7 @@ public class Base extends Troop {
 
   public void selectTexture() {
 
-    if (diseaseType == UnitType.BACTERIA) {
+    if (diseaseType == Troop.UnitType.BACTERIA) {
       this.imageBase =
           GifDecoder.loadGIFAnimation(PlayMode.LOOP, Gdx.files.internal("core/assets/castle1.gif").read());
     } else if (diseaseType == UnitType.MONSTER) {

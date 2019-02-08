@@ -12,10 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.entities.*;
+import com.cauldron.bodyconquest.entities.Troops.Troop.*;
+import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
-import com.cauldron.bodyconquest.entities.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
-import com.cauldron.bodyconquest.entities.Troop.*;
 
 import java.util.ArrayList;
 

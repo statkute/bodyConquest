@@ -1,5 +1,6 @@
 package com.cauldron.bodyconquest.entities;
 
+import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 
 import java.util.ArrayList;

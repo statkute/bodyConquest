@@ -16,13 +16,13 @@ public abstract class Troop extends MapObject {
   /*
   May change to float depending on final implementation
    */
-  private int range;
-  private double movementSpeed;
+  protected int range;
+  protected double movementSpeed;
   private int attackSpeed;
   private int lipidsCost;
   private int sugarsCost;
   private int proteinCost;
-  private int health;
+  protected int health;
 
   public Troop() {}
 
@@ -121,7 +121,7 @@ public abstract class Troop extends MapObject {
     setHealth(Math.max(getHealth() - damage, NO_HEALTH));
   }
 
-  public boolean inRange(com.cauldron.bodyconquest.entities.Troop troop) {
+  public boolean inRange(Troop troop) {
     if (distFrom(troop) < range) {
       return true;
     } else {
@@ -129,7 +129,7 @@ public abstract class Troop extends MapObject {
     }
   }
 
-  public void checkAttack(ArrayList<com.cauldron.bodyconquest.entities.Troop> enemies) {}
+  public void checkAttack(ArrayList<Troop> enemies) {}
 
   public void setMoving(boolean b) { moving = b; }
   public void setAttacking(boolean b) { attacking = b; }
