@@ -1,63 +1,32 @@
 package com.cauldron.bodyconquest.networking;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
-
-public class Client {
-  /**
-   * Starts ClientReceiver and ClientSender threads
-   *
-   * @param args
-   * @throws IOException
-   */
-  public static void main(String[] args) throws IOException {
-    String inetAddress = getInetAddress();
-
+class Client {
+  public static void main(String argv[]) throws Exception {
     ClientReceiver clientReceiver = new ClientReceiver();
-    ClientSender clientSender = new ClientSender(inetAddress, clientReceiver);
+    ClientSender clientSender = new ClientSender(clientReceiver);
 
-    clientSender.start();
     clientReceiver.start();
-    clientSender.sendPacket("connected");
+    clientSender.start();
 
-    Scanner reader = new Scanner(System.in);
-    System.out.println("Enter your id: ");
-    char id = reader.nextLine().charAt(0);
+    //    Thread.sleep(5000);
 
-    for (int i = 1; i < 10000; i++) {
-      System.out.println("Enter a message: ");
-      String message = reader.nextLine();
-      clientSender.sendPacket(id + message);
-    }
-  }
+    clientSender.sendMessage("connected");
+    Thread.sleep(500);
+    clientSender.sendMessage("This is a message sent just after the game has started");
+    // String sentence;
+    // String modifiedSentence;
 
-  /**
-   * Selects one ip Adress that is available for multicasting and returns it
-   *
-   * @return selected IP address in String format
-   * @throws IOException
-   */
-  public static String getInetAddress() throws IOException {
-    MulticastSocket socket = new MulticastSocket(4445);
-    Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();
+    // BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+    // Socket clientSocket = new Socket(packet.getAddress(), 4446);
+    // DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+    // DataInputStream inFromServer = new DataInputStream(clientSocket.getInputStream());
 
-    while (faces.hasMoreElements()) {
-      NetworkInterface iface = faces.nextElement();
-      if (iface.isLoopback() || !iface.isUp()) continue;
-
-      Enumeration<InetAddress> addresses = iface.getInetAddresses();
-
-      while (addresses.hasMoreElements()) {
-        InetAddress addr = addresses.nextElement();
-        return (addr.toString());
-      }
-    }
-
-    return "";
+    // sentence = "hello server\n";
+    // outToServer.writeUTF(sentence);
+    // outToServer.flush();
+    // System.out.println("Sent hello to server.");
+    // modifiedSentence = inFromServer.readUTF();
+    // System.out.println("FROM SERVER: " + modifiedSentence);
+    // clientSocket.close();
   }
 }
