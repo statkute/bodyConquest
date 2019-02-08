@@ -1,7 +1,7 @@
 package com.cauldron.bodyconquest.gamestates;
 
 import com.badlogic.gdx.Gdx;
-import com.cauldron.bodyconquest.entities.Unit;
+import com.cauldron.bodyconquest.entities.Troop;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
 
 public class BasicTestAI extends Thread {
@@ -36,9 +36,9 @@ public class BasicTestAI extends Thread {
     Gdx.app.postRunnable(new Runnable() {
       @Override
       public void run() {
-        game.spawnUnit(Unit.UnitType.BACTERIA, Lane.BOT, playerType);
-        game.spawnUnit(Unit.UnitType.BACTERIA, Lane.MID, playerType);
-        game.spawnUnit(Unit.UnitType.BACTERIA, Lane.TOP, playerType);
+        game.spawnUnit(Troop.UnitType.BACTERIA, Lane.BOT, playerType);
+        game.spawnUnit(Troop.UnitType.BACTERIA, Lane.MID, playerType);
+        game.spawnUnit(Troop.UnitType.BACTERIA, Lane.TOP, playerType);
       }
     });
 

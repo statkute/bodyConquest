@@ -1,12 +1,16 @@
 package com.cauldron.bodyconquest.entities;
 
+import com.cauldron.bodyconquest.gamestates.EncounterScreen. *;
+
 import java.util.ArrayList;
 
-public abstract class Unit extends MapObject {
+public abstract class Troop extends MapObject {
 
   public static enum UnitType {
     BACTERIA
   }
+
+  protected PlayerType playerType;
 
   public static final int NO_HEALTH = 0;
 
@@ -57,15 +61,15 @@ public abstract class Unit extends MapObject {
     setHealth(Math.max(getHealth() - damage, NO_HEALTH));
   }
 
-  public boolean inRange(Unit unit) {
-    if (distFrom(unit) < range) {
+  public boolean inRange(Troop troop) {
+    if (distFrom(troop) < range) {
       return true;
     } else {
       return false;
     }
   }
 
-  public void checkAttack(ArrayList<Unit> enemies) {}
+  public void checkAttack(ArrayList<Troop> enemies) {}
 
   public void setMoving(boolean b) { moving = b; }
   public void setAttacking(boolean b) { attacking = b; }

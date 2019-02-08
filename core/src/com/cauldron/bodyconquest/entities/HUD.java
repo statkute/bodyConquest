@@ -17,10 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
-import com.cauldron.bodyconquest.entities.Unit.UnitType;
+import com.cauldron.bodyconquest.entities.Troop.UnitType;
 
 public class HUD {
 
