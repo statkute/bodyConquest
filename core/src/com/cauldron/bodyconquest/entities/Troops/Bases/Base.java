@@ -132,7 +132,7 @@ public class Base extends Troop {
 
   @Override
   public void checkAttack(ArrayList<Troop> enemies) {
-    
+
   }
 
   // to use method above we need to decide to use rectangles ( easy to spot collision)
