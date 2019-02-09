@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -15,11 +14,11 @@ import com.cauldron.bodyconquest.entities.Projectile;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
+import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.Troops.Troop.UnitType;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -78,8 +77,8 @@ public class EncounterScreen implements Screen {
   private ArrayList<Troop> troopsTop;
   private ArrayList<Troop> troopsBottom;
 
-  private ArrayList<Projectile> projectilesP1;
-  private ArrayList<Projectile> projectilesP2;
+  private ArrayList<Projectile> projectilesBottom;
+  private ArrayList<Projectile> projectilesTop;
 
   private Base topBase;
   private Base bottomBase;
@@ -162,6 +161,9 @@ public class EncounterScreen implements Screen {
     // Update All Units
     checkAttack(troopsTop, troopsBottom);
     checkAttack(troopsBottom, troopsTop);
+    checkProjectiles(projectilesTop, troopsBottom);
+    checkProjectiles(projectilesBottom, troopsTop);
+
   }
 
   @Override
@@ -257,6 +259,7 @@ public class EncounterScreen implements Screen {
     // Spawn units for bottom player
     if (playerType.equals(PlayerType.BOT_PLAYER)) {
       if (lane == Lane.BOT) {
+        troop = new Flu(this, playerType, lane);
         troop.setPosition(
             botLaneBPSpawnX - (troop.getWidth() / 2), botLaneBPSpawnY - (troop.getHeight() / 2));
       } else if (lane == Lane.MID) {
@@ -292,9 +295,9 @@ public class EncounterScreen implements Screen {
     if(playerType == null || proj == null) return;
 
     if(playerType == PlayerType.BOT_PLAYER) {
-      projectilesP1.add(proj);
+      projectilesBottom.add(proj);
     } else if (playerType == PlayerType.TOP_PLAYER) {
-      projectilesP2.add(proj);
+      projectilesTop.add(proj);
     }
 
     stage.addActor(proj);
