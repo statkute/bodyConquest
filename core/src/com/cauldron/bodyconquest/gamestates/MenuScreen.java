@@ -28,13 +28,13 @@ public class MenuScreen implements Screen {
 
   OrthographicCamera camera;
 
+  Server server;
+  Client client;
+
   public MenuScreen(BodyConquest game) {
     this.game = game;
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800, 600);
-
-    Server server;
-    Client client;
 
     background = new Texture("core/assets/logosmall.png");
     playButtonMultiplayer = new Texture("core/assets/multiplayer1.png");
@@ -111,13 +111,18 @@ public class MenuScreen implements Screen {
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
         System.out.println("Singleplayer Is touched");
 
-        Server server = new Server();
+        server = new Server();
         try {
           server.startServer("singleplayer");
-          Client client = new Client();
-          System.out.println("client is about to start");
+          client = new Client();
           client.startClient();
-          System.out.println("client has started inside the menu");
+          try {
+            Thread.sleep(500);
+            client.clientSender.sendMessage("this is CLIENT after the SETUP");
+            server.serverSender.sendMessage("this is SERVER after the SETUP");
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
         } catch (SocketException e) {
           e.printStackTrace();
         } catch (IOException e) {

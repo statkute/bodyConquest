@@ -22,6 +22,7 @@ public class ServerReceiver extends Thread {
   }
 
   public void run() {
+    gameSetup();
     while (true) {
       try {
         byte[] buf = new byte[1024];
@@ -30,28 +31,50 @@ public class ServerReceiver extends Thread {
         String receivedMessage = new String(packet.getData(), 0, packet.getLength());
         System.out.println(
             "Server received -> " + receivedMessage + "------- from: " + packet.getAddress());
+      } catch (SocketException e) {
+        e.printStackTrace();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public void gameSetup() {
+    while (true) {
+      try {
+        byte[] buf = new byte[1024];
+        DatagramPacket packet = new DatagramPacket(buf, 1024);
+        socket.receive(packet);
+        String receivedMessage = new String(packet.getData(), 0, packet.getLength());
+        System.out.println(
+            "SETTING UP THE GAME: Server received -> "
+                + receivedMessage
+                + "------- from: "
+                + packet.getAddress());
         if (!serverSender.connectedClients.contains(packet.getAddress())) {
           serverSender.connectedClients.add(packet.getAddress());
         } else {
           receivedMessages.put(receivedMessage.trim());
         }
 
-//        if (receivedMessage.trim().equals("connected")
-//            && type.equals("singleplayer")
-//            && numberOfClients == 0) {
-//          serverSender.sendMessage("a");
-//          serverSender.sendMessage("start game");
-//          numberOfClients++;
-//        } else if (receivedMessage.trim().equals("connected") && type.equals("multiplayer")) {
-//          if (numberOfClients == 0) {
-//            serverSender.sendMessage("a");
-//            numberOfClients++;
-//          } else if (numberOfClients == 1) {
-//            serverSender.sendMessage("b");
-//            serverSender.sendMessage("start game");
-//            numberOfClients++;
-//          }
-//        }
+        if (receivedMessage.trim().equals("connected")
+            && type.equals("singleplayer")
+            && numberOfClients == 0) {
+          serverSender.sendMessage("a");
+          serverSender.sendMessage("start game");
+          numberOfClients++;
+          break;
+        } else if (receivedMessage.trim().equals("connected") && type.equals("multiplayer")) {
+          if (numberOfClients == 0) {
+            serverSender.sendMessage("a");
+            numberOfClients++;
+          } else if (numberOfClients == 1) {
+            serverSender.sendMessage("b");
+            serverSender.sendMessage("start game");
+            numberOfClients++;
+            break;
+          }
+        }
 
       } catch (SocketException e) {
         e.printStackTrace();

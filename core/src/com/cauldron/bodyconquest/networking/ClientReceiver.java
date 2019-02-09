@@ -35,7 +35,7 @@ public class ClientReceiver extends Thread {
   }
 
   public void run() {
-//    gameSetup();
+    gameSetup();
     while (true) {
       try {
         byte[] buf = new byte[256];
@@ -43,7 +43,7 @@ public class ClientReceiver extends Thread {
         socket.receive(packet);
         String received = new String(packet.getData()).trim();
         System.out.println(
-            "Received Message: " + received.trim() + " ------ from: " + packet.getAddress());
+            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
       } catch (IOException e) {
         e.printStackTrace();
       }
