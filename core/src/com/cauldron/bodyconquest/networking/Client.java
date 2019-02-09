@@ -2,10 +2,17 @@ package com.cauldron.bodyconquest.networking;
 
 import java.io.IOException;
 
+/**
+ * The Client thread
+ */
 public class Client {
   public ClientReceiver clientReceiver;
   public ClientSender clientSender;
 
+  /**
+   * Starts the receiver and sender threads
+   * @throws IOException
+   */
   public void startClient() throws IOException {
     clientReceiver = new ClientReceiver();
     clientSender = new ClientSender(clientReceiver);

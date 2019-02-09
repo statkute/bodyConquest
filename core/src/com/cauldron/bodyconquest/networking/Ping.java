@@ -6,6 +6,9 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+/**
+ * Server Pinging thread that deals with notifying newly connected clients of the Server's IP
+ */
 public class Ping extends Thread {
   public void run() {
     try {

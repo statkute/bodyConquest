@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/** Server thread that is responsible for receiving messages from all connected clients */
 public class ServerReceiver extends Thread {
   public DatagramSocket socket;
   public ServerSender serverSender;
@@ -13,6 +14,13 @@ public class ServerReceiver extends Thread {
   public String type;
   public int numberOfClients;
 
+  /**
+   * ServerReceiver initialization
+   *
+   * @param serverSender the ServerSender thread of the same Server
+   * @param type the type of the game: either "singleplayer" or "multiplayer"
+   * @throws SocketException
+   */
   public ServerReceiver(ServerSender serverSender, String type) throws SocketException {
     socket = new DatagramSocket(3000);
     this.serverSender = serverSender;
@@ -21,6 +29,7 @@ public class ServerReceiver extends Thread {
     numberOfClients = 0;
   }
 
+  /** A method that continuously checks for incoming messages */
   public void run() {
     gameSetup();
     while (true) {
@@ -39,6 +48,7 @@ public class ServerReceiver extends Thread {
     }
   }
 
+  /** A method that deals with receiving and storing client ID and waiting for the game to start */
   public void gameSetup() {
     while (true) {
       try {

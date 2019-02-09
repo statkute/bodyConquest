@@ -5,18 +5,30 @@ import java.net.*;
 import java.util.Enumeration;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/** Client thread responsible for receiving messages from the server */
 public class ClientReceiver extends Thread {
   public InetAddress address;
   public DatagramSocket socket;
   public InetAddress group;
   public AtomicInteger id;
 
+  /**
+   * ClientReceiver initialization
+   *
+   * @throws IOException
+   */
   public ClientReceiver() throws IOException {
     address = getIpAddress();
     socket = new DatagramSocket(3001);
     id = new AtomicInteger(0);
   }
 
+  /**
+   * Connects to a multicast UDP group and receives a message from the 'Ping' server thread and
+   * stores the address of the received message as the IP of the server
+   *
+   * @return the IP address of the server
+   */
   public InetAddress getIpAddress() {
     try {
       MulticastSocket mSocket = new MulticastSocket(4446);
@@ -34,6 +46,10 @@ public class ClientReceiver extends Thread {
     return null;
   }
 
+  /**
+   * Sets up the game and loops continuously checking for new incoming messages form the server and
+   * receives them
+   */
   public void run() {
     gameSetup();
     while (true) {
@@ -50,6 +66,7 @@ public class ClientReceiver extends Thread {
     }
   }
 
+  /** Receives and assigns this client an ID from the server and waits for the game to start */
   public void gameSetup() {
     String received = "";
     while (!received.equals("start game")) {
@@ -73,6 +90,13 @@ public class ClientReceiver extends Thread {
         "THIS CLIENT HAS CONNECTED AND JOINED THE GAME, CLIENT ID: " + id.toString());
   }
 
+  /**
+   * Joins a multicast group
+   *
+   * @param socket
+   * @param group
+   * @throws IOException
+   */
   private static void joinGroup(MulticastSocket socket, InetAddress group) throws IOException {
     Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
     while (interfaces.hasMoreElements()) {

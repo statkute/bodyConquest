@@ -1,12 +1,19 @@
 package com.cauldron.bodyconquest.networking;
 
+/** Server Thread responsible for dealing with game logic based on incoming messages */
 public class ServerLogic extends Thread {
   public ServerReceiver serverReceiver;
 
+  /**
+   * ServerLogic initialisation
+   *
+   * @param serverReceiver the ServerReceiver thread of the same Server
+   */
   public ServerLogic(ServerReceiver serverReceiver) {
     this.serverReceiver = serverReceiver;
   }
 
+  /** Deals with game logic tasks of the incoming messages */
   public void run() {
     while (true) {
       try {

@@ -28,8 +28,8 @@ public class MenuScreen implements Screen {
 
   OrthographicCamera camera;
 
-  Server server;
-  Client client;
+  public Server server;
+  public Client client;
 
   public MenuScreen(BodyConquest game) {
     this.game = game;
