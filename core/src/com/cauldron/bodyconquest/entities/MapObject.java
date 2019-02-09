@@ -1,9 +1,13 @@
 package com.cauldron.bodyconquest.entities;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 
 /*
@@ -24,6 +28,7 @@ public abstract class MapObject extends Actor {
 
   public Image sprite;
   protected TextureRegion region;
+  protected Texture texture;
 
   protected float speed;
 
@@ -90,11 +95,27 @@ public abstract class MapObject extends Actor {
     return getY() - (getHeight() / 2);
   }
 
-  public void setBounds() {
-    bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
+//  public void setBounds() {
+//    bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
+//  }
+
+  public Rectangle getBounds()
+  {
+    return new Rectangle(getX(), getY(), getWidth(), getHeight());
   }
 
-  public Rectangle getBounds() {
-    return bounds;
+  public boolean checkCollision(MapObject object){
+    if(object.getBounds().overlaps(this.bounds))return true;
+
+    return false;
   }
+
+  @Override
+  public void draw(Batch batch, float parentAlpha) {
+    Color color = getColor();
+    batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+    batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+  }
+
+
 }
