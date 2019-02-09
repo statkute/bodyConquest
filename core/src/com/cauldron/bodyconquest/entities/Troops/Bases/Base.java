@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.entities;
+package com.cauldron.bodyconquest.entities.Troops.Bases;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +15,8 @@ import com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.cauldron.bodyconquest.handlers.GifDecoder;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+
+import java.util.ArrayList;
 
 public class Base extends Troop {
 
@@ -57,6 +59,7 @@ public class Base extends Troop {
     setDamage();
 
   }
+
   private void init() {
     setSize(150, 150);
     if (playerType == PlayerType.BOT_PLAYER) {
@@ -125,6 +128,11 @@ public class Base extends Troop {
 
   public boolean conquered() {
     return isDead();
+  }
+
+  @Override
+  public void checkAttack(ArrayList<Troop> enemies) {
+    
   }
 
   // to use method above we need to decide to use rectangles ( easy to spot collision)
