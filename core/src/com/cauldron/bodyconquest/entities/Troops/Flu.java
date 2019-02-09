@@ -173,7 +173,7 @@ public class Flu extends Troop {
 
     // Images and Animations
     Texture texture = new Texture("core/assets/bacteria.png");
-    region = new TextureRegion(texture);
+    //region = new TextureRegion(texture);
 
     /////////////////
 

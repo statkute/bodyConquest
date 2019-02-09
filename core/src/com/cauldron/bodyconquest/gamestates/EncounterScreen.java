@@ -135,12 +135,14 @@ public class EncounterScreen implements Screen {
     topLaneP2 = new ArrayList<Troop>();
 
     Base botBase = new BacteriaBase(PlayerType.BOT_PLAYER);
+    botBase.setPosition(getMap().getRight() - botBase.getWidth(), getMap().getY());
     stage.addActor(botBase);
     botLaneP1.add(botBase);
     midLaneP1.add(botBase);
     topLaneP1.add(botBase);
 
     Base topBase = new BacteriaBase(PlayerType.TOP_PLAYER);
+    topBase.setPosition(getMap().getX(), getMap().getTop() - topBase.getHeight());
     stage.addActor(topBase);
     botLaneP2.add(topBase);
     midLaneP2.add(topBase);

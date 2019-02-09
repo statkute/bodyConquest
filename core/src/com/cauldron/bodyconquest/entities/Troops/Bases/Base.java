@@ -29,7 +29,7 @@ public abstract class Base extends Troop {
       this.attackable = true;
       this.moving = false;
       this.attacking = false;
-
+      setSize(150, 150);
       // this.range = 5 (dont know which value to put
 
 
@@ -38,10 +38,10 @@ public abstract class Base extends Troop {
 //  private void init() {
 //    setSize(150, 150);
 //    if (playerType == PlayerType.BOT_PLAYER) {
-//      setPosition(screen.getMap().getRight() - getWidth(), screen.getMap().getY());
+//
 //       texture = new Texture("core/assets/Base (Green).png");
 //    } else if (playerType == PlayerType.TOP_PLAYER) {
-//      setPosition(screen.getMap().getX(), screen.getMap().getTop() - getHeight());
+//
 //      texture = new Texture("core/assets/Base (Yellow).png");
 //    }
 //
