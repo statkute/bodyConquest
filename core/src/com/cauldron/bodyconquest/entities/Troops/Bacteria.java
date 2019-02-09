@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.entities;
+package com.cauldron.bodyconquest.entities.Troops;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -14,7 +14,7 @@ import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
 
 import java.util.ArrayList;
 
-public class Bacteria extends Unit {
+public class Bacteria extends Troop {
 
   float stateTime;
   private TextureRegion[] walkFrames;
@@ -29,6 +29,7 @@ public class Bacteria extends Unit {
   private Rectangle collisionBox; // + Sprite for now at least
 
   public Bacteria() {
+    super();
     setup();
     playerType = PlayerType.BOT_PLAYER;
     lane = Lane.BOT;
@@ -93,7 +94,7 @@ public class Bacteria extends Unit {
         }*/
 
         // Turn values are too hard coded, have turn points sent in the EncounterScreen that this can access so every
-        // Unit conforms to the same turn location
+        // Troop conforms to the same turn location
         // And the unit should turn when the centre of the unit has passed the respective turn point
         if (lane == Lane.BOT) {
           if (getX() > 150) {
@@ -123,13 +124,13 @@ public class Bacteria extends Unit {
     }
   }
 
-  private void attack(Unit unit) {
-    unit.hit(damage);
+  private void attack(Troop troop) {
+    troop.hit(damage);
   }
 
-  public void checkAttack(ArrayList<Unit> enemies) {
-    Unit closestEnemy = null;
-    for (Unit enemy : enemies) {
+  public void checkAttack(ArrayList<Troop> enemies) {
+    Troop closestEnemy = null;
+    for (Troop enemy : enemies) {
       if (closestEnemy == null) closestEnemy = enemy;
 
       // Attack closest enemy
@@ -154,7 +155,7 @@ public class Bacteria extends Unit {
     // Dimensions
     setSize(50, 50);
 
-    // Unit Stats
+    // Troop Stats
     health = maxHealth = 100;
     speed = 100;
     attackable = true;

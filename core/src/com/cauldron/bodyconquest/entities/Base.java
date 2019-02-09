@@ -1,5 +1,11 @@
 package com.cauldron.bodyconquest.entities;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.cauldron.bodyconquest.entities.Troops.Troop;
+import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -12,9 +18,7 @@ import com.cauldron.bodyconquest.handlers.GifDecoder;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Base extends Unit {
-
-  protected Rectangle boundsBase;
+public class Base extends Troop {
 
   protected int healthBacteriaBase = 100;
   protected int healthMonsterBase = 75;
@@ -24,7 +28,6 @@ public class Base extends Unit {
   protected int damageMonsterBase = 8;
   protected int damageVirusBase = 10;
 
-  private PlayerType player;
   private UnitType diseaseType;
 
   protected Texture healthBackground;
@@ -34,11 +37,16 @@ public class Base extends Unit {
   protected Animation<TextureRegion> imageBase;
   // in order to see animation in rendering need to pass
   //  animation.getkeyframe(delta)
+  private Texture texture;
+  public Base(EncounterScreen screen, PlayerType playerType) {
+    this.screen = screen;
+    this.playerType = playerType;
+    init();
+  }
 
   public Base(PlayerType playerType, UnitType diseaseType) {
-
     this.diseaseType = diseaseType;
-    this.player = playerType;
+    this.playerType = playerType;
     this.attackable = true;
     this.moving = false;
     this.attacking = false;
@@ -57,8 +65,34 @@ public class Base extends Unit {
 
     setInitialHealth();
     setDamage();
+
+  }
+  private void init() {
+    setSize(150, 150);
+    if (playerType == PlayerType.BOT_PLAYER) {
+      setPosition(screen.getMap().getRight() - getWidth(), screen.getMap().getY());
+       texture = new Texture("core/assets/Base (Green).png");
+    } else if (playerType == PlayerType.TOP_PLAYER) {
+      setPosition(screen.getMap().getX(), screen.getMap().getTop() - getHeight());
+      texture = new Texture("core/assets/Base (Yellow).png");
+    }
+
+    maxHealth = health = 800;
+    attackable = true;
+    sprite = new Image(texture);
   }
 
+  @Override
+  public void draw(Batch batch, float parentAlpha) {
+    Color color = getColor();
+    batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+    batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+  }
+
+  @Override
+  public void act(float delta) {
+    super.act(delta);
+  }
   public void changeAttackingMode() {
     this.attacking = true;
   }
@@ -90,7 +124,7 @@ public class Base extends Unit {
 
   public void selectTexture() {
 
-    if (diseaseType == UnitType.BACTERIA) {
+    if (diseaseType == Troop.UnitType.BACTERIA) {
       this.imageBase =
           GifDecoder.loadGIFAnimation(PlayMode.LOOP, Gdx.files.internal("core/assets/castle1.gif").read());
       System.out.println("Does it read bases image");
