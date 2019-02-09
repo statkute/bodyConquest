@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.entities.AIs;
+package com.cauldron.bodyconquest.AIs;
 
 import com.cauldron.bodyconquest.entities.Location;
 import com.cauldron.bodyconquest.entities.Map;

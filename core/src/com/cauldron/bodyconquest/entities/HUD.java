@@ -26,65 +26,37 @@ import com.cauldron.bodyconquest.rendering.BodyConquest;
 public class HUD {
 
   private Viewport viewport;
-  // Maybe encapsulate this later
-  public Stage stage;
-  private EncounterScreen screen;
-  private List<MapObject> unitList;
-  public Image unitBar;
+  private Stage stage;
+  private Image unitBar;
+  private final Skin skin;
 
-  public HealthBar healthBar;
+  private ImageButton unitButton;
 
-  private Image spawnArea;
-  private PlayerType playerType;
+  private final EncounterScreen screen;
+  private final PlayerType playerType;
 
-  private Base baseBottom;
-
-  //
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
+    this.screen = screen;
+    this.playerType = playerType;
+
     viewport =
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
     stage = new Stage(viewport, sb);
     Gdx.input.setInputProcessor(stage);
-    this.screen = screen;
-    this.playerType = playerType;
 
     // Main Bar
     unitBar = new Image(new Texture("core/assets/Action Bar v1.png"));
     unitBar.setBounds(0, 0, BodyConquest.V_WIDTH, 50);
     stage.addActor(unitBar);
-    // unitList = new List<MapObject>();
 
-    // Health Bar
-    // healthBar = new HealthBar();
-    // stage.addActor(healthBar);
-
-    final Skin skin = new Skin();
+    // Load in skins
+    skin = new Skin();
     skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     skin.add("badlogic", new Texture("core/assets/badlogic.jpg"));
     skin.add("spawnpoint", new Texture("core/assets/droplet.png"));
 
-    baseBottom = new Base(PlayerType.BOT_PLAYER, UnitType.BACTERIA);
-    baseBottom.setPosition(630, 120);
-    stage.addActor(baseBottom);
-
-    // BOTTOM spawn point placeholder
-    Image bottomSpawnPoint = new Image(skin, "spawnpoint");
-    bottomSpawnPoint.setBounds(500, 50, 100, 100);
-    stage.addActor(bottomSpawnPoint);
-
-    // MID spawn point placeholder
-    Image midSpawnPoint = new Image(skin, "spawnpoint");
-    midSpawnPoint.setBounds(475, 160, 100, 100);
-    stage.addActor(midSpawnPoint);
-
-    // TOP spawn point placeholder
-    Image topSpawnPoint = new Image(skin, "spawnpoint");
-    topSpawnPoint.setBounds(575, 200, 100, 100);
-    stage.addActor(topSpawnPoint);
-
-    // REALLY BAD PRACTICE (Wasting memory)
-    ImageButton unitButton = new ImageButton(new Bacteria().sprite.getDrawable());
-    float unitButtonSize = unitBar.getWidth() * (3 / 4);
+    // Initialise Image Button
+    unitButton = new ImageButton(new Bacteria().sprite.getDrawable());
     unitButton.setBounds(
         unitBar.getWidth() / 4, unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2), 25, 25);
     unitButton.addListener(
@@ -100,6 +72,25 @@ public class HUD {
     // unitBarTable.setBounds(unitBar.getX(), unitBar.getY(), unitBar.getWidth(),
     // unitBar.getHeight());
     // unitBarTable.add(unitButton);
+
+    setUpDragAndDrop();
+  }
+
+  private void setUpDragAndDrop() {
+    // BOTTOM spawn point placeholder
+    Image bottomSpawnPoint = new Image(skin, "spawnpoint");
+    bottomSpawnPoint.setBounds(500, 50, 100, 100);
+    stage.addActor(bottomSpawnPoint);
+
+    // MID spawn point placeholder
+    Image midSpawnPoint = new Image(skin, "spawnpoint");
+    midSpawnPoint.setBounds(475, 160, 100, 100);
+    stage.addActor(midSpawnPoint);
+
+    // TOP spawn point placeholder
+    Image topSpawnPoint = new Image(skin, "spawnpoint");
+    topSpawnPoint.setBounds(575, 200, 100, 100);
+    stage.addActor(topSpawnPoint);
 
     DragAndDrop dragAndDrop = new DragAndDrop();
     dragAndDrop.addSource(
@@ -176,4 +167,8 @@ public class HUD {
           }
         });
   }
+
+  public Stage getStage() { return stage; }
+  public Image getUnitBar() { return unitBar; }
+
 }

@@ -1,18 +1,16 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
-
-import java.util.ArrayList;
+import com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane;
+import com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType;
+import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 
 public class Bacteria extends Troop {
 
@@ -22,50 +20,62 @@ public class Bacteria extends Troop {
 
   private EncounterScreen map;
   private PlayerType playerType;
-  private Lane lane;
   // Some above head health bar?
   // private UnitHealthBar healthBar;
 
   private Rectangle collisionBox; // + Sprite for now at least
 
   public Bacteria() {
-    super();
-    setup();
+    super(Lane.BOT);
+    init();
     playerType = PlayerType.BOT_PLAYER;
-    lane = Lane.BOT;
   }
+
+
   /*
   Each moving unit could be given a queue of checkpoints to reach
   and then one left at the enemy base it would be within range and attack
   */
   public Bacteria(EncounterScreen map, PlayerType playerType, Lane lane) {
+    super(lane);
     this.playerType = playerType;
-    this.lane = lane;
     this.map = map;
-    setup();
+    init();
+  }
+  private void init(){
+    // Dimensions
+    setSize(50, 50);
+
+    // Troop Stats
+    health = maxHealth = 100;
+    speed = 100;
+    attackable = true;
+    moving = true;
+    attacking = false;
+    // attackCooldown = 20;
+    cooldown = 1000; // Milliseconds
+    lastAttack = 0;
+    range = 50;
+    damage = 30;
+
+    walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");
+
+    stateTime = 0f;
+
+
+
+    // maybe better to use Rectangle class? instead of Image class (found in Tutorials)
+    sprite = new Image(walkAnimation.getKeyFrame(0));
   }
 
   @Override
   public void draw(Batch batch, float parentAlpha) {
-    Color color = getColor();
-    batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-
     stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
 
     // Get current frame of animation for the current stateTime
-    TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+    currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 
-    batch.draw(
-        currentFrame,
-        getX(),
-        getY(),
-        getOriginX(),
-        getOriginY(),
-        getWidth(),
-        getHeight(),
-        getScaleX(),
-        getScaleY(),
-        getRotation());
+    super.draw(batch, parentAlpha);
   }
 
   @Override
@@ -124,77 +134,5 @@ public class Bacteria extends Troop {
     }
   }
 
-  private void attack(Troop troop) {
-    troop.hit(damage);
-  }
 
-  public void checkAttack(ArrayList<Troop> enemies) {
-    Troop closestEnemy = null;
-    for (Troop enemy : enemies) {
-      if (closestEnemy == null) closestEnemy = enemy;
-
-      // Attack closest enemy
-      closestEnemy = distFrom(enemy) < distFrom(closestEnemy) ? enemy : closestEnemy;
-    }
-
-    if (closestEnemy != null && closestEnemy.isAttackable() && inRange(closestEnemy)) {
-      setMoving(false);
-      long time = System.currentTimeMillis();
-      if (!attacking && (time > lastAttack + cooldown)) {
-        attack(closestEnemy);
-        lastAttack = time;
-      }
-    } else {
-      if (!moving) setMoving(true);
-    }
-  }
-
-  // public Rectangle getCollisionBox() { return collisionBox; }
-
-  private void setup(){
-    // Dimensions
-    setSize(50, 50);
-
-    // Troop Stats
-    health = maxHealth = 100;
-    speed = 100;
-    attackable = true;
-    moving = true;
-    attacking = false;
-    // attackCooldown = 20;
-    cooldown = 1000; // Milliseconds
-    lastAttack = 0;
-    range = 100;
-    damage = 30;
-
-    // Images and Animations
-    Texture texture = new Texture("core/assets/bacteria.png");
-    region = new TextureRegion(texture);
-
-    /////////////////
-
-    Texture walkSheet = new Texture("core/assets/bacteria.png");
-    int FRAME_COLS = 7, FRAME_ROWS = 1;
-    TextureRegion[][] tmp =
-        TextureRegion.split(
-            walkSheet, walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight() / FRAME_ROWS);
-    walkFrames = new TextureRegion[(FRAME_COLS - 1) * FRAME_ROWS];
-    int index = 0;
-    for (int i = 0; i < FRAME_ROWS; i++) {
-      for (int j = 0; j < FRAME_COLS - 1; j++) {
-        walkFrames[index++] = tmp[i][j];
-      }
-    }
-    walkAnimation = new Animation<TextureRegion>(0.2f, walkFrames);
-
-    // Instantiate a SpriteBatch for drawing and reset the elapsed animation
-    // time to 0
-    SpriteBatch spriteBatch = new SpriteBatch();
-    stateTime = 0f;
-
-    //////////////////////////
-
-    // maybe better to use Rectangle class? instead of Image class (found in Tutorials)
-    sprite = new Image(walkFrames[0].getTexture());
-  }
 }
