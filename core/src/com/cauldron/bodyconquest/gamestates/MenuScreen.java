@@ -4,10 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.cauldron.bodyconquest.networking.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+
+import java.io.IOException;
+import java.net.SocketException;
 
 public class MenuScreen implements Screen {
 
@@ -28,6 +32,9 @@ public class MenuScreen implements Screen {
     this.game = game;
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800, 600);
+
+    Server server;
+    Client client;
 
     background = new Texture("core/assets/logosmall.png");
     playButtonMultiplayer = new Texture("core/assets/multiplayer1.png");
@@ -94,7 +101,7 @@ public class MenuScreen implements Screen {
 
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
-    if (Gdx.input.isTouched()) {
+    if (Gdx.input.justTouched()) {
 
       if (multiplayerBounds.contains(tmp.x, tmp.y)) {
         System.out.println("Multiplayer Is touched");
@@ -102,6 +109,21 @@ public class MenuScreen implements Screen {
         //              dispose();
       }
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
+        System.out.println("Singleplayer Is touched");
+
+        Server server = new Server();
+        try {
+          server.startServer("singleplayer");
+          Client client = new Client();
+          System.out.println("client is about to start");
+          client.startClient();
+          System.out.println("client has started inside the menu");
+        } catch (SocketException e) {
+          e.printStackTrace();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+
         game.setScreen(new RaceSelection(game));
         dispose();
       }

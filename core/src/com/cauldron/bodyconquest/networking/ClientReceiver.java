@@ -35,7 +35,7 @@ public class ClientReceiver extends Thread {
   }
 
   public void run() {
-    gameSetup();
+//    gameSetup();
     while (true) {
       try {
         byte[] buf = new byte[256];
