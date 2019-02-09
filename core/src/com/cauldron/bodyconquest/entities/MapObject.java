@@ -27,7 +27,7 @@ public abstract class MapObject extends Actor {
   private Rectangle bounds;
 
   public Image sprite;
-  protected TextureRegion region;
+  protected TextureRegion currentFrame;
   protected Texture texture;
 
   protected float speed;
@@ -114,7 +114,7 @@ public abstract class MapObject extends Actor {
   public void draw(Batch batch, float parentAlpha) {
     Color color = getColor();
     batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-    batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+    batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
   }
 
 

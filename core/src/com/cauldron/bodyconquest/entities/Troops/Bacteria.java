@@ -47,26 +47,12 @@ public class Bacteria extends Troop {
 
   @Override
   public void draw(Batch batch, float parentAlpha) {
-    // We can put this in troop if all Troops will act in a similar way
-    Color color = getColor();
-    batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-
     stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
 
     // Get current frame of animation for the current stateTime
-    TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+    currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 
-    batch.draw(
-        currentFrame,
-        getX(),
-        getY(),
-        getOriginX(),
-        getOriginY(),
-        getWidth(),
-        getHeight(),
-        getScaleX(),
-        getScaleY(),
-        getRotation());
+    super.draw(batch, parentAlpha);
   }
 
   @Override
@@ -170,7 +156,7 @@ public class Bacteria extends Troop {
 
     // Images and Animations
     Texture texture = new Texture("core/assets/bacteria.png");
-    region = new TextureRegion(texture);
+    //region = new TextureRegion(texture);
 
     /////////////////
 
