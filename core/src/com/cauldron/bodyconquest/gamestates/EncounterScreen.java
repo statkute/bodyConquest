@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.entities.*;
+import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
@@ -133,13 +134,13 @@ public class EncounterScreen implements Screen {
     topLaneP1 = new ArrayList<Troop>();
     topLaneP2 = new ArrayList<Troop>();
 
-    Base botBase = new Base(this, PlayerType.BOT_PLAYER);
+    Base botBase = new BacteriaBase(PlayerType.BOT_PLAYER);
     stage.addActor(botBase);
     botLaneP1.add(botBase);
     midLaneP1.add(botBase);
     topLaneP1.add(botBase);
 
-    Base topBase = new Base(this, PlayerType.TOP_PLAYER);
+    Base topBase = new BacteriaBase(PlayerType.TOP_PLAYER);
     stage.addActor(topBase);
     botLaneP2.add(topBase);
     midLaneP2.add(topBase);
