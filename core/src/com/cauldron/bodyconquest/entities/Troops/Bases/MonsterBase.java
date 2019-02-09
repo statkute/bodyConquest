@@ -11,15 +11,11 @@ import java.util.ArrayList;
 
 public class MonsterBase extends Base {
 
-    public MonsterBase(EncounterScreen.PlayerType pt){
-        super(pt);
+    public MonsterBase(EncounterScreen.Lane lane, EncounterScreen.PlayerType pt){
+        super(lane, pt);
         init();
     }
 
-    @Override
-    public void checkAttack(ArrayList<Troop> enemies) {
-
-    }
 
     private void init(){
         this.health = 75;

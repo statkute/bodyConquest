@@ -23,6 +23,7 @@ public class HealthBar extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        // This would be getHealth()/getMaxHealth()
         float progress = 0.4f;
 
         loadingBarBackground.draw(batch, getX(), getY(), getWidth() * getScaleX(), getHeight() * getScaleY());

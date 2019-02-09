@@ -31,6 +31,7 @@ public abstract class MapObject extends Actor {
   protected Texture texture;
 
   protected float speed;
+  protected boolean collideable;
 
   public EncounterScreen screen;
 
@@ -95,9 +96,7 @@ public abstract class MapObject extends Actor {
     return getY() - (getHeight() / 2);
   }
 
-//  public void setBounds() {
-//    bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
-//  }
+  public boolean isCollideable() { return collideable; }
 
   public Rectangle getBounds()
   {
@@ -105,8 +104,7 @@ public abstract class MapObject extends Actor {
   }
 
   public boolean checkCollision(MapObject object){
-    if(object.getBounds().overlaps(this.bounds))return true;
-
+    if(object.getBounds().overlaps(this.bounds)) return true;
     return false;
   }
 
@@ -116,6 +114,5 @@ public abstract class MapObject extends Actor {
     batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
     batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
   }
-
 
 }

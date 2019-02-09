@@ -11,14 +11,9 @@ import java.util.ArrayList;
 
 public class VirusBase extends Base {
 
-    public VirusBase(EncounterScreen.PlayerType pt){
-        super(pt);
+    public VirusBase(EncounterScreen.Lane lane, EncounterScreen.PlayerType pt){
+        super(lane, pt);
         init();
-    }
-
-    @Override
-    public void checkAttack(ArrayList<Troop> enemies) {
-
     }
 
     private void init(){
