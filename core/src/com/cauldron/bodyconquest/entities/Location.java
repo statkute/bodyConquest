@@ -9,7 +9,7 @@ public class Location {
     private final int x;
     private final int y;
     private LocationType type;
-    private Object occupant;
+    private MapObject occupant;
 
     public Location(int x, int y) {
         this.x = x;
@@ -17,7 +17,7 @@ public class Location {
         this.type = LocationType.EMPTY;
     }
 
-    public Location(int x, int y, Object occupant) {
+    public Location(int x, int y, MapObject occupant) {
         this.x = x;
         this.y = y;
         this.type = LocationType.UNIT;
@@ -44,11 +44,11 @@ public class Location {
         return occupant.getClass().getName();
     }
 
-    public Object getOccupant() {
+    public MapObject getOccupant() {
         return occupant;
     }
 
-    public void setOccupant(Object occupant) {
+    public void setOccupant(MapObject occupant) {
         this.occupant = occupant;
     }
 }
