@@ -26,7 +26,7 @@ public abstract class Troop extends MapObject {
   protected int range;
   protected double movementSpeed;
 
-  // Resource Requirements
+  // Resources Requirements
   private int lipidsCost;
   private int sugarsCost;
   private int proteinCost;
