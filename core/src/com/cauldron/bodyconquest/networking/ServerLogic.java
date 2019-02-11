@@ -18,6 +18,7 @@ public class ServerLogic extends Thread {
     while (true) {
       try {
         String message = serverReceiver.receivedMessages.take();
+        System.out.println("SERVER LOGIC: " + message);
         // deal with the message using the game logic, add the response to the outgoing queue and
         // send off one by one to the clients
       } catch (InterruptedException e) {
