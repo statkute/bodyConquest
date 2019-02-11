@@ -118,8 +118,6 @@ public class MenuScreen implements Screen {
           client.startClient();
           try {
             Thread.sleep(500);
-            client.clientSender.sendMessage("this is CLIENT after the SETUP");
-            server.serverSender.sendMessage("this is SERVER after the SETUP");
           } catch (InterruptedException e) {
             e.printStackTrace();
           }

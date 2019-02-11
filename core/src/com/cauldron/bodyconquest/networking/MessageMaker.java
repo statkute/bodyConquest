@@ -1,7 +1,7 @@
 package com.cauldron.bodyconquest.networking;
 
 public class MessageMaker {
-  public String spawnTroopsMessage(String troopClass, int lane){
+  public static String spawnTroopsMessage(String troopClass, int lane){
     String message = "ACTION_T_";
 
     if (troopClass.equals("bacteria")){
@@ -13,7 +13,7 @@ public class MessageMaker {
     return (message);
   }
 
-  public String castAbilityMessage(String abilityName, int xAxis, int yAxis){
+  public static String castAbilityMessage(String abilityName, int xAxis, int yAxis){
     String message = "ACTION_A_";
 
     if (abilityName.equals("fireball")){
@@ -21,15 +21,26 @@ public class MessageMaker {
     } else {
       message += "W_"; //water blast
     }
-    message += (xAxis + "_" + yAxis);
+    if (xAxis < 10){
+      message += ("0" + xAxis);
+    }else {
+      message += xAxis;
+    }
+    message += "_";
+    if (yAxis < 10){
+      message += ("0" + yAxis);
+    }else {
+      message += yAxis;
+    }
+
     return (message);
   }
 
-  public String pauseMessage(){
+  public static String pauseMessage(){
     return("PAUSE");
   }
 
-  public String exitMessage(){
+  public static String exitMessage(){
     return("EXIT");
   }
 
