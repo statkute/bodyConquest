@@ -107,7 +107,7 @@ public class Bacteria extends Troop {
         // Troop conforms to the same turn location
         // And the unit should turn when the centre of the unit has passed the respective turn point
         if (lane == Lane.BOT) {
-          if (getX() > 150) {
+          if (getX() > map.getBotTurnPointX()) {
             moveLeft(delta);
           } else {
             moveUp(delta);
@@ -116,7 +116,7 @@ public class Bacteria extends Troop {
           moveLeft(delta / 2);
           moveUp(delta / 2);
         } else if (lane == Lane.TOP) {
-          if (getY() < 550) {
+          if (getY() < map.getTopTurnPointY()) {
             moveUp(delta);
           } else {
             moveLeft(delta);
@@ -129,6 +129,17 @@ public class Bacteria extends Troop {
           } else {
             moveRight(delta);
           }
+        } else if (lane == Lane.MID){
+          moveRight(delta / 2);
+          moveDown(delta / 2);
+        } else if (lane == Lane.TOP) {
+          if (getX() < map.getTopTurnPointX()) {
+            moveRight(delta);
+            System.out.println("move right");
+          } else {
+            moveDown(delta);
+          }
+          //moveRight(delta);
         }
       }
     }
