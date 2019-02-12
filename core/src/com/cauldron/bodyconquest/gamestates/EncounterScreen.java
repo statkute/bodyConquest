@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.entities.HUD;
 import com.cauldron.bodyconquest.entities.Projectile;
 import com.cauldron.bodyconquest.entities.Troops.*;
@@ -275,13 +276,13 @@ public class EncounterScreen implements Screen {
     if (playerType.equals(PlayerType.BOT_PLAYER)) {
       if (lane == Lane.BOT) {
         troop.setPosition(
-                botLaneBPSpawnX - (troop.getWidth() / 2), botLaneBPSpawnY - (troop.getHeight() / 2));
+                Constants.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2));
       } else if (lane == Lane.MID) {
         troop.setPosition(
-                midLaneBPSpawnX - (troop.getWidth() / 2), midLaneBPSpawnY - (troop.getHeight() / 2));
+                Constants.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2));
       } else if (lane == Lane.TOP) {
         troop.setPosition(
-                topLaneBPSpawnX - (troop.getWidth() / 2), topLaneBPSpawnY - (troop.getHeight() / 2));
+                Constants.BP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.BP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2));
       }
       troopsBottom.add(troop);
     }
@@ -290,13 +291,13 @@ public class EncounterScreen implements Screen {
     if (playerType.equals(PlayerType.TOP_PLAYER)) {
       if (lane == Lane.BOT) {
         troop.setPosition(
-                botLaneTPSpawnX - (troop.getWidth() / 2), botLaneTPSpawnY - (troop.getHeight() / 2));
+                Constants.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2));
       } else if (lane == Lane.MID) {
         troop.setPosition(
-            midLaneTPSpawnX - (troop.getWidth() / 2), midLaneTPSpawnY - (troop.getHeight() / 2));
+                Constants.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2));
       } else if (lane == Lane.TOP) {
         troop.setPosition(
-                topLaneTPSpawnX - (troop.getWidth() / 2), topLaneTPSpawnY - (troop.getHeight() / 2));
+                Constants.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2));
       }
       troopsTop.add(troop);
     }

@@ -37,7 +37,7 @@ public class BasicTestAI extends Thread {
       @Override
       public void run() {
         game.spawnUnit(UnitType.BACTERIA, Lane.BOT, playerType);
-        //game.spawnUnit(UnitType.BACTERIA, Lane.MID, playerType);
+        game.spawnUnit(UnitType.BACTERIA, Lane.MID, playerType);
         game.spawnUnit(UnitType.FLU, Lane.TOP, playerType);
       }
     });
