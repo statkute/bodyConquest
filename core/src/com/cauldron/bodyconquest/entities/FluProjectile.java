@@ -31,7 +31,7 @@ public class FluProjectile extends Projectile {
     currentFrame = new TextureRegion(new Texture("core/assets/Default Sprite (Green).png"));
     setTargetLocation(xDest, yDest);
 
-    walkAnimation = AnimationWrapper.getSpriteSheet(5, 1, 0.15f, "core/assets/p.png");
+    walkAnimation = AnimationWrapper.getSpriteSheet(5, 1, 0.15f, "core/assets/projectile_with_trail.png");
     stateTime = 0f;
     sprite = new Image(walkAnimation.getKeyFrame(0));
   }
@@ -48,8 +48,8 @@ public class FluProjectile extends Projectile {
 
     // Get current frame of animation for the current stateTime
     currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-    this.setWidth(35);
-    this.setHeight(35);
+    this.setWidth(70);
+    this.setHeight(70);
     super.draw(batch, parentAlpha);
   }
 }
