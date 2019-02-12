@@ -25,15 +25,14 @@ import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 public class HUD {
 
-  private Viewport viewport;
-  private Stage stage;
-  private Image unitBar;
-  private final Skin skin;
+    private final EncounterScreen screen;
+    private final PlayerType playerType;
+    private final Skin skin;
+    private Viewport viewport;
+    private Stage stage;
+    private Image unitBar;
+    private ImageButton unitButton;
 
-  private ImageButton unitButton;
-
-  private final EncounterScreen screen;
-  private final PlayerType playerType;
 
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     this.screen = screen;
@@ -77,22 +76,27 @@ public class HUD {
   }
 
   private void setUpDragAndDrop() {
+      DragAndDrop dragAndDrop = new DragAndDrop();
     // BOTTOM spawn point placeholder
-    Image bottomSpawnPoint = new Image(skin, "spawnpoint");
-    bottomSpawnPoint.setBounds(500, 50, 100, 100);
-    stage.addActor(bottomSpawnPoint);
+//    Image bottomSpawnPoint = new Image(skin, "spawnpoint");
+//    bottomSpawnPoint.setBounds(500, 50, 100, 100);
+//    stage.addActor(bottomSpawnPoint);
+
+      addSpawnPoint(stage, 500, 50, dragAndDrop, Lane.BOT);
+      addSpawnPoint(stage, 475, 160, dragAndDrop, Lane.MID);
+      addSpawnPoint(stage, 575, 200, dragAndDrop, Lane.TOP);
 
     // MID spawn point placeholder
-    Image midSpawnPoint = new Image(skin, "spawnpoint");
-    midSpawnPoint.setBounds(475, 160, 100, 100);
-    stage.addActor(midSpawnPoint);
+//    Image midSpawnPoint = new Image(skin, "spawnpoint");
+//    midSpawnPoint.setBounds(475, 160, 100, 100);
+//    stage.addActor(midSpawnPoint);
 
     // TOP spawn point placeholder
-    Image topSpawnPoint = new Image(skin, "spawnpoint");
-    topSpawnPoint.setBounds(575, 200, 100, 100);
-    stage.addActor(topSpawnPoint);
+//    Image topSpawnPoint = new Image(skin, "spawnpoint");
+//    topSpawnPoint.setBounds(575, 200, 100, 100);
+//    stage.addActor(topSpawnPoint);
 
-    DragAndDrop dragAndDrop = new DragAndDrop();
+
     dragAndDrop.addSource(
         new Source(unitButton) {
           public Payload dragStart(InputEvent event, float x, float y, int pointer) {
@@ -114,61 +118,85 @@ public class HUD {
         });
 
     // adding troop spawn dnd target BOTTOM
-    dragAndDrop.addTarget(
-        new Target(bottomSpawnPoint) {
-          public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-            getActor().setColor(Color.YELLOW);
-            return true;
-          }
-
-          public void reset(Source source, Payload payload) {
-            getActor().setColor(Color.WHITE);
-          }
-
-          public void drop(Source source, Payload payload, float x, float y, int pointer) {
-            System.out.println("SPAWN HERE");
-            screen.spawnUnit(UnitType.BACTERIA, Lane.BOT, playerType);
-          }
-        });
+//    dragAndDrop.addTarget(
+//        new Target(bottomSpawnPoint) {
+//          public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+//            getActor().setColor(Color.YELLOW);
+//            return true;
+//          }
+//
+//          public void reset(Source source, Payload payload) {
+//            getActor().setColor(Color.WHITE);
+//          }
+//
+//          public void drop(Source source, Payload payload, float x, float y, int pointer) {
+//            System.out.println("SPAWN HERE");
+//            screen.spawnUnit(UnitType.BACTERIA, Lane.BOT, playerType);
+//          }
+//        });
 
     // adding troop spawn dnd target MID
-    dragAndDrop.addTarget(
-        new Target(midSpawnPoint) {
-          public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-            getActor().setColor(Color.YELLOW);
-            return true;
-          }
-
-          public void reset(Source source, Payload payload) {
-            getActor().setColor(Color.WHITE);
-          }
-
-          public void drop(Source source, Payload payload, float x, float y, int pointer) {
-            System.out.println("SPAWN HERE");
-            screen.spawnUnit(UnitType.BACTERIA, Lane.MID, playerType);
-          }
-        });
+//    dragAndDrop.addTarget(
+//        new Target(midSpawnPoint) {
+//          public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+//            getActor().setColor(Color.YELLOW);
+//            return true;
+//          }
+//
+//          public void reset(Source source, Payload payload) {
+//            getActor().setColor(Color.WHITE);
+//          }
+//
+//          public void drop(Source source, Payload payload, float x, float y, int pointer) {
+//            System.out.println("SPAWN HERE");
+//            screen.spawnUnit(UnitType.BACTERIA, Lane.MID, playerType);
+//          }
+//        });
 
     // adding troop spawn dnd target TOP
-    dragAndDrop.addTarget(
-        new Target(topSpawnPoint) {
-          public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-            getActor().setColor(Color.YELLOW);
-            return true;
-          }
-
-          public void reset(Source source, Payload payload) {
-            getActor().setColor(Color.WHITE);
-          }
-
-          public void drop(Source source, Payload payload, float x, float y, int pointer) {
-            System.out.println("SPAWN HERE");
-            screen.spawnUnit(UnitType.BACTERIA, Lane.TOP, playerType);
-          }
-        });
+//    dragAndDrop.addTarget(
+//        new Target(topSpawnPoint) {
+//          public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+//            getActor().setColor(Color.YELLOW);
+//            return true;
+//          }
+//
+//          public void reset(Source source, Payload payload) {
+//            getActor().setColor(Color.WHITE);
+//          }
+//
+//          public void drop(Source source, Payload payload, float x, float y, int pointer) {
+//            System.out.println("SPAWN HERE");
+//            screen.spawnUnit(UnitType.BACTERIA, Lane.TOP, playerType);
+//          }
+//        });
   }
 
   public Stage getStage() { return stage; }
   public Image getUnitBar() { return unitBar; }
+
+  private void addSpawnPoint(Stage stage, int x, int y, DragAndDrop dragAndDrop, final Lane lane){
+      Image bottomSpawnPoint = new Image(skin, "spawnpoint");
+      bottomSpawnPoint.setBounds(x, y, 100, 100);
+      stage.addActor(bottomSpawnPoint);
+
+      dragAndDrop.addTarget(
+              new Target(bottomSpawnPoint) {
+                  public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+                      getActor().setColor(Color.YELLOW);
+                      return true;
+                  }
+
+                  public void reset(Source source, Payload payload) {
+                      getActor().setColor(Color.WHITE);
+                  }
+
+                  public void drop(Source source, Payload payload, float x, float y, int pointer) {
+                      System.out.println("SPAWN HERE");
+                      screen.spawnUnit(UnitType.BACTERIA, lane, playerType);
+                  }
+              });
+
+  }
 
 }
