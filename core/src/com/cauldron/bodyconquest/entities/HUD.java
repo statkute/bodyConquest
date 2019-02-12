@@ -55,6 +55,7 @@ public class HUD {
     // Load in skins
     skin = new Skin();
     skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+    skin.add("defaultWhite", new Texture("core/assets/Default Sprite.png"));
     skin.add("badlogic", new Texture("core/assets/badlogic.jpg"));
     skin.add("spawnpoint", new Texture("core/assets/droplet.png"));
 
@@ -68,7 +69,7 @@ public class HUD {
 
   private void setUpDragAndDrop() {
 
-      addSpawnPoint(500, 50,  Lane.BOT);
+      addSpawnPoint(475, 50,  Lane.BOT);
       addSpawnPoint(475, 160, Lane.MID);
       addSpawnPoint(575, 200, Lane.TOP);
 
@@ -82,19 +83,21 @@ public class HUD {
   public Image getUnitBar() { return unitBar; }
 
   private void addSpawnPoint(int x, int y, final Lane lane){
-      Image bottomSpawnPoint = new Image(skin, "spawnpoint");
+      Image bottomSpawnPoint = new Image(skin, "defaultWhite");
       bottomSpawnPoint.setBounds(x, y, 100, 100);
+      bottomSpawnPoint.setColor(0, 255, 0, 0);
       stage.addActor(bottomSpawnPoint);
 
       dragAndDrop.addTarget(
               new Target(bottomSpawnPoint) {
                   public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-                      getActor().setColor(Color.YELLOW);
+                      //getActor().setColor(Color.PURPLE);
+                      getActor().setColor(0, 255, 0, 0.5f);
                       return true;
                   }
 
                   public void reset(Source source, Payload payload) {
-                      getActor().setColor(Color.WHITE);
+                      getActor().setColor(0, 255, 0, 0);
                   }
 
                   public void drop(Source source, Payload payload, float x, float y, int pointer) {
@@ -113,7 +116,7 @@ public class HUD {
 
   }
 
-  private void addDragAndDropSource(int index, String name){
+  private void addDragAndDropSource(int index, final String name){
       ImageButton troopButton;
       if(name.equals("bacteria")){
           troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
@@ -142,7 +145,7 @@ public class HUD {
 
               payload.setDragActor(new Image(new Texture("core/assets/Default Sprite (Green).png")));
 
-              Label validLabel = new Label("Some payload!", skin);
+              Label validLabel = new Label("Release to drop " + name + "!", skin);
               validLabel.setColor(0, 1, 0, 1);
               payload.setValidDragActor(validLabel);
 
