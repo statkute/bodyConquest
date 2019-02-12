@@ -15,13 +15,10 @@ import com.cauldron.bodyconquest.entities.Projectile;
 import com.cauldron.bodyconquest.entities.Troops.*;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
-import com.cauldron.bodyconquest.entities.Troops.Flu;
-import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.Troops.Troop.UnitType;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /*
 The screen where the encounters occurs, hosts a number of actors including,
@@ -264,7 +261,7 @@ public class EncounterScreen implements Screen {
     if (unitType.equals(UnitType.BACTERIA)) {
       troop = new Bacteria(this, playerType, lane);
     } else if(unitType.equals(UnitType.FLU)){
-      troop = new FluNew(this, playerType, lane);
+      troop = new Flu(this, playerType, lane);
     } else if (unitType.equals(UnitType.VIRUS)){
       troop = new Virus(this, playerType, lane);
     }

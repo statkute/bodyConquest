@@ -120,7 +120,7 @@ public class HUD {
   }
 
   private void addDragAndDropSource(int index, final String name){
-      ImageButton troopButton;
+      final ImageButton troopButton;
       if(name.equals("bacteria")){
           troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
       } else if(name.equals("flu")) {
@@ -130,6 +130,7 @@ public class HUD {
       } else { //default
           troopButton = new ImageButton(new FluNew().sprite.getDrawable());
       }
+
       troopButton.setBounds(
               unitBar.getWidth() / 4 + 25*index, unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2), 25, 25);
       troopButton.addListener(
@@ -146,7 +147,7 @@ public class HUD {
               Payload payload = new Payload();
               payload.setObject(new Image(new Texture("core/assets/Default Sprite (Green).png")));
 
-              payload.setDragActor(new Image(new Texture("core/assets/Default Sprite (Green).png")));
+              payload.setDragActor(new Image(troopButton.getImage().getDrawable()));
 
               Label validLabel = new Label("Release to drop " + name + "!", skin);
               validLabel.setColor(0, 1, 0, 1);
