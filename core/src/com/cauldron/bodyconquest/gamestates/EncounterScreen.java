@@ -15,6 +15,8 @@ import com.cauldron.bodyconquest.entities.Projectile;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
+import com.cauldron.bodyconquest.entities.Troops.Flu;
+import com.cauldron.bodyconquest.entities.Troops.FluNew;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.Troops.Troop.UnitType;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
@@ -249,6 +251,8 @@ public class EncounterScreen implements Screen {
     // Initialise troop type
     if (unitType.equals(UnitType.BACTERIA)) {
       troop = new Bacteria(this, playerType, lane);
+    } else if(unitType.equals(UnitType.FLU)){
+      troop = new FluNew(this, playerType, lane);
     }
 
     // Return if invalid troop, lane or player type is used

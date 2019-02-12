@@ -94,7 +94,7 @@ public class HUD {
 
                   public void drop(Source source, Payload payload, float x, float y, int pointer) {
                       System.out.println("SPAWN HERE");
-                      screen.spawnUnit(UnitType.BACTERIA, lane, playerType);
+                      screen.spawnUnit(UnitType.FLU, lane, playerType);
                   }
               });
 
