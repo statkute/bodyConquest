@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -15,11 +14,11 @@ import com.cauldron.bodyconquest.entities.Projectile;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
+import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.Troops.Troop.UnitType;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -78,8 +77,8 @@ public class EncounterScreen implements Screen {
   private ArrayList<Troop> troopsTop;
   private ArrayList<Troop> troopsBottom;
 
-  private ArrayList<Projectile> projectilesP1;
-  private ArrayList<Projectile> projectilesP2;
+  private ArrayList<Projectile> projectilesBottom;
+  private ArrayList<Projectile> projectilesTop;
 
   private Base topBase;
   private Base bottomBase;
@@ -115,6 +114,9 @@ public class EncounterScreen implements Screen {
     topBase.setPosition(getMap().getX(), getMap().getTop() - topBase.getHeight());
     stage.addActor(topBase);
     troopsTop.add(topBase);
+
+    projectilesBottom = new ArrayList<Projectile>();
+    projectilesTop = new ArrayList<Projectile>();
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
   }
@@ -162,6 +164,9 @@ public class EncounterScreen implements Screen {
     // Update All Units
     checkAttack(troopsTop, troopsBottom);
     checkAttack(troopsBottom, troopsTop);
+    checkProjectiles(projectilesTop, troopsBottom);
+    checkProjectiles(projectilesBottom, troopsTop);
+
   }
 
   @Override
@@ -202,9 +207,9 @@ public class EncounterScreen implements Screen {
     // Development Tools (NOT NECESSARY FOR GAMEPLAY) ///////////////////////
 
     // Get X, Y co-ordinates of mouse click (Not working reliably) WIP
-    if (Gdx.input.isTouched()) {
-      System.out.println(Arrays.toString(troopsTop.toArray()));
-    }
+//    if (Gdx.input.isTouched()) {
+//      System.out.println(Arrays.toString(troopsTop.toArray()));
+//    }
 //      Vector3 touchPos = new Vector3();
 //      touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 //      gameCamera.unproject(
@@ -257,14 +262,15 @@ public class EncounterScreen implements Screen {
     // Spawn units for bottom player
     if (playerType.equals(PlayerType.BOT_PLAYER)) {
       if (lane == Lane.BOT) {
+        troop = new Flu(this, playerType, lane);
         troop.setPosition(
-            botLaneBPSpawnX - (troop.getWidth() / 2), botLaneBPSpawnY - (troop.getHeight() / 2));
+                botLaneBPSpawnX - (troop.getWidth() / 2), botLaneBPSpawnY - (troop.getHeight() / 2));
       } else if (lane == Lane.MID) {
         troop.setPosition(
-            midLaneBPSpawnX - (troop.getWidth() / 2), midLaneBPSpawnY - (troop.getHeight() / 2));
+                midLaneBPSpawnX - (troop.getWidth() / 2), midLaneBPSpawnY - (troop.getHeight() / 2));
       } else if (lane == Lane.TOP) {
         troop.setPosition(
-            topLaneBPSpawnX - (troop.getWidth() / 2), topLaneBPSpawnY - (troop.getHeight() / 2));
+                topLaneBPSpawnX - (troop.getWidth() / 2), topLaneBPSpawnY - (troop.getHeight() / 2));
       }
       troopsBottom.add(troop);
     }
@@ -273,13 +279,13 @@ public class EncounterScreen implements Screen {
     if (playerType.equals(PlayerType.TOP_PLAYER)) {
       if (lane == Lane.BOT) {
         troop.setPosition(
-            botLaneTPSpawnX - (troop.getWidth() / 2), botLaneTPSpawnY - (troop.getHeight() / 2));
+                botLaneTPSpawnX - (troop.getWidth() / 2), botLaneTPSpawnY - (troop.getHeight() / 2));
       } else if (lane == Lane.MID) {
         troop.setPosition(
-            midLaneTPSpawnX - (troop.getWidth() / 2), midLaneTPSpawnY - (troop.getHeight() / 2));
+                midLaneTPSpawnX - (troop.getWidth() / 2), midLaneTPSpawnY - (troop.getHeight() / 2));
       } else if (lane == Lane.BOT) {
         troop.setPosition(
-            topLaneTPSpawnX - (troop.getWidth() / 2), topLaneTPSpawnY - (troop.getHeight() / 2));
+                topLaneTPSpawnX - (troop.getWidth() / 2), topLaneTPSpawnY - (troop.getHeight() / 2));
       }
       troopsTop.add(troop);
     }
@@ -292,9 +298,9 @@ public class EncounterScreen implements Screen {
     if(playerType == null || proj == null) return;
 
     if(playerType == PlayerType.BOT_PLAYER) {
-      projectilesP1.add(proj);
+      projectilesBottom.add(proj);
     } else if (playerType == PlayerType.TOP_PLAYER) {
-      projectilesP2.add(proj);
+      projectilesTop.add(proj);
     }
 
     stage.addActor(proj);

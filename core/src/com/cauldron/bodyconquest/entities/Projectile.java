@@ -51,7 +51,7 @@ public abstract class Projectile extends MapObject {
   public void setTargetLocation(float x, float y) {
     double relX = x - this.getCentreX();
     double relY = y - this.getCentreY();
-    setAngle(Math.atan(relX / relY));
+    setAngle(Math.atan(relY / relX));
   }
 
   @Override
@@ -67,7 +67,7 @@ public abstract class Projectile extends MapObject {
     dx = speed * delta * (float) Math.cos(getAngle());
     dy = speed * delta * (float) Math.sin(getAngle());
 
-    setPosition(getX() + dx, getY() + dy);
+    setPosition(getX() - dx, getY() - dy);
   }
 
   public double getAngle() {

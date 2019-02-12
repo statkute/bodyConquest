@@ -168,7 +168,11 @@ public class HUD {
         });
   }
 
-  public Stage getStage() { return stage; }
-  public Image getUnitBar() { return unitBar; }
+  public Stage getStage() {
+    return stage;
+  }
 
+  public Image getUnitBar() {
+    return unitBar;
+  }
 }
