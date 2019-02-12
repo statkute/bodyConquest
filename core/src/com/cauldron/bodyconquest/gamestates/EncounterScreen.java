@@ -2,6 +2,7 @@ package com.cauldron.bodyconquest.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -83,6 +84,8 @@ public class EncounterScreen implements Screen {
   private Base topBase;
   private Base bottomBase;
 
+  public static Sound dropSound;
+
   public EncounterScreen(BodyConquest game) {
     this.game = game;
     gameCamera = new OrthographicCamera();
@@ -116,6 +119,8 @@ public class EncounterScreen implements Screen {
     troopsTop.add(topBase);
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
+
+    dropSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/waterDrop.wav"));
   }
 
   private void checkAttack(ArrayList<Troop> troopsP1, ArrayList<Troop> troopsP2) {
@@ -130,7 +135,10 @@ public class EncounterScreen implements Screen {
     }
     // This gives particular players a very slight advantage because certain units will be deleted
     // first if they both die
-    for (Troop u : deadTroops) troopsP1.remove(u);
+    for (Troop u : deadTroops) {
+      troopsP1.remove(u);
+      dropSound.play();
+    }
   }
 
   private void checkProjectiles(ArrayList<Projectile> projectiles, ArrayList<Troop> enemies) {
@@ -244,6 +252,7 @@ public class EncounterScreen implements Screen {
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
     // Initialise the troop
     Troop troop = null;
+    //dropSound.play();
 
     // Initialise troop type
     if (unitType.equals(UnitType.BACTERIA)) {
