@@ -121,7 +121,6 @@ public abstract class Troop extends MapObject {
 
   public void attack(Troop troop) {
     if (troop != null && troop.isAttackable() /*&& inRange(troop)*/) {
-      if(troop.getClass() == BacteriaBase.class)System.out.println("HERE");
       setMoving(false);
       long time = System.currentTimeMillis();
       if (!attacking && (time > lastAttack + cooldown)) {
@@ -145,7 +144,6 @@ public abstract class Troop extends MapObject {
       // Attack closest enemy
       closestEnemy = distFrom(enemy) < distFrom(closestEnemy) ? enemy : closestEnemy;
     }
-    //System.out.println(closestEnemy.toString());
     if(inRange(closestEnemy)) {
       attack(closestEnemy);
       return;

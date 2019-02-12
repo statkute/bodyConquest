@@ -209,9 +209,9 @@ public class EncounterScreen implements Screen {
     // Development Tools (NOT NECESSARY FOR GAMEPLAY) ///////////////////////
 
     // Get X, Y co-ordinates of mouse click (Not working reliably) WIP
-    if (Gdx.input.isTouched()) {
-      System.out.println(Arrays.toString(troopsTop.toArray()));
-    }
+//    if (Gdx.input.isTouched()) {
+//      //System.out.println(Arrays.toString(troopsTop.toArray()));
+//
 //      Vector3 touchPos = new Vector3();
 //      touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 //      gameCamera.unproject(
