@@ -1,21 +1,16 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.entities.FluProjectile;
+import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
-
-import java.util.ArrayList;
 
 public class Flu extends Troop {
 
@@ -54,13 +49,14 @@ public class Flu extends Troop {
     attacking = false;
     cooldown = 1300; // Milliseconds
     lastAttack = 0;
-    range = 150;
+    range = 200;
     damage = 40;
+
+    walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/flu.png");
 
     stateTime = 0f;
 
-    walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");
-
+    // maybe better to use Rectangle class? instead of Image class (found in Tutorials)
     sprite = new Image(walkAnimation.getKeyFrame(0));
   }
 
@@ -111,8 +107,19 @@ public class Flu extends Troop {
 
   @Override
   public void attack(Troop troop) {
-    FluProjectile proj = new FluProjectile(screen, getCentreX(), getCentreY(), troop.getCentreX(), troop.getCentreY());
-    screen.addProjectile(proj, playerType);
+    if (troop != null && troop.isAttackable() /*&& inRange(troop)*/) {
+      if(troop.getClass() == BacteriaBase.class)System.out.println("HERE");
+      setMoving(false);
+      long time = System.currentTimeMillis();
+      if (!attacking && (time > lastAttack + cooldown)) {
+        FluProjectile proj = new FluProjectile(map, getCentreX(), getCentreY(), troop.getCentreX(), troop.getCentreY());
+        map.addProjectile(proj, playerType);
+        lastAttack = time;
+      }
+    } else {
+      if (!moving) setMoving(true);
+    }
+
   }
 
 }

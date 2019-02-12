@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
+import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.FluNew;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
@@ -123,7 +124,7 @@ public class HUD {
       if(name.equals("bacteria")){
           troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
       } else if(name.equals("flu")) {
-          troopButton = new ImageButton(new FluNew().sprite.getDrawable());
+          troopButton = new ImageButton(new Flu().sprite.getDrawable());
       } else if(name.equals("virus")){
           troopButton = new ImageButton(new Virus().sprite.getDrawable());
       } else { //default
@@ -165,6 +166,5 @@ public class HUD {
 
     public Stage getStage() { return stage; }
     public Image getUnitBar() { return unitBar; }
-
 
 }
