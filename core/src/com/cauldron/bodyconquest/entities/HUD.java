@@ -29,7 +29,7 @@ public class HUD {
 
     private final EncounterScreen screen;
     private final PlayerType playerType;
-    private final Skin skin;
+    private Skin skin;
     private Viewport viewport;
     private Stage stage;
     private Image unitBar;
@@ -40,34 +40,39 @@ public class HUD {
     this.screen = screen;
     this.playerType = playerType;
 
-    dragAndDrop = new DragAndDrop();
-
     viewport =
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
     stage = new Stage(viewport, sb);
     Gdx.input.setInputProcessor(stage);
 
-    // Main Bar
-    unitBar = new Image(new Texture("core/assets/Action Bar v1.png"));
-    unitBar.setBounds(0, 0, BodyConquest.V_WIDTH, 50);
-    stage.addActor(unitBar);
+      // Load bar, skins and dragAndDrop mechanics
+      setupUnitBar();
+      loadSkins();
+      setUpDragAndDrop();
 
-    // Load in skins
-    skin = new Skin();
-    skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-    skin.add("defaultWhite", new Texture("core/assets/Default Sprite.png"));
-    skin.add("badlogic", new Texture("core/assets/badlogic.jpg"));
-    skin.add("spawnpoint", new Texture("core/assets/droplet.png"));
-
-    // Table unitBarTable = new Table();
+      // Table unitBarTable = new Table();
     // unitBarTable.setBounds(unitBar.getX(), unitBar.getY(), unitBar.getWidth(),
     // unitBar.getHeight());
     // unitBarTable.add(unitButton);
 
-    setUpDragAndDrop();
   }
 
-  private void setUpDragAndDrop() {
+    private void loadSkins() {
+        skin = new Skin();
+        skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        skin.add("defaultWhite", new Texture("core/assets/Default Sprite.png"));
+        skin.add("badlogic", new Texture("core/assets/badlogic.jpg"));
+        skin.add("spawnpoint", new Texture("core/assets/droplet.png"));
+    }
+
+    private void setupUnitBar() {
+        unitBar = new Image(new Texture("core/assets/Action Bar v1.png"));
+        unitBar.setBounds(0, 0, BodyConquest.V_WIDTH, 50);
+        stage.addActor(unitBar);
+    }
+
+    private void setUpDragAndDrop() {
+      dragAndDrop = new DragAndDrop();
 
       addSpawnPoint(475, 50,  Lane.BOT);
       addSpawnPoint(475, 160, Lane.MID);
@@ -78,9 +83,6 @@ public class HUD {
       addDragAndDropSource(2, "virus");
 
   }
-
-  public Stage getStage() { return stage; }
-  public Image getUnitBar() { return unitBar; }
 
   private void addSpawnPoint(int x, int y, final Lane lane){
       Image bottomSpawnPoint = new Image(skin, "defaultWhite");
@@ -160,5 +162,9 @@ public class HUD {
 
       dragAndDrop.addSource(s);
   }
+
+    public Stage getStage() { return stage; }
+    public Image getUnitBar() { return unitBar; }
+
 
 }
