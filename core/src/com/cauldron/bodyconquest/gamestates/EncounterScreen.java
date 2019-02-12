@@ -53,8 +53,10 @@ public class EncounterScreen implements Screen {
   private Stage stage;
 
   // If kept final change to all caps
-  private final float botTurnPointX = 85;
+  private final float botTurnPointX = 150;
   private final float botTurnPointY = 60;
+  private final float topTurnpointX = 550;
+  private final float topTurnpointY = 525;
 
   // Probably make this final
   private final float botLaneBPSpawnX = 500; // 535;
@@ -69,9 +71,9 @@ public class EncounterScreen implements Screen {
 
   // Not yet initialised
   private float midLaneTPSpawnX;
-  private float topLaneTPSpawnX;
+  private float topLaneTPSpawnX = 175;
   private float midLaneTPSpawnY;
-  private float topLaneTPSpawnY;
+  private float topLaneTPSpawnY = 525;
 
   // Troop Arrays (Data type and usage is subject to future change)
 
@@ -289,7 +291,7 @@ public class EncounterScreen implements Screen {
       } else if (lane == Lane.MID) {
         troop.setPosition(
             midLaneTPSpawnX - (troop.getWidth() / 2), midLaneTPSpawnY - (troop.getHeight() / 2));
-      } else if (lane == Lane.BOT) {
+      } else if (lane == Lane.TOP) {
         troop.setPosition(
             topLaneTPSpawnX - (troop.getWidth() / 2), topLaneTPSpawnY - (troop.getHeight() / 2));
       }
@@ -320,5 +322,13 @@ public class EncounterScreen implements Screen {
 
   public float getBotTurnPointY() {
     return botTurnPointY;
+  }
+
+  public float getTopTurnPointX(){
+    return topTurnpointX;
+  }
+
+  public float getTopTurnPointY(){
+    return topTurnpointY;
   }
 }
