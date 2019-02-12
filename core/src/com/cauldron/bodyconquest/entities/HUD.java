@@ -31,11 +31,14 @@ public class HUD {
     private Viewport viewport;
     private Stage stage;
     private Image unitBar;
+    private DragAndDrop dragAndDrop;
 
 
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     this.screen = screen;
     this.playerType = playerType;
+
+    dragAndDrop = new DragAndDrop();
 
     viewport =
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
@@ -62,21 +65,20 @@ public class HUD {
   }
 
   private void setUpDragAndDrop() {
-      DragAndDrop dragAndDrop = new DragAndDrop();
 
-      addSpawnPoint(stage, 500, 50, dragAndDrop, Lane.BOT);
-      addSpawnPoint(stage, 475, 160, dragAndDrop, Lane.MID);
-      addSpawnPoint(stage, 575, 200, dragAndDrop, Lane.TOP);
+      addSpawnPoint(500, 50,  Lane.BOT);
+      addSpawnPoint(475, 160, Lane.MID);
+      addSpawnPoint(575, 200, Lane.TOP);
 
-      addDragAndDropSource(stage, 0, dragAndDrop);
-      addDragAndDropSource(stage, 1, dragAndDrop);
+      addDragAndDropSource(0, "bacteria");
+      addDragAndDropSource(1, "flu");
 
   }
 
   public Stage getStage() { return stage; }
   public Image getUnitBar() { return unitBar; }
 
-  private void addSpawnPoint(Stage stage, int x, int y, DragAndDrop dragAndDrop, final Lane lane){
+  private void addSpawnPoint(int x, int y, final Lane lane){
       Image bottomSpawnPoint = new Image(skin, "spawnpoint");
       bottomSpawnPoint.setBounds(x, y, 100, 100);
       stage.addActor(bottomSpawnPoint);
@@ -94,45 +96,52 @@ public class HUD {
 
                   public void drop(Source source, Payload payload, float x, float y, int pointer) {
                       System.out.println("SPAWN HERE");
-                      screen.spawnUnit(UnitType.FLU, lane, playerType);
+                      System.out.println(source.getActor().getName());
+                      if(source.getActor().getName().equals("flu")){
+                          screen.spawnUnit(UnitType.FLU, lane, playerType);
+                      } else if(source.getActor().getName().equals("bacteria")){
+                          screen.spawnUnit(UnitType.BACTERIA, lane, playerType);
+                      }
+
                   }
               });
 
   }
 
-  private void addDragAndDropSource(Stage stage, int index, DragAndDrop dragAndDrop){
-      ImageButton bacteriaButton = new ImageButton(new Bacteria().sprite.getDrawable());
-      bacteriaButton.setBounds(
+  private void addDragAndDropSource(int index, String name){
+      ImageButton troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
+      troopButton.setBounds(
               unitBar.getWidth() / 4 + 25*index, unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2), 25, 25);
-      bacteriaButton.addListener(
+      troopButton.addListener(
               new ChangeListener() {
                   @Override
                   public void changed(ChangeEvent event, Actor actor) {
                       screen.spawnUnit(UnitType.BACTERIA, Lane.BOT, playerType);
                   }
               });
-      stage.addActor(bacteriaButton);
+      stage.addActor(troopButton);
 
-      dragAndDrop.addSource(
-              new Source(bacteriaButton) {
-                  public Payload dragStart(InputEvent event, float x, float y, int pointer) {
-                      Payload payload = new Payload();
-                      payload.setObject(new Image(new Texture("core/assets/Default Sprite (Green).png")));
+      Source s = new Source(troopButton) {
+          public Payload dragStart(InputEvent event, float x, float y, int pointer) {
+              Payload payload = new Payload();
+              payload.setObject(new Image(new Texture("core/assets/Default Sprite (Green).png")));
 
-                      payload.setDragActor(new Image(new Texture("core/assets/Default Sprite (Green).png")));
+              payload.setDragActor(new Image(new Texture("core/assets/Default Sprite (Green).png")));
 
-                      Label validLabel = new Label("Some payload!", skin);
-                      validLabel.setColor(0, 1, 0, 1);
-                      payload.setValidDragActor(validLabel);
+              Label validLabel = new Label("Some payload!", skin);
+              validLabel.setColor(0, 1, 0, 1);
+              payload.setValidDragActor(validLabel);
 
-                      Label invalidLabel = new Label("Some payload!", skin);
-                      invalidLabel.setColor(1, 0, 0, 1);
-                      payload.setInvalidDragActor(invalidLabel);
+              Label invalidLabel = new Label("Some payload!", skin);
+              invalidLabel.setColor(1, 0, 0, 1);
+              payload.setInvalidDragActor(invalidLabel);
 
-                      return payload;
-                  }
-              });
+              return payload;
+          }
+      };
+      s.getActor().setName(name);
 
+      dragAndDrop.addSource(s);
   }
 
 }
