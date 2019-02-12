@@ -12,12 +12,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.entities.HUD;
 import com.cauldron.bodyconquest.entities.Projectile;
-import com.cauldron.bodyconquest.entities.Troops.Bacteria;
+import com.cauldron.bodyconquest.entities.Troops.*;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
-import com.cauldron.bodyconquest.entities.Troops.Flu;
-import com.cauldron.bodyconquest.entities.Troops.FluNew;
-import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.Troops.Troop.UnitType;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
@@ -253,6 +250,8 @@ public class EncounterScreen implements Screen {
       troop = new Bacteria(this, playerType, lane);
     } else if(unitType.equals(UnitType.FLU)){
       troop = new FluNew(this, playerType, lane);
+    } else if (unitType.equals(UnitType.VIRUS)){
+      troop = new Virus(this, playerType, lane);
     }
 
     // Return if invalid troop, lane or player type is used

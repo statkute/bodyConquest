@@ -18,7 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
+import com.cauldron.bodyconquest.entities.Troops.FluNew;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
+import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
@@ -72,6 +74,7 @@ public class HUD {
 
       addDragAndDropSource(0, "bacteria");
       addDragAndDropSource(1, "flu");
+      addDragAndDropSource(2, "virus");
 
   }
 
@@ -101,6 +104,8 @@ public class HUD {
                           screen.spawnUnit(UnitType.FLU, lane, playerType);
                       } else if(source.getActor().getName().equals("bacteria")){
                           screen.spawnUnit(UnitType.BACTERIA, lane, playerType);
+                      } else if(source.getActor().getName().equals("virus")){
+                          screen.spawnUnit(UnitType.VIRUS, lane, playerType);
                       }
 
                   }
@@ -109,7 +114,16 @@ public class HUD {
   }
 
   private void addDragAndDropSource(int index, String name){
-      ImageButton troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
+      ImageButton troopButton;
+      if(name.equals("bacteria")){
+          troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
+      } else if(name.equals("flu")) {
+          troopButton = new ImageButton(new FluNew().sprite.getDrawable());
+      } else if(name.equals("virus")){
+          troopButton = new ImageButton(new Virus().sprite.getDrawable());
+      } else { //default
+          troopButton = new ImageButton(new FluNew().sprite.getDrawable());
+      }
       troopButton.setBounds(
               unitBar.getWidth() / 4 + 25*index, unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2), 25, 25);
       troopButton.addListener(

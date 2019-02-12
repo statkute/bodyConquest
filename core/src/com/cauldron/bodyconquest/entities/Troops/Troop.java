@@ -12,7 +12,7 @@ public abstract class Troop extends MapObject {
   protected final Lane lane;
 
   public static enum UnitType {
-    BACTERIA, FLU
+    BACTERIA, FLU, VIRUS
   }
 
   protected int maxHealth;
