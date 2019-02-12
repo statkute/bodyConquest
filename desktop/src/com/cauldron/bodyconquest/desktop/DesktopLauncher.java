@@ -37,6 +37,5 @@ public class DesktopLauncher {
     config.backgroundFPS = 0; // Setting to 0 disables background fps throttling
 
     new LwjglApplication(new BodyConquest(), config);
-    // new LwjglApplication(new DragAndDropTest(), config);
   }
 }

@@ -20,7 +20,7 @@ public class FluProjectile extends Projectile {
 
   private void init() {
     setSize(20, 20);
-    setBounds();
+    //setBounds();
     damage = 40;
     speed = 200;
     texture = new Texture("core/assets/Default Sprite (Green).png");
