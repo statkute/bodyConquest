@@ -135,7 +135,7 @@ public class Bacteria extends Troop {
         } else if (lane == Lane.TOP) {
           if (getX() < map.getTopTurnPointX()) {
             moveRight(delta);
-            System.out.println("move right");
+            //System.out.println("move right");
           } else {
             moveDown(delta);
           }

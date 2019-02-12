@@ -128,6 +128,17 @@ public class Virus extends Troop {
           } else {
             moveRight(delta);
           }
+        } else if (lane == Lane.MID){
+          moveRight(delta / 2);
+          moveDown(delta / 2);
+        } else if (lane == Lane.TOP) {
+          if (getX() < map.getTopTurnPointX()) {
+            moveRight(delta);
+           // System.out.println("move right");
+          } else {
+            moveDown(delta);
+          }
+          //moveRight(delta);
         }
       }
     }
