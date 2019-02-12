@@ -2,6 +2,7 @@ package com.cauldron.bodyconquest.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.entities.HUD;
 import com.cauldron.bodyconquest.entities.Projectile;
-import com.cauldron.bodyconquest.entities.Troops.Bacteria;
+import com.cauldron.bodyconquest.entities.Troops.*;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
@@ -83,6 +84,8 @@ public class EncounterScreen implements Screen {
   private Base topBase;
   private Base bottomBase;
 
+  public static Sound dropSound;
+
   public EncounterScreen(BodyConquest game) {
     this.game = game;
     gameCamera = new OrthographicCamera();
@@ -119,6 +122,8 @@ public class EncounterScreen implements Screen {
     projectilesTop = new ArrayList<Projectile>();
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
+
+    dropSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/waterDrop.wav"));
   }
 
   private void checkAttack(ArrayList<Troop> troopsP1, ArrayList<Troop> troopsP2) {
@@ -133,7 +138,10 @@ public class EncounterScreen implements Screen {
     }
     // This gives particular players a very slight advantage because certain units will be deleted
     // first if they both die
-    for (Troop u : deadTroops) troopsP1.remove(u);
+    for (Troop u : deadTroops) {
+      troopsP1.remove(u);
+      dropSound.play();
+    }
   }
 
   private void checkProjectiles(ArrayList<Projectile> projectiles, ArrayList<Troop> enemies) {
@@ -250,10 +258,15 @@ public class EncounterScreen implements Screen {
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
     // Initialise the troop
     Troop troop = null;
+    //dropSound.play();
 
     // Initialise troop type
     if (unitType.equals(UnitType.BACTERIA)) {
       troop = new Bacteria(this, playerType, lane);
+    } else if(unitType.equals(UnitType.FLU)){
+      troop = new FluNew(this, playerType, lane);
+    } else if (unitType.equals(UnitType.VIRUS)){
+      troop = new Virus(this, playerType, lane);
     }
 
     // Return if invalid troop, lane or player type is used
@@ -262,7 +275,6 @@ public class EncounterScreen implements Screen {
     // Spawn units for bottom player
     if (playerType.equals(PlayerType.BOT_PLAYER)) {
       if (lane == Lane.BOT) {
-        troop = new Flu(this, playerType, lane);
         troop.setPosition(
                 botLaneBPSpawnX - (troop.getWidth() / 2), botLaneBPSpawnY - (troop.getHeight() / 2));
       } else if (lane == Lane.MID) {
