@@ -34,6 +34,7 @@ public class FluProjectile extends Projectile {
     walkAnimation = AnimationWrapper.getSpriteSheet(5, 1, 0.15f, "core/assets/projectile_with_trail.png");
     stateTime = 0f;
     sprite = new Image(walkAnimation.getKeyFrame(0));
+    sprite.setRotation(45.0f);
   }
 
   @Override

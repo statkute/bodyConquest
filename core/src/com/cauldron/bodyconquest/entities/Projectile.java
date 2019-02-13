@@ -68,6 +68,7 @@ public abstract class Projectile extends MapObject {
     dy = speed * delta * (float) Math.sin(getAngle());
 
     setPosition(getX() - dx, getY() - dy);
+    setRotation((float) (getAngle() * (180/Math.PI)));
   }
 
   public double getAngle() {
