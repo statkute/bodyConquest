@@ -26,8 +26,6 @@ import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
-import javax.xml.bind.SchemaOutputResolver;
-
 public class HUD {
 
     private final EncounterScreen screen;
@@ -37,8 +35,10 @@ public class HUD {
     private Stage stage;
     private Image unitBar;
     private DragAndDrop dragAndDrop;
-    private HealthBar healthBar;
-    private int adjustmentWidth = 100;
+    private HealthBar healthBarRight;
+    private HealthBar healthBarLeft;
+    private int adjustmentWidthRight = 100;
+    private int adjustmentWidthLeft = -80;
     private int adjustmentHeight = 50;
 
 
@@ -56,7 +56,8 @@ public class HUD {
       setupUnitBar();
       loadSkins();
       setUpDragAndDrop();
-      setUpHealthBar();
+      healthBarRight = setUpHealthBar(healthBarRight,adjustmentWidthRight,adjustmentHeight);
+      healthBarLeft = setUpHealthBar(healthBarLeft,adjustmentWidthLeft,adjustmentHeight);
 
 
       // Table unitBarTable = new Table();
@@ -176,16 +177,28 @@ public class HUD {
     public Stage getStage() { return stage; }
     public Image getUnitBar() { return unitBar; }
 
-    public void setUpHealthBar(){
+    public HealthBar setUpHealthBar(HealthBar healthBar, int adjustmentWidth, int adjustmentHeight){
         healthBar = new HealthBar(20,300);
-        healthBar.setPosition(unitBar.getRight() - adjustmentWidth,unitBar.getImageHeight() + adjustmentHeight);
+        if(adjustmentWidth < 0){
+            healthBar.setPosition(unitBar.getX() - adjustmentWidth,unitBar.getImageHeight() + adjustmentHeight);
+        }
+        else{
+            healthBar.setPosition(unitBar.getRight() - adjustmentWidth,unitBar.getImageHeight() + adjustmentHeight);
+        }
+
         stage.addActor(healthBar);
+        return healthBar;
     }
 
-    public void updateHealthBar(){
+    public void updateBottomHealthBar(){
       float f = screen.getBottomBase().getHealth()/ (float)screen.getBottomBase().getMaxHealth();
       System.out.println(f);
-      healthBar.setValue(f);
+      healthBarRight.setValue(f);
+    }
+
+    public void updateTopHealthBar(){
+      float f = screen.getTopBase().getHealth()/ (float)screen.getTopBase().getMaxHealth();
+      healthBarLeft.setValue(f);
     }
 
 

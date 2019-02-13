@@ -179,7 +179,8 @@ public class EncounterScreen implements Screen {
     checkAttack(troopsBottom, troopsTop);
     checkProjectiles(projectilesTop, troopsBottom);
     checkProjectiles(projectilesBottom, troopsTop);
-    hud.updateHealthBar();
+    hud.updateBottomHealthBar();
+    hud.updateTopHealthBar();
 
   }
 
