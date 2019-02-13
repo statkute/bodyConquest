@@ -37,6 +37,7 @@ public class HUD {
     private DragAndDrop dragAndDrop;
 
 
+
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     this.screen = screen;
     this.playerType = playerType;
@@ -50,6 +51,7 @@ public class HUD {
       setupUnitBar();
       loadSkins();
       setUpDragAndDrop();
+
 
       // Table unitBarTable = new Table();
     // unitBarTable.setBounds(unitBar.getX(), unitBar.getY(), unitBar.getWidth(),
@@ -167,5 +169,7 @@ public class HUD {
 
     public Stage getStage() { return stage; }
     public Image getUnitBar() { return unitBar; }
+
+
 
 }

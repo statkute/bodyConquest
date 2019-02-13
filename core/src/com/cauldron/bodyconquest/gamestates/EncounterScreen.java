@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.entities.HUD;
+import com.cauldron.bodyconquest.entities.HealthBar;
 import com.cauldron.bodyconquest.entities.Projectile;
 import com.cauldron.bodyconquest.entities.Troops.*;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
@@ -83,6 +85,9 @@ public class EncounterScreen implements Screen {
   private Base topBase;
   private Base bottomBase;
 
+  private HealthBar healthBar;
+  private ProgressBar progressBar;
+
   public static Sound dropSound;
 
   public EncounterScreen(BodyConquest game) {
@@ -119,6 +124,17 @@ public class EncounterScreen implements Screen {
 
     projectilesBottom = new ArrayList<Projectile>();
     projectilesTop = new ArrayList<Projectile>();
+
+//    healthBar = new HealthBar(bottomBase);
+//    healthBar.setPosition(300,300);
+//    stage.addActor(healthBar);
+
+//    healthBar = new HealthBar();
+//    progressBar.setValue(1.0f);
+//    progressBar.setAnimateDuration(0.25f);
+//    progressBar.setBounds(500,100,healthBar.width,healthBar.height);
+
+    stage.addActor(progressBar);
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
 
