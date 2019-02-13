@@ -135,7 +135,7 @@ public class EncounterScreen implements Screen {
 //    progressBar.setAnimateDuration(0.25f);
 //    progressBar.setBounds(500,100,healthBar.width,healthBar.height);
 
-    stage.addActor(progressBar);
+//    stage.addActor(progressBar);
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
 
