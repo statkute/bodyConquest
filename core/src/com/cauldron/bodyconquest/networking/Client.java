@@ -21,6 +21,7 @@ public class Client {
     clientSender.start();
 
     clientSender.sendMessage("connected");
+    clientSender.sendMessage("Hi btw");
   }
 
   //  public static void main(String argv[]) throws Exception {

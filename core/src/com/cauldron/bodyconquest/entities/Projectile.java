@@ -1,7 +1,7 @@
 package com.cauldron.bodyconquest.entities;
 
 import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 import java.util.ArrayList;
 
@@ -17,11 +17,11 @@ public abstract class Projectile extends MapObject {
   protected ArrayList<Troop> hitTroops;
 
   protected boolean remove;
-  protected EncounterScreen screen;
+  protected EncounterState screen;
 
   private double angle;
 
-  public Projectile(EncounterScreen screen) {
+  public Projectile(EncounterState screen) {
     this.screen = screen;
     // Maybe a better way of doing this
     hitTroops = new ArrayList<Troop>();

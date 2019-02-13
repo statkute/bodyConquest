@@ -22,13 +22,13 @@ import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.FluNew;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
+import com.cauldron.bodyconquest.gamestates.EncounterState.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 public class HUD {
 
-    private final EncounterScreen screen;
+    private final EncounterState screen;
     private final PlayerType playerType;
     private Skin skin;
     private Viewport viewport;
@@ -38,7 +38,7 @@ public class HUD {
 
 
 
-  public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
+  public HUD(SpriteBatch sb, final EncounterState screen, final PlayerType playerType) {
     this.screen = screen;
     this.playerType = playerType;
 

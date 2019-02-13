@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.handlers.GifDecoder;
 
 public class BacteriaBase extends Base {
 
     private float stateTime;
 
-    public BacteriaBase(EncounterScreen.Lane lane, EncounterScreen.PlayerType pt){
+    public BacteriaBase(EncounterState.Lane lane, EncounterState.PlayerType pt){
         super(lane, pt);
         init();
     }

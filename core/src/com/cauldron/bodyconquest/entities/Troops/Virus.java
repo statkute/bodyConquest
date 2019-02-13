@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.constants.Constants;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
+import com.cauldron.bodyconquest.gamestates.EncounterState.Lane;
+import com.cauldron.bodyconquest.gamestates.EncounterState.PlayerType;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 
 public class Virus extends Troop {
@@ -18,7 +18,7 @@ public class Virus extends Troop {
   private TextureRegion[] walkFrames;
   private Animation<TextureRegion> walkAnimation;
 
-  private EncounterScreen map;
+  private EncounterState map;
   private PlayerType playerType;
   // Some above head health bar?
   // private UnitHealthBar healthBar;
@@ -36,7 +36,7 @@ public class Virus extends Troop {
   Each moving unit could be given a queue of checkpoints to reach
   and then one left at the enemy base it would be within range and attack
   */
-  public Virus(EncounterScreen map, PlayerType playerType, Lane lane) {
+  public Virus(EncounterState map, PlayerType playerType, Lane lane) {
     super(lane);
     this.playerType = playerType;
     this.map = map;
@@ -103,7 +103,7 @@ public class Virus extends Troop {
           }
         }*/
 
-        // Turn values are too hard coded, have turn points sent in the EncounterScreen that this can access so every
+        // Turn values are too hard coded, have turn points sent in the EncounterState that this can access so every
         // Troop conforms to the same turn location
         // And the unit should turn when the centre of the unit has passed the respective turn point
         if (lane == Lane.BOT) {

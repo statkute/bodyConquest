@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 /*
 Contains all the properties and methods that all map objects must have.
@@ -31,7 +31,7 @@ public abstract class MapObject extends Actor {
   protected float speed;
   protected boolean collideable;
 
-  public EncounterScreen screen;
+  public EncounterState screen;
 
   public MapObject() {
     // This might be a mistake

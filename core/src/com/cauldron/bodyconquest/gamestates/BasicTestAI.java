@@ -2,17 +2,17 @@ package com.cauldron.bodyconquest.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
+import com.cauldron.bodyconquest.gamestates.EncounterState.*;
 
 public class BasicTestAI extends Thread {
 
   private final long COOLDOWN = 5000;
   private boolean running;
 
-  private EncounterScreen game;
+  private EncounterState game;
   private PlayerType playerType;
 
-  public BasicTestAI(EncounterScreen game, PlayerType playerType) {
+  public BasicTestAI(EncounterState game, PlayerType playerType) {
     this.game = game;
     this.playerType = playerType;
     running = true;

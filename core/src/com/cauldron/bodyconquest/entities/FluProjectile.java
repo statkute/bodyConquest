@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 
 public class FluProjectile extends Projectile {
@@ -16,7 +16,7 @@ public class FluProjectile extends Projectile {
   private Animation<TextureRegion> walkAnimation;
   private float stateTime;
 
-  public FluProjectile(EncounterScreen screen, float x, float y, float xDest, float yDest) {
+  public FluProjectile(EncounterState screen, float x, float y, float xDest, float yDest) {
     super(screen);
     setSize(20, 20);
     setPosition(x - (getWidth() / 2) , y - (getHeight() / 2));

@@ -2,8 +2,8 @@ package com.cauldron.bodyconquest.entities.Troops;
 
 import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
+import com.cauldron.bodyconquest.gamestates.EncounterState.*;
 
 import java.util.ArrayList;
 
