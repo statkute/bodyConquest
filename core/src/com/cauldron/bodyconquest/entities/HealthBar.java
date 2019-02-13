@@ -16,9 +16,5 @@ public class HealthBar extends ProgressBar {
     setWidth(width);
     setHeight(height);
 
-    setAnimateDuration(0.0f);
-    setValue(1f);
-
-    setAnimateDuration(0.25f);
   }
 }

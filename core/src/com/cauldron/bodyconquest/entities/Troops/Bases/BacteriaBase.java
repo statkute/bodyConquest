@@ -18,6 +18,7 @@ public class BacteriaBase extends Base {
 
     private void init(){
         this.health = 100;
+        this.maxHealth = health;
         this.damage = 3;
         this.imageBase =
                 GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("core/assets/castle1.gif").read());

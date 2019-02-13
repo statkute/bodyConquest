@@ -86,8 +86,6 @@ public class EncounterScreen implements Screen {
   private Base topBase;
   private Base bottomBase;
 
-  private HealthBar healthBar;
-
   public static Sound dropSound;
 
   public EncounterScreen(BodyConquest game) {
@@ -181,6 +179,7 @@ public class EncounterScreen implements Screen {
     checkAttack(troopsBottom, troopsTop);
     checkProjectiles(projectilesTop, troopsBottom);
     checkProjectiles(projectilesBottom, troopsTop);
+    hud.updateHealthBar();
 
   }
 
@@ -341,5 +340,13 @@ public class EncounterScreen implements Screen {
 
   public float getTopTurnPointY(){
     return topTurnpointY;
+  }
+
+  public Base getTopBase(){
+      return topBase;
+  }
+
+  public Base getBottomBase(){
+      return bottomBase;
   }
 }

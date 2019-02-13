@@ -178,9 +178,14 @@ public class HUD {
 
     public void setUpHealthBar(){
         healthBar = new HealthBar(20,300);
-    //System.out.println(unitBar.getRight() - 100);
         healthBar.setPosition(unitBar.getRight() - adjustmentWidth,unitBar.getImageHeight() + adjustmentHeight);
         stage.addActor(healthBar);
+    }
+
+    public void updateHealthBar(){
+      float f = screen.getBottomBase().getHealth()/ (float)screen.getBottomBase().getMaxHealth();
+      System.out.println(f);
+      healthBar.setValue(f);
     }
 
 
