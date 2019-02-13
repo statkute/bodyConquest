@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.entities.HUD;
 import com.cauldron.bodyconquest.entities.HealthBar;
+import com.cauldron.bodyconquest.entities.Map;
 import com.cauldron.bodyconquest.entities.Projectile;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 The screen where the encounters occurs, hosts a number of actors including,
 the health bar, unitButtons, resourceBars and player information.
 */
-public class EncounterState {
+public class EncounterState extends GameState {
 
   public enum PlayerType {
     BOT_PLAYER,
@@ -91,21 +92,23 @@ public class EncounterState {
   public static Sound dropSound;
 
   public EncounterState(BodyConquest game) {
-    this.game = game;
-    gameCamera = new OrthographicCamera();
-    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
-    stage = new Stage(gamePort);
-    Gdx.input.setInputProcessor(stage);
+//    this.game = game;
+//    gameCamera = new OrthographicCamera();
+//    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
+//    stage = new Stage(gamePort);
+//    Gdx.input.setInputProcessor(stage);
 
-    // Initialise player HUD
-    hud = new HUD(game.batch, this, PlayerType.BOT_PLAYER);
+//    // Initialise player HUD
+//    hud = new HUD(game.batch, this, PlayerType.BOT_PLAYER);
 
     // Set up map
-    map = new Image(new Texture("core/assets/Basic Map v2.png"));
-    float topOfUnitBar = hud.getUnitBar().getTop();
-    mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
-    map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
-    stage.addActor(map);
+    //map = new Image(new Texture("core/assets/Basic Map v2.png"));
+    //float topOfUnitBar = hud.getUnitBar().getTop();
+    //mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
+    //map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
+    //stage.addActor(map);
+
+    //Map
 
     // Initialise unit arrays
     troopsBottom = new ArrayList<Troop>();
@@ -114,12 +117,12 @@ public class EncounterState {
     // Create player bases
     bottomBase = new BacteriaBase(Lane.ALL, PlayerType.BOT_PLAYER);
     bottomBase.setPosition(getMap().getRight() - bottomBase.getWidth(), getMap().getY());
-    stage.addActor(bottomBase);
+    //stage.addActor(bottomBase);
     troopsBottom.add(bottomBase);
 
     topBase = new BacteriaBase(Lane.ALL, PlayerType.TOP_PLAYER);
     topBase.setPosition(getMap().getX(), getMap().getTop() - topBase.getHeight());
-    stage.addActor(topBase);
+    //stage.addActor(topBase);
     troopsTop.add(topBase);
 
     projectilesBottom = new ArrayList<Projectile>();
@@ -135,7 +138,7 @@ public class EncounterState {
     for (Troop troop : troopsP1) {
       if (troop.isDead()) {
         deadTroops.add(troop);
-        troop.remove();
+        //troop.remove();
         continue;
       }
       troop.checkAttack(troopsP2);
@@ -159,7 +162,8 @@ public class EncounterState {
     for (Projectile proj : finishedProjectiles) projectiles.remove(proj);
   }
 
-  public void update(float dt) {
+  @Override
+  public void update() {
     // Handle Input
 
     /* MULTIPLAYER */
@@ -224,7 +228,7 @@ public class EncounterState {
     }
 
     // Maybe add troop to data structure containing all units if the stage isn't one
-    stage.addActor(troop);
+    //stage.addActor(troop);
   }
 
   public void addProjectile(Projectile proj, PlayerType playerType) {
@@ -236,7 +240,7 @@ public class EncounterState {
       projectilesTop.add(proj);
     }
 
-    stage.addActor(proj);
+    //stage.addActor(proj);
   }
 
   public Image getMap() { return map; }

@@ -41,46 +41,44 @@ public abstract class Projectile extends MapObject {
 
   public void setRemove() {
     remove = true;
-    remove();
+    //remove();
   }
 
   public boolean getRemove() {
     return remove;
   }
 
-  public void setTargetLocation(float x, float y) {
-    double relX = x - this.getCentreX();
-    double relY = y - this.getCentreY();
-    setAngle(Math.atan(relY / relX));
+  public void update() {
+    move();
   }
-
-  @Override
-  public void act(float delta) {
-    super.act(delta);
-
-    if(remove) {
-      remove();
-      return;
-    }
-
-    float dx, dy;
-    dx = speed * delta * (float) Math.cos(getAngle());
-    dy = speed * delta * (float) Math.sin(getAngle());
-
-    setPosition(getX() - dx, getY() - dy);
-  }
-
-  public double getAngle() {
-    return angle;
-  }
-
-  public void setAngle(double angle) {
-    this.angle = angle % 360;
-  }
+//
+//  @Override
+//  public void act(float delta) {
+//    super.act(delta);
+//
+////    if(remove) {
+////      remove();
+////      return;
+////    }
+//
+//    float dx, dy;
+//    dx = speed * delta * (float) Math.cos(getAngle());
+//    dy = speed * delta * (float) Math.sin(getAngle());
+//
+//    setPosition(getX() - dx, getY() - dy);
+//  }
+//
+//  public double getAngle() {
+//    return angle;
+//  }
+//
+//  public void setAngle(double angle) {
+//    this.angle = angle % 360;
+//  }
 
   public void checkHit(ArrayList<Troop> enemies) {
     for(Troop enemy : enemies) {
-      if(getBounds().overlaps(enemy.getBounds())) {
+      if(getBounds().intersects(enemy.getBounds())) {
         hit(enemy);
       }
     }

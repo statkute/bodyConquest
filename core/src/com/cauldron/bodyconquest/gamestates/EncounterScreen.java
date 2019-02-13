@@ -27,6 +27,7 @@ import java.util.ArrayList;
 The screen where the encounters occurs, hosts a number of actors including,
 the health bar, unitButtons, resourceBars and player information.
  */
+@SuppressWarnings("ALL")
 public class EncounterScreen implements Screen {
 
   public enum PlayerType {

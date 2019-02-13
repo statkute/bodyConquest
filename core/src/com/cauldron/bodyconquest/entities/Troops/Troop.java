@@ -1,9 +1,8 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
 import com.cauldron.bodyconquest.entities.MapObject;
-import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
-import com.cauldron.bodyconquest.gamestates.EncounterState;
-import com.cauldron.bodyconquest.gamestates.EncounterState.*;
+import com.cauldron.bodyconquest.gamestates.EncounterState.Lane;
+import com.cauldron.bodyconquest.gamestates.EncounterState.PlayerType;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,6 @@ public abstract class Troop extends MapObject {
   private int sugarsCost;
   private int proteinCost;
 
-
   // States
   protected boolean attacking;
   protected boolean moving;
@@ -44,6 +42,13 @@ public abstract class Troop extends MapObject {
   public Troop(Lane lane) {
     this.lane = lane;
     this.collideable = true;
+    initDefault();
+  }
+
+  private void initDefault() {
+    stopSpeed = 0.5;
+    // Maxed out because I don't want to do fine tuning right noow
+    acceleration = 100000;
   }
 
   public boolean inRange(Troop troop) {
@@ -141,6 +146,8 @@ public abstract class Troop extends MapObject {
       if (!moving) setMoving(true);
     }
   }
+
+  public abstract void update();
 
 //  public void checkCollision(ArrayList<MapObject> mapObjects) {
 //    for(MapObject o : mapObjects) {
