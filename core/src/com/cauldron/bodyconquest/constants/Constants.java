@@ -33,6 +33,9 @@ public class Constants {
     public float midLaneTPSpawnY;
     public float topLaneTPSpawnY = 525;
 
+    // Resource types
+    public static enum resourceType {PROTEIN, FAT, SUGAR};
+
 }
 
 

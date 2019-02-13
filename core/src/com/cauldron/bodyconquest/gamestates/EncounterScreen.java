@@ -20,6 +20,10 @@ import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
 import com.cauldron.bodyconquest.entities.Troops.Troop.UnitType;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
+import com.cauldron.bodyconquest.resourcebars.CarbsResourceBar;
+import com.cauldron.bodyconquest.resourcebars.LipidResourceBar;
+import com.cauldron.bodyconquest.resourcebars.ProteinResourceBar;
+import com.cauldron.bodyconquest.resourcebars.ResourceBar;
 
 import java.util.ArrayList;
 
@@ -49,6 +53,10 @@ public class EncounterScreen implements Screen {
 
   private Image map;
   private float mapSize;
+
+  private ResourceBar protein;
+  private ResourceBar lipid;
+  private ResourceBar carbs;
 
   private Stage stage;
 
@@ -106,6 +114,14 @@ public class EncounterScreen implements Screen {
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
+
+    // Add resource bars
+      protein = new ProteinResourceBar();
+      lipid = new LipidResourceBar();
+      carbs = new CarbsResourceBar();
+      stage.addActor(protein);
+      stage.addActor(lipid);
+      stage.addActor(carbs);
 
     // Initialise unit arrays
     troopsBottom = new ArrayList<Troop>();
