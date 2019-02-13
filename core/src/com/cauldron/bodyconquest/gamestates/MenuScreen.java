@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -22,6 +24,7 @@ public class MenuScreen implements Screen {
   private Rectangle singleplayerBounds;
   private Rectangle settingsBounds;
   private Rectangle creditsBounds;
+  private Stage stage;
 
   OrthographicCamera camera;
 
@@ -29,6 +32,7 @@ public class MenuScreen implements Screen {
     this.game = game;
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800, 600);
+    stage = new Stage();
 
     background = new Texture("core/assets/logosmall.png");
     playButtonMultiplayer = new Texture("core/assets/multiplayer1.png");
@@ -95,7 +99,7 @@ public class MenuScreen implements Screen {
 
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
-    if (Gdx.input.isTouched()) {
+    if (Gdx.input.justTouched()) {
 
       if (multiplayerBounds.contains(tmp.x, tmp.y)) {
         System.out.println("Multiplayer Is touched");
@@ -103,6 +107,7 @@ public class MenuScreen implements Screen {
         //              dispose();
       }
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
+        //stage.addAction(Actions.fadeOut(5f));
         game.setScreen(new RaceSelection(game));
         dispose();
       }
