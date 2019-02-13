@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType;
@@ -106,7 +107,7 @@ public class Virus extends Troop {
         // Troop conforms to the same turn location
         // And the unit should turn when the centre of the unit has passed the respective turn point
         if (lane == Lane.BOT) {
-          if (getX() > 150) {
+          if (getX() > Constants.BOT_TURNPOINT_X) {
             moveLeft(delta);
           } else {
             moveUp(delta);
@@ -115,7 +116,7 @@ public class Virus extends Troop {
           moveLeft(delta / 2);
           moveUp(delta / 2);
         } else if (lane == Lane.TOP) {
-          if (getY() < 550) {
+          if (getY() < Constants.TOP_TURNPOINT_Y) {
             moveUp(delta);
           } else {
             moveLeft(delta);
@@ -123,11 +124,22 @@ public class Virus extends Troop {
         }
       } else if (playerType == PlayerType.TOP_PLAYER) {
         if (lane == Lane.BOT) {
-          if (getCentreY() > map.getBotTurnPointY()) {
+          if (getCentreY() > Constants.BOT_TURNPOINT_Y) {
             moveDown(delta);
           } else {
             moveRight(delta);
           }
+        } else if (lane == Lane.MID){
+          moveRight(delta / 2);
+          moveDown(delta / 2);
+        } else if (lane == Lane.TOP) {
+          if (getX() < Constants.TOP_TURNPOINT_X) {
+            moveRight(delta);
+            //System.out.println("move right");
+          } else {
+            moveDown(delta);
+          }
+          //moveRight(delta);
         }
       }
     }

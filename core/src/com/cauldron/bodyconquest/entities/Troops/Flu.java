@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.entities.FluProjectile;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
@@ -76,9 +77,30 @@ public class Flu extends Troop {
 
     if (moving) {
       if (playerType == PlayerType.BOT_PLAYER) {
-
-        if (lane == Lane.BOT) {
+        /*if (lane == Lane.BOT) {
+          System.out.println(getX());
+          *//*System.out.println(
+              "X: "
+                  + getX()
+                  + "\tCentre X: "
+                  + getCentreX()
+                  + "\tOrigin X: "
+                  + getOriginX()
+                  + "\tScale X: "
+                  + getScaleX());*//*
+          //if (getCentreX() > map.getBotTurnPointX()) {
           if (getX() > 150) {
+            moveLeft(delta);
+          } else {
+            moveUp(delta);
+          }
+        }*/
+
+        // Turn values are too hard coded, have turn points sent in the EncounterScreen that this can access so every
+        // Troop conforms to the same turn location
+        // And the unit should turn when the centre of the unit has passed the respective turn point
+        if (lane == Lane.BOT) {
+          if (getX() > Constants.BOT_TURNPOINT_X) {
             moveLeft(delta);
           } else {
             moveUp(delta);
@@ -87,7 +109,7 @@ public class Flu extends Troop {
           moveLeft(delta / 2);
           moveUp(delta / 2);
         } else if (lane == Lane.TOP) {
-          if (getY() < 550) {
+          if (getY() < Constants.TOP_TURNPOINT_Y) {
             moveUp(delta);
           } else {
             moveLeft(delta);
@@ -95,11 +117,22 @@ public class Flu extends Troop {
         }
       } else if (playerType == PlayerType.TOP_PLAYER) {
         if (lane == Lane.BOT) {
-          if (getCentreY() > map.getBotTurnPointY()) {
+          if (getCentreY() > Constants.BOT_TURNPOINT_Y) {
             moveDown(delta);
           } else {
             moveRight(delta);
           }
+        } else if (lane == Lane.MID){
+          moveRight(delta / 2);
+          moveDown(delta / 2);
+        } else if (lane == Lane.TOP) {
+          if (getX() < Constants.TOP_TURNPOINT_X) {
+            moveRight(delta);
+            //System.out.println("move right");
+          } else {
+            moveDown(delta);
+          }
+          //moveRight(delta);
         }
       }
     }
