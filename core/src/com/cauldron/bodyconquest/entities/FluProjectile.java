@@ -47,9 +47,9 @@ public class FluProjectile extends Projectile {
     stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
 
     // Get current frame of animation for the current stateTime
-    currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-    this.setWidth(70);
-    this.setHeight(70);
+    //currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+    //this.setWidth(70);
+    //this.setHeight(70);
     super.draw(batch, parentAlpha);
   }
 }
