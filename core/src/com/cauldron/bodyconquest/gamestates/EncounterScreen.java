@@ -126,17 +126,6 @@ public class EncounterScreen implements Screen {
     projectilesBottom = new ArrayList<Projectile>();
     projectilesTop = new ArrayList<Projectile>();
 
-//    healthBar = new HealthBar(bottomBase);
-//    healthBar.setPosition(300,300);
-//    stage.addActor(healthBar);
-
-//    healthBar = new HealthBar();
-//    progressBar.setValue(1.0f);
-//    progressBar.setAnimateDuration(0.25f);
-//    progressBar.setBounds(500,100,healthBar.width,healthBar.height);
-
-//    stage.addActor(progressBar);
-
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
 
     dropSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/waterDrop.wav"));
