@@ -1,71 +1,33 @@
 package com.cauldron.bodyconquest.entities;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class HealthBar extends Actor {
-
-  protected Pixmap pixmapRed;
-  protected Pixmap pixmapGreenBeginning;
-  protected Pixmap pixmapGreenEnding;
-  protected TextureRegionDrawable drawable;
-//  protected ProgressBar.ProgressBarStyle progressBarStyle;
+public class HealthBar extends ProgressBar {
 
 
-  public int width = 20;
-  public int height = 100;
-
-  public HealthBar() {
-    init();
-  }
-
-  public void init() {
-
-    pixmapRed = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-    pixmapRed.setColor(Color.RED);
-    pixmapRed.fill();
-    setDrawable(pixmapRed);
-//    progressBarStyle = P
-//    progressBarStyle.background = drawable;
-    pixmapGreenBeginning = new Pixmap(0,height, Pixmap.Format.RGBA8888);
-    initGreen(pixmapGreenBeginning);
-//    progressBarStyle.knob = drawable;
-    pixmapGreenEnding = new Pixmap(width,height, Pixmap.Format.RGBA8888);
-    initGreen(pixmapGreenEnding);
-//    progressBarStyle.knobBefore = drawable;
-  }
+  public HealthBar(int width, int height){
 
 
+    super(0f,1f,0.01f,false,new ProgressBarStyle());
 
+    getStyle().background = HealthBarHelper.getColoredDrawable(width, height, Color.RED);
+    getStyle().knob = HealthBarHelper.getColoredDrawable(0, height, Color.GREEN);
+    getStyle().knobBefore = HealthBarHelper.getColoredDrawable(width, height, Color.GREEN);
 
-  public void setDrawable(Pixmap pixmap){
+    setWidth(width);
+    setHeight(height);
 
-      this.drawable = new TextureRegionDrawable(new Texture(pixmap));
-      dispose(pixmap);
-  }
+    setAnimateDuration(0.0f);
+    setValue(1f);
 
-  public void initGreen(Pixmap pixmap){
-
-      pixmap.setColor(Color.GREEN);
-      pixmap.fill();
-      setDrawable(pixmap);
+    setAnimateDuration(0.25f);
 
   }
 
-  public void dispose(Pixmap pixmap){
-      pixmap.dispose();
 
-  }
 
-//  public ProgressBar.ProgressBarStyle  getProgressBarStyle(){
-//
-//      return progressBarStyle;
-//
-//  }
+
 
 
     }
