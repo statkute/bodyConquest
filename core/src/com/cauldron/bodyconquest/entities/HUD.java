@@ -26,6 +26,8 @@ import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
+import javax.xml.bind.SchemaOutputResolver;
+
 public class HUD {
 
     private final EncounterScreen screen;
@@ -35,6 +37,9 @@ public class HUD {
     private Stage stage;
     private Image unitBar;
     private DragAndDrop dragAndDrop;
+    private HealthBar healthBar;
+    private int adjustmentWidth = 100;
+    private int adjustmentHeight = 50;
 
 
 
@@ -51,6 +56,7 @@ public class HUD {
       setupUnitBar();
       loadSkins();
       setUpDragAndDrop();
+      setUpHealthBar();
 
 
       // Table unitBarTable = new Table();
@@ -169,6 +175,13 @@ public class HUD {
 
     public Stage getStage() { return stage; }
     public Image getUnitBar() { return unitBar; }
+
+    public void setUpHealthBar(){
+        healthBar = new HealthBar(20,300);
+    //System.out.println(unitBar.getRight() - 100);
+        healthBar.setPosition(unitBar.getRight() - adjustmentWidth,unitBar.getImageHeight() + adjustmentHeight);
+        stage.addActor(healthBar);
+    }
 
 
 

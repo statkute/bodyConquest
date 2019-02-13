@@ -126,9 +126,7 @@ public class EncounterScreen implements Screen {
     projectilesTop = new ArrayList<Projectile>();
 
 
-//    healthBar = new HealthBar(20,300);
-//    healthBar.setPosition(600,200);
-//    stage.addActor(healthBar);
+
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
 

@@ -10,18 +10,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class HealthBarHelper {
 
-    private HealthBarHelper(){}
+  private HealthBarHelper() {}
 
+  public static Drawable getColoredDrawable(int width, int height, Color color) {
+    Pixmap pixmap = new Pixmap(width, height, Format.RGBA8888);
+    pixmap.setColor(color);
+    pixmap.fill();
 
-    public static Drawable getColoredDrawable(int width, int height, Color color){
-        Pixmap pixmap = new Pixmap(width, height, Format.RGBA8888);
-        pixmap.setColor(color);
-        pixmap.fill();
+    TextureRegionDrawable drawable =
+        new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
 
-        TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+    pixmap.dispose();
 
-        pixmap.dispose();
-
-        return drawable;
-    }
+    return drawable;
+  }
 }
