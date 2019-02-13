@@ -87,7 +87,6 @@ public class EncounterScreen implements Screen {
   private Base bottomBase;
 
   private HealthBar healthBar;
-  private ProgressBar progressBar;
 
   public static Sound dropSound;
 
@@ -125,6 +124,11 @@ public class EncounterScreen implements Screen {
 
     projectilesBottom = new ArrayList<Projectile>();
     projectilesTop = new ArrayList<Projectile>();
+
+
+//    healthBar = new HealthBar(20,300);
+//    healthBar.setPosition(600,200);
+//    stage.addActor(healthBar);
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
 
