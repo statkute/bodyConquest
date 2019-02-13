@@ -86,6 +86,10 @@ public class EncounterScreen implements Screen {
   private Base topBase;
   private Base bottomBase;
 
+  public static final float GAME_END_FADEOUT = 0.5f;
+  public static final float GAME_START_FADEIN = 0.25f;
+
+
   public static Sound dropSound;
 
   public EncounterScreen(BodyConquest game) {
