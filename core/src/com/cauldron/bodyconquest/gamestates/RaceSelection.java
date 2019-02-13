@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -43,6 +45,8 @@ public class RaceSelection implements Screen {
   private Rectangle confirmBounds;
   private Rectangle playBounds;
 
+  private Viewport gamePort;
+
   private List<Texture> listTextures;
 
   private boolean selected = false;
@@ -56,6 +60,8 @@ public class RaceSelection implements Screen {
     this.game = game;
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800, 600);
+
+    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, camera);
 
     background = new Texture("core/assets/backgroundRaceSelection.png");
     confirmButton = new Texture("core/assets/confirmbutton.v3.png");

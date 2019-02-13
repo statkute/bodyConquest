@@ -7,13 +7,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 
 /*
 Contains all the properties and methods that all map objects must have.
 It also extends Actor.
-
 */
 
 public abstract class MapObject extends Actor {
@@ -89,11 +87,11 @@ public abstract class MapObject extends Actor {
   }
 
   public float getCentreX() {
-    return getX() - (getWidth() / 2);
+    return getX() + (getWidth() / 2);
   }
 
   public float getCentreY() {
-    return getY() - (getHeight() / 2);
+    return getY() + (getHeight() / 2);
   }
 
   public boolean isCollideable() { return collideable; }

@@ -2,6 +2,7 @@ package com.cauldron.bodyconquest.entities.Troops;
 
 import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
+import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
 
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ public abstract class Troop extends MapObject {
   public static final int NO_HEALTH = 0;
   protected final Lane lane;
 
-  public static enum UnitType {
-    BACTERIA
+  public enum UnitType {
+    BACTERIA, FLU, VIRUS
   }
 
   protected int maxHealth;
@@ -26,7 +27,7 @@ public abstract class Troop extends MapObject {
   protected int range;
   protected double movementSpeed;
 
-  // Resource Requirements
+  // Resources Requirements
   private int lipidsCost;
   private int sugarsCost;
   private int proteinCost;
@@ -119,39 +120,26 @@ public abstract class Troop extends MapObject {
   }
 
   public void attack(Troop troop) {
-    if (troop != null && troop.isAttackable() /*&& inRange(troop)*/) {
-      if(troop.getClass() == BacteriaBase.class)System.out.println("HERE");
-      setMoving(false);
-      long time = System.currentTimeMillis();
-      if (!attacking && (time > lastAttack + cooldown)) {
-        troop.hit(damage);
-        lastAttack = time;
-      }
-    } else {
-      if (!moving) setMoving(true);
-    }
+    troop.hit(damage);
 }
 
   public void checkAttack(ArrayList<Troop> enemies) {
     Troop closestEnemy = null;
     for (Troop enemy : enemies) {
-      if (checkCollision(enemy)) {
-        attack(enemy);
-        return;
-      }
-
-     if (closestEnemy == null) closestEnemy = enemy;
+      if (closestEnemy == null) closestEnemy = enemy;
       // Attack closest enemy
       closestEnemy = distFrom(enemy) < distFrom(closestEnemy) ? enemy : closestEnemy;
     }
-    //System.out.println(closestEnemy.toString());
-    if(inRange(closestEnemy)) {
-      attack(closestEnemy);
-      return;
+    if (closestEnemy != null && closestEnemy.isAttackable() && inRange(closestEnemy)) {
+      setMoving(false);
+      long time = System.currentTimeMillis();
+      if (!attacking && (time > lastAttack + cooldown)) {
+        attack(closestEnemy);
+        lastAttack = time;
+      }
+    } else {
+      if (!moving) setMoving(true);
     }
-
-    if (!moving) setMoving(true);
-
   }
 
 //  public void checkCollision(ArrayList<MapObject> mapObjects) {

@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 
-public class Bacteria extends Troop {
+public class FluNew extends Troop {
 
   float stateTime;
   private TextureRegion[] walkFrames;
@@ -25,7 +24,7 @@ public class Bacteria extends Troop {
 
   private Rectangle collisionBox; // + Sprite for now at least
 
-  public Bacteria() {
+  public FluNew() {
     super(Lane.BOT);
     init();
     playerType = PlayerType.BOT_PLAYER;
@@ -36,7 +35,7 @@ public class Bacteria extends Troop {
   Each moving unit could be given a queue of checkpoints to reach
   and then one left at the enemy base it would be within range and attack
   */
-  public Bacteria(EncounterScreen map, PlayerType playerType, Lane lane) {
+  public FluNew(EncounterScreen map, PlayerType playerType, Lane lane) {
     super(lane);
     this.playerType = playerType;
     this.map = map;
@@ -58,7 +57,7 @@ public class Bacteria extends Troop {
     range = 50;
     damage = 30;
 
-    walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");
+    walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/flu.png");
 
     stateTime = 0f;
 
@@ -107,7 +106,7 @@ public class Bacteria extends Troop {
         // Troop conforms to the same turn location
         // And the unit should turn when the centre of the unit has passed the respective turn point
         if (lane == Lane.BOT) {
-          if (getX() > Constants.BOT_TURNPOINT_X) {
+          if (getX() > 150) {
             moveLeft(delta);
           } else {
             moveUp(delta);
@@ -116,7 +115,7 @@ public class Bacteria extends Troop {
           moveLeft(delta / 2);
           moveUp(delta / 2);
         } else if (lane == Lane.TOP) {
-          if (getY() < Constants.TOP_TURNPOINT_Y) {
+          if (getY() < 550) {
             moveUp(delta);
           } else {
             moveLeft(delta);
@@ -124,22 +123,11 @@ public class Bacteria extends Troop {
         }
       } else if (playerType == PlayerType.TOP_PLAYER) {
         if (lane == Lane.BOT) {
-          if (getCentreY() > Constants.BOT_TURNPOINT_Y) {
+          if (getCentreY() > map.getBotTurnPointY()) {
             moveDown(delta);
           } else {
             moveRight(delta);
           }
-        } else if (lane == Lane.MID){
-          moveRight(delta / 2);
-          moveDown(delta / 2);
-        } else if (lane == Lane.TOP) {
-          if (getX() < Constants.TOP_TURNPOINT_X) {
-            moveRight(delta);
-            //System.out.println("move right");
-          } else {
-            moveDown(delta);
-          }
-          //moveRight(delta);
         }
       }
     }

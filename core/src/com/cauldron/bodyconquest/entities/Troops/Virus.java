@@ -12,7 +12,7 @@ import com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane;
 import com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 
-public class Bacteria extends Troop {
+public class Virus extends Troop {
 
   float stateTime;
   private TextureRegion[] walkFrames;
@@ -25,7 +25,7 @@ public class Bacteria extends Troop {
 
   private Rectangle collisionBox; // + Sprite for now at least
 
-  public Bacteria() {
+  public Virus() {
     super(Lane.BOT);
     init();
     playerType = PlayerType.BOT_PLAYER;
@@ -36,7 +36,7 @@ public class Bacteria extends Troop {
   Each moving unit could be given a queue of checkpoints to reach
   and then one left at the enemy base it would be within range and attack
   */
-  public Bacteria(EncounterScreen map, PlayerType playerType, Lane lane) {
+  public Virus(EncounterScreen map, PlayerType playerType, Lane lane) {
     super(lane);
     this.playerType = playerType;
     this.map = map;
@@ -58,7 +58,7 @@ public class Bacteria extends Troop {
     range = 50;
     damage = 30;
 
-    walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");
+    walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/virus.png");
 
     stateTime = 0f;
 

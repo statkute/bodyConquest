@@ -40,9 +40,12 @@ public class ServerReceiver extends Thread {
         String receivedMessage = new String(packet.getData(), 0, packet.getLength());
         System.out.println(
             "Server received -> " + receivedMessage + "------- from: " + packet.getAddress());
+        receivedMessages.put(receivedMessage.trim());
       } catch (SocketException e) {
         e.printStackTrace();
       } catch (IOException e) {
+        e.printStackTrace();
+      } catch (InterruptedException e) {
         e.printStackTrace();
       }
     }
@@ -63,34 +66,29 @@ public class ServerReceiver extends Thread {
                 + packet.getAddress());
         if (!serverSender.connectedClients.contains(packet.getAddress())) {
           serverSender.connectedClients.add(packet.getAddress());
-        } else {
-          receivedMessages.put(receivedMessage.trim());
         }
 
         if (receivedMessage.trim().equals("connected")
             && type.equals("singleplayer")
             && numberOfClients == 0) {
-          serverSender.sendMessage("a");
+          serverSender.sendMessage("ID: a");
           serverSender.sendMessage("start game");
           numberOfClients++;
           break;
         } else if (receivedMessage.trim().equals("connected") && type.equals("multiplayer")) {
           if (numberOfClients == 0) {
-            serverSender.sendMessage("a");
+            serverSender.sendMessage("ID: a");
             numberOfClients++;
           } else if (numberOfClients == 1) {
-            serverSender.sendMessage("b");
+            serverSender.sendMessage("ID: b");
             serverSender.sendMessage("start game");
             numberOfClients++;
             break;
           }
         }
-
       } catch (SocketException e) {
         e.printStackTrace();
       } catch (IOException e) {
-        e.printStackTrace();
-      } catch (InterruptedException e) {
         e.printStackTrace();
       }
     }

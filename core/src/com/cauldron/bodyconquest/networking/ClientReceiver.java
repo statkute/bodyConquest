@@ -75,6 +75,7 @@ public class ClientReceiver extends Thread {
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         socket.receive(packet);
         received = new String(packet.getData()).trim();
+        System.out.println(received);
         if (id.toString().equals("0") && received.startsWith("ID: ")) {
           if (received.endsWith("a")) {
             id = new AtomicInteger(1);
