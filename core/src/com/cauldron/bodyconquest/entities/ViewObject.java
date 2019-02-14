@@ -14,6 +14,7 @@ public class ViewObject extends Actor {
     setY((float)bo.getY());
     setWidth((float)bo.getWidth());
     setHeight((float)bo.getHeight());
+    // Right now all textures are the default green
     texture = new Texture("core/assets/Default Sprite (Green).png");
   }
 
@@ -27,6 +28,5 @@ public class ViewObject extends Actor {
     Color color = getColor();
     batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
     batch.draw(texture, getX(), getY(), getWidth(), getHeight());
-
   }
 }

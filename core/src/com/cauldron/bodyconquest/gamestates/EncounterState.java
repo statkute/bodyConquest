@@ -12,6 +12,8 @@ import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
+import com.cauldron.bodyconquest.game_logic.BasicTestAI;
+import com.cauldron.bodyconquest.game_logic.Communicator;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -174,11 +176,11 @@ public class EncounterState extends GameState {
 
     // Initialise troop type
     if (unitType.equals(UnitType.BACTERIA)) {
-      troop = new Bacteria(this, playerType, lane);
+      troop = new Bacteria(playerType, lane);
     } else if(unitType.equals(UnitType.FLU)){
       troop = new Flu(this, playerType, lane);
     } else if (unitType.equals(UnitType.VIRUS)){
-      troop = new Virus(this, playerType, lane);
+      troop = new Virus(playerType, lane);
     }
 
     // Return if invalid troop, lane or player type is used

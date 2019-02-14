@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.gamestates;
+package com.cauldron.bodyconquest.game_logic;
 
 import com.cauldron.bodyconquest.entities.BasicObject;
 

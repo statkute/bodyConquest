@@ -1,7 +1,8 @@
-package com.cauldron.bodyconquest.gamestates;
+package com.cauldron.bodyconquest.game_logic;
 
 import com.badlogic.gdx.Gdx;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.gamestates.EncounterState.*;
 
 public class BasicTestAI extends Thread {

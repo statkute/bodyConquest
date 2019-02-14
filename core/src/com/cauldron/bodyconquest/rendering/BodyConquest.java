@@ -4,11 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.cauldron.bodyconquest.gamestates.MenuScreen;
+import com.cauldron.bodyconquest.screens.MenuScreen;
 
 /*
 The core of the rendering engine, hosts the sprite batch for the current screen,

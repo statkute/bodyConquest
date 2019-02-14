@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.gamestates;
+package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -9,9 +9,8 @@ import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-
-import java.io.IOException;
-import java.net.SocketException;
+import com.cauldron.bodyconquest.screens.CreditsScreen;
+import com.cauldron.bodyconquest.screens.RaceSelection;
 
 public class MenuScreen implements Screen {
 

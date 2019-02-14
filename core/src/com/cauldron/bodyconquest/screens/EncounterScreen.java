@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.gamestates;
+package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -9,15 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cauldron.bodyconquest.entities.BasicObject;
-import com.cauldron.bodyconquest.entities.HUD;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.ViewObject;
+import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class FightScreen implements Screen {
+public class EncounterScreen implements Screen {
 
   private final float mapSize;
   private final Image map;
@@ -41,7 +41,7 @@ public class FightScreen implements Screen {
   private final HUD hud;
   private Communicator comms;
 
-  public FightScreen(BodyConquest game, Communicator comms) {
+  public EncounterScreen(BodyConquest game, Communicator comms) {
     this.comms = comms;
     testInit();
     this.game = game;
@@ -185,7 +185,7 @@ public class FightScreen implements Screen {
   //
   //    public static Sound dropSound;
   //
-  //    public FightScreen(BodyConquest game) {
+  //    public EncounterScreen(BodyConquest game) {
   //      this.game = game;
   //      gameCamera = new OrthographicCamera();
   //      gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);

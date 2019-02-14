@@ -1,5 +1,6 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.gamestates.EncounterState.Lane;
@@ -15,7 +16,9 @@ public abstract class Troop extends MapObject {
   protected final PlayerType playerType;
 
   public enum UnitType {
-    BACTERIA, FLU, VIRUS
+    BACTERIA,
+    FLU,
+    VIRUS
   }
 
   protected int maxHealth;
@@ -36,12 +39,15 @@ public abstract class Troop extends MapObject {
   // States
   protected boolean attacking;
 
+  // Properties
   protected boolean attackable;
+
+  // Temporary implementation to get images for the HUD
+  public Image sprite;
 
   public Troop(Lane lane, PlayerType playerType) {
     this.lane = lane;
     this.playerType = playerType;
-    this.collidable = true;
     initDefault();
   }
 
@@ -49,6 +55,11 @@ public abstract class Troop extends MapObject {
     // Maxed out because I don't want to do fine tuning right now
     stopSpeed = 100000;
     acceleration = 100000;
+    lastAttack = 0;
+    attackable = true;
+    moving = true;
+    attacking = false;
+    collidable = true;
   }
 
   public boolean inRange(Troop troop) {
@@ -60,7 +71,6 @@ public abstract class Troop extends MapObject {
   }
 
   /* With this health can never drop below zero */
-  // Can be overridden
   public void hit(int damage) {
     setHealth(Math.max(getHealth() - damage, NO_HEALTH));
   }
@@ -77,7 +87,9 @@ public abstract class Troop extends MapObject {
     return maxHealth;
   }
 
-  public int getHealth() { return health; }
+  public int getHealth() {
+    return health;
+  }
 
   public double getAttackSpeed() {
     return attackSpeed;
@@ -111,13 +123,17 @@ public abstract class Troop extends MapObject {
     return damage;
   }
 
-  public Lane getLane() { return lane; }
+  public Lane getLane() {
+    return lane;
+  }
 
   public boolean isAttackable() {
     return attackable;
   }
 
-  public void setAttacking(boolean b) { attacking = b; }
+  public void setAttacking(boolean b) {
+    attacking = b;
+  }
 
   public boolean isDead() {
     return health == NO_HEALTH;
@@ -125,7 +141,7 @@ public abstract class Troop extends MapObject {
 
   public void attack(Troop troop) {
     troop.hit(damage);
-}
+  }
 
   public void checkAttack(CopyOnWriteArrayList<Troop> enemies) {
     Troop closestEnemy = null;
@@ -172,19 +188,16 @@ public abstract class Troop extends MapObject {
         }
       } else if (playerType == PlayerType.TOP_PLAYER) {
         if (lane == Lane.BOT) {
-          //System.out.println("Bot lane top player direction down");
           if (getCentreY() > Constants.BOT_TURNPOINT_Y) {
-
             setDirectionDown();
           } else {
             setDirectionRight();
           }
-        } else if (lane == Lane.MID){
+        } else if (lane == Lane.MID) {
           setDirectionDownRight();
         } else if (lane == Lane.TOP) {
           if (getX() < Constants.TOP_TURNPOINT_X) {
             setDirectionRight();
-            //System.out.println("setDirection right");
           } else {
             setDirectionDown();
           }
@@ -192,8 +205,7 @@ public abstract class Troop extends MapObject {
       }
     }
   }
-  
-  
+
   @Override
   public String toString() {
     return this.getClass().toString();

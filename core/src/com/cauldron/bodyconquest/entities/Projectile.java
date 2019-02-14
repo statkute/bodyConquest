@@ -1,7 +1,6 @@
 package com.cauldron.bodyconquest.entities;
 
 import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -12,15 +11,12 @@ public abstract class Projectile extends MapObject {
   protected float maxTravelDistance;
   protected float distanceTraveled;
 
-  protected boolean hit;
   protected boolean piercing;
   protected ArrayList<Troop> hitTroops;
 
   protected boolean remove;
-  protected EncounterState screen;
 
-  public Projectile(EncounterState screen) {
-    this.screen = screen;
+  public Projectile() {
     // Maybe a better way of doing this
     hitTroops = new ArrayList<Troop>();
     this.collidable = true;
@@ -47,7 +43,6 @@ public abstract class Projectile extends MapObject {
 
   public void setRemove() {
     remove = true;
-    //remove();
   }
 
   public boolean getRemove() {
@@ -55,32 +50,13 @@ public abstract class Projectile extends MapObject {
   }
 
   public void update() {
+    double xPrev, yPrev;
+    if(distanceTraveled >= maxTravelDistance) setRemove();
+    xPrev = getX();
+    yPrev = getY();
     move();
+    distanceTraveled += distFrom(xPrev, yPrev);
   }
-//
-//  @Override
-//  public void act(float delta) {
-//    super.act(delta);
-//
-////    if(remove) {
-////      remove();
-////      return;
-////    }
-//
-//    float dx, dy;
-//    dx = speed * delta * (float) Math.cos(getAngle());
-//    dy = speed * delta * (float) Math.sin(getAngle());
-//
-//    setPosition(getX() - dx, getY() - dy);
-//  }
-//
-//  public double getAngle() {
-//    return angle;
-//  }
-//
-//  public void setAngle(double angle) {
-//    this.angle = angle % 360;
-//  }
 
   public void checkHit(CopyOnWriteArrayList<Troop> enemies) {
     for(Troop enemy : enemies) {

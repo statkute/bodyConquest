@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.gamestates;
+package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
