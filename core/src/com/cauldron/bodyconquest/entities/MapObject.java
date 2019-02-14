@@ -14,14 +14,16 @@ It also extends Actor.
 
 public abstract class MapObject {
 
-  private final double UP_DIRECTION = 90;
-  private final double DOWN_DIRECTION = -90;
-  private final double LEFT_DIRECTION = 180;
-  private final double RIGHT_DIRECTION = 0;
+  private final double UP_DIRECTION = 0;
+  private final double DOWN_DIRECTION = 180;
+  private final double LEFT_DIRECTION = -90;
+  private final double RIGHT_DIRECTION = 90;
 
   // private Dimension dimension;
+  // Current x and y
   private double x;
   private double y;
+  // Destination x and y
   private double dx;
   private double dy;
   private int width;
@@ -30,7 +32,6 @@ public abstract class MapObject {
 
   // Movement attributes
   protected double acceleration;
-  protected double deceleration;
   protected double currentSpeed;
   protected double maxSpeed;
   protected double stopSpeed;
@@ -38,27 +39,25 @@ public abstract class MapObject {
   private int cwidth;
   private int cheight;
 
-  private Rectangle bounds;
-
   public Image sprite;
   protected TextureRegion currentFrame;
   protected Texture texture;
 
-  protected double speed;
-  protected boolean collideable;
+  //public String imagePath;
 
-  private double destx;
-  private double desty;
+  protected boolean collidable;
 
   public EncounterState screen;
-  private boolean moving;
-  private boolean stoping;
+  protected boolean moving;
+
+  private Object animation;
 
   public MapObject() {
     // This might be a mistake
     setWidth(0);
     setHeight(0);
-    bounds = new Rectangle();
+    animation = null;
+    //imagePath = "core/assets/Default Sprite(Green).png";
   }
 
   public void setX(double x) {
@@ -75,32 +74,15 @@ public abstract class MapObject {
     return cheight;
   }
 
-//  public void moveUp(double delta) {
-//    setY(getY() + (delta * speed));
-//  }
-//
-//  public void moveDown(double delta) {
-//    setY(getY() - (delta * speed));
-//  }
-//
-//  public void moveLeft(double delta) {
-//    setX(getX() - speed);
-//  }
-//
-//  public void moveRight(double delta) {
-//    setX(getX() + speed);
-//  }
-
   /* maybe int depending on implementation. */
   public double distFrom(MapObject object) {
     return distFrom(object.getCentreX(), object.getCentreY());
   }
 
   public double distFrom(double x, double y) {
-    double xDif = (double) this.getCentreX() - (double) x;
-    double yDif = (double) this.getCentreY() - (double) y;
-    // System.out.println((double) Math.sqrt(Math.pow(xDif, 2) + Math.pow(yDif, 2)));
-    return (double) Math.sqrt(Math.pow(xDif, 2) + Math.pow(yDif, 2));
+    double xDif = this.getCentreX() - x;
+    double yDif = this.getCentreY() - y;
+    return Math.sqrt(Math.pow(xDif, 2) + Math.pow(yDif, 2));
   }
 
   public double getCentreX() {
@@ -111,7 +93,7 @@ public abstract class MapObject {
     return getY() + (getHeight() / 2);
   }
 
-  public boolean isCollideable() { return collideable; }
+  public boolean isCollideable() { return collidable; }
 
   public Rectangle getBounds()
   {
@@ -134,6 +116,12 @@ public abstract class MapObject {
   public void setDirectionDown() { direction = Math.toRadians(DOWN_DIRECTION); }
   public void setDirectionLeft() { direction = Math.toRadians(LEFT_DIRECTION); }
   public void setDirectionRight() { direction = Math.toRadians(RIGHT_DIRECTION); }
+
+  public void setDirectionUpLeft() { direction = Math.toRadians((UP_DIRECTION + LEFT_DIRECTION) / 2); }
+  public void setDirectionUpRight() { direction = Math.toRadians((UP_DIRECTION + RIGHT_DIRECTION) / 2); }
+  public void setDirectionDownLeft() { direction = Math.toRadians((-DOWN_DIRECTION + LEFT_DIRECTION) / 2); }
+  public void setDirectionDownRight() { direction = Math.toRadians((DOWN_DIRECTION + RIGHT_DIRECTION) / 2); }
+
   private void setDirection(double angle) {
     // Takes in radians
     direction = angle;
@@ -171,6 +159,8 @@ public abstract class MapObject {
     return y;
   }
 
+  public double getMaxSpeed() { return maxSpeed; }
+
   public void setPosition(double x, double y) {
     setX(x);
     setY(y);
@@ -196,6 +186,9 @@ public abstract class MapObject {
   }
 
   public void move() {
+    dx = x;
+    dy = y;
+
     if (moving) {
       if (currentSpeed < maxSpeed) currentSpeed += acceleration;
       currentSpeed = Math.min(currentSpeed, maxSpeed);
@@ -204,8 +197,37 @@ public abstract class MapObject {
       currentSpeed -= stopSpeed;
       currentSpeed = Math.max(currentSpeed, 0);
     }
-    dx += currentSpeed * Math.cos(direction);
-    dy += currentSpeed * Math.sin(direction);
+    dx += currentSpeed * Math.sin(direction);
+    dy += currentSpeed * Math.cos(direction);
+
+    // This may need to exist outside of move in the future
+    checkCollisions();
+  }
+
+  public void setMoving(boolean b) { moving = b; }
+
+  public BasicObject getBasicObject() {
+    BasicObject bo = new BasicObject();
+    bo.setX(x);
+    bo.setY(y);
+    bo.setWidth(width);
+    bo.setHeight(height);
+    bo.setDirection(direction);
+    bo.setCurrentSpeed(currentSpeed);
+    bo.setAnimation(animation);
+    //bo.setImagePath(imagePath);
+    return bo;
+  }
+
+  public abstract void update();
+
+  // Right now this does nothing but in the future this will check if the object is out of bounds or trying to walk into
+  // another wall / unit and stop the x and/or y values from changing
+  // This may mean that all move commands for map objects will need to be called, then all check collisions will need to
+  // be called after
+  public void checkCollisions() {
+    x = dx;
+    y = dy;
   }
 
 }

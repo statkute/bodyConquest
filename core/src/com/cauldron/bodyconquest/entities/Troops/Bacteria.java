@@ -19,16 +19,13 @@ public class Bacteria extends Troop {
   private Animation<TextureRegion> walkAnimation;
 
   private EncounterState map;
-  private PlayerType playerType;
   // Some above head health bar?
   // private UnitHealthBar healthBar;
 
-  private Rectangle collisionBox; // + Sprite for now at least
-
   public Bacteria() {
-    super(Lane.BOT);
+    super(Lane.BOT, PlayerType.BOT_PLAYER);
     init();
-    playerType = PlayerType.BOT_PLAYER;
+
   }
 
 
@@ -37,18 +34,18 @@ public class Bacteria extends Troop {
   and then one left at the enemy base it would be within range and attack
   */
   public Bacteria(EncounterState map, PlayerType playerType, Lane lane) {
-    super(lane);
-    this.playerType = playerType;
+    super(lane, playerType);
     this.map = map;
     init();
   }
   private void init(){
     // Dimensions
     setSize(50, 50);
+    setCSize(50, 50);
 
     // Troop Stats
     health = maxHealth = 100;
-    speed = 100;
+    maxSpeed = 1;
     attackable = true;
     moving = true;
     attacking = false;
@@ -62,59 +59,17 @@ public class Bacteria extends Troop {
 
     stateTime = 0f;
 
-
-
     // maybe better to use Rectangle class? instead of Image class (found in Tutorials)
     sprite = new Image(walkAnimation.getKeyFrame(0));
   }
 
   @Override
   public void update() {
-    updateMovement();
+    super.update();
+    //System.out.println("Bacteria X: " + getX() + "\tY: " + getY());
   }
 
-  private void updateMovement() {
-    if (moving) {
-      if (playerType == PlayerType.BOT_PLAYER) {
-        if (lane == Lane.BOT) {
-          if (getX() > Constants.BOT_TURNPOINT_X) {
-            setDirectionLeft();
-          } else {
-            setDirectionUp();
-          }
-        } else if (lane == Lane.MID) {
-          setDirectionLeft();
-          setDirectionUp();
-        } else if (lane == Lane.TOP) {
-          if (getY() < Constants.TOP_TURNPOINT_Y) {
-            setDirectionUp();
-          } else {
-            setDirectionLeft();
-          }
-        }
-      } else if (playerType == PlayerType.TOP_PLAYER) {
-        if (lane == Lane.BOT) {
-          if (getCentreY() > Constants.BOT_TURNPOINT_Y) {
-            setDirectionDown();
-          } else {
-            setDirectionRight();
-          }
-        } else if (lane == Lane.MID){
-          setDirectionRight();
-          setDirectionDown();
-        } else if (lane == Lane.TOP) {
-          if (getX() < Constants.TOP_TURNPOINT_X) {
-            setDirectionRight();
-            //System.out.println("setDirection right");
-          } else {
-            setDirectionDown();
-          }
-        }
-      }
-    }
-  }
-
-//  @Override
+  //  @Override
 //  public void draw(Batch batch, float parentAlpha) {
 //    stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
 //

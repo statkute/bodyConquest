@@ -11,45 +11,51 @@ import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 
 public class FluProjectile extends Projectile {
 
-  private float xDest;
-  private float yDest;
+  private double xDest;
+  private double yDest;
   private Animation<TextureRegion> walkAnimation;
   private float stateTime;
 
-  public FluProjectile(EncounterState screen, float x, float y, float xDest, float yDest) {
+  public FluProjectile(EncounterState screen, double x, double y, double xDest, double yDest) {
     super(screen);
     setSize(20, 20);
     setPosition(x - (getWidth() / 2) , y - (getHeight() / 2));
     this.xDest = xDest;
     this.yDest = yDest;
+    System.out.println("xDest: " + xDest + "\tyDest: " + yDest);
     init();
   }
 
   private void init() {
     damage = 40;
-    speed = 200;
-    currentFrame = new TextureRegion(new Texture("core/assets/Default Sprite (Green).png"));
-    setTargetLocation(xDest, yDest);
+    maxSpeed = 2;
+    //currentFrame = new TextureRegion(new Texture("core/assets/Default Sprite (Green).png"));
 
-    walkAnimation = AnimationWrapper.getSpriteSheet(5, 1, 0.15f, "core/assets/projectile_with_trail.png");
+    //walkAnimation = AnimationWrapper.getSpriteSheet(5, 1, 0.15f, "core/assets/projectile_with_trail.png");
     stateTime = 0f;
-    sprite = new Image(walkAnimation.getKeyFrame(0));
+    //sprite = new Image(walkAnimation.getKeyFrame(0));
   }
 
   @Override
-  public void act(float delta) {
-    super.act(delta);
-
+  public void update() {
+    moveTowards(xDest, yDest);
+    super.update();
   }
 
-  @Override
-  public void draw(Batch batch, float parentAlpha) {
-    stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
-
-    // Get current frame of animation for the current stateTime
-    //currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-    //this.setWidth(70);
-    //this.setHeight(70);
-    super.draw(batch, parentAlpha);
-  }
+//  @Override
+//  public void act(float delta) {
+//    super.act(delta);
+//
+//  }
+//
+//  @Override
+//  public void draw(Batch batch, float parentAlpha) {
+//    stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
+//
+//    // Get current frame of animation for the current stateTime
+//    //currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+//    //this.setWidth(70);
+//    //this.setHeight(70);
+//    super.draw(batch, parentAlpha);
+//  }
 }

@@ -19,16 +19,15 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
-import com.cauldron.bodyconquest.entities.Troops.FluNew;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
-import com.cauldron.bodyconquest.gamestates.EncounterState;
-import com.cauldron.bodyconquest.gamestates.EncounterState.*;
+import com.cauldron.bodyconquest.gamestates.FightScreen;
+import com.cauldron.bodyconquest.gamestates.FightScreen.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 public class HUD {
 
-    private final EncounterState screen;
+    private final FightScreen screen;
     private final PlayerType playerType;
     private Skin skin;
     private Viewport viewport;
@@ -38,7 +37,7 @@ public class HUD {
 
 
 
-  public HUD(SpriteBatch sb, final EncounterState screen, final PlayerType playerType) {
+  public HUD(SpriteBatch sb, final FightScreen screen, final PlayerType playerType) {
     this.screen = screen;
     this.playerType = playerType;
 
@@ -130,7 +129,7 @@ public class HUD {
       } else if(name.equals("virus")){
           troopButton = new ImageButton(new Virus().sprite.getDrawable());
       } else { //default
-          troopButton = new ImageButton(new FluNew().sprite.getDrawable());
+          troopButton = new ImageButton(new Flu().sprite.getDrawable());
       }
 
       troopButton.setBounds(

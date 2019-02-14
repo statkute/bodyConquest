@@ -1,30 +1,19 @@
 package com.cauldron.bodyconquest.gamestates;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.constants.Constants;
-import com.cauldron.bodyconquest.entities.HUD;
-import com.cauldron.bodyconquest.entities.HealthBar;
+import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
+import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.entities.Projectile;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.entities.Troops.Troop.UnitType;
+import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
-import com.cauldron.bodyconquest.rendering.BodyConquest;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /*
 The screen where the encounters occurs, hosts a number of actors including,
@@ -43,17 +32,9 @@ public class EncounterState extends GameState {
     MID,
     ALL
   }
-
-  private BodyConquest game;
-  private OrthographicCamera gameCamera;
-  private Viewport gamePort;
-
-  private HUD hud;
-
-  private Image map;
+  
+  private Map map;
   private float mapSize;
-
-  private Stage stage;
 
   // If kept final change to all caps
   private final float botTurnPointX = 150;
@@ -80,65 +61,58 @@ public class EncounterState extends GameState {
 
   // Troop Arrays (Data type and usage is subject to future change)
 
-  private ArrayList<Troop> troopsTop;
-  private ArrayList<Troop> troopsBottom;
+  private CopyOnWriteArrayList<MapObject> allMapObjects;
 
-  private ArrayList<Projectile> projectilesBottom;
-  private ArrayList<Projectile> projectilesTop;
+  private CopyOnWriteArrayList<Troop> troopsTop;
+  private CopyOnWriteArrayList<Troop> troopsBottom;
+
+  private CopyOnWriteArrayList<Projectile> projectilesBottom;
+  private CopyOnWriteArrayList<Projectile> projectilesTop;
 
   private Base topBase;
   private Base bottomBase;
 
-  public static Sound dropSound;
+  //public static Sound dropSound;
 
-  public EncounterState(BodyConquest game) {
-//    this.game = game;
-//    gameCamera = new OrthographicCamera();
-//    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
-//    stage = new Stage(gamePort);
-//    Gdx.input.setInputProcessor(stage);
+  private Communicator comms;
 
-//    // Initialise player HUD
-//    hud = new HUD(game.batch, this, PlayerType.BOT_PLAYER);
+  public EncounterState(Communicator comms) {
+    this.comms = comms;
+    
+    map = new Map();
 
-    // Set up map
-    //map = new Image(new Texture("core/assets/Basic Map v2.png"));
-    //float topOfUnitBar = hud.getUnitBar().getTop();
-    //mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
-    //map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
-    //stage.addActor(map);
-
-    //Map
-
+    allMapObjects = new CopyOnWriteArrayList<MapObject>();
+    
     // Initialise unit arrays
-    troopsBottom = new ArrayList<Troop>();
-    troopsTop = new ArrayList<Troop>();
+    troopsBottom = new CopyOnWriteArrayList<Troop>();
+    troopsTop = new CopyOnWriteArrayList<Troop>();
 
     // Create player bases
     bottomBase = new BacteriaBase(Lane.ALL, PlayerType.BOT_PLAYER);
-    bottomBase.setPosition(getMap().getRight() - bottomBase.getWidth(), getMap().getY());
+    bottomBase.setPosition(map.getRight() - bottomBase.getWidth(), map.getBottom());
     //stage.addActor(bottomBase);
     troopsBottom.add(bottomBase);
+    allMapObjects.add(bottomBase);
 
     topBase = new BacteriaBase(Lane.ALL, PlayerType.TOP_PLAYER);
-    topBase.setPosition(getMap().getX(), getMap().getTop() - topBase.getHeight());
+    topBase.setPosition(map.getLeft(), map.getTop() - topBase.getHeight());
     //stage.addActor(topBase);
     troopsTop.add(topBase);
+    allMapObjects.add(topBase);
 
-    projectilesBottom = new ArrayList<Projectile>();
-    projectilesTop = new ArrayList<Projectile>();
+    projectilesBottom = new CopyOnWriteArrayList<Projectile>();
+    projectilesTop = new CopyOnWriteArrayList<Projectile>();
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
 
-    dropSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/waterDrop.wav"));
+    //dropSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/waterDrop.wav"));
   }
 
-  private void checkAttack(ArrayList<Troop> troopsP1, ArrayList<Troop> troopsP2) {
-    ArrayList<Troop> deadTroops = new ArrayList<Troop>();
+  private void checkAttack(CopyOnWriteArrayList<Troop> troopsP1, CopyOnWriteArrayList<Troop> troopsP2) {
+    CopyOnWriteArrayList<Troop> deadTroops = new CopyOnWriteArrayList<Troop>();
     for (Troop troop : troopsP1) {
       if (troop.isDead()) {
         deadTroops.add(troop);
-        //troop.remove();
         continue;
       }
       troop.checkAttack(troopsP2);
@@ -147,23 +121,29 @@ public class EncounterState extends GameState {
     // first if they both die
     for (Troop u : deadTroops) {
       troopsP1.remove(u);
-      dropSound.play();
+      allMapObjects.remove(u);
+      //dropSound.play();
     }
   }
 
-  private void checkProjectiles(ArrayList<Projectile> projectiles, ArrayList<Troop> enemies) {
-    ArrayList<Projectile> finishedProjectiles = new ArrayList<Projectile>();
+  private void checkProjectiles(CopyOnWriteArrayList<Projectile> projectiles, CopyOnWriteArrayList<Troop> enemies) {
+    CopyOnWriteArrayList<Projectile> finishedProjectiles = new CopyOnWriteArrayList<Projectile>();
     for(Projectile proj : projectiles) {
       proj.checkHit(enemies);
       if(proj.getRemove()) finishedProjectiles.add(proj);
     }
     // This gives particular players a very slight advantage because certain units will be deleted
     // first if they both die
-    for (Projectile proj : finishedProjectiles) projectiles.remove(proj);
+    for (Projectile proj : finishedProjectiles){
+      projectiles.remove(proj);
+      allMapObjects.remove(proj);
+    }
   }
 
   @Override
   public void update() {
+
+    for(MapObject mo : allMapObjects) mo.update();
     // Handle Input
 
     /* MULTIPLAYER */
@@ -178,6 +158,13 @@ public class EncounterState extends GameState {
     checkAttack(troopsBottom, troopsTop);
     checkProjectiles(projectilesTop, troopsBottom);
     checkProjectiles(projectilesBottom, troopsTop);
+
+    //System.out.println(allMapObjects.size());
+    // Synchronize this
+    // Change this so it only add new objects
+    CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
+    for(MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
+    comms.populateObjectList(sentObjects);
   }
 
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
@@ -226,9 +213,8 @@ public class EncounterState extends GameState {
       }
       troopsTop.add(troop);
     }
+    allMapObjects.add(troop);
 
-    // Maybe add troop to data structure containing all units if the stage isn't one
-    //stage.addActor(troop);
   }
 
   public void addProjectile(Projectile proj, PlayerType playerType) {
@@ -237,13 +223,13 @@ public class EncounterState extends GameState {
     if(playerType == PlayerType.BOT_PLAYER) {
       projectilesBottom.add(proj);
     } else if (playerType == PlayerType.TOP_PLAYER) {
+      System.out.println("ADD PROJECT TO TOP ROJ");
       projectilesTop.add(proj);
     }
 
-    //stage.addActor(proj);
-  }
+    allMapObjects.add(proj);
 
-  public Image getMap() { return map; }
+  }
 
   public float getBotTurnPointX() {
     return botTurnPointX;

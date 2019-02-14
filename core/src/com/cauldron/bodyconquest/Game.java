@@ -1,102 +1,107 @@
 package com.cauldron.bodyconquest;
 
+import com.cauldron.bodyconquest.gamestates.Communicator;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.gamestates.GameStateManager;
 
-public class Game implements Runnable {
+public class Game extends Thread {
 
-    // Dimensions
-//    public static GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-//    public static final int SCREEN_WIDTH = gd.getDisplayMode().getWidth();
-//    public static final int SCREEN_HEIGHT = gd.getDisplayMode().getHeight();
-//    public static final int WIDTH = 320;
-//    public static final int HEIGHT = 256;
-//    public static final int SCALE = 3; 	// Scale allows me to change the size of the game and game window easily
+  public volatile Communicator comms;
+  // Dimensions
+  //    public static GraphicsDevice gd =
+  // GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+  //    public static final int SCREEN_WIDTH = gd.getDisplayMode().getWidth();
+  //    public static final int SCREEN_HEIGHT = gd.getDisplayMode().getHeight();
+  //    public static final int WIDTH = 320;
+  //    public static final int HEIGHT = 256;
+  //    public static final int SCALE = 3; 	// Scale allows me to change the size of the game and
+  // game window easily
 
-    // Fullscreen
-    //private int fsm;
+  // Fullscreen
+  // private int fsm;
 
-    // Game thread
-    private Thread thread;
-    private boolean running;
-    private int FPS = 60; // The number of frames the game will load per second
-    private long targetTime = 1000 / FPS;
+  // Game thread
+  // private Thread thread;
+  private boolean running;
+  private int FPS = 60; // The number of frames the game will load per second
+  private long targetTime = 1000 / FPS;
 
-    // Game state manager
-    private GameStateManager gsm;
+  // Game state manager
+  private GameStateManager gsm;
 
-    // Constructor
-  public Game(){}
-//    public GamePanel(int fsm) {
-//      super();
-//      this.fsm = fsm;
-//      setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-//      setFocusable(true);
-//      requestFocus();
-//    }
-//
-//    public void addNotify() {
-//      super.addNotify();
-//      if (thread == null) {
-//        thread = new Thread(this);
-//        addKeyListener(this);
-//        thread.start();
-//      }
-//    }
+  // Constructor
+  public Game() {
+    comms = new Communicator();
+  }
+  //    public GamePanel(int fsm) {
+  //      super();
+  //      this.fsm = fsm;
+  //      setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+  //      setFocusable(true);
+  //      requestFocus();
+  //    }
+  //
+  //    public void addNotify() {
+  //      super.addNotify();
+  //      if (thread == null) {
+  //        thread = new Thread(this);
+  //        addKeyListener(this);
+  //        thread.start();
+  //      }
+  //    }
 
-    private void init() { // Sets the image and image sizes
+  private void init() { // Sets the image and image sizes
 
-      //image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-      //border = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
-      //g = (Graphics2D) image.getGraphics();
+    // image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    // border = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
+    // g = (Graphics2D) image.getGraphics();
 
-      //g.fillRect(0, 0, (SCREEN_WIDTH - (WIDTH * SCALE)) / 2, SCREEN_HEIGHT);
+    // g.fillRect(0, 0, (SCREEN_WIDTH - (WIDTH * SCALE)) / 2, SCREEN_HEIGHT);
 
-      running = true;
+    running = true;
 
-      gsm = new GameStateManager();
-    }
+    gsm = new GameStateManager();
+    gsm.setCurrentGameState(new EncounterState(comms));
+  }
 
-    public void run() { // What initially occurs when the game runs from frame to frame
+  @Override
+  public void run() { // What initially occurs when the game runs from frame to frame
 
-      init();
+    init();
 
-      long start;
-      long elapsed;
-      long wait;
+    long start;
+    long elapsed;
+    long wait;
 
-      // Game loop
-      while (running) {
+    // Game loop
+    while (running) {
 
-        start = System.nanoTime();
+      start = System.nanoTime();
 
-        update();
-        //draw();
-        //drawToScreen();
+      update();
+      // draw();
+      // drawToScreen();
 
-        elapsed = System.nanoTime() - start;
-        // This makes it so that once the target time has passed, then the code will continue running
-        wait = targetTime - elapsed / 1000000;
-        if (wait < 0)
-          wait = 5;
+      elapsed = System.nanoTime() - start;
+      // This makes it so that once the target time has passed, then the code will continue running
+      wait = targetTime - elapsed / 1000000;
+      if (wait < 0) wait = 5;
 
-        try {
-          Thread.sleep(wait);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
+      try {
+        Thread.sleep(wait);
+      } catch (Exception e) {
+        e.printStackTrace();
       }
-
     }
+  }
 
-    private void update() {
-      gsm.update();
-    }
+  private void update() {
+    gsm.update();
+  }
 
-//    private void draw() {
-//      gsm.draw(g);
-//    }
-//
-
+  //    private void draw() {
+  //      gsm.draw(g);
+  //    }
+  //
 
 }

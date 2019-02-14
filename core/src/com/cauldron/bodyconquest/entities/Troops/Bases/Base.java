@@ -11,8 +11,7 @@ public abstract class Base extends Troop {
     protected Animation<TextureRegion> imageBase;
 
     public Base(EncounterState.Lane lane, PlayerType playerType) {
-      super(lane);
-      this.playerType = playerType;
+      super(lane, playerType);
       this.attackable = true;
       this.moving = false;
       this.attacking = false;

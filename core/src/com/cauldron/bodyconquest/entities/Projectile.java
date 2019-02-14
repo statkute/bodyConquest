@@ -4,10 +4,10 @@ import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Projectile extends MapObject {
 
-  protected float speed;
   protected int damage;
   protected float maxTravelDistance;
   protected float distanceTraveled;
@@ -19,12 +19,18 @@ public abstract class Projectile extends MapObject {
   protected boolean remove;
   protected EncounterState screen;
 
-  private double angle;
-
   public Projectile(EncounterState screen) {
     this.screen = screen;
     // Maybe a better way of doing this
     hitTroops = new ArrayList<Troop>();
+    this.collidable = true;
+    initDefault();
+  }
+
+  private void initDefault() {
+    // Maxed out because I don't want to do fine tuning right now
+    stopSpeed = 100000;
+    acceleration = 100000;
   }
 
   public void hit(Troop troop) {
@@ -76,7 +82,7 @@ public abstract class Projectile extends MapObject {
 //    this.angle = angle % 360;
 //  }
 
-  public void checkHit(ArrayList<Troop> enemies) {
+  public void checkHit(CopyOnWriteArrayList<Troop> enemies) {
     for(Troop enemy : enemies) {
       if(getBounds().intersects(enemy.getBounds())) {
         hit(enemy);

@@ -19,22 +19,27 @@ public class BacteriaBase extends Base {
     private void init(){
         this.health = 100;
         this.damage = 3;
-        this.imageBase =
-                GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("core/assets/castle1.gif").read());
+//        this.imageBase =
+//                GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("core/assets/castle1.gif").read());
         this.range = 130;
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
-
-        // Get current frame of animation for the current stateTime
-        currentFrame = imageBase.getKeyFrame(stateTime, true);
-        super.draw(batch, parentAlpha);
-    }
+//    @Override
+//    public void draw(Batch batch, float parentAlpha) {
+//        stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
+//
+//        // Get current frame of animation for the current stateTime
+//        currentFrame = imageBase.getKeyFrame(stateTime, true);
+//        super.draw(batch, parentAlpha);
+//    }
 
     @Override
     public void attack(Troop troop) {
         super.attack(troop);
+    }
+
+    @Override
+    public void update() {
+
     }
 }

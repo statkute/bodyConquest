@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.Game;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -153,8 +154,10 @@ public class RaceSelection implements Screen {
       if (confirmed) {
 
         if (playBounds.contains(tmp.x, tmp.y)) {
-
-          game.setScreen(new EncounterScreen(game));
+          Game g = new Game();
+          g.start();
+          //Communicator comms = new Communicator();
+          game.setScreen(new FightScreen(game, g.comms));
           dispose();
         }
       } else if (!confirmed) {

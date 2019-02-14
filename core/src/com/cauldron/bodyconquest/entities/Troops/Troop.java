@@ -1,15 +1,18 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.gamestates.EncounterState.Lane;
 import com.cauldron.bodyconquest.gamestates.EncounterState.PlayerType;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Troop extends MapObject {
 
   public static final int NO_HEALTH = 0;
+
   protected final Lane lane;
+  protected final PlayerType playerType;
 
   public enum UnitType {
     BACTERIA, FLU, VIRUS
@@ -24,7 +27,6 @@ public abstract class Troop extends MapObject {
   protected long cooldown;
   protected long lastAttack;
   protected int range;
-  protected double movementSpeed;
 
   // Resources Requirements
   private int lipidsCost;
@@ -33,21 +35,19 @@ public abstract class Troop extends MapObject {
 
   // States
   protected boolean attacking;
-  protected boolean moving;
 
   protected boolean attackable;
 
-  protected PlayerType playerType;
-
-  public Troop(Lane lane) {
+  public Troop(Lane lane, PlayerType playerType) {
     this.lane = lane;
-    this.collideable = true;
+    this.playerType = playerType;
+    this.collidable = true;
     initDefault();
   }
 
   private void initDefault() {
-    stopSpeed = 0.5;
-    // Maxed out because I don't want to do fine tuning right noow
+    // Maxed out because I don't want to do fine tuning right now
+    stopSpeed = 100000;
     acceleration = 100000;
   }
 
@@ -92,7 +92,7 @@ public abstract class Troop extends MapObject {
   }
 
   public double getMovementSpeed() {
-    return movementSpeed;
+    return getMaxSpeed();
   }
 
   public double getProteinCost() {
@@ -107,7 +107,7 @@ public abstract class Troop extends MapObject {
     return range;
   }
 
-  public int getDamge() {
+  public int getDamage() {
     return damage;
   }
 
@@ -117,7 +117,6 @@ public abstract class Troop extends MapObject {
     return attackable;
   }
 
-  public void setMoving(boolean b) { moving = b; }
   public void setAttacking(boolean b) { attacking = b; }
 
   public boolean isDead() {
@@ -128,7 +127,7 @@ public abstract class Troop extends MapObject {
     troop.hit(damage);
 }
 
-  public void checkAttack(ArrayList<Troop> enemies) {
+  public void checkAttack(CopyOnWriteArrayList<Troop> enemies) {
     Troop closestEnemy = null;
     for (Troop enemy : enemies) {
       if (closestEnemy == null) closestEnemy = enemy;
@@ -147,13 +146,52 @@ public abstract class Troop extends MapObject {
     }
   }
 
-  public abstract void update();
+  public void update() {
+    updateMovement();
+    move();
+  }
 
-//  public void checkCollision(ArrayList<MapObject> mapObjects) {
-//    for(MapObject o : mapObjects) {
-//      //if(o.isCollideable())
-//    }
-//  }
+  protected void updateMovement() {
+    if (moving) {
+      if (playerType == PlayerType.BOT_PLAYER) {
+        if (lane == Lane.BOT) {
+          if (getX() > Constants.BOT_TURNPOINT_X) {
+            setDirectionLeft();
+          } else {
+            setDirectionUp();
+          }
+        } else if (lane == Lane.MID) {
+          setDirectionLeft();
+          setDirectionUp();
+        } else if (lane == Lane.TOP) {
+          if (getY() < Constants.TOP_TURNPOINT_Y) {
+            setDirectionUp();
+          } else {
+            setDirectionLeft();
+          }
+        }
+      } else if (playerType == PlayerType.TOP_PLAYER) {
+        if (lane == Lane.BOT) {
+          //System.out.println("Bot lane top player direction down");
+          if (getCentreY() > Constants.BOT_TURNPOINT_Y) {
+
+            setDirectionDown();
+          } else {
+            setDirectionRight();
+          }
+        } else if (lane == Lane.MID){
+          setDirectionDownRight();
+        } else if (lane == Lane.TOP) {
+          if (getX() < Constants.TOP_TURNPOINT_X) {
+            setDirectionRight();
+            //System.out.println("setDirection right");
+          } else {
+            setDirectionDown();
+          }
+        }
+      }
+    }
+  }
   
   
   @Override
