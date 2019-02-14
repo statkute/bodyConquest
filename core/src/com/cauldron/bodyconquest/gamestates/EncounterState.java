@@ -92,13 +92,11 @@ public class EncounterState extends GameState {
     // Create player bases
     bottomBase = new BacteriaBase(Lane.ALL, PlayerType.BOT_PLAYER);
     bottomBase.setPosition(map.getRight() - bottomBase.getWidth(), map.getBottom());
-    //stage.addActor(bottomBase);
     troopsBottom.add(bottomBase);
     allMapObjects.add(bottomBase);
 
     topBase = new BacteriaBase(Lane.ALL, PlayerType.TOP_PLAYER);
     topBase.setPosition(map.getLeft(), map.getTop() - topBase.getHeight());
-    //stage.addActor(topBase);
     troopsTop.add(topBase);
     allMapObjects.add(topBase);
 
@@ -107,7 +105,6 @@ public class EncounterState extends GameState {
 
     new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
 
-    //dropSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/waterDrop.wav"));
   }
 
   private void checkAttack(CopyOnWriteArrayList<Troop> troopsP1, CopyOnWriteArrayList<Troop> troopsP2) {
@@ -119,12 +116,10 @@ public class EncounterState extends GameState {
       }
       troop.checkAttack(troopsP2);
     }
-    // This gives particular players a very slight advantage because certain units will be deleted
-    // first if they both die
+
     for (Troop u : deadTroops) {
       troopsP1.remove(u);
       allMapObjects.remove(u);
-      //dropSound.play();
     }
   }
 
@@ -144,16 +139,9 @@ public class EncounterState extends GameState {
 
   @Override
   public void update() {
+    // Receive any input from clients
 
     for(MapObject mo : allMapObjects) mo.update();
-    // Handle Input
-
-    /* MULTIPLAYER */
-    // Send inputs to server
-
-    // Receive update from server
-
-    /* SINGLE PLAYER */
 
     // Update All Units
     checkAttack(troopsTop, troopsBottom);
@@ -161,7 +149,6 @@ public class EncounterState extends GameState {
     checkProjectiles(projectilesTop, troopsBottom);
     checkProjectiles(projectilesBottom, troopsTop);
 
-    //System.out.println(allMapObjects.size());
     // Synchronize this
     // Change this so it only add new objects
     CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
@@ -172,7 +159,6 @@ public class EncounterState extends GameState {
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
     // Initialise the troop
     Troop troop = null;
-    //dropSound.play();
 
     // Initialise troop type
     if (unitType.equals(UnitType.BACTERIA)) {
@@ -225,12 +211,9 @@ public class EncounterState extends GameState {
     if(playerType == PlayerType.BOT_PLAYER) {
       projectilesBottom.add(proj);
     } else if (playerType == PlayerType.TOP_PLAYER) {
-      System.out.println("ADD PROJECT TO TOP ROJ");
       projectilesTop.add(proj);
     }
-
     allMapObjects.add(proj);
-
   }
 
   public float getBotTurnPointX() {
