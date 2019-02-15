@@ -3,7 +3,7 @@ package com.cauldron.bodyconquest.entities.resources;
 import com.cauldron.bodyconquest.game_logic.utils.Timer;
 
 public class Resources extends Thread {
-  private final double MAX_RESOURCE = 100.0;
+  private double MAX_RESOURCE = 100.0;
   private double lipids;
   private double sugars;
   private double proteins;
@@ -21,36 +21,38 @@ public class Resources extends Thread {
   }
 
   public void run() {
-    // wait for a second before increasing the resources
-    boolean successfulTimer = Timer.startTimer(1000);
-    while (successfulTimer != true){
-      successfulTimer = Timer.startTimer(1000);
-    }
+    while (true) {
+      // wait for a second before increasing the resources
+      boolean successfulTimer = Timer.startTimer(1000);
+      while (!successfulTimer) {
+        successfulTimer = Timer.startTimer(1000);
+      }
 
-    if (lipids < MAX_RESOURCE) {
-      if (lipids + regenerationLipids > MAX_RESOURCE) {
-        lipids = MAX_RESOURCE;
-      } else {
-        lipids += regenerationLipids;
+      if (lipids < MAX_RESOURCE) {
+        if (lipids + regenerationLipids > MAX_RESOURCE) {
+          lipids = MAX_RESOURCE;
+        } else {
+          lipids += regenerationLipids;
+        }
+      }
+
+      if (sugars < MAX_RESOURCE) {
+        if (sugars + regenerationSugars > MAX_RESOURCE) {
+          sugars = MAX_RESOURCE;
+        } else {
+          sugars += regenerationSugars;
+        }
+      }
+
+      if (proteins < MAX_RESOURCE) {
+        if (proteins + regenerationProteins > MAX_RESOURCE) {
+          proteins = MAX_RESOURCE;
+        } else {
+          proteins += regenerationProteins;
+        }
       }
     }
-
-    if (sugars < MAX_RESOURCE) {
-      if (sugars + regenerationSugars > MAX_RESOURCE) {
-        sugars = MAX_RESOURCE;
-      } else {
-        sugars += regenerationSugars;
-      }
-    }
-
-    if (proteins < MAX_RESOURCE) {
-      if (proteins + regenerationProteins > MAX_RESOURCE) {
-        proteins = MAX_RESOURCE;
-      } else {
-        proteins += regenerationProteins;
-      }
-    }
-    //TO DO: send resource update to the client
+    // TO DO: send resource update to the client
   }
 
   public boolean canAfford(double priceLipids, double priceSugars, double priceProteins) {
@@ -64,7 +66,7 @@ public class Resources extends Thread {
     lipids -= priceLipids;
     sugars -= priceSugars;
     proteins -= priceProteins;
-    //TO DO: send resource update to the client
+    // TO DO: send resource update to the client
   }
 
   public void increaseLipidRegeneration(double increase) {
