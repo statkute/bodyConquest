@@ -2,7 +2,16 @@ package com.cauldron.bodyconquest.constants;
 
 public class Constants {
 
-    // Turnpoints coordinates on the two lanes that have corners: BOT and TOP
+    // EVERYTHINGS
+    public static enum EveryThing {}
+    // ALL units
+    public static enum UnitType {BACTERIA, FLU, BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE, VIRUS}
+    // Player types
+    public static enum PlayerType {PLAYER_TOP, PLAYER_BOTTOM, AI}
+    // All lanes
+    public enum Lane {TOP, BOTTOM, MIDDLE, ALL}
+
+    // Turnpoints coordinates on the two lanes that have corners: BOTTOM and TOP
     public static final float BOT_TURNPOINT_X = 150;
     public static final float BOT_TURNPOINT_Y = 100;
     public static final float TOP_TURNPOINT_X = 600;

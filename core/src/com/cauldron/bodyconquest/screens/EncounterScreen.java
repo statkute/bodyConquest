@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.constants.Constants.*;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.ViewObject;
@@ -22,17 +24,7 @@ public class EncounterScreen implements Screen {
   private final float mapSize;
   private final Image map;
 
-  public enum PlayerType {
-    BOT_PLAYER,
-    TOP_PLAYER
-  }
 
-  public enum Lane {
-    TOP,
-    BOT,
-    MID,
-    ALL
-  }
 
   private final OrthographicCamera gameCamera;
   private final FitViewport gamePort;
@@ -49,7 +41,7 @@ public class EncounterScreen implements Screen {
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    hud = new HUD(game.batch, this, PlayerType.BOT_PLAYER);
+    hud = new HUD(game.batch, this, Constants.PlayerType.PLAYER_BOTTOM);
 
     // Set up map
     map = new Image(new Texture("core/assets/Basic Map v2.png"));
@@ -122,17 +114,18 @@ public class EncounterScreen implements Screen {
 
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
     // Should call send spawn message to server
+    //comms.addCommand();
   }
 
   //    public enum PlayerType {
-  //      BOT_PLAYER,
-  //      TOP_PLAYER
+  //      PLAYER_BOTTOM,
+  //      PLAYER_TOP
   //    }
   //
   //    public enum Lane {
   //      TOP,
-  //      BOT,
-  //      MID,
+  //      BOTTOM,
+  //      MIDDLE,
   //      ALL
   //    }
   //
@@ -194,7 +187,7 @@ public class EncounterScreen implements Screen {
   //
   //      // Initialise player HUD
   //      hud = new HUD(game.batch, this,
-  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.BOT_PLAYER);
+  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.PLAYER_BOTTOM);
   //
   //      // Set up map
   //      map = new Image(new Texture("core/assets/Basic Map v2.png"));
@@ -211,13 +204,13 @@ public class EncounterScreen implements Screen {
   //      // Create player bases
   //      bottomBase = new
   // BacteriaBase(com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane.ALL,
-  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.BOT_PLAYER);
+  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.PLAYER_BOTTOM);
   //      bottomBase.setPosition(getMap().getRight() - bottomBase.getWidth(), getMap().getY());
   //      stage.addActor(bottomBase);
   //      troopsBottom.add(bottomBase);
   //
   //      topBase = new BacteriaBase(com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane.ALL,
-  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.TOP_PLAYER);
+  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.PLAYER_TOP);
   //      topBase.setPosition(getMap().getX(), getMap().getTop() - topBase.getHeight());
   //      stage.addActor(topBase);
   //      troopsTop.add(topBase);
@@ -231,7 +224,7 @@ public class EncounterScreen implements Screen {
   ////    stage.addActor(healthBar);
   //
   //      new BasicTestAI(this,
-  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.TOP_PLAYER).start();
+  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.PLAYER_TOP).start();
   //
   //      dropSound = Gdx.audio.newSound(Gdx.files.internal("core/assets/waterDrop.wav"));
   //    }
@@ -388,13 +381,13 @@ public class EncounterScreen implements Screen {
   //
   //      // Spawn units for bottom player
   //      if
-  // (playerType.equals(com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.BOT_PLAYER))
+  // (playerType.equals(com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.PLAYER_BOTTOM))
   // {
-  //        if (lane == com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane.BOT) {
+  //        if (lane == com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane.BOTTOM) {
   //          troop.setPosition(
   //                  Constants.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2),
   // Constants.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2));
-  //        } else if (lane == com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane.MID) {
+  //        } else if (lane == com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane.MIDDLE) {
   //          troop.setPosition(
   //                  Constants.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2),
   // Constants.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2));
@@ -408,13 +401,13 @@ public class EncounterScreen implements Screen {
   //
   //      // Spawn units for top player
   //      if
-  // (playerType.equals(com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.TOP_PLAYER))
+  // (playerType.equals(com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.PLAYER_TOP))
   // {
-  //        if (lane == com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane.BOT) {
+  //        if (lane == com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane.BOTTOM) {
   //          troop.setPosition(
   //                  Constants.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2),
   // Constants.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2));
-  //        } else if (lane == com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane.MID) {
+  //        } else if (lane == com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane.MIDDLE) {
   //          troop.setPosition(
   //                  Constants.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2),
   // Constants.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2));
@@ -435,10 +428,10 @@ public class EncounterScreen implements Screen {
   //      if(playerType == null || proj == null) return;
   //
   //      if(playerType ==
-  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.BOT_PLAYER) {
+  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.PLAYER_BOTTOM) {
   //        projectilesBottom.add(proj);
   //      } else if (playerType ==
-  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.TOP_PLAYER) {
+  // com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType.PLAYER_TOP) {
   //        projectilesTop.add(proj);
   //      }
   //

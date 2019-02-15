@@ -1,7 +1,6 @@
 package com.cauldron.bodyconquest.entities.Troops.Bases;
 
-import com.cauldron.bodyconquest.gamestates.EncounterState.Lane;
-import com.cauldron.bodyconquest.gamestates.EncounterState.PlayerType;
+import com.cauldron.bodyconquest.constants.Constants.*;
 
 public class VirusBase extends Base {
 

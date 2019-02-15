@@ -2,11 +2,13 @@ package com.cauldron.bodyconquest.game_logic;
 
 import com.cauldron.bodyconquest.entities.BasicObject;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Communicator {
 
   private CopyOnWriteArrayList<BasicObject> objects;
+  private ConcurrentLinkedQueue<String> commands;
 
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();

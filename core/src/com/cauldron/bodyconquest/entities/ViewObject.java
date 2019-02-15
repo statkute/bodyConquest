@@ -15,7 +15,7 @@ public class ViewObject extends Actor {
     setWidth((float)bo.getWidth());
     setHeight((float)bo.getHeight());
     // Right now all textures are the default green
-    texture = new Texture("core/assets/Default Sprite (Green).png");
+    texture = new Texture("core/assets/bucket.png");
   }
 
   @Override

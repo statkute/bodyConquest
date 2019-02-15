@@ -5,16 +5,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.entities.projectiles.FluProjectile;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
-import com.cauldron.bodyconquest.gamestates.EncounterState.Lane;
-import com.cauldron.bodyconquest.gamestates.EncounterState.PlayerType;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
+import com.cauldron.bodyconquest.constants.Constants.*;
 
 public class Flu extends Troop {
 
   private EncounterState map;
 
   public Flu() {
-    super(Lane.BOT, PlayerType.BOT_PLAYER);
+    super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
     init();
   }
 

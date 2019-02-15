@@ -10,7 +10,7 @@ import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.entities.Troops.Troop.*;
+import com.cauldron.bodyconquest.constants.Constants.*;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
 import com.cauldron.bodyconquest.game_logic.Communicator;
@@ -26,20 +26,12 @@ public class EncounterState extends GameState {
    * An enumeration for the different assignments {@link Troop}s can have to determine how Troops move and who/what they
    * attack.
    */
-  public enum PlayerType {
-    BOT_PLAYER,
-    TOP_PLAYER
-  }
+
 
   /**
    * An enumeration for the different lanes {@link Troop}s can be assigned to, to determine how those Troops move.
    */
-  public enum Lane {
-    TOP,
-    BOT,
-    MID,
-    ALL
-  }
+
 
   /** The map object that holds all information that needs to be known about the map. */
   private Map map;
@@ -80,12 +72,12 @@ public class EncounterState extends GameState {
     troopsTop = new CopyOnWriteArrayList<Troop>();
 
     // Create player bases
-    Base bottomBase = new BacteriaBase(Lane.ALL, PlayerType.BOT_PLAYER);
+    Base bottomBase = new BacteriaBase(Lane.ALL, PlayerType.PLAYER_BOTTOM);
     bottomBase.setPosition(map.getRight() - bottomBase.getWidth(), map.getBottom());
     troopsBottom.add(bottomBase);
     allMapObjects.add(bottomBase);
 
-    Base topBase = new BacteriaBase(Lane.ALL, PlayerType.TOP_PLAYER);
+    Base topBase = new BacteriaBase(Lane.ALL, PlayerType.PLAYER_TOP);
     topBase.setPosition(map.getLeft(), map.getTop() - topBase.getHeight());
     troopsTop.add(topBase);
     allMapObjects.add(topBase);
@@ -93,7 +85,7 @@ public class EncounterState extends GameState {
     projectilesBottom = new CopyOnWriteArrayList<Projectile>();
     projectilesTop = new CopyOnWriteArrayList<Projectile>();
 
-    new BasicTestAI(this, PlayerType.TOP_PLAYER).start();
+    new BasicTestAI(this, PlayerType.PLAYER_TOP).start();
 
   }
 
@@ -146,6 +138,7 @@ public class EncounterState extends GameState {
   @Override
   public void update() {
     // Receive any input from clients
+    //String command = comms.getNextComand();
 
     for(MapObject mo : allMapObjects) mo.update();
 
@@ -184,11 +177,11 @@ public class EncounterState extends GameState {
     if (troop == null || lane == null || playerType == null) return;
 
     // Spawn units for bottom player
-    if (playerType.equals(PlayerType.BOT_PLAYER)) {
-      if (lane == Lane.BOT) {
+    if (playerType.equals(PlayerType.PLAYER_BOTTOM)) {
+      if (lane == Lane.BOTTOM) {
         troop.setPosition(
                 Constants.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0), Constants.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Lane.MID) {
+      } else if (lane == Lane.MIDDLE) {
         troop.setPosition(
                 Constants.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0), Constants.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.TOP) {
@@ -199,11 +192,11 @@ public class EncounterState extends GameState {
     }
 
     // Spawn units for top player
-    if (playerType.equals(PlayerType.TOP_PLAYER)) {
-      if (lane == Lane.BOT) {
+    if (playerType.equals(PlayerType.PLAYER_TOP)) {
+      if (lane == Lane.BOTTOM) {
         troop.setPosition(
                 Constants.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0), Constants.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Lane.MID) {
+      } else if (lane == Lane.MIDDLE) {
         troop.setPosition(
                 Constants.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0), Constants.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.TOP) {
@@ -223,9 +216,9 @@ public class EncounterState extends GameState {
   public void addProjectile(Projectile projectile, PlayerType playerType) {
     if(playerType == null || projectile == null) return;
 
-    if(playerType == PlayerType.BOT_PLAYER) {
+    if(playerType == PlayerType.PLAYER_BOTTOM) {
       projectilesBottom.add(projectile);
-    } else if (playerType == PlayerType.TOP_PLAYER) {
+    } else if (playerType == PlayerType.PLAYER_TOP) {
       projectilesTop.add(projectile);
     } else {
       return;

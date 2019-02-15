@@ -1,9 +1,8 @@
 package com.cauldron.bodyconquest.game_logic;
 
 import com.badlogic.gdx.Gdx;
-import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
-import com.cauldron.bodyconquest.gamestates.EncounterState.*;
+import com.cauldron.bodyconquest.constants.Constants.*;
 
 public class BasicTestAI extends Thread {
 
@@ -37,8 +36,8 @@ public class BasicTestAI extends Thread {
     Gdx.app.postRunnable(new Runnable() {
       @Override
       public void run() {
-        game.spawnUnit(UnitType.BACTERIA, Lane.BOT, playerType);
-        game.spawnUnit(UnitType.BACTERIA, Lane.MID, playerType);
+        game.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType);
+        game.spawnUnit(UnitType.BACTERIA, Lane.MIDDLE, playerType);
         game.spawnUnit(UnitType.FLU, Lane.TOP, playerType);
       }
     });
