@@ -4,7 +4,7 @@ import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
 import com.cauldron.bodyconquest.entities.MapObject;
-import com.cauldron.bodyconquest.entities.Projectile;
+import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;

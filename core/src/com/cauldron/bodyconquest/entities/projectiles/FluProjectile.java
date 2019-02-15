@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.entities;
+package com.cauldron.bodyconquest.entities.projectiles;
 
 public class FluProjectile extends Projectile {
 

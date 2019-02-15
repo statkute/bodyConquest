@@ -1,5 +1,6 @@
-package com.cauldron.bodyconquest.entities;
+package com.cauldron.bodyconquest.entities.projectiles;
 
+import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 
 import java.util.ArrayList;
