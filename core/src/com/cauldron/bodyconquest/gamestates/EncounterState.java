@@ -17,67 +17,57 @@ import com.cauldron.bodyconquest.game_logic.Communicator;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/*
-The screen where the encounters occurs, hosts a number of actors including,
-the health bar, unitButtons, resourceBars and player information.
-*/
+/**
+ * The {@link GameState} where all of the encounter logic takes place.
+ */
 public class EncounterState extends GameState {
 
+  /**
+   * An enumeration for the different assignments {@link Troop}s can have to determine how Troops move and who/what they
+   * attack.
+   */
   public enum PlayerType {
     BOT_PLAYER,
     TOP_PLAYER
   }
 
+  /**
+   * An enumeration for the different lanes {@link Troop}s can be assigned to, to determine how those Troops move.
+   */
   public enum Lane {
     TOP,
     BOT,
     MID,
     ALL
   }
-  
+
+  /** The map object that holds all information that needs to be known about the map. */
   private Map map;
-  private float mapSize;
-
-  // If kept final change to all caps
-  private final float botTurnPointX = 150;
-  private final float botTurnPointY = 60;
-  private final float topTurnpointX = 550;
-  private final float topTurnpointY = 525;
-
-  // Probably make this final
-  private final float botLaneBPSpawnX = 500; // 535;
-  private final float botLaneBPSpawnY = 85; // 90;
-  private final float midLaneBPSpawnX = 505;
-  private final float midLaneBPSpawnY = 185;
-  private final float topLaneBPSpawnX = 600;
-  private final float topLaneBPSpawnY = 225;
-
-  private final float botLaneTPSpawnX = 170;
-  private final float botLaneTPSpawnY = 470;
-
-  // Not yet initialised
-  private float midLaneTPSpawnX;
-  private float topLaneTPSpawnX = 175;
-  private float midLaneTPSpawnY;
-  private float topLaneTPSpawnY = 525;
 
   // Troop Arrays (Data type and usage is subject to future change)
-
+  /** The list that stores all MapObject currently on the map. */
   private CopyOnWriteArrayList<MapObject> allMapObjects;
 
+  /** The list that stores all the troops belonging to the top player. */
   private CopyOnWriteArrayList<Troop> troopsTop;
+  /** The list that stores all the troops belonging to the bottom player. */
   private CopyOnWriteArrayList<Troop> troopsBottom;
 
+  /** The list that stores all the projectiles that belong to the bottom player. */
   private CopyOnWriteArrayList<Projectile> projectilesBottom;
+  /** The list that stores all the projectiles that belong to the top player. */
   private CopyOnWriteArrayList<Projectile> projectilesTop;
 
-  private Base topBase;
-  private Base bottomBase;
-
-  //public static Sound dropSound;
-
+  /**
+   * The communicator object which acts as a place holder for the Server (and possibly in future the Client).
+   * This may remain for quick and easy implementation of single player without using a Client/Server.
+    */
   private Communicator comms;
 
+  /**
+   * Constructor.
+   * @param comms The communication object to receive information from the Server/Model.
+   */
   public EncounterState(Communicator comms) {
     this.comms = comms;
     
@@ -90,12 +80,12 @@ public class EncounterState extends GameState {
     troopsTop = new CopyOnWriteArrayList<Troop>();
 
     // Create player bases
-    bottomBase = new BacteriaBase(Lane.ALL, PlayerType.BOT_PLAYER);
+    Base bottomBase = new BacteriaBase(Lane.ALL, PlayerType.BOT_PLAYER);
     bottomBase.setPosition(map.getRight() - bottomBase.getWidth(), map.getBottom());
     troopsBottom.add(bottomBase);
     allMapObjects.add(bottomBase);
 
-    topBase = new BacteriaBase(Lane.ALL, PlayerType.TOP_PLAYER);
+    Base topBase = new BacteriaBase(Lane.ALL, PlayerType.TOP_PLAYER);
     topBase.setPosition(map.getLeft(), map.getTop() - topBase.getHeight());
     troopsTop.add(topBase);
     allMapObjects.add(topBase);
@@ -107,8 +97,15 @@ public class EncounterState extends GameState {
 
   }
 
+  /**
+   * Check attack interactions between the two troop lists.
+   * Initiates any resulting attack sequences caused from troops being eligible to attack another troop.
+   * @param troopsP1 First list of troops.
+   * @param troopsP2 Second list of troops.
+   */
   private void checkAttack(CopyOnWriteArrayList<Troop> troopsP1, CopyOnWriteArrayList<Troop> troopsP2) {
     CopyOnWriteArrayList<Troop> deadTroops = new CopyOnWriteArrayList<Troop>();
+
     for (Troop troop : troopsP1) {
       if (troop.isDead()) {
         deadTroops.add(troop);
@@ -123,20 +120,29 @@ public class EncounterState extends GameState {
     }
   }
 
+  /**
+   * Check collision interactions between the projectiles in the given projectile list with the troops in the given
+   * troop list.
+   * Initiates any resulting attack sequences caused from troops being hit.
+   * @param projectiles The list of projectiles to check interactions with.
+   * @param enemies The list of troops to check interactions with.
+   */
   private void checkProjectiles(CopyOnWriteArrayList<Projectile> projectiles, CopyOnWriteArrayList<Troop> enemies) {
     CopyOnWriteArrayList<Projectile> finishedProjectiles = new CopyOnWriteArrayList<Projectile>();
     for(Projectile proj : projectiles) {
       proj.checkHit(enemies);
       if(proj.getRemove()) finishedProjectiles.add(proj);
     }
-    // This gives particular players a very slight advantage because certain units will be deleted
-    // first if they both die
+
     for (Projectile proj : finishedProjectiles){
       projectiles.remove(proj);
       allMapObjects.remove(proj);
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void update() {
     // Receive any input from clients
@@ -156,8 +162,13 @@ public class EncounterState extends GameState {
     comms.populateObjectList(sentObjects);
   }
 
+  /**
+   * Called by player AI's or players to spawn troops.
+   * @param unitType The unit/troop to be spawned.
+   * @param lane The lane the unit/troop will be assigned to.
+   * @param playerType The player the unit/troop will be assigned to.
+   */
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
-    // Initialise the troop
     Troop troop = null;
 
     // Initialise troop type
@@ -176,13 +187,13 @@ public class EncounterState extends GameState {
     if (playerType.equals(PlayerType.BOT_PLAYER)) {
       if (lane == Lane.BOT) {
         troop.setPosition(
-                Constants.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2));
+                Constants.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0), Constants.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.MID) {
         troop.setPosition(
-                Constants.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2));
+                Constants.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0), Constants.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.TOP) {
         troop.setPosition(
-                Constants.BP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.BP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2));
+                Constants.BP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0), Constants.BP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       }
       troopsBottom.add(troop);
     }
@@ -191,44 +202,35 @@ public class EncounterState extends GameState {
     if (playerType.equals(PlayerType.TOP_PLAYER)) {
       if (lane == Lane.BOT) {
         troop.setPosition(
-                Constants.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2));
+                Constants.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0), Constants.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.MID) {
         troop.setPosition(
-                Constants.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2));
+                Constants.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0), Constants.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.TOP) {
         troop.setPosition(
-                Constants.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2), Constants.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2));
+                Constants.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0), Constants.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       }
       troopsTop.add(troop);
     }
     allMapObjects.add(troop);
-
   }
 
-  public void addProjectile(Projectile proj, PlayerType playerType) {
-    if(playerType == null || proj == null) return;
+  /**
+   * Called by ranged (projectile using) MapObjects to add their projectile to the list of MapObjects.
+   * @param projectile The projectile to be added to the EncounterState/Map.
+   * @param playerType The player that the projectile belongs to.
+   */
+  public void addProjectile(Projectile projectile, PlayerType playerType) {
+    if(playerType == null || projectile == null) return;
 
     if(playerType == PlayerType.BOT_PLAYER) {
-      projectilesBottom.add(proj);
+      projectilesBottom.add(projectile);
     } else if (playerType == PlayerType.TOP_PLAYER) {
-      projectilesTop.add(proj);
+      projectilesTop.add(projectile);
+    } else {
+      return;
     }
-    allMapObjects.add(proj);
+    allMapObjects.add(projectile);
   }
 
-  public float getBotTurnPointX() {
-    return botTurnPointX;
-  }
-
-  public float getBotTurnPointY() {
-    return botTurnPointY;
-  }
-
-  public float getTopTurnPointX(){
-    return topTurnpointX;
-  }
-
-  public float getTopTurnPointY(){
-    return topTurnpointY;
-  }
 }
