@@ -54,7 +54,7 @@ public class Flu extends Troop {
       setMoving(false);
       long time = System.currentTimeMillis();
       if (!attacking && (time > lastAttack + cooldown)) {
-        FluProjectile proj = new FluProjectile(getCentreX(), getCentreY(), troop.getCentreX(), troop.getCentreY());
+        FluProjectile proj = new FluProjectile(getDamage(), getCentreX(), getCentreY(), troop.getCentreX(), troop.getCentreY());
         map.addProjectile(proj, playerType);
         lastAttack = time;
       }
