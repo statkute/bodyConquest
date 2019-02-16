@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.game_logic.utils.Timer;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
@@ -168,6 +169,7 @@ public class RaceSelection implements Screen {
       if (confirmed) {
 
         if (playBounds.contains(tmp.x, tmp.y)) {
+          playButtonSound();
           g = new Game();
           g.start();
           Timer.startTimer(1000);
@@ -181,14 +183,18 @@ public class RaceSelection implements Screen {
       } else if (!confirmed) {
 
         if (disease1Bounds.contains(tmp.x, tmp.y)) {
+          playButtonSound();
 
           changeTexture(disease1);
         } else if (disease2Bounds.contains(tmp.x, tmp.y)) {
+          playButtonSound();
           // System.out.println("disease 2 selected");
           changeTexture(disease2);
         } else if (disease3Bounds.contains(tmp.x, tmp.y)) {
+          playButtonSound();
           changeTexture(disease3);
         } else if (confirmBounds.contains(tmp.x, tmp.y) && selected) {
+          playButtonSound();
           confirmed = true;
         }
       }
@@ -244,6 +250,7 @@ public class RaceSelection implements Screen {
     if (disease1Bounds.contains(tmp.x, tmp.y)
         || disease2Bounds.contains(tmp.x, tmp.y)
         || disease3Bounds.contains(tmp.x, tmp.y)) {
+      playButtonSound();
       game.font.draw(
           game.batch, warning, BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2, 200);
     }
@@ -276,5 +283,9 @@ public class RaceSelection implements Screen {
 
   public Game getG() {
     return g;
+  }
+
+  public void playButtonSound(){
+    Constants.buttonSound.play();
   }
 }

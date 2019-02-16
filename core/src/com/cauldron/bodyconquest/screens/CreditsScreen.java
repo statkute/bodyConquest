@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -51,6 +52,7 @@ public class CreditsScreen implements Screen {
       Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
       camera.unproject(tmp);
       if (backBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
         game.setScreen(new MenuScreen(game));
         dispose();
       }
@@ -73,5 +75,8 @@ public class CreditsScreen implements Screen {
   public void dispose() {
     backButton.dispose();
     background.dispose();
+  }
+  public void playButtonSound(){
+    Constants.buttonSound.play();
   }
 }
