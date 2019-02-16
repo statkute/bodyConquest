@@ -112,16 +112,16 @@ public class MenuScreen implements Screen {
       }
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
         System.out.println("Singleplayer Is touched");
-        server = new Server();
-        try {
-          server.startServer("singleplayer");
-          client = new Client();
-          client.startClient();
-        } catch (SocketException e) {
-          e.printStackTrace();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+//        server = new Server();
+//        try {
+//          server.startServer("singleplayer");
+//          client = new Client();
+//          client.startClient();
+//        } catch (SocketException e) {
+//          e.printStackTrace();
+//        } catch (IOException e) {
+//          e.printStackTrace();
+//        }
 
         // ntStackTrace();
         //        } catch (IOException e) {

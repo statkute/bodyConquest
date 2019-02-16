@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -145,12 +146,20 @@ public class RaceSelection implements Screen {
     game.font.draw(game.batch, diseaseName2, 366, 30);
     game.font.draw(game.batch, diseaseName3, 642, 30);
 
-    checkPressed();
+    try{
+      checkPressed();
+    }
+
+    catch (IOException e){
+      e.printStackTrace();
+    }
+
+
 
     game.batch.end();
   }
 
-  public void checkPressed() {
+  public void checkPressed() throws IOException {
     if (Gdx.input.justTouched()) {
 
       Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
