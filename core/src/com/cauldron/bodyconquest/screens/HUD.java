@@ -20,13 +20,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.constants.Constants.*;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
-import com.cauldron.bodyconquest.entities.Troops.Troop.UnitType;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
-import com.cauldron.bodyconquest.screens.EncounterScreen.Lane;
-import com.cauldron.bodyconquest.screens.EncounterScreen.PlayerType;
 
 public class HUD {
 
@@ -70,8 +68,8 @@ public class HUD {
   private void setUpDragAndDrop() {
     dragAndDrop = new DragAndDrop();
 
-    addSpawnPoint(475, 50, Lane.BOT);
-    addSpawnPoint(475, 160, Lane.MID);
+    addSpawnPoint(475, 50, Lane.BOTTOM);
+    addSpawnPoint(475, 160, Lane.MIDDLE);
     addSpawnPoint(575, 200, Lane.TOP);
 
     addDragAndDropSource(0, "bacteria");
@@ -131,7 +129,7 @@ public class HUD {
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent event, Actor actor) {
-            screen.spawnUnit(UnitType.BACTERIA, Lane.BOT, playerType);
+            screen.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType);
           }
         });
     stage.addActor(troopButton);

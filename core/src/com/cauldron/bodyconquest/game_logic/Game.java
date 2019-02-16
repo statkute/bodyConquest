@@ -12,6 +12,7 @@ public class Game extends Thread {
   private boolean running;
   private int FPS = 60; // The number of time the game will refresh each second
   private long targetTime = 1000 / FPS;
+  private EncounterState encounterState;
 
   private GameStateManager gsm;
 
@@ -22,7 +23,8 @@ public class Game extends Thread {
   private void init() {
     running = true;
     gsm = new GameStateManager();
-    gsm.setCurrentGameState(new EncounterState(comms));
+    encounterState = new EncounterState(comms);
+    gsm.setCurrentGameState(encounterState);
   }
 
   @Override
@@ -56,5 +58,9 @@ public class Game extends Thread {
 
   private void update() {
     gsm.update();
+  }
+
+  public EncounterState getEncounterState(){
+    return encounterState;
   }
 }

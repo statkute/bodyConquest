@@ -3,8 +3,7 @@ package com.cauldron.bodyconquest.entities.Troops;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.entities.MapObject;
-import com.cauldron.bodyconquest.gamestates.EncounterState.Lane;
-import com.cauldron.bodyconquest.gamestates.EncounterState.PlayerType;
+import com.cauldron.bodyconquest.constants.Constants.*;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -23,11 +22,7 @@ public abstract class Troop extends MapObject {
   protected final PlayerType playerType;
 
   /** Enumeration for each type of Unit/Troop that exists. */
-  public enum UnitType {
-    BACTERIA,
-    FLU,
-    VIRUS
-  }
+
 
   /** The maximum health this Troop can have. */
   protected int maxHealth;
@@ -145,14 +140,14 @@ public abstract class Troop extends MapObject {
    */
   protected void updateMovement() {
     if (moving) {
-      if (playerType == PlayerType.BOT_PLAYER) {
-        if (lane == Lane.BOT) {
+      if (playerType == PlayerType.PLAYER_BOTTOM) {
+        if (lane == Lane.BOTTOM) {
           if (getX() > Constants.BOT_TURNPOINT_X) {
             setDirectionLeft();
           } else {
             setDirectionUp();
           }
-        } else if (lane == Lane.MID) {
+        } else if (lane == Lane.MIDDLE) {
           setDirectionLeft();
           setDirectionUp();
         } else if (lane == Lane.TOP) {
@@ -162,14 +157,14 @@ public abstract class Troop extends MapObject {
             setDirectionLeft();
           }
         }
-      } else if (playerType == PlayerType.TOP_PLAYER) {
-        if (lane == Lane.BOT) {
+      } else if (playerType == PlayerType.PLAYER_TOP) {
+        if (lane == Lane.BOTTOM) {
           if (getCentreY() > Constants.BOT_TURNPOINT_Y) {
             setDirectionDown();
           } else {
             setDirectionRight();
           }
-        } else if (lane == Lane.MID) {
+        } else if (lane == Lane.MIDDLE) {
           setDirectionDownRight();
         } else if (lane == Lane.TOP) {
           if (getX() < Constants.TOP_TURNPOINT_X) {

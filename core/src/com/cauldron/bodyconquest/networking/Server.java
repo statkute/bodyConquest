@@ -4,9 +4,9 @@ import java.net.SocketException;
 
 /** Server class */
 public class Server {
-  public ServerSender serverSender;
-  public ServerReceiver serverReceiver;
-  public ServerLogic serverLogic;
+  private ServerSender serverSender;
+  private ServerReceiver serverReceiver;
+  private ServerLogic serverLogic;
 
   /**
    * Server initialization: receiver, sender and logic threads are started
@@ -25,6 +25,10 @@ public class Server {
     serverSender.start();
     serverReceiver.start();
     serverLogic.start();
+  }
+
+  public ServerSender getServerSender() {
+    return serverSender;
   }
 
   //  public static void main(String args[]) throws Exception {

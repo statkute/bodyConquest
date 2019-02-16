@@ -1,5 +1,9 @@
 package com.cauldron.bodyconquest.entities;
 
+import com.cauldron.bodyconquest.constants.Constants.*;
+
+import com.cauldron.bodyconquest.constants.Constants;
+
 public class BasicObject {
 
   private Object animation;
@@ -10,6 +14,7 @@ public class BasicObject {
   private double direction;
   private double currentSpeed;
   private String imagePath;
+  private UnitType unitType;
   //private EverythingType type;
 
   public void setX(double x) {
@@ -68,11 +73,11 @@ public class BasicObject {
     return animation;
   }
 
-  public void setImagePath(String imagePath) {
-    this.imagePath = imagePath;
+  public void setUnitType(UnitType ut) {
+    this.unitType = ut;
   }
 
-  public String getImagePath() {
-    return imagePath;
+  public UnitType getUnitType() {
+    return unitType;
   }
 }
