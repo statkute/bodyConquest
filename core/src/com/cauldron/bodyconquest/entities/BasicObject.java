@@ -2,19 +2,15 @@ package com.cauldron.bodyconquest.entities;
 
 import com.cauldron.bodyconquest.constants.Constants.*;
 
-import com.cauldron.bodyconquest.constants.Constants;
-
 public class BasicObject {
 
-  private Object animation;
   private double x;
   private double y;
   private int width;
   private int height;
   private double direction;
   private double currentSpeed;
-  private String imagePath;
-  private UnitType unitType;
+  private MapObjectType mapObjectType;
   //private EverythingType type;
 
   public void setX(double x) {
@@ -65,19 +61,11 @@ public class BasicObject {
     return currentSpeed;
   }
 
-  public void setAnimation(Object animation) {
-    this.animation = animation;
+  public void setUnitType(MapObjectType ut) {
+    this.mapObjectType = ut;
   }
 
-  public Object getAnimation() {
-    return animation;
-  }
-
-  public void setUnitType(UnitType ut) {
-    this.unitType = ut;
-  }
-
-  public UnitType getUnitType() {
-    return unitType;
+  public MapObjectType getUnitType() {
+    return mapObjectType;
   }
 }

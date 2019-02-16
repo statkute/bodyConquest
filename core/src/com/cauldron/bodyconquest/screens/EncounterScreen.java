@@ -60,12 +60,14 @@ public class EncounterScreen implements Screen {
   public void render(float delta) {
 
 
-
-
     CopyOnWriteArrayList<BasicObject> objects = comms.getAllObjects();
     //if(baseTop.health > 0 && baseBottom)
+    // Turn BasicObjects from server/communicator into ViewObjects (and gives them a texture)
     ArrayList<ViewObject> viewObjects = new ArrayList<ViewObject>();
-    for (BasicObject o : objects) viewObjects.add(new ViewObject(o));
+    for (BasicObject o : objects) {
+      viewObjects.add(new ViewObject(o));
+    }
+
     for (ViewObject vo : viewObjects) {
       //System.out.println("Adding viewobject");
 

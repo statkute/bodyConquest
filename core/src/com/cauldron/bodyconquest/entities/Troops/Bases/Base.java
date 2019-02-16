@@ -10,6 +10,7 @@ public abstract class Base extends Troop {
       this.attackable = true;
       this.moving = false;
       this.attacking = false;
+      this.
       setSize(150, 150);
     }
 

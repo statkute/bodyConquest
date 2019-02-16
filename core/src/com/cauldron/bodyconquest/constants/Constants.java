@@ -6,7 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 public class Constants {
 
     // EVERYTHINGS
-    public static enum EveryThing {}
+    public static enum MapObjectType {BASE}
     // ALL units
     public static enum UnitType {BACTERIA, FLU, BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE, VIRUS}
     // Player types
