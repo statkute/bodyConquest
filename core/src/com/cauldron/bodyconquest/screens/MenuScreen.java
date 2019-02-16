@@ -12,6 +12,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.cauldron.bodyconquest.screens.CreditsScreen;
 import com.cauldron.bodyconquest.screens.RaceSelection;
 
+import java.io.IOException;
+import java.net.SocketException;
+
 public class MenuScreen implements Screen {
 
   private BodyConquest game;
@@ -27,8 +30,8 @@ public class MenuScreen implements Screen {
 
   OrthographicCamera camera;
 
-  public Server server;
-  public Client client;
+  private Server server;
+  private Client client;
 
   public MenuScreen(BodyConquest game) {
     this.game = game;
@@ -109,8 +112,18 @@ public class MenuScreen implements Screen {
       }
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
         System.out.println("Singleplayer Is touched");
+        server = new Server();
+        try {
+          server.startServer("singleplayer");
+          client = new Client();
+          client.startClient();
+        } catch (SocketException e) {
+          e.printStackTrace();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
 
-        //ntStackTrace();
+        // ntStackTrace();
         //        } catch (IOException e) {
         //          e.printStackTrace();
         //        }server = new Server();
@@ -142,6 +155,14 @@ public class MenuScreen implements Screen {
         dispose();
       }
     }
+  }
+
+  public Server getServer() {
+    return server;
+  }
+
+  public Client getClient() {
+    return client;
   }
 
   @Override

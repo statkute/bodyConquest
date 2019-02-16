@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.game_logic.Game;
+import com.cauldron.bodyconquest.game_logic.utils.Timer;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
+import com.cauldron.bodyconquest.networking.utilities.Serialization;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -53,6 +56,8 @@ public class RaceSelection implements Screen {
   private boolean selected = false;
   private boolean confirmed = false;
   private boolean opponentSelected = false;
+
+  private Game g;
 
   private Random random;
 
@@ -154,9 +159,13 @@ public class RaceSelection implements Screen {
       if (confirmed) {
 
         if (playBounds.contains(tmp.x, tmp.y)) {
-          Game g = new Game();
+          g = new Game();
           g.start();
-          //Communicator comms = new Communicator();
+          Timer.startTimer(1000);
+          String json = Serialization.serialize(g.getEncounterState());
+          System.out.println(json.getBytes().length);
+          EncounterState encounterState = Serialization.deserialize(json);
+          // Communicator comms = new Communicator();
           game.setScreen(new EncounterScreen(game, g.comms));
           dispose();
         }
@@ -254,5 +263,9 @@ public class RaceSelection implements Screen {
     confirmButton.dispose();
     selectionFrame1.dispose();
     selectionFrame2.dispose();
+  }
+
+  public Game getG() {
+    return g;
   }
 }
