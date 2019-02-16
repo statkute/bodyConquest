@@ -10,6 +10,7 @@ public class BasicObject {
   private double direction;
   private double currentSpeed;
   private String imagePath;
+  //private EverythingType type;
 
   public void setX(double x) {
     this.x = x;

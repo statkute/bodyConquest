@@ -66,7 +66,12 @@ public class EncounterScreen implements Screen {
 
   @Override
   public void render(float delta) {
+
+
+
+
     CopyOnWriteArrayList<BasicObject> objects = comms.getAllObjects();
+    //if(baseTop.health > 0 && baseBottom)
     ArrayList<ViewObject> viewObjects = new ArrayList<ViewObject>();
     for (BasicObject o : objects) viewObjects.add(new ViewObject(o));
     for (ViewObject vo : viewObjects) {
