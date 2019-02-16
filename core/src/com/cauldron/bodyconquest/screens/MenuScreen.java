@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.networking.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
@@ -106,11 +107,13 @@ public class MenuScreen implements Screen {
     if (Gdx.input.justTouched()) {
 
       if (multiplayerBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
         System.out.println("Multiplayer Is touched");
         //              game.setScreen(new RaceSelectionScreen(game));
         //              dispose();
       }
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
         System.out.println("Singleplayer Is touched");
 //        server = new Server();
 //        try {
@@ -146,11 +149,13 @@ public class MenuScreen implements Screen {
         dispose();
       }
       if (settingsBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
         System.out.println("Settings Is touched");
         //              game.setScreen(new SettingsScreen(game));
         //              dispose();
       }
       if (creditsBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
         game.setScreen(new CreditsScreen(game));
         dispose();
       }
@@ -184,5 +189,9 @@ public class MenuScreen implements Screen {
     playButtonMultiplayer.dispose();
     settingsButton.dispose();
     creditsButton.dispose();
+  }
+
+  public void playButtonSound(){
+    Constants.buttonSound.play();
   }
 }

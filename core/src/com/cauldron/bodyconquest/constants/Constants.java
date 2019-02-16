@@ -1,5 +1,8 @@
 package com.cauldron.bodyconquest.constants;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+
 public class Constants {
 
     // EVERYTHINGS
@@ -41,6 +44,9 @@ public class Constants {
     public float topLaneTPSpawnX = 175;
     public float midLaneTPSpawnY;
     public float topLaneTPSpawnY = 525;
+
+    //Sounds
+    public static final Sound buttonSound= Gdx.audio.newSound(Gdx.files.internal("core/assets/buttonClick.wav"));
 
 }
 
