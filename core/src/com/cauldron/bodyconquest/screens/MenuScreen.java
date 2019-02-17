@@ -46,18 +46,20 @@ public class MenuScreen implements Screen {
     settingsButton = new Texture("core/assets/settings.png");
     creditsButton = new Texture("core/assets/Credits.png");
 
-    multiplayerBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-            336,
-            playButtonMultiplayer.getWidth(),
-            playButtonMultiplayer.getHeight());
     singleplayerBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-            226,
+            300,
             playButtonSinglePlayer.getWidth(),
             playButtonSinglePlayer.getHeight());
+
+    multiplayerBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
+            226,
+            playButtonMultiplayer.getWidth(),
+            playButtonMultiplayer.getHeight());
+
     settingsBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
@@ -85,13 +87,14 @@ public class MenuScreen implements Screen {
 
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(
-        playButtonMultiplayer,
-        BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-        336);
+
     game.batch.draw(
         playButtonSinglePlayer,
         BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
+        300);
+    game.batch.draw(
+        playButtonMultiplayer,
+        BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
         226);
     game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 126);
     game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 30);
@@ -173,7 +176,7 @@ public class MenuScreen implements Screen {
     creditsButton.dispose();
   }
 
-  public void playButtonSound(){
+  public void playButtonSound() {
     Constants.buttonSound.play();
   }
 }
