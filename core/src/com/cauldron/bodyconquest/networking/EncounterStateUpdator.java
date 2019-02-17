@@ -17,7 +17,7 @@ public class EncounterStateUpdator extends Thread {
       // Message message = "ENCOUNTERSTATE_UPDATE_"
       // message += json
       // serverSender.sendMessage(message)
-      
+
       Timer.startTimer(600);
     }
   }

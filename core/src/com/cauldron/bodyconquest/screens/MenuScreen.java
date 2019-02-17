@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
@@ -115,38 +116,19 @@ public class MenuScreen implements Screen {
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         System.out.println("Singleplayer Is touched");
-//        server = new Server();
-//        try {
-//          server.startServer("singleplayer");
-//          client = new Client();
-//          client.startClient();
-//        } catch (SocketException e) {
-//          e.printStackTrace();
-//        } catch (IOException e) {
-//          e.printStackTrace();
-//        }
-
-        // ntStackTrace();
-        //        } catch (IOException e) {
-        //          e.printStackTrace();
-        //        }server = new Server();
-        ////        try {
-        ////          server.startServer("singleplayer");
-        ////          client = new Client();
-        ////          client.startClient();
-        ////          try {
-        ////            Thread.sleep(500);
-        ////          } catch (InterruptedException e) {
-        ////            e.printStackTrace();
-        ////          }
-        ////        } catch (SocketException e) {
-        ////          e.printStackTrace();
-        ////        } catch (IOException e) {
-        ////          e.printStackTrace();
-        ////        }
-
-        game.setScreen(new RaceSelection(game));
-        dispose();
+        server = new Server();
+        try {
+          server.startServer("singleplayer");
+          client = new Client();
+          Communicator communicator = new Communicator();
+          client.startClient(communicator);
+          game.setScreen(new RaceSelection(game, server, communicator));
+          dispose();
+        } catch (SocketException e) {
+          e.printStackTrace();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
       if (settingsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
