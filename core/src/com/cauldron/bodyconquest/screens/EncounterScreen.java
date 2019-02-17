@@ -24,8 +24,6 @@ public class EncounterScreen implements Screen {
   private final float mapSize;
   private final Image map;
 
-
-
   private final OrthographicCamera gameCamera;
   private final FitViewport gamePort;
   private final Stage stage;
