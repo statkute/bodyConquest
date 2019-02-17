@@ -39,6 +39,12 @@ public class ServerSender extends Thread {
     }
   }
 
+  public void sendObjectUpdates(String message){
+    String header = "OBJECT_UPDATE_";
+    String fullMessage = header + message;
+    sendMessage(fullMessage);
+  }
+
   public void run() {
     while (true) {}
   }

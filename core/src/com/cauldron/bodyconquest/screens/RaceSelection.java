@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.game_logic.utils.Timer;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
+import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
@@ -62,9 +64,12 @@ public class RaceSelection implements Screen {
   private Game g;
 
   private Random random;
+  private Server server;
+  private Communicator communicator;
 
-  public RaceSelection(BodyConquest game) {
-
+  public RaceSelection(BodyConquest game, Server server, Communicator communicator) {
+    this.communicator = communicator;
+    this.server = server;
     this.game = game;
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800, 600);
@@ -147,15 +152,11 @@ public class RaceSelection implements Screen {
     game.font.draw(game.batch, diseaseName2, 366, 30);
     game.font.draw(game.batch, diseaseName3, 642, 30);
 
-    try{
+    try {
       checkPressed();
-    }
-
-    catch (IOException e){
+    } catch (IOException e) {
       e.printStackTrace();
     }
-
-
 
     game.batch.end();
   }
@@ -170,14 +171,10 @@ public class RaceSelection implements Screen {
 
         if (playBounds.contains(tmp.x, tmp.y)) {
           playButtonSound();
-          g = new Game();
+          g = new Game(server, communicator);
           g.start();
-          Timer.startTimer(1000);
-          String json = Serialization.serialize(g.getEncounterState());
-          System.out.println(json.getBytes().length);
-          EncounterState encounterState = Serialization.deserialize(json);
           // Communicator comms = new Communicator();
-          game.setScreen(new EncounterScreen(game, g.comms));
+          game.setScreen(new EncounterScreen(game, communicator));
           dispose();
         }
       } else if (!confirmed) {
@@ -285,7 +282,7 @@ public class RaceSelection implements Screen {
     return g;
   }
 
-  public void playButtonSound(){
+  public void playButtonSound() {
     Constants.buttonSound.play();
   }
 }

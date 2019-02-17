@@ -1,5 +1,7 @@
 package com.cauldron.bodyconquest.networking;
 
+import com.cauldron.bodyconquest.game_logic.Communicator;
+
 import java.io.IOException;
 
 /**
@@ -8,17 +10,20 @@ import java.io.IOException;
 public class Client {
   public ClientReceiver clientReceiver;
   public ClientSender clientSender;
+  private ClientLogic clientLogic;
 
   /**
    * Starts the receiver and sender threads
    * @throws IOException
    */
-  public void startClient() throws IOException {
+  public void startClient(Communicator communicator) throws IOException {
     clientReceiver = new ClientReceiver();
     clientSender = new ClientSender(clientReceiver);
+    clientLogic = new ClientLogic(clientReceiver, communicator);
 
     clientReceiver.start();
     clientSender.start();
+    clientLogic.start();
 
     clientSender.sendMessage("connected");
     clientSender.sendMessage("Hi btw");

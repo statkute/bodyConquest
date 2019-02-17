@@ -42,6 +42,9 @@ public class ServerLogic extends Thread {
           // TO DO: pause the game
         } else if (command.equals("EXIT")){
           //TO DO: exit the game
+        } else if (command.startsWith("RACE_")){
+          String race = command.substring(5);
+          //TO DO: set a race for the user
         }
       } catch (InterruptedException e) {
         e.printStackTrace();

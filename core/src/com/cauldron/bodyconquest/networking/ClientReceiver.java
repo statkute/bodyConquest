@@ -3,6 +3,7 @@ package com.cauldron.bodyconquest.networking;
 import java.io.IOException;
 import java.net.*;
 import java.util.Enumeration;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /** Client thread responsible for receiving messages from the server */
@@ -11,6 +12,7 @@ public class ClientReceiver extends Thread {
   public DatagramSocket socket;
   public InetAddress group;
   public AtomicInteger id;
+  public LinkedBlockingQueue<String> receivedMessages;
 
   /**
    * ClientReceiver initialization
@@ -21,6 +23,7 @@ public class ClientReceiver extends Thread {
     address = getIpAddress();
     socket = new DatagramSocket(3001);
     id = new AtomicInteger(0);
+    receivedMessages = new LinkedBlockingQueue<String>();
   }
 
   /**
@@ -54,13 +57,16 @@ public class ClientReceiver extends Thread {
     gameSetup();
     while (true) {
       try {
-        byte[] buf = new byte[256];
+        byte[] buf = new byte[2560];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         socket.receive(packet);
         String received = new String(packet.getData()).trim();
         System.out.println(
             "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
+        receivedMessages.put(received.trim());
       } catch (IOException e) {
+        e.printStackTrace();
+      } catch (InterruptedException e) {
         e.printStackTrace();
       }
     }
