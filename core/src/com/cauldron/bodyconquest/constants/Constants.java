@@ -10,6 +10,22 @@ public class Constants {
 
     public static String pathBaseImage = pathAssets + "castle1.gif";
     public static String pathBucket = pathAssets + "bucket.png";
+    public static String pathVirus = pathAssets + "virus.png";
+    public static String pathBacteria = pathAssets + "bacteria.png";
+    public static String pathFlu = pathAssets + "flu.png";
+    public static String pathProjectile = pathAssets + "projectile.png";
+
+    public static int frameColsBacteria = 7;
+    public static int frameRowsBacteria = 1;
+    public static int frameColsFlu = 7;
+    public static int frameRowsFlu = 1;
+    public static int frameColsVirus = 7;
+    public static int frameRowsVirus = 1;
+    public static int frameColsProjectile = 6;
+    public static int frameRowsProjectile = 1;
+    public static int frameColsBacteriaBase = 1;
+    public static int frameRowsBacteriaBase = 1;
+
 
 
     // EVERYTHINGS
