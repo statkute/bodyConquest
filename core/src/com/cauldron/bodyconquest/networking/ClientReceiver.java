@@ -1,5 +1,7 @@
 package com.cauldron.bodyconquest.networking;
 
+import com.badlogic.gdx.utils.Logger;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.Enumeration;
@@ -8,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /** Client thread responsible for receiving messages from the server */
 public class ClientReceiver extends Thread {
+
   public InetAddress address;
   public DatagramSocket socket;
   public InetAddress group;
@@ -61,8 +64,8 @@ public class ClientReceiver extends Thread {
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         socket.receive(packet);
         String received = new String(packet.getData()).trim();
-        System.out.println(
-            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
+//        System.out.println(
+//            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
         receivedMessages.put(received.trim());
       } catch (IOException e) {
         e.printStackTrace();
