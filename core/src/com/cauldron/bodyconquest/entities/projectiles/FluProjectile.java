@@ -8,6 +8,7 @@ public class FluProjectile extends Projectile {
   private double yDest;
 
   public FluProjectile(int damage, double x, double y, double xDest, double yDest) {
+    super();
     this.damage = damage;
     setSize(20, 20);
     setPosition(x - (getWidth() / 2), y - (getHeight() / 2));
@@ -17,10 +18,10 @@ public class FluProjectile extends Projectile {
   }
 
   private void init() {
-    maxSpeed = 2;
+    maxSpeed = 1;
     maxTravelDistance = 200;
     mapObjectType = Constants.MapObjectType.FLUPROJECTILE;
-
+    piercing = false;
   }
 
   @Override

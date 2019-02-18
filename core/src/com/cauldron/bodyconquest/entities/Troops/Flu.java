@@ -1,12 +1,10 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.cauldron.bodyconquest.constants.Constants.Lane;
+import com.cauldron.bodyconquest.constants.Constants.MapObjectType;
+import com.cauldron.bodyconquest.constants.Constants.PlayerType;
 import com.cauldron.bodyconquest.entities.projectiles.FluProjectile;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
-import com.cauldron.bodyconquest.handlers.AnimationWrapper;
-import com.cauldron.bodyconquest.constants.Constants.*;
 
 public class Flu extends Troop {
 
@@ -30,7 +28,7 @@ public class Flu extends Troop {
   private void init() {
     // Dimensions
     setSize(50, 50);
-
+    setCSize(50, 50);
     // Troop Stats
     health = maxHealth = 70;
     maxSpeed = 0.8;

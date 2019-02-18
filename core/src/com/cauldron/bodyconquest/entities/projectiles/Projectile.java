@@ -4,7 +4,6 @@ import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Projectile extends MapObject {
@@ -14,13 +13,14 @@ public abstract class Projectile extends MapObject {
   protected float distanceTraveled;
 
   protected boolean piercing;
-  protected ArrayList<Troop> hitTroops;
+  protected CopyOnWriteArrayList<Troop> hitTroops;
 
   protected boolean remove;
 
   public Projectile() {
+    super();
     // Maybe a better way of doing this
-    hitTroops = new ArrayList<Troop>();
+    hitTroops = new CopyOnWriteArrayList<Troop>();
     this.collidable = true;
     initDefault();
   }
@@ -31,6 +31,9 @@ public abstract class Projectile extends MapObject {
     acceleration = 100000;
     mapObjectType = Constants.MapObjectType.FLU;
     distanceTraveled = 0;
+    moving = true;
+    collidable = true;
+    remove = false;
   }
 
   public void hit(Troop troop) {
@@ -38,6 +41,8 @@ public abstract class Projectile extends MapObject {
     if (piercing) {
       if (hitTroops.contains(troop)) return;
       hitTroops.add(troop);
+      troop.hit(damage);
+      return;
     }
     troop.hit(damage);
     setRemove();
