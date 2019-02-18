@@ -8,7 +8,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Communicator {
 
   private CopyOnWriteArrayList<BasicObject> objects;
-  private ConcurrentLinkedQueue<String> commands;
 
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();

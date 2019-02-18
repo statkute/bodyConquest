@@ -1,24 +1,23 @@
 package com.cauldron.bodyconquest.gamestates;
 
 import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.constants.Constants.Lane;
+import com.cauldron.bodyconquest.constants.Constants.PlayerType;
+import com.cauldron.bodyconquest.constants.Constants.UnitType;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
 import com.cauldron.bodyconquest.entities.MapObject;
-import com.cauldron.bodyconquest.entities.ViewObject;
-import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.constants.Constants.*;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
+import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
 import com.cauldron.bodyconquest.game_logic.Communicator;
-import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
-import com.cauldron.bodyconquest.constants.Constants;
 
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -150,7 +149,7 @@ public class EncounterState extends GameState {
     // Receive any input from clients
     // String command = comms.getNextComand();
 
-    if(topBase.getHealth() > 0 && bottomBase.getHealth() > 0){
+    if(topBase.getHealth() > 0 && bottomBase.getHealth() > 0){}
 
 
 
@@ -166,31 +165,7 @@ public class EncounterState extends GameState {
     // Synchronize this
     // Change this so it only add new objects
     CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
-    for (MapObject o : allMapObjects) {
-
-      // Map Object does not have a unit type. How will determine which one is which?
-//      switch (o.getUnitType()){
-//        case FLU:
-//          //TO DO add flu texture
-//          break;
-//        case VIRUS:
-//          ////TO DO add virus texture
-//        case BACTERIA:
-//          ////TO DO add bacteria texture
-//        case BACTERTIA_BASE:
-//          viewObjects.add(new ViewObject(o,Constants.pathBaseImage));
-//          break;
-//        case VIRUS_BASE:
-//          ////TO DO add Virus base Texture
-//        case MONSTER_BASE:
-//          ////TO DO add Monster base Texture
-//        case BUCKET:
-//          viewObjects.add(new ViewObject(o,Constants.pathBucket));
-//          break;
-//      }
-      sentObjects.add(o.getBasicObject());
-    }
-
+    for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
 
     // TO DO: send this to the client
     String json = "";
@@ -201,11 +176,6 @@ public class EncounterState extends GameState {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    }
-
-//    else{
-//      g
-//    }
   }
 
   /**
