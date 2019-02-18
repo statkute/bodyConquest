@@ -61,7 +61,7 @@ public class EncounterScreen implements Screen {
   @Override
   public void render(float delta) {
 
-    System.out.println("Bottom health: " + comms.getBottomHealthPercentage());
+//    System.out.println("Bottom health: " + comms.getBottomHealthPercentage());
     CopyOnWriteArrayList<BasicObject> objects = comms.getAllObjects();
     //if(baseTop.health > 0 && baseBottom)
     // Turn BasicObjects from server/communicator into ViewObjects (and gives them a texture)
