@@ -288,7 +288,7 @@ public class RaceSelection implements Screen {
     Timer.startTimer(1000);
     String json = Serialization.serialize(g.getEncounterState());
     System.out.println(json.getBytes().length);
-    EncounterState encounterState = Serialization.deserialize(json);
+    //EncounterState encounterState = Serialization.deserialize(json);
     // Communicator comms = new Communicator();
     //game.setScreen(new EncounterScreen(game, g.comms, ));
     Server server = new Server();

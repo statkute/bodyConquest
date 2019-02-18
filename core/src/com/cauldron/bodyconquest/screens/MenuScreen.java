@@ -117,21 +117,7 @@ public class MenuScreen implements Screen {
         //              dispose();
       }
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
-        playButtonSound();
-        System.out.println("Singleplayer Is touched");
-        server = new Server();
-        try {
-          server.startServer("singleplayer");
-          client = new Client();
-          Communicator communicator = new Communicator();
-          client.startClient(communicator);
-          game.setScreen(new RaceSelection(game, server, communicator));
-          dispose();
-        } catch (SocketException e) {
-          e.printStackTrace();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+        startSingleplayer();
       }
       if (settingsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
@@ -144,6 +130,24 @@ public class MenuScreen implements Screen {
         game.setScreen(new CreditsScreen(game));
         dispose();
       }
+    }
+  }
+
+  private void startSingleplayer() {
+    playButtonSound();
+    System.out.println("Singleplayer Is touched");
+    server = new Server();
+    try {
+      server.startServer("singleplayer");
+      client = new Client();
+      //Communicator communicator = new Communicator();
+      client.startClient(communicator);
+      game.setScreen(new RaceSelection(game, server, communicator));
+      dispose();
+    } catch (SocketException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 

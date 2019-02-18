@@ -1,13 +1,9 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.constants.Lane;
 import com.cauldron.bodyconquest.constants.PlayerType;
 import com.cauldron.bodyconquest.entities.projectiles.FluProjectile;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
-import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 
 public class Flu extends Troop {
 
