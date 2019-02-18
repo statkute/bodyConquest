@@ -22,12 +22,13 @@ public class Game extends Thread {
   public Game(Server server, Communicator communicator) {
     this.server = server;
     comms = communicator;
+    encounterState = new EncounterState(comms, server.getServerSender());
   }
 
   private void init() {
     running = true;
     gsm = new GameStateManager();
-    encounterState = new EncounterState(comms, server.getServerSender());
+    //encounterState = new EncounterState(comms, server.getServerSender());
     gsm.setCurrentGameState(encounterState);
   }
 
@@ -62,5 +63,9 @@ public class Game extends Thread {
 
   private void update() {
     gsm.update();
+  }
+
+  public EncounterState getEncounterState() {
+    return encounterState;
   }
 }

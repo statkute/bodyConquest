@@ -125,6 +125,8 @@ public class MenuScreen implements Screen {
           client = new Client();
           Communicator communicator = new Communicator();
           client.startClient(communicator);
+          game.setServer(server);
+          game.setClient(client);
           game.setScreen(new RaceSelection(game, server, communicator));
           dispose();
         } catch (SocketException e) {

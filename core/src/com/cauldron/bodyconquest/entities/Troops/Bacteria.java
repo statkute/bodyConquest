@@ -37,7 +37,7 @@ public class Bacteria extends Troop {
     mapObjectType = MapObjectType.BACTERIA;
 
     // Temporary implementation for images for the HUD
-    Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");
-    sprite = new Image(walkAnimation.getKeyFrame(0));
+    //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");
+    //sprite = new Image(walkAnimation.getKeyFrame(0));
   }
 }

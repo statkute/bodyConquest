@@ -14,6 +14,8 @@ import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.networking.ClientSender;
+import com.cauldron.bodyconquest.networking.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
@@ -30,9 +32,11 @@ public class EncounterScreen implements Screen {
   private final BodyConquest game;
   private final HUD hud;
   private Communicator comms;
+  private ClientSender clientSender;
 
-  public EncounterScreen(BodyConquest game, Communicator comms) {
+  public EncounterScreen(BodyConquest game, Communicator comms, ClientSender clientSender) {
     this.comms = comms;
+    this.clientSender = clientSender;
     testInit();
     this.game = game;
     gameCamera = new OrthographicCamera();
@@ -145,6 +149,8 @@ public class EncounterScreen implements Screen {
   }
 
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
+    String message = MessageMaker.spawnTroopsMessage(unitType, lane, playerType);
+    clientSender.sendMessage(message);
     // Should call send spawn message to server
     //comms.addCommand();
   }

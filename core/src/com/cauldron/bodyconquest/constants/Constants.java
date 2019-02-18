@@ -31,13 +31,93 @@ public class Constants {
     // EVERYTHINGS
     public static enum MapObjectType {BACTERIA, FLU, BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE}
     // ALL units
-    public static enum UnitType {BACTERIA, FLU, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE}
+    public static enum UnitType {
+        BACTERIA, FLU, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE;
+
+        private static final String ENCODED_BACTERIA  = "BAC";
+        private static final String ENCODED_FLU       = "FLU";
+        private static final String ENCODED_VIRUS     = "VIR";
+
+        public static UnitType decode(String unitString) {
+            UnitType unitType = null;
+
+            if(unitString.equals(ENCODED_BACTERIA)) unitType = BACTERIA;
+            if(unitString.equals(ENCODED_FLU))      unitType = FLU;
+            if(unitString.equals(ENCODED_VIRUS))    unitType = VIRUS;
+
+            return unitType;
+        }
+
+        public String encode() {
+            switch(this) {
+                case BACTERIA:  return ENCODED_BACTERIA;
+                case FLU:       return ENCODED_FLU;
+                case VIRUS:     return ENCODED_VIRUS;
+                default:        return null;
+            }
+        }
+    }
 
     public static enum BaseType {BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE};
     // Player types
-    public static enum PlayerType {PLAYER_TOP, PLAYER_BOTTOM, AI}
+    public static enum PlayerType {
+
+        PLAYER_TOP, PLAYER_BOTTOM, AI;
+
+        private static final String ENCODED_PLAYER_TOP    = "PT";
+        private static final String ENCODED_PLAYER_BOTTOM = "PB";
+        private static final String ENCODED_AI            = "AI";
+
+        public static PlayerType decode(String playerString) {
+            PlayerType playerType = null;
+
+            if(playerString.equals(ENCODED_PLAYER_BOTTOM))  playerType = PLAYER_BOTTOM;
+            if(playerString.equals(ENCODED_PLAYER_TOP))     playerType = PLAYER_TOP;
+            if(playerString.equals(ENCODED_AI))             playerType = AI;
+
+            return  playerType;
+        }
+
+        public String encoded() {
+            switch (this) {
+                case PLAYER_BOTTOM: return ENCODED_PLAYER_BOTTOM;
+                case PLAYER_TOP:    return ENCODED_PLAYER_TOP;
+                case AI:            return ENCODED_AI;
+                default:            return null;
+            }
+        }
+    }
     // All lanes
-    public enum Lane {TOP, BOTTOM, MIDDLE, ALL}
+    public enum Lane {
+
+        TOP, BOTTOM, MIDDLE, ALL;
+
+        private static final String BOTTOM_ENCODED  = "B";
+        private static final String MIDDLE_ENCODED  = "M";
+        private static final String TOP_ENCODED     = "T";
+        private static final String ALL_ENCODED     = "A";
+
+        public static Lane decode(String laneString) {
+            Lane lane = null;
+
+            if(laneString.equals(BOTTOM_ENCODED)) lane = BOTTOM;
+            if(laneString.equals(MIDDLE_ENCODED)) lane = MIDDLE;
+            if(laneString.equals(TOP_ENCODED))    lane = TOP;
+            if(laneString.equals(ALL_ENCODED))    lane = ALL;
+
+            return lane;
+        }
+
+        public String encoded() {
+            switch(this) {
+                case BOTTOM:  return BOTTOM_ENCODED;
+                case MIDDLE:  return MIDDLE_ENCODED;
+                case TOP:     return TOP_ENCODED;
+                case ALL:     return ALL_ENCODED;
+                default:      return null;
+            }
+        }
+    }
 
     // Turnpoints coordinates on the two lanes that have corners: BOTTOM and TOP
     public static final float BOT_TURNPOINT_X = 150;
