@@ -14,6 +14,8 @@ import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.networking.ClientSender;
+import com.cauldron.bodyconquest.networking.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
@@ -30,9 +32,11 @@ public class EncounterScreen implements Screen {
   private final BodyConquest game;
   private final HUD hud;
   private Communicator comms;
+  private ClientSender clientSender;
 
-  public EncounterScreen(BodyConquest game, Communicator comms) {
+  public EncounterScreen(BodyConquest game, Communicator comms, ClientSender clientSender) {
     this.comms = comms;
+    this.clientSender = clientSender;
     testInit();
     this.game = game;
     gameCamera = new OrthographicCamera();
@@ -68,15 +72,13 @@ public class EncounterScreen implements Screen {
     for (BasicObject o : objects) {
 
       switch (o.getMapObjectType()){
-//        case FLU:
-//
-//          viewObjects.add(new ViewObject(o,Constants.pathFlu,Constants.frameColsFlu,Constants.frameRowsFlu));
-//          break;
+        case FLU:
+          viewObjects.add(new ViewObject(o,Constants.pathFlu,Constants.frameColsFlu,Constants.frameRowsFlu,elapsedSeconds));
+          break;
 //        case VIRUS:
-//          viewObjects.add(new ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus));
+//          viewObjects.add(new ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus,elapsedSeconds));
 //          break;
         case BACTERIA:
-
           viewObjects.add(new ViewObject(o,Constants.pathBacteria,Constants.frameColsBacteria,Constants.frameRowsBacteria,elapsedSeconds));
           break;
         case BACTERTIA_BASE:
@@ -91,8 +93,8 @@ public class EncounterScreen implements Screen {
 //        case BUCKET:
 //          viewObjects.add(new ViewObject(o,Constants.pathBucket,1,1));
 //          break;
-//        case FLUPROJECTILE:
-//          viewObjects.add(new ViewObject(o,Constants.pathProjectile,Constants.frameColsProjectile,Constants.frameRowsProjectile));
+        case FLUPROJECTILE:
+          viewObjects.add(new ViewObject(o,Constants.pathProjectile,Constants.frameColsProjectile,Constants.frameRowsProjectile,elapsedSeconds));
       }
 
 
@@ -150,6 +152,8 @@ public class EncounterScreen implements Screen {
   }
 
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
+    String message = MessageMaker.spawnTroopsMessage(unitType, lane, playerType);
+    clientSender.sendMessage(message);
     // Should call send spawn message to server
     //comms.addCommand();
   }

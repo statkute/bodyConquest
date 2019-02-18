@@ -111,15 +111,18 @@ public class HUD {
   private void addDragAndDropSource(int index, final String name) {
     final ImageButton troopButton;
     if (name.equals("bacteria")) {
-      troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
+      //troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
     } else if (name.equals("flu")) {
-      troopButton = new ImageButton(new Flu().sprite.getDrawable());
+      //troopButton = new ImageButton(new Flu().sprite.getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
     } else if (name.equals("virus")) {
-      troopButton = new ImageButton(new Virus().sprite.getDrawable());
+      //troopButton = new ImageButton(new Virus().sprite.getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
     } else { // default
-      troopButton = new ImageButton(new Flu().sprite.getDrawable());
+      //troopButton = new ImageButton(new Flu().sprite.getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
     }
-
     troopButton.setBounds(
         unitBar.getWidth() / 4 + 25 * index,
         unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),

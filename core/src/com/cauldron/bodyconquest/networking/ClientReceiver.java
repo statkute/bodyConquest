@@ -60,7 +60,7 @@ public class ClientReceiver extends Thread {
     gameSetup();
     while (true) {
       try {
-        byte[] buf = new byte[2560];
+        byte[] buf = new byte[1000000];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         socket.receive(packet);
         String received = new String(packet.getData()).trim();

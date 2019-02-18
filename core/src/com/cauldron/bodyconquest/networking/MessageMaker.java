@@ -1,17 +1,19 @@
 package com.cauldron.bodyconquest.networking;
 
-public class MessageMaker {
-  public static String spawnTroopsMessage(String troopClass, int lane) {
-    String message = "ACTION_T_";
+import com.cauldron.bodyconquest.constants.Constants.*;
 
-    if (troopClass.equals("bacteria")) {
-      message += "B_";
-    } else {
-      message += "F_"; // flu
+public class MessageMaker {
+
+    public static String spawnTroopsMessage(UnitType troopClass, Lane lane, PlayerType playerType){
+      String message = "ACTION_T_";
+
+      message += troopClass.encode();
+      message += "_";
+      message += playerType.encoded();
+      message += "_";
+      message += lane.encoded();
+      return (message);
     }
-    message += lane;
-    return (message);
-  }
 
   public static String castAbilityMessage(String abilityName, int xAxis, int yAxis) {
     String message = "ACTION_A_";

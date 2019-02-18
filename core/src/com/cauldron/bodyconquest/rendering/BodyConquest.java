@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.cauldron.bodyconquest.networking.Client;
+import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.screens.MenuScreen;
 
 /*
@@ -31,6 +33,9 @@ public class BodyConquest extends Game {
   // so that we could add text
   public BitmapFont font;
 
+  private Server server;
+  private Client client;
+
   @Override
   public void create() {
     batch = new SpriteBatch();
@@ -49,5 +54,21 @@ public class BodyConquest extends Game {
   public void dispose() {
     batch.dispose();
     font.dispose();
+  }
+
+  public Server getServer() {
+    return server;
+  }
+
+  public void setServer(Server server) {
+    this.server = server;
+  }
+
+  public Client getClient() {
+    return client;
+  }
+
+  public void setClient(Client client) {
+    this.client = client;
   }
 }

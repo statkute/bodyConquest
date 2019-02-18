@@ -174,7 +174,8 @@ public class RaceSelection implements Screen {
           g = new Game(server, communicator);
           g.start();
           // Communicator comms = new Communicator();
-          game.setScreen(new EncounterScreen(game, communicator));
+          server.startServerLogic(g.getEncounterState());
+          game.setScreen(new EncounterScreen(game, communicator, game.getClient().clientSender));
           dispose();
         }
       } else if (!confirmed) {

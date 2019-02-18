@@ -192,6 +192,7 @@ public class EncounterState extends GameState {
     if (unitType.equals(UnitType.BACTERIA)) {
       troop = new Bacteria(playerType, lane);
     } else if (unitType.equals(UnitType.FLU)) {
+      System.out.println("FluSpawn");
       troop = new Flu(this, playerType, lane);
     } else if (unitType.equals(UnitType.VIRUS)) {
       troop = new Virus(playerType, lane);

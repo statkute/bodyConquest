@@ -30,6 +30,7 @@ public abstract class Projectile extends MapObject {
     stopSpeed = 100000;
     acceleration = 100000;
     mapObjectType = Constants.MapObjectType.FLU;
+    distanceTraveled = 0;
   }
 
   public void hit(Troop troop) {
@@ -58,7 +59,7 @@ public abstract class Projectile extends MapObject {
     xPrev = getX();
     yPrev = getY();
     move();
-    distanceTraveled += distFrom(xPrev, yPrev);
+    //distanceTraveled += distFrom(xPrev, yPrev);
   }
 
   public void checkHit(CopyOnWriteArrayList<Troop> enemies) {

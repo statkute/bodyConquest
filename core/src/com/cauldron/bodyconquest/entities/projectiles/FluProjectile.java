@@ -18,7 +18,7 @@ public class FluProjectile extends Projectile {
 
   private void init() {
     maxSpeed = 2;
-    maxTravelDistance = 100;
+    maxTravelDistance = 200;
     mapObjectType = Constants.MapObjectType.FLUPROJECTILE;
 
   }
