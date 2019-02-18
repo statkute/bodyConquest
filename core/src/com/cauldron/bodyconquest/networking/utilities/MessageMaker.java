@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.networking;
+package com.cauldron.bodyconquest.networking.utilities;
 
 import com.cauldron.bodyconquest.constants.Constants.*;
 
@@ -47,10 +47,31 @@ public class MessageMaker {
     message += position.toUpperCase().charAt(0);
     message += "_";
     NumberFormat formatter = new DecimalFormat("000");
-    String s = formatter.format(health);
-    message += s;
+    String formattedNumber = formatter.format(health);
+    message += formattedNumber;
 
     return message;
+  }
+
+  public static String resourceUpdate(int lipids, int sugars, int proteins, String player){
+    String message = "RESOURCES_";
+    message += player.toUpperCase().charAt(0);
+    message += "_";
+
+    NumberFormat formatter = new DecimalFormat("000");
+    String formattedLipids = formatter.format(lipids);
+    message += formattedLipids;
+    message += "_";
+
+    String formattedSugars = formatter.format(sugars);
+    message += formattedSugars;
+    message += "_";
+
+    String formattedProteins = formatter.format(proteins);
+    message += formattedProteins;
+
+    return message;
+
   }
 
   public static String raceMessage(String race) {
