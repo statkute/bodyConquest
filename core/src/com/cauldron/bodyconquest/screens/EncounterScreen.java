@@ -66,25 +66,29 @@ public class EncounterScreen implements Screen {
 
       switch (o.getMapObjectType()){
         case FLU:
-          //TO DO add flu texture
+          viewObjects.add(new ViewObject(o,Constants.pathFlu,Constants.frameColsFlu,Constants.frameRowsFlu));
           break;
         case VIRUS:
-          ////TO DO add virus texture
+          viewObjects.add(new ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus));
+          break;
         case BACTERIA:
-          ////TO DO add bacteria texture
+          viewObjects.add(new ViewObject(o,Constants.pathBacteria,Constants.frameColsBacteria,Constants.frameRowsBacteria));
+          break;
         case BACTERTIA_BASE:
           viewObjects.add(new ViewObject(o,Constants.pathBaseImage));
           break;
         case VIRUS_BASE:
           ////TO DO add Virus base Texture
+          break;
         case MONSTER_BASE:
           ////TO DO add Monster base Texture
-        case BUCKET:
-          viewObjects.add(new ViewObject(o,Constants.pathBucket));
           break;
+        case BUCKET:
+          viewObjects.add(new ViewObject(o,Constants.pathBucket,1,1));
+          break;
+        case FLUPROJECTILE:
+          viewObjects.add(new ViewObject(o,Constants.pathProjectile,Constants.frameColsProjectile,Constants.frameRowsProjectile));
       }
-
-
 
 
     }
