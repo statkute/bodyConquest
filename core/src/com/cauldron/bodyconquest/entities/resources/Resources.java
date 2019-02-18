@@ -25,8 +25,7 @@ public class Resources extends Thread {
     regenerationSugars = 5;
     regenerationProteins = 6;
 
-    String message = MessageMaker.resourceUpdate(lipids, sugars, proteins, player);
-    serverSender.sendMessage(message);
+    sendUpdate(player, serverSender);
   }
 
   public void run() {
@@ -60,9 +59,13 @@ public class Resources extends Thread {
           proteins += regenerationProteins;
         }
       }
-      String message = MessageMaker.resourceUpdate(lipids, sugars, proteins, player);
-      serverSender.sendMessage(message);
+      sendUpdate(player, serverSender);
     }
+  }
+
+  private void sendUpdate(String player, ServerSender serverSender) {
+    String message = MessageMaker.resourceUpdate(lipids, sugars, proteins, player);
+    serverSender.sendMessage(message);
   }
 
   public boolean canAfford(int priceLipids, int priceSugars, int priceProteins) {
@@ -76,7 +79,7 @@ public class Resources extends Thread {
     lipids -= priceLipids;
     sugars -= priceSugars;
     proteins -= priceProteins;
-    //TO DO: send resource update to the client
+    sendUpdate(player, serverSender);
   }
 
   public void increaseLipidRegeneration(int increase) {
