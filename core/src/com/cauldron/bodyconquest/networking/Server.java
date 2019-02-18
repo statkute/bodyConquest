@@ -1,5 +1,7 @@
 package com.cauldron.bodyconquest.networking;
 
+import com.cauldron.bodyconquest.game_logic.Game;
+
 import java.net.SocketException;
 
 /** Server class */
@@ -14,13 +16,13 @@ public class Server {
    * @param type game type: either "singleplayer" or "mutliplayer"
    * @throws SocketException
    */
-  public void startServer(String type) throws SocketException {
+  public void startServer(String type, Game game) throws SocketException {
     Ping ping = new Ping();
     ping.start();
 
     serverSender = new ServerSender();
     serverReceiver = new ServerReceiver(serverSender, type);
-    serverLogic = new ServerLogic(serverReceiver);
+    serverLogic = new ServerLogic(serverReceiver, game.getEncounterState());
 
     serverSender.start();
     serverReceiver.start();

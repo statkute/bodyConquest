@@ -1,7 +1,8 @@
 package com.cauldron.bodyconquest.entities.Troops.Bases;
 
+import com.cauldron.bodyconquest.constants.Lane;
+import com.cauldron.bodyconquest.constants.PlayerType;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.constants.Constants.*;
 
 public abstract class Base extends Troop {
 

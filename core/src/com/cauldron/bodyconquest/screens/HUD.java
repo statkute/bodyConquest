@@ -18,9 +18,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.constants.Lane;
+import com.cauldron.bodyconquest.constants.PlayerType;
+import com.cauldron.bodyconquest.constants.UnitType;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
@@ -110,14 +113,19 @@ public class HUD {
 
   private void addDragAndDropSource(int index, final String name) {
     final ImageButton troopButton;
+    // This needs to not get images using sprites on the server objects (MapObjects)
     if (name.equals("bacteria")) {
-      troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
+      //troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
     } else if (name.equals("flu")) {
-      troopButton = new ImageButton(new Flu().sprite.getDrawable());
+      //troopButton = new ImageButton(new Flu().sprite.getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
     } else if (name.equals("virus")) {
-      troopButton = new ImageButton(new Virus().sprite.getDrawable());
+      //troopButton = new ImageButton(new Virus().sprite.getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
     } else { // default
-      troopButton = new ImageButton(new Flu().sprite.getDrawable());
+      //troopButton = new ImageButton(new Flu().sprite.getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
     }
 
     troopButton.setBounds(

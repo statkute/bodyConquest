@@ -2,8 +2,9 @@ package com.cauldron.bodyconquest.entities.Troops;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.constants.Lane;
+import com.cauldron.bodyconquest.constants.PlayerType;
 import com.cauldron.bodyconquest.entities.MapObject;
-import com.cauldron.bodyconquest.constants.Constants.*;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 

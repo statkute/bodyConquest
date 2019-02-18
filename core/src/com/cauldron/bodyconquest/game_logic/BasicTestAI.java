@@ -1,8 +1,10 @@
 package com.cauldron.bodyconquest.game_logic;
 
 import com.badlogic.gdx.Gdx;
+import com.cauldron.bodyconquest.constants.Lane;
+import com.cauldron.bodyconquest.constants.PlayerType;
+import com.cauldron.bodyconquest.constants.UnitType;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
-import com.cauldron.bodyconquest.constants.Constants.*;
 
 public class BasicTestAI extends Thread {
 

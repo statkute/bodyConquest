@@ -1,6 +1,8 @@
 package com.cauldron.bodyconquest.entities.Troops.Bases;
 
-import com.cauldron.bodyconquest.constants.Constants.*;
+
+import com.cauldron.bodyconquest.constants.Lane;
+import com.cauldron.bodyconquest.constants.PlayerType;
 
 public class MonsterBase extends Base {
 

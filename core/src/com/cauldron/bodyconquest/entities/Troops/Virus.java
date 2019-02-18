@@ -3,8 +3,9 @@ package com.cauldron.bodyconquest.entities.Troops;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.cauldron.bodyconquest.constants.Lane;
+import com.cauldron.bodyconquest.constants.PlayerType;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
-import com.cauldron.bodyconquest.constants.Constants.*;
 
 public class Virus extends Troop {
 
@@ -34,8 +35,8 @@ public class Virus extends Troop {
     damage = 30;
 
     // Temporary implementation for images for the HUD
-    Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/virus.png");
-    sprite = new Image(walkAnimation.getKeyFrame(0));
+    //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/virus.png");
+    //sprite = new Image(walkAnimation.getKeyFrame(0));
   }
 
 }

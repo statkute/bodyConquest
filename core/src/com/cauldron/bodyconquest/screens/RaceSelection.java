@@ -10,6 +10,8 @@ import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.game_logic.utils.Timer;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
+import com.cauldron.bodyconquest.networking.Client;
+import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -170,14 +173,7 @@ public class RaceSelection implements Screen {
 
         if (playBounds.contains(tmp.x, tmp.y)) {
           playButtonSound();
-          g = new Game();
-          g.start();
-          Timer.startTimer(1000);
-          String json = Serialization.serialize(g.getEncounterState());
-          System.out.println(json.getBytes().length);
-          EncounterState encounterState = Serialization.deserialize(json);
-          // Communicator comms = new Communicator();
-          game.setScreen(new EncounterScreen(game, g.comms));
+          startSinglePlayer();
           dispose();
         }
       } else if (!confirmed) {
@@ -279,6 +275,30 @@ public class RaceSelection implements Screen {
     confirmButton.dispose();
     selectionFrame1.dispose();
     selectionFrame2.dispose();
+  }
+
+  private void startSinglePlayer() throws IOException {
+    g = new Game();
+    g.start();
+    Timer.startTimer(1000);
+    String json = Serialization.serialize(g.getEncounterState());
+    System.out.println(json.getBytes().length);
+    EncounterState encounterState = Serialization.deserialize(json);
+    // Communicator comms = new Communicator();
+    //game.setScreen(new EncounterScreen(game, g.comms, ));
+    Server server = new Server();
+    Client client;
+    try {
+      server.startServer("singleplayer", g);
+      client = new Client();
+      client.startClient();
+      game.setScreen(new EncounterScreen(game, g.comms, client.clientSender));
+
+    } catch (SocketException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public Game getG() {

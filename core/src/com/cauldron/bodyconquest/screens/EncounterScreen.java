@@ -9,11 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cauldron.bodyconquest.constants.Constants;
-import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.constants.Lane;
+import com.cauldron.bodyconquest.constants.PlayerType;
+import com.cauldron.bodyconquest.constants.UnitType;
 import com.cauldron.bodyconquest.entities.BasicObject;
-import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.networking.ClientSender;
+import com.cauldron.bodyconquest.networking.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
@@ -32,16 +35,18 @@ public class EncounterScreen implements Screen {
   private final BodyConquest game;
   private final HUD hud;
   private Communicator comms;
+  private ClientSender clientSender;
 
-  public EncounterScreen(BodyConquest game, Communicator comms) {
+  public EncounterScreen(BodyConquest game, Communicator comms, ClientSender clientSender) {
     this.comms = comms;
+    this.clientSender = clientSender;
     testInit();
     this.game = game;
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    hud = new HUD(game.batch, this, Constants.PlayerType.PLAYER_BOTTOM);
+    hud = new HUD(game.batch, this, PlayerType.PLAYER_BOTTOM);
 
     // Set up map
     map = new Image(new Texture("core/assets/Basic Map v2.png"));
@@ -120,8 +125,8 @@ public class EncounterScreen implements Screen {
   }
 
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
-    // Should call send spawn message to server
-    //comms.addCommand();
+    String message = MessageMaker.spawnTroopsMessage(unitType, lane, playerType);
+    clientSender.sendMessage(message);
   }
 
   //    public enum PlayerType {

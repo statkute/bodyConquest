@@ -1,15 +1,18 @@
 package com.cauldron.bodyconquest.networking;
 
+import com.cauldron.bodyconquest.constants.Lane;
+import com.cauldron.bodyconquest.constants.PlayerType;
+import com.cauldron.bodyconquest.constants.UnitType;
+
 public class MessageMaker {
-  public static String spawnTroopsMessage(String troopClass, int lane){
+  public static String spawnTroopsMessage(UnitType troopClass, Lane lane, PlayerType playerType){
     String message = "ACTION_T_";
 
-    if (troopClass.equals("bacteria")){
-      message += "B_";
-    } else {
-      message += "F_"; //flu
-    }
-    message += lane;
+    message += troopClass.encode();
+    message += "_";
+    message += playerType.encoded();
+    message += "_";
+    message += lane.encoded();
     return (message);
   }
 

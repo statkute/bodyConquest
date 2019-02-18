@@ -1,16 +1,22 @@
 package com.cauldron.bodyconquest.networking;
 
+import com.cauldron.bodyconquest.constants.Lane;
+import com.cauldron.bodyconquest.constants.PlayerType;
+import com.cauldron.bodyconquest.constants.UnitType;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
+
 /** Server Thread responsible for dealing with game logic based on incoming messages */
 public class ServerLogic extends Thread {
   public ServerReceiver serverReceiver;
-
+  private EncounterState encounterState;
   /**
    * ServerLogic initialisation
    *
    * @param serverReceiver the ServerReceiver thread of the same Server
    */
-  public ServerLogic(ServerReceiver serverReceiver) {
+  public ServerLogic(ServerReceiver serverReceiver, EncounterState encounterState) {
     this.serverReceiver = serverReceiver;
+    this.encounterState = encounterState;
   }
 
   /** Deals with game logic tasks of the incoming messages */
@@ -22,13 +28,14 @@ public class ServerLogic extends Thread {
         String command = message.substring(1);
         if (command.startsWith("ACTION")){
           if (command.startsWith("ACTION_T")){
-            int lane = Character.getNumericValue(command.charAt(command.length() - 1));
-            if (command.charAt(9) == 'B'){
-              // TO DO: spawn bacteria for clientID at the lane
-            } else if (command.charAt(9) == 'F'){
-              //TO DO: spawn flu for clientID at the lane
-            }
-            //TO DO: spawn troops of type for clientID at lane
+            System.out.println(command.substring(9, 12));
+            UnitType unit = UnitType.decode(command.substring(9, 12));
+            System.out.println(command.substring(13, 15));
+            PlayerType playerType = PlayerType.decode(command.substring(13, 15));
+            System.out.println(command.substring(command.length() - 1));
+            Lane lane = Lane.decode(command.substring(command.length() - 1));
+            encounterState.spawnUnit(unit, lane, playerType);
+
           } else if (command.startsWith("ACTION_A")){
             int x_Axis = Integer.parseInt(command.substring(11, 13));
             int y_Axis = Integer.parseInt(command.substring(command.length() - 2));
