@@ -42,6 +42,8 @@ public class Flu extends Troop {
     range = 200;
     damage = 40;
 
+    mapObjectType = MapObjectType.FLU;
+
     // Temporary implementation for images for the HUD
     Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/flu.png");
     sprite = new Image(walkAnimation.getKeyFrame(0));

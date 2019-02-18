@@ -5,10 +5,19 @@ import com.badlogic.gdx.audio.Sound;
 
 public class Constants {
 
+
+    private static String pathAssets = "core/assets/";
+
+    public static String pathBaseImage = pathAssets + "castle1.gif";
+    public static String pathBucket = pathAssets + "bucket.png";
+
+
     // EVERYTHINGS
-    public static enum MapObjectType {BASE}
+    public static enum MapObjectType {BACTERIA, FLU, BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE}
     // ALL units
-    public static enum UnitType {BACTERIA, FLU, BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE, VIRUS}
+    public static enum UnitType {BACTERIA, FLU, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE}
+
+    public static enum BaseType {BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE};
     // Player types
     public static enum PlayerType {PLAYER_TOP, PLAYER_BOTTOM, AI}
     // All lanes

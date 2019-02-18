@@ -9,13 +9,14 @@ public class ViewObject extends Actor {
 
   private Texture texture;
 
-  public ViewObject(BasicObject bo) {
+  public ViewObject(BasicObject bo, String pathTexture) {
     setX((float)bo.getX());
     setY((float)bo.getY());
     setWidth((float)bo.getWidth());
     setHeight((float)bo.getHeight());
-    // Right now all textures are the default green
-    texture = new Texture("core/assets/bucket.png");
+    // Right now all textures are the default buckets
+    //texture = new Texture("core/assets/bucket.png");
+    texture = new Texture(pathTexture);
   }
 
   @Override

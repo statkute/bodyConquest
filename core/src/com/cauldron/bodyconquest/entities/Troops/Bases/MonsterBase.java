@@ -12,6 +12,7 @@ public class MonsterBase extends Base {
     private void init(){
         this.health = 75;
         this.damage = 8;
+        mapObjectType = MapObjectType.MONSTER_BASE;
     }
 
 }

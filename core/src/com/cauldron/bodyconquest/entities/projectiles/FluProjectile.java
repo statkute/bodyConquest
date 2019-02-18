@@ -1,5 +1,7 @@
 package com.cauldron.bodyconquest.entities.projectiles;
 
+import com.cauldron.bodyconquest.constants.Constants;
+
 public class FluProjectile extends Projectile {
 
   private double xDest;
@@ -17,6 +19,8 @@ public class FluProjectile extends Projectile {
   private void init() {
     maxSpeed = 2;
     maxTravelDistance = 100;
+    mapObjectType = Constants.MapObjectType.FLUPROJECTILE;
+
   }
 
   @Override
