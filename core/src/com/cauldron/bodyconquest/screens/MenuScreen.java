@@ -115,6 +115,15 @@ public class MenuScreen implements Screen {
       if (multiplayerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         System.out.println("Multiplayer Is touched");
+
+
+        client = new Client();
+        Communicator communicator = new Communicator();
+        try {
+          client.startClient(communicator);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
         //              game.setScreen(new RaceSelectionScreen(game));
         //              dispose();
       }
