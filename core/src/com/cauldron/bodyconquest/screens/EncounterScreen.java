@@ -158,8 +158,8 @@ public class EncounterScreen implements Screen {
       //    System.out.println(viewObjects.size());
       for (ViewObject vo : viewObjects) vo.remove();
 
-      viewObjects.clear();
-      objects.clear();
+//      viewObjects.clear();
+//      objects.clear();
     }
 
     if (((healthTopBase == Constants.MINHEALTH) || (healthBottomBase == Constants.MINHEALTH))
