@@ -30,6 +30,8 @@ public class MenuScreen implements Screen {
   private Rectangle settingsBounds;
   private Rectangle creditsBounds;
 
+  public static long timeOfServer;
+
   OrthographicCamera camera;
 
   private Server server;
@@ -121,6 +123,7 @@ public class MenuScreen implements Screen {
         System.out.println("Singleplayer Is touched");
         server = new Server();
         try {
+          timeOfServer = System.currentTimeMillis();
           server.startServer("singleplayer");
           client = new Client();
           Communicator communicator = new Communicator();

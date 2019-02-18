@@ -66,32 +66,37 @@ public class EncounterScreen implements Screen {
     //if(baseTop.health > 0 && baseBottom)
     // Turn BasicObjects from server/communicator into ViewObjects (and gives them a texture)
     ArrayList<ViewObject> viewObjects = new ArrayList<ViewObject>();
+    long tEnd = System.currentTimeMillis();
+    long tDelta = tEnd - MenuScreen.timeOfServer;
+    float elapsedSeconds = tDelta / 1000.0f;
     for (BasicObject o : objects) {
 
       switch (o.getMapObjectType()){
-        case FLU:
-          viewObjects.add(new ViewObject(o,Constants.pathFlu,Constants.frameColsFlu,Constants.frameRowsFlu));
-          break;
-        case VIRUS:
-          viewObjects.add(new ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus));
-          break;
+//        case FLU:
+//
+//          viewObjects.add(new ViewObject(o,Constants.pathFlu,Constants.frameColsFlu,Constants.frameRowsFlu));
+//          break;
+//        case VIRUS:
+//          viewObjects.add(new ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus));
+//          break;
         case BACTERIA:
-          viewObjects.add(new ViewObject(o,Constants.pathBacteria,Constants.frameColsBacteria,Constants.frameRowsBacteria));
+
+          viewObjects.add(new ViewObject(o,Constants.pathBacteria,Constants.frameColsBacteria,Constants.frameRowsBacteria,elapsedSeconds));
           break;
         case BACTERTIA_BASE:
-          viewObjects.add(new ViewObject(o,Constants.pathBaseImage));
+          viewObjects.add(new ViewObject(o,Constants.pathBaseImage,elapsedSeconds));
           break;
-        case VIRUS_BASE:
-          ////TO DO add Virus base Texture
-          break;
-        case MONSTER_BASE:
-          ////TO DO add Monster base Texture
-          break;
-        case BUCKET:
-          viewObjects.add(new ViewObject(o,Constants.pathBucket,1,1));
-          break;
-        case FLUPROJECTILE:
-          viewObjects.add(new ViewObject(o,Constants.pathProjectile,Constants.frameColsProjectile,Constants.frameRowsProjectile));
+//        case VIRUS_BASE:
+//          ////TO DO add Virus base Texture
+//          break;
+//        case MONSTER_BASE:
+//          ////TO DO add Monster base Texture
+//          break;
+//        case BUCKET:
+//          viewObjects.add(new ViewObject(o,Constants.pathBucket,1,1));
+//          break;
+//        case FLUPROJECTILE:
+//          viewObjects.add(new ViewObject(o,Constants.pathProjectile,Constants.frameColsProjectile,Constants.frameRowsProjectile));
       }
 
 
@@ -124,7 +129,7 @@ public class EncounterScreen implements Screen {
     game.batch.begin();
     // game.batch.draw();
     game.batch.end();
-
+//    System.out.println(viewObjects.size());
     for(ViewObject vo : viewObjects) vo.remove();
   }
 
