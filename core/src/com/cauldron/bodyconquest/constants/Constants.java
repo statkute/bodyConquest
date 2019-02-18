@@ -6,6 +6,13 @@ import com.badlogic.gdx.audio.Sound;
 public class Constants {
 
 
+    public static final int MINHEALTH =0;
+
+
+    public static final int UPDATESCREENTILL = 40;
+    public static final int INCREASEACCUMULATORTILL = 50;
+
+
     private static String pathAssets = "core/assets/";
 
     public static String pathBaseImage = pathAssets + "castle1.gif";
@@ -158,6 +165,7 @@ public class Constants {
     public static final int baseBottomY = 70;
     public static final int baseWidth = 120;
     public static final int baseHeight = 120;
+
 
 }
 

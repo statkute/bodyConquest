@@ -73,82 +73,102 @@ public class EncounterScreen implements Screen {
     healthBottomBase = comms.getBottomHealthPercentage();
     healthTopBase = comms.getTopHealthPercentage();
 
+    if (accumulatorAfterBaseConquered < Constants.UPDATESCREENTILL) {
+      objects = comms.getAllObjects();
 
-    if( accumulatorAfterBaseConquered< 40){
-    objects = comms.getAllObjects();
+      // Turn BasicObjects from server/communicator into ViewObjects (and gives them a texture)
+      viewObjects = new ArrayList<ViewObject>();
+      long tEnd = System.currentTimeMillis();
+      long tDelta = tEnd - MenuScreen.timeOfServer;
+      float elapsedSeconds = tDelta / 1000.0f;
+      for (BasicObject o : objects) {
 
-    // Turn BasicObjects from server/communicator into ViewObjects (and gives them a texture)
-    viewObjects = new ArrayList<ViewObject>();
-    long tEnd = System.currentTimeMillis();
-    long tDelta = tEnd - MenuScreen.timeOfServer;
-    float elapsedSeconds = tDelta / 1000.0f;
-    for (BasicObject o : objects) {
-
-      switch (o.getMapObjectType()){
-        case FLU:
-          viewObjects.add(new ViewObject(o,Constants.pathFlu,Constants.frameColsFlu,Constants.frameRowsFlu,elapsedSeconds));
-          break;
-//        case VIRUS:
-//          viewObjects.add(new ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus,elapsedSeconds));
-//          break;
-        case BACTERIA:
-          viewObjects.add(new ViewObject(o,Constants.pathBacteria,Constants.frameColsBacteria,Constants.frameRowsBacteria,elapsedSeconds));
-          break;
-        case BACTERTIA_BASE:
-          viewObjects.add(new ViewObject(o,Constants.pathBaseImage,elapsedSeconds));
-          break;
-//        case VIRUS_BASE:
-//          ////TO DO add Virus base Texture
-//          break;
-//        case MONSTER_BASE:
-//          ////TO DO add Monster base Texture
-//          break;
-//        case BUCKET:
-//          viewObjects.add(new ViewObject(o,Constants.pathBucket,1,1));
-//          break;
-        case FLUPROJECTILE:
-          viewObjects.add(new ViewObject(o,Constants.pathProjectile,Constants.frameColsProjectile,Constants.frameRowsProjectile,elapsedSeconds));
+        switch (o.getMapObjectType()) {
+          case FLU:
+            viewObjects.add(
+                new ViewObject(
+                    o,
+                    Constants.pathFlu,
+                    Constants.frameColsFlu,
+                    Constants.frameRowsFlu,
+                    elapsedSeconds));
+            break;
+            //        case VIRUS:
+            //          viewObjects.add(new
+            // ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus,elapsedSeconds));
+            //          break;
+          case BACTERIA:
+            viewObjects.add(
+                new ViewObject(
+                    o,
+                    Constants.pathBacteria,
+                    Constants.frameColsBacteria,
+                    Constants.frameRowsBacteria,
+                    elapsedSeconds));
+            break;
+          case BACTERTIA_BASE:
+            viewObjects.add(new ViewObject(o, Constants.pathBaseImage, elapsedSeconds));
+            break;
+            //        case VIRUS_BASE:
+            //          ////TO DO add Virus base Texture
+            //          break;
+            //        case MONSTER_BASE:
+            //          ////TO DO add Monster base Texture
+            //          break;
+            //        case BUCKET:
+            //          viewObjects.add(new ViewObject(o,Constants.pathBucket,1,1));
+            //          break;
+          case FLUPROJECTILE:
+            viewObjects.add(
+                new ViewObject(
+                    o,
+                    Constants.pathProjectile,
+                    Constants.frameColsProjectile,
+                    Constants.frameRowsProjectile,
+                    elapsedSeconds));
+        }
       }
 
+      for (ViewObject vo : viewObjects) {
 
+        stage.addActor(vo);
+      }
+      // Update the camera
+      gameCamera.update();
+
+      // Render background
+      Gdx.gl.glClearColor(0, 0, 0, 1);
+      Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+      // Combine encounter and hud views
+      game.batch.setProjectionMatrix(hud.getStage().getCamera().combined);
+
+      // Make all actors call their act methods
+      stage.act();
+      // Draw Actors
+      stage.draw();
+
+      // Draw HUD
+      hud.getStage().draw();
+
+      // Start, draw and end spriteBatch
+      game.batch.begin();
+      // game.batch.draw();
+      game.batch.end();
+      //    System.out.println(viewObjects.size());
+      for (ViewObject vo : viewObjects) vo.remove();
+
+      viewObjects.clear();
+      objects.clear();
     }
 
-    for (ViewObject vo : viewObjects) {
+    if (((healthTopBase == Constants.MINHEALTH) || (healthBottomBase == Constants.MINHEALTH))
+        && accumulatorAfterBaseConquered < Constants.INCREASEACCUMULATORTILL) {
 
-      stage.addActor(vo);
-    }
-    // Update the camera
-    gameCamera.update();
+      accumulatorAfterBaseConquered++;
 
-    // Render background
-    Gdx.gl.glClearColor(0, 0, 0, 1);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-    // Combine encounter and hud views
-    game.batch.setProjectionMatrix(hud.getStage().getCamera().combined);
-
-    // Make all actors call their act methods
-    stage.act();
-    // Draw Actors
-    stage.draw();
-
-    // Draw HUD
-    hud.getStage().draw();
-
-    // Start, draw and end spriteBatch
-    game.batch.begin();
-    // game.batch.draw();
-    game.batch.end();
-//    System.out.println(viewObjects.size());
-    for(ViewObject vo : viewObjects) vo.remove();
-
-    viewObjects.clear();
-    objects.clear();
-    }
-
-    if( ((healthTopBase ==0)  || (healthBottomBase == 0)) && accumulatorAfterBaseConquered < 50){
-
-        accumulatorAfterBaseConquered++;
+      // TO DO once accumulator is between 40 and 50 make a pop up box to winnign screen or just
+      // make a winning screen for Friday
     }
   }
 
@@ -176,7 +196,7 @@ public class EncounterScreen implements Screen {
     String message = MessageMaker.spawnTroopsMessage(unitType, lane, playerType);
     clientSender.sendMessage(message);
     // Should call send spawn message to server
-    //comms.addCommand();
+    // comms.addCommand();
   }
 
   //    public enum PlayerType {
