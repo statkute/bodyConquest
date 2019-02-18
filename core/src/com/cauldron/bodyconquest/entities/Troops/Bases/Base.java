@@ -14,5 +14,4 @@ public abstract class Base extends Troop {
       this.setSize(Constants.baseWidth, Constants.baseHeight);
       mapObjectType = MapObjectType.BASE;
     }
-
 }
