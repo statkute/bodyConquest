@@ -26,7 +26,7 @@ public class ServerLogic extends Thread {
         char clientID = message.charAt(0);
         String command = message.substring(1);
         if (command.startsWith("ACTION")){
-          if (command.startsWith("ACTION_T")){
+            if (command.startsWith("ACTION_T")){
             System.out.println(command.substring(9, 12));
             UnitType unit = UnitType.decode(command.substring(9, 12));
             System.out.println(command.substring(13, 15));

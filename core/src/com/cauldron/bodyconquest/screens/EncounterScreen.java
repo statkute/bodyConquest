@@ -72,15 +72,13 @@ public class EncounterScreen implements Screen {
     for (BasicObject o : objects) {
 
       switch (o.getMapObjectType()){
-//        case FLU:
-//
-//          viewObjects.add(new ViewObject(o,Constants.pathFlu,Constants.frameColsFlu,Constants.frameRowsFlu));
-//          break;
+        case FLU:
+          viewObjects.add(new ViewObject(o,Constants.pathFlu,Constants.frameColsFlu,Constants.frameRowsFlu,elapsedSeconds));
+          break;
 //        case VIRUS:
-//          viewObjects.add(new ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus));
+//          viewObjects.add(new ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus,elapsedSeconds));
 //          break;
         case BACTERIA:
-
           viewObjects.add(new ViewObject(o,Constants.pathBacteria,Constants.frameColsBacteria,Constants.frameRowsBacteria,elapsedSeconds));
           break;
         case BACTERTIA_BASE:
@@ -95,8 +93,8 @@ public class EncounterScreen implements Screen {
 //        case BUCKET:
 //          viewObjects.add(new ViewObject(o,Constants.pathBucket,1,1));
 //          break;
-//        case FLUPROJECTILE:
-//          viewObjects.add(new ViewObject(o,Constants.pathProjectile,Constants.frameColsProjectile,Constants.frameRowsProjectile));
+        case FLUPROJECTILE:
+          viewObjects.add(new ViewObject(o,Constants.pathProjectile,Constants.frameColsProjectile,Constants.frameRowsProjectile,elapsedSeconds));
       }
 
 
