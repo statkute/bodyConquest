@@ -1,5 +1,7 @@
 package com.cauldron.bodyconquest.entities;
 
+import com.cauldron.bodyconquest.constants.Constants;
+
 import java.awt.*;
 
 /*
@@ -19,6 +21,9 @@ public abstract class MapObject {
   private final double LEFT_DIRECTION = -90;
   private final double RIGHT_DIRECTION = 90;
 
+  // Type of the object
+  protected Constants.MapObjectType mapObjectType;
+
   // Current x and y
   private double x;
   private double y;
@@ -31,6 +36,8 @@ public abstract class MapObject {
   // Collision box width and height
   private int cwidth;
   private int cheight;
+
+
 
   // Movement attributes
   /** The rate at which the current speed increases per tick until the MapObject's movement reaches maxSpeed. */
@@ -93,6 +100,23 @@ public abstract class MapObject {
    */
   public double getCheight() {
     return cheight;
+  }
+
+
+  /**
+   * Get the type of MapObject which includes all possible types.
+   * @return The type of the MapObject.
+   */
+  public Constants.MapObjectType getMapObjectType() {
+    return mapObjectType;
+  }
+
+  /**
+   * Set the type of MapObject.
+   * @param mapObjectType The type of the MapObject to be set.
+   */
+  public void setMapObjectType(Constants.MapObjectType mapObjectType) {
+    this.mapObjectType = mapObjectType;
   }
 
   /**
@@ -410,6 +434,7 @@ public abstract class MapObject {
     bo.setHeight(height);
     bo.setDirection(direction);
     bo.setCurrentSpeed(currentSpeed);
+    bo.setMapObjectType(mapObjectType);
     return bo;
   }
 }

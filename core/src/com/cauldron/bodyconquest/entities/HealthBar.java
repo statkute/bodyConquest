@@ -25,34 +25,8 @@ public class HealthBar extends ProgressBar {
 
   }
 
-
-
-
-
-
     }
 
 
-    //    private NinePatchDrawable loadingBarBackground;
-//
-//    private NinePatchDrawable loadingBar;
-//
-//    protected float progress;
-//
-//    public HealthBar(Base base) {
-//        TextureAtlas skinAtlas = new TextureAtlas(Gdx.files.internal("uiskin.atlas"));
-//        NinePatch loadingBarBackgroundPatch = new NinePatch(skinAtlas.findRegion("default-round"), 5, 5, 4, 4);
-//        NinePatch loadingBarPatch = new NinePatch(skinAtlas.findRegion("default-round-down"), 5, 5, 4, 4);
-//        loadingBar = new NinePatchDrawable(loadingBarPatch);
-//        loadingBarBackground = new NinePatchDrawable(loadingBarBackgroundPatch);
-//        progress = base.getHealth()/base.getMaxHealth();
-//    }
-//
-//    @Override
-//    public void draw(Batch batch, float parentAlpha) {
-//        // This would be getHealth()/getMaxHealth()
-//
-//        loadingBarBackground.draw(batch, getX(), getY(), getWidth() * getScaleX(), getHeight() * getScaleY());
-//        loadingBar.draw(batch, getX(), getY(), progress * getWidth() * getScaleX(), getHeight() * getScaleY());
-//    }
+
 

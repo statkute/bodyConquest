@@ -12,5 +12,6 @@ public class VirusBase extends Base {
   private void init() {
     this.health = 70;
     this.damage = 10;
+    mapObjectType = MapObjectType.VIRUS_BASE;
   }
 }

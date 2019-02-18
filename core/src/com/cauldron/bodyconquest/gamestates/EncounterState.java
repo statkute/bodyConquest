@@ -60,6 +60,9 @@ public class EncounterState extends GameState {
   private Communicator comms;
   private ServerSender serverSender;
 
+  private Base topBase;
+  private Base bottomBase;
+
   /**
    * Constructor.
    *
@@ -77,13 +80,13 @@ public class EncounterState extends GameState {
     troopsTop = new CopyOnWriteArrayList<Troop>();
 
     // Create player bases
-    Base bottomBase = new BacteriaBase(Lane.ALL, PlayerType.PLAYER_BOTTOM);
-    bottomBase.setPosition(map.getRight() - bottomBase.getWidth(), map.getBottom());
+    bottomBase = new BacteriaBase(Lane.ALL, PlayerType.PLAYER_BOTTOM);
+    bottomBase.setPosition(Constants.baseBottomX,Constants.baseBottomY);
     troopsBottom.add(bottomBase);
     allMapObjects.add(bottomBase);
 
-    Base topBase = new BacteriaBase(Lane.ALL, PlayerType.PLAYER_TOP);
-    topBase.setPosition(map.getLeft(), map.getTop() - topBase.getHeight());
+    topBase = new BacteriaBase(Lane.ALL, PlayerType.PLAYER_TOP);
+    topBase.setPosition(Constants.baseTopX,Constants.baseTopY);
     troopsTop.add(topBase);
     allMapObjects.add(topBase);
 
@@ -145,6 +148,11 @@ public class EncounterState extends GameState {
   public void update() {
     // Receive any input from clients
     // String command = comms.getNextComand();
+
+    if(topBase.getHealth() > 0 && bottomBase.getHealth() > 0){}
+
+
+
 
     for (MapObject mo : allMapObjects) mo.update();
 

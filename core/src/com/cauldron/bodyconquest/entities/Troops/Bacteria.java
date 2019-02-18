@@ -3,6 +3,7 @@ package com.cauldron.bodyconquest.entities.Troops;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 import com.cauldron.bodyconquest.constants.Constants.*;
 
@@ -33,6 +34,7 @@ public class Bacteria extends Troop {
     cooldown = 1000; // Milliseconds
     range = 50;
     damage = 30;
+    mapObjectType = MapObjectType.BACTERIA;
 
     // Temporary implementation for images for the HUD
     Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");

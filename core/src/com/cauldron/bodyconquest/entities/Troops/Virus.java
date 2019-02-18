@@ -32,6 +32,7 @@ public class Virus extends Troop {
     lastAttack = 0;
     range = 50;
     damage = 30;
+    mapObjectType = MapObjectType.VIRUS;
 
     // Temporary implementation for images for the HUD
     Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/virus.png");

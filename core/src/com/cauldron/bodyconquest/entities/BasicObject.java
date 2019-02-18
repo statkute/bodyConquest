@@ -10,8 +10,8 @@ public class BasicObject {
   private int height;
   private double direction;
   private double currentSpeed;
+
   private MapObjectType mapObjectType;
-  //private EverythingType type;
 
   public void setX(double x) {
     this.x = x;
@@ -61,11 +61,11 @@ public class BasicObject {
     return currentSpeed;
   }
 
-  public void setUnitType(MapObjectType ut) {
+  public void setMapObjectType(MapObjectType ut) {
     this.mapObjectType = ut;
   }
 
-  public MapObjectType getUnitType() {
+  public MapObjectType getMapObjectType() {
     return mapObjectType;
   }
 }

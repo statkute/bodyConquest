@@ -24,8 +24,6 @@ public class EncounterScreen implements Screen {
   private final float mapSize;
   private final Image map;
 
-
-
   private final OrthographicCamera gameCamera;
   private final FitViewport gamePort;
   private final Stage stage;
@@ -65,7 +63,30 @@ public class EncounterScreen implements Screen {
     // Turn BasicObjects from server/communicator into ViewObjects (and gives them a texture)
     ArrayList<ViewObject> viewObjects = new ArrayList<ViewObject>();
     for (BasicObject o : objects) {
-      viewObjects.add(new ViewObject(o));
+
+      switch (o.getMapObjectType()){
+        case FLU:
+          //TO DO add flu texture
+          break;
+        case VIRUS:
+          ////TO DO add virus texture
+        case BACTERIA:
+          ////TO DO add bacteria texture
+        case BACTERTIA_BASE:
+          viewObjects.add(new ViewObject(o,Constants.pathBaseImage));
+          break;
+        case VIRUS_BASE:
+          ////TO DO add Virus base Texture
+        case MONSTER_BASE:
+          ////TO DO add Monster base Texture
+        case BUCKET:
+          viewObjects.add(new ViewObject(o,Constants.pathBucket));
+          break;
+      }
+
+
+
+
     }
 
     for (ViewObject vo : viewObjects) {
