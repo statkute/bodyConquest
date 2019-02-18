@@ -10,7 +10,7 @@ public class BasicObject {
   private int height;
   private double direction;
   private double currentSpeed;
-
+  private double rotation;
   private MapObjectType mapObjectType;
 
   public void setX(double x) {
@@ -67,5 +67,13 @@ public class BasicObject {
 
   public MapObjectType getMapObjectType() {
     return mapObjectType;
+  }
+
+  public double getRotation() {
+    return rotation;
+  }
+
+  public void setRotation(double rotation) {
+    this.rotation = rotation;
   }
 }

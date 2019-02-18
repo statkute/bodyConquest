@@ -13,7 +13,7 @@ public class Constants {
     public static String pathVirus = pathAssets + "virus.png";
     public static String pathBacteria = pathAssets + "bacteria.png";
     public static String pathFlu = pathAssets + "flu.png";
-    public static String pathProjectile = pathAssets + "projectile.png";
+    public static String pathProjectile = pathAssets + "projectile_with_trail.png";
 
     public static int frameColsBacteria = 7;
     public static int frameRowsBacteria = 1;
