@@ -155,7 +155,7 @@ public class Constants {
 
     public static final int baseTopX = 130;
     public static final int baseTopY = 460;
-    public static final int baseBottomX = 545;
+    public static final int baseBottomX = 645;//545;
     public static final int baseBottomY = 70;
     public static final int baseWidth = 120;
     public static final int baseHeight = 120;

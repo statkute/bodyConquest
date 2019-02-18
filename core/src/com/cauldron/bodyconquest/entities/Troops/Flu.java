@@ -31,7 +31,7 @@ public class Flu extends Troop {
     setCSize(50, 50);
     // Troop Stats
     health = maxHealth = 70;
-    maxSpeed = 0.8;
+    maxSpeed = 2;
     attackable = true;
     moving = true;
     attacking = false;

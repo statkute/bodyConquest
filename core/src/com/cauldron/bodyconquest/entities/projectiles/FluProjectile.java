@@ -22,11 +22,11 @@ public class FluProjectile extends Projectile {
     maxTravelDistance = 200;
     mapObjectType = Constants.MapObjectType.FLUPROJECTILE;
     piercing = false;
+    moveTowards(xDest, yDest);
   }
 
   @Override
   public void update() {
-    moveTowards(xDest, yDest);
     super.update();
   }
 }

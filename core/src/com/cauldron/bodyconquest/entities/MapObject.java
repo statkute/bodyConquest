@@ -373,6 +373,7 @@ public abstract class MapObject {
     double angle = Math.atan((y - this.y) / (x - this.x));
     setDirection(angle);
     System.out.println("Proj Dest Rel To SHooter | X: " + (x - this.x) + " Y: " + (y - this.y));
+    System.out.println("x: " + x  + "\ty: " + y);
     System.out.println(Math.toDegrees(angle));
   }
 
