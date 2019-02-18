@@ -35,7 +35,7 @@ public class Flu extends Troop {
     attackable = true;
     moving = true;
     attacking = false;
-    cooldown = 1300; // Milliseconds
+    cooldown = 3000; // Milliseconds
     lastAttack = 0;
     range = 200;
     damage = 40;

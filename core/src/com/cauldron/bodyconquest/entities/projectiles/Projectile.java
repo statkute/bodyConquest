@@ -9,18 +9,21 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class Projectile extends MapObject {
 
   protected int damage;
-  protected float maxTravelDistance;
-  protected float distanceTraveled;
+  protected double maxTravelDistance;
+  protected double distanceTraveled;
 
   protected boolean piercing;
-  protected CopyOnWriteArrayList<Troop> hitTroops;
+  //protected CopyOnWriteArrayList<Troop> hitTroops;
+
+  protected double xInit;
+  protected double yInit;
 
   protected boolean remove;
 
   public Projectile() {
     super();
     // Maybe a better way of doing this
-    hitTroops = new CopyOnWriteArrayList<Troop>();
+    //hitTroops = new CopyOnWriteArrayList<Troop>();
     this.collidable = true;
     initDefault();
   }
@@ -38,12 +41,12 @@ public abstract class Projectile extends MapObject {
 
   public void hit(Troop troop) {
     if (remove) return;
-    if (piercing) {
-      if (hitTroops.contains(troop)) return;
-      hitTroops.add(troop);
-      troop.hit(damage);
-      return;
-    }
+//    if (piercing) {
+//      if (hitTroops.contains(troop)) return;
+//      hitTroops.add(troop);
+//      troop.hit(damage);
+//      return;
+//    }
     troop.hit(damage);
     setRemove();
     // Make sure this immediately removes projectile of necessary and
@@ -64,7 +67,7 @@ public abstract class Projectile extends MapObject {
     xPrev = getX();
     yPrev = getY();
     move();
-    //distanceTraveled += distFrom(xPrev, yPrev);
+    distanceTraveled = distFrom(xInit, yInit);
   }
 
   public void checkHit(CopyOnWriteArrayList<Troop> enemies) {

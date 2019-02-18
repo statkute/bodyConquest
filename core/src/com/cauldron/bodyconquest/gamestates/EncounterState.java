@@ -162,6 +162,8 @@ public class EncounterState extends GameState {
     checkProjectiles(projectilesTop, troopsBottom);
     checkProjectiles(projectilesBottom, troopsTop);
 
+
+
     // Synchronize this
     // Change this so it only add new objects
     CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();

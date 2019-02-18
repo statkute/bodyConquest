@@ -148,8 +148,7 @@ public abstract class Troop extends MapObject {
             setDirectionUp();
           }
         } else if (lane == Lane.MIDDLE) {
-          setDirectionLeft();
-          setDirectionUp();
+          setDirectionUpLeft();
         } else if (lane == Lane.TOP) {
           if (getY() < Constants.TOP_TURNPOINT_Y) {
             setDirectionUp();

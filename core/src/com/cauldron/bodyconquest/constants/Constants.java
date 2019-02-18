@@ -21,11 +21,10 @@ public class Constants {
     public static int frameRowsFlu = 1;
     public static int frameColsVirus = 7;
     public static int frameRowsVirus = 1;
-    public static int frameColsProjectile = 6;
+    public static int frameColsProjectile = 5;//6;
     public static int frameRowsProjectile = 1;
     public static int frameColsBacteriaBase = 1;
     public static int frameRowsBacteriaBase = 1;
-
 
 
     // EVERYTHINGS
@@ -155,7 +154,7 @@ public class Constants {
 
     public static final int baseTopX = 130;
     public static final int baseTopY = 460;
-    public static final int baseBottomX = 645;//545;
+    public static final int baseBottomX = 545;
     public static final int baseBottomY = 70;
     public static final int baseWidth = 120;
     public static final int baseHeight = 120;

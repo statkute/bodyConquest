@@ -9,6 +9,8 @@ public class FluProjectile extends Projectile {
 
   public FluProjectile(int damage, double x, double y, double xDest, double yDest) {
     super();
+    xInit = x;
+    yInit = y;
     this.damage = damage;
     setSize(20, 20);
     setPosition(x - (getWidth() / 2), y - (getHeight() / 2));
