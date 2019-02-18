@@ -14,7 +14,7 @@ public class Serialization {
   }
 
   public static CopyOnWriteArrayList<BasicObject> deserialize(String json) throws IOException {
-    System.out.println(json.length());
+    //System.out.println(json.length());
     CopyOnWriteArrayList<BasicObject> objects = (CopyOnWriteArrayList<BasicObject>) JsonReader.jsonToJava(json);
     return objects;
   }

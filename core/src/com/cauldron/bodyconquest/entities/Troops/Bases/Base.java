@@ -12,7 +12,7 @@ public abstract class Base extends Troop {
       this.moving = false;
       this.attacking = false;
       this.setSize(Constants.baseWidth, Constants.baseHeight);
+      this.setCSize(Constants.baseWidth, Constants.baseHeight);
       mapObjectType = MapObjectType.BASE;
     }
-
 }

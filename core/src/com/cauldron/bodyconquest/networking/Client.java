@@ -31,8 +31,12 @@ public class Client {
 
   public static void main (String args[]) throws IOException {
     ClientReceiver clientReceiver = new ClientReceiver();
-    ClientSender clientSender = new ClientSender(clientReceiver);    clientReceiver.start();
-    clientSender.start();    clientSender.sendMessage("connected");
+    ClientSender clientSender = new ClientSender(clientReceiver);
+
+    clientReceiver.start();
+    clientSender.start();
+
+    clientSender.sendMessage("connected");
     clientSender.sendMessage("Hi btw");
   }
 

@@ -16,10 +16,10 @@ It also extends Actor.
 public abstract class MapObject {
 
   // Directions in degrees with up being 0
-  private final double UP_DIRECTION = 0;
-  private final double DOWN_DIRECTION = 180;
-  private final double LEFT_DIRECTION = -90;
-  private final double RIGHT_DIRECTION = 90;
+  private final double UP_DIRECTION = 90;//0;
+  private final double DOWN_DIRECTION = 270;
+  private final double LEFT_DIRECTION = 180;//-90;
+  private final double RIGHT_DIRECTION = 360;//90;
 
   // Type of the object
   protected Constants.MapObjectType mapObjectType;
@@ -370,8 +370,11 @@ public abstract class MapObject {
    * @param y The y co-ordinate to set the movement direction towards.
    */
   public void moveTowards(double x, double y) {
-    double angle = Math.atan((y - this.y) / (x - this.x));
+    double angle = Math.atan((y - this.getCentreY()) / (x - this.getCentreX()));
     setDirection(angle);
+    System.out.println("Proj Dest Rel To SHooter | X: " + (x - getCentreX()) + " Y: " + (y - getCentreY()));
+    System.out.println("x: " + x  + "\ty: " + y);
+    System.out.println(Math.toDegrees(angle));
   }
 
   /**
@@ -389,8 +392,8 @@ public abstract class MapObject {
       currentSpeed -= stopSpeed;
       currentSpeed = Math.max(currentSpeed, 0);
     }
-    dx += currentSpeed * Math.sin(direction);
-    dy += currentSpeed * Math.cos(direction);
+    dx += currentSpeed * Math.cos(direction);
+    dy += currentSpeed * Math.sin(direction);
 
     // This may need to exist outside of move in the future
     checkCollisions();
