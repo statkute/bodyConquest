@@ -18,15 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.constants.Lane;
 import com.cauldron.bodyconquest.constants.PlayerType;
 import com.cauldron.bodyconquest.constants.UnitType;
-import com.cauldron.bodyconquest.entities.Troops.Bacteria;
-import com.cauldron.bodyconquest.entities.Troops.Flu;
-import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 public class HUD {

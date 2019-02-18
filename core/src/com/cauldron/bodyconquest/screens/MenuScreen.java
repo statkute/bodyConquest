@@ -138,11 +138,14 @@ public class MenuScreen implements Screen {
     System.out.println("Singleplayer Is touched");
     server = new Server();
     try {
+
       server.startServer("singleplayer");
       client = new Client();
-      //Communicator communicator = new Communicator();
+      game.setClient(client);
+      game.setServer(server);
+      Communicator communicator = new Communicator();
       client.startClient(communicator);
-      game.setScreen(new RaceSelection(game, server, communicator));
+      game.setScreen(new RaceSelection(game, communicator));
       dispose();
     } catch (SocketException e) {
       e.printStackTrace();

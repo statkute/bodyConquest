@@ -37,9 +37,9 @@ public class EncounterScreen implements Screen {
   private Communicator comms;
   private ClientSender clientSender;
 
-  public EncounterScreen(BodyConquest game, Communicator comms, ClientSender clientSender) {
+  public EncounterScreen(BodyConquest game, Communicator comms) {
     this.comms = comms;
-    this.clientSender = clientSender;
+    this.clientSender = game.getClient().clientSender;
     testInit();
     this.game = game;
     gameCamera = new OrthographicCamera();

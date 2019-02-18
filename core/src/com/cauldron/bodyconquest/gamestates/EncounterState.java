@@ -17,6 +17,7 @@ import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
 
@@ -58,16 +59,16 @@ public class EncounterState extends GameState {
    * Client). This may remain for quick and easy implementation of single player without using a
    * Client/Server.
    */
-  private Communicator comms;
+  //private Communicator comms;
   private ServerSender serverSender;
 
   /**
    * Constructor.
    *
-   * @param comms The communication object to receive information from the Server/Model.
+   * @param serverSender The communication object to receive information from the Server/Model.
    */
-  public EncounterState(Communicator comms, ServerSender serverSender) {
-    this.comms = comms;
+  public EncounterState(ServerSender serverSender) {
+    //this.comms = comms;
     this.serverSender = serverSender;
     map = new Map();
 

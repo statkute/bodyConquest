@@ -57,7 +57,7 @@ public abstract class Troop extends MapObject {
   protected boolean attackable;
 
   // Temporary implementation to get images for the HUD
-  public Image sprite;
+  //public Image sprite;
 
   /**
    * The constructor.
