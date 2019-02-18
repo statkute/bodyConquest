@@ -18,8 +18,9 @@ public class ViewObject extends Actor {
   float stateTime;
   private TextureRegion[] walkFrames;
   private TextureRegion currentFrame;
+  private float elapsedTime;
 
-  public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows) {
+  public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows,float elapsedTime) {
     setX((float)bo.getX());
     setY((float)bo.getY());
     setWidth((float)bo.getWidth());
@@ -27,18 +28,19 @@ public class ViewObject extends Actor {
     // Right now all textures are the default buckets
     //texture = new Texture("core/assets/bucket.png");
     //texture = new Texture(pathTexture);
-    walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, 0.01f, pathTexture);
+    this.elapsedTime = elapsedTime;
+    walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, 0.2f, pathTexture);
 
     stateTime = 0f;
   }
 
-  public ViewObject(BasicObject bo, String pathTexture) {
+  public ViewObject(BasicObject bo, String pathTexture, float elapsedTime) {
     setX((float)bo.getX());
     setY((float)bo.getY());
     setWidth((float)bo.getWidth());
     setHeight((float)bo.getHeight());
     walkAnimation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(pathTexture).read());
-
+    this.elapsedTime = elapsedTime;
     stateTime = 0f;
   }
 
@@ -50,8 +52,9 @@ public class ViewObject extends Actor {
   @Override
   public void draw(Batch batch, float parentAlpha) {
     // TO DO will need to fix logic for this
-    stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
+    stateTime += elapsedTime; // Accumulate elapsed animation time
     // Get current frame of animation for the current stateTime
+    //System.out.println(System.currentTimeMillis());
     currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 
     Color color = getColor();
