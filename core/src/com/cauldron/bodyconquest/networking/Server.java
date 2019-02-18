@@ -2,6 +2,8 @@ package com.cauldron.bodyconquest.networking;
 
 import com.cauldron.bodyconquest.game_logic.Game;
 
+import com.cauldron.bodyconquest.gamestates.EncounterState;
+
 import java.net.SocketException;
 
 /** Server class */
