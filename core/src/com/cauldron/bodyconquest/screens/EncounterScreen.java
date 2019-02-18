@@ -14,6 +14,7 @@ import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.networking.ClientSender;
 import com.cauldron.bodyconquest.networking.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
@@ -34,6 +35,13 @@ public class EncounterScreen implements Screen {
   private Communicator comms;
   private ClientSender clientSender;
 
+  private ArrayList<ViewObject> viewObjects;
+  private CopyOnWriteArrayList<BasicObject> objects;
+
+  private int healthBottomBase;
+  private int healthTopBase;
+  int accumulatorAfterBaseConquered = 0;
+
   public EncounterScreen(BodyConquest game, Communicator comms, ClientSender clientSender) {
     this.comms = comms;
     this.clientSender = clientSender;
@@ -44,6 +52,7 @@ public class EncounterScreen implements Screen {
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
     hud = new HUD(game.batch, this, Constants.PlayerType.PLAYER_BOTTOM);
+    accumulatorAfterBaseConquered = 0;
 
     // Set up map
     map = new Image(new Texture("core/assets/Basic Map v2.png"));
@@ -61,11 +70,15 @@ public class EncounterScreen implements Screen {
   @Override
   public void render(float delta) {
 
-//    System.out.println("Bottom health: " + comms.getBottomHealthPercentage());
-    CopyOnWriteArrayList<BasicObject> objects = comms.getAllObjects();
-    //if(baseTop.health > 0 && baseBottom)
+    healthBottomBase = comms.getBottomHealthPercentage();
+    healthTopBase = comms.getTopHealthPercentage();
+
+
+    if( accumulatorAfterBaseConquered< 40){
+    objects = comms.getAllObjects();
+
     // Turn BasicObjects from server/communicator into ViewObjects (and gives them a texture)
-    ArrayList<ViewObject> viewObjects = new ArrayList<ViewObject>();
+    viewObjects = new ArrayList<ViewObject>();
     long tEnd = System.currentTimeMillis();
     long tDelta = tEnd - MenuScreen.timeOfServer;
     float elapsedSeconds = tDelta / 1000.0f;
@@ -101,7 +114,6 @@ public class EncounterScreen implements Screen {
     }
 
     for (ViewObject vo : viewObjects) {
-      //System.out.println("Adding viewobject");
 
       stage.addActor(vo);
     }
@@ -129,6 +141,15 @@ public class EncounterScreen implements Screen {
     game.batch.end();
 //    System.out.println(viewObjects.size());
     for(ViewObject vo : viewObjects) vo.remove();
+
+    viewObjects.clear();
+    objects.clear();
+    }
+
+    if( ((healthTopBase ==0)  || (healthBottomBase == 0)) && accumulatorAfterBaseConquered < 50){
+
+        accumulatorAfterBaseConquered++;
+    }
   }
 
   @Override

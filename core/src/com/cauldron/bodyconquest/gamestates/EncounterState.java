@@ -149,7 +149,7 @@ public class EncounterState extends GameState {
   public void update() {
     // Receive any input from clients
     // String command = comms.getNextComand();
-    if(topBase.getHealth() > 0 && bottomBase.getHealth() > 0){}
+//    if(topBase.getHealth() > 0 && bottomBase.getHealth() > 0){}
 
     for (MapObject mo : allMapObjects) mo.update();
 
