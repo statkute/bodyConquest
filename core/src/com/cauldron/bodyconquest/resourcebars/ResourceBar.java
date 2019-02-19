@@ -2,17 +2,19 @@ package com.cauldron.bodyconquest.resourcebars;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.constants.Constants.ResourceType;
 import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
-public abstract class ResourceBar {
+public abstract class ResourceBar extends Actor {
 
     private float resource;
     private ResourceType resourceType;
     private TextureRegion outline;
     private TextureRegion inside;
+    private TextureRegion currentFrame;
 
     protected float getResource() {
         return resource;
@@ -43,16 +45,17 @@ public abstract class ResourceBar {
         this.inside = inside;
     }
 
-//    @Override
-//    public void draw(Batch batch, float parentAlpha) {
-//        //stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
-//
-//        // Get current frame of animation for the current stateTime
-//        //currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-//        currentFrame = getOutline();
-//        this.setWidth(BodyConquest.V_WIDTH / 20.0f);
-//        this.setHeight(BodyConquest.V_HEIGHT - 50);
-//        this.setY(50);
-//        super.draw(batch, parentAlpha);
-//    }
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        //stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
+
+        // Get current frame of animation for the current stateTime
+        //currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+        currentFrame = getOutline();
+        this.setWidth(BodyConquest.V_WIDTH / 20.0f);
+        this.setHeight(BodyConquest.V_HEIGHT - 50);
+        this.setY(50);
+        //super.draw(batch, parentAlpha);
+        batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+    }
 }

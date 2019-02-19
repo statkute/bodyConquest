@@ -25,6 +25,10 @@ import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
+import com.cauldron.bodyconquest.resourcebars.CarbsResourceBar;
+import com.cauldron.bodyconquest.resourcebars.LipidsResourceBar;
+import com.cauldron.bodyconquest.resourcebars.ProteinResourceBar;
+import com.cauldron.bodyconquest.resourcebars.ResourceBar;
 
 public class HUD {
 
@@ -35,6 +39,9 @@ public class HUD {
   private Stage stage;
   private Image unitBar;
   private DragAndDrop dragAndDrop;
+  private ResourceBar proteinResourceBar;
+  private ResourceBar lipidsResourceBar;
+  private ResourceBar carbsResourceBar;
 
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     this.screen = screen;
@@ -48,6 +55,7 @@ public class HUD {
     // Load bar, skins and dragAndDrop mechanics
     setupUnitBar();
     loadSkins();
+    setupResourceBars();
     setUpDragAndDrop();
   }
 
@@ -63,6 +71,15 @@ public class HUD {
     unitBar = new Image(new Texture("core/assets/Action Bar v1.png"));
     unitBar.setBounds(0, 0, BodyConquest.V_WIDTH, 50);
     stage.addActor(unitBar);
+  }
+
+  private void setupResourceBars(){
+    proteinResourceBar = new ProteinResourceBar();
+    carbsResourceBar   = new CarbsResourceBar();
+    lipidsResourceBar  = new LipidsResourceBar();
+    stage.addActor(proteinResourceBar);
+    stage.addActor(carbsResourceBar);
+    stage.addActor(lipidsResourceBar);
   }
 
   private void setUpDragAndDrop() {
