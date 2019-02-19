@@ -170,6 +170,9 @@ public class Constants {
     public static final int baseWidth = 120;
     public static final int baseHeight = 120;
 
+    // Resources
+    public static enum ResourceType {PROTEIN, LIPID, CARBS}
+
 
 }
 
