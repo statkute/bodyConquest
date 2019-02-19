@@ -94,7 +94,6 @@ public class HostScreen implements Screen {
 
     if (Gdx.input.justTouched()) {
       if (hostBounds.contains(tmp.x, tmp.y)) {
-        playButtonSound();
         System.out.println("host pressed");
         server = new Server();
         server.startServer("multiplayer");
@@ -106,7 +105,6 @@ public class HostScreen implements Screen {
         game.setScreen(new RaceSelection(game, server, communicator, "multiplayer"));
       }
       if (joinBounds.contains(tmp.x, tmp.y)) {
-        playButtonSound();
         System.out.println("join pressed");
         client = new Client();
         Communicator communicator = new Communicator();
@@ -116,9 +114,5 @@ public class HostScreen implements Screen {
         game.setScreen(new RaceSelection(game, communicator));
       }
     }
-  }
-
-  public void playButtonSound() {
-    Constants.buttonSound.play();
   }
 }
