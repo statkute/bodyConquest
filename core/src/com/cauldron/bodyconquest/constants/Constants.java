@@ -6,6 +6,13 @@ import com.badlogic.gdx.audio.Sound;
 public class Constants {
 
 
+    public static final int MINHEALTH =0;
+
+
+    public static final int UPDATESCREENTILL = 40;
+    public static final int INCREASEACCUMULATORTILL = 50;
+
+
     private static String pathAssets = "core/assets/";
 
     public static String pathBaseImage = pathAssets + "castle1.gif";
@@ -14,6 +21,10 @@ public class Constants {
     public static String pathBacteria = pathAssets + "bacteria.png";
     public static String pathFlu = pathAssets + "flu.png";
     public static String pathProjectile = pathAssets + "projectile_with_trail.png";
+    public static String pathHost = pathAssets + "host.png";
+    public static String pathHostBackground = pathAssets+ "hostScreen.png";
+    public static String pathJoin= pathAssets + "join.png";
+
 
     public static int frameColsBacteria = 7;
     public static int frameRowsBacteria = 1;
@@ -158,6 +169,7 @@ public class Constants {
     public static final int baseBottomY = 70;
     public static final int baseWidth = 120;
     public static final int baseHeight = 120;
+
 
 }
 

@@ -15,6 +15,7 @@ public class BacteriaBase extends Base {
         this.health = 100;
         this.damage = 3;
         this.range = 130;
+        this.maxHealth = health;
         mapObjectType = MapObjectType.BACTERTIA_BASE;
     }
 

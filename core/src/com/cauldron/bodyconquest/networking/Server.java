@@ -38,21 +38,17 @@ public class Server {
     serverLogic.start();
   }
 
-  //  public static void main(String args[]) throws Exception {
-  //    Ping ping = new Ping();
-  //    ping.start();
-  //
-  //    ServerSender serverSender = new ServerSender();
-  //    ServerReceiver serverReceiver = new ServerReceiver(serverSender);
-  //    ServerLogic serverLogic = new ServerLogic(serverReceiver);
-  //
-  //    serverSender.start();
-  //    serverReceiver.start();
-  //    serverLogic.start();
-  //
-  //    setupSinglePlayer(serverSender);
-  //
-  //    serverSender.sendMessage(
-  //        "This is a message from the server sent just after the game has started");
-  //  }
+    public static void main(String args[]) throws Exception {
+      Ping ping = new Ping();
+      ping.start();
+
+      ServerSender serverSender = new ServerSender();
+      ServerReceiver serverReceiver = new ServerReceiver(serverSender, "multiplayer");
+
+      serverSender.start();
+      serverReceiver.start();
+
+      serverSender.sendMessage(
+          "This is a message from the server sent just after the game has started");
+    }
 }

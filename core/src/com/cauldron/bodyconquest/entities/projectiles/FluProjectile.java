@@ -13,10 +13,10 @@ public class FluProjectile extends Projectile {
     yInit = y;
     this.damage = damage;
     setSize(60, 60);
-    setPosition(x + getWidth(), y + getHeight());
+    setPosition(x - (getWidth() / 2), y - (getHeight() / 2));
     this.xDest = xDest;
     this.yDest = yDest;
-    setCSize(20, 20);
+    setCSize(60, 60);
     init();
   }
 

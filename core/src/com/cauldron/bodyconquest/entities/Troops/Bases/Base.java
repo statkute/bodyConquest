@@ -15,5 +15,4 @@ public abstract class Base extends Troop {
       this.setCSize(Constants.baseWidth, Constants.baseHeight);
       mapObjectType = MapObjectType.BASE;
     }
-
 }
