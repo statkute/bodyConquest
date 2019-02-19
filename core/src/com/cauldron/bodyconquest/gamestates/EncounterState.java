@@ -146,12 +146,8 @@ public class EncounterState extends GameState {
   /** {@inheritDoc} */
   @Override
   public void update() {
-    // Receive any input from clients
-    // String command = comms.getNextComand();
 
     if(topBase.getHealth() > 0 && bottomBase.getHealth() > 0){}
-
-
 
 
     for (MapObject mo : allMapObjects) mo.update();
@@ -163,8 +159,6 @@ public class EncounterState extends GameState {
     checkProjectiles(projectilesBottom, troopsTop);
 
 
-
-    // Synchronize this
     // Change this so it only add new objects
     CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
     for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
@@ -174,7 +168,6 @@ public class EncounterState extends GameState {
     try {
       json = Serialization.serialize(sentObjects);
       serverSender.sendObjectUpdates(json);
-//      comms.populateObjectList(sentObjectsDeserialized);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -194,7 +187,6 @@ public class EncounterState extends GameState {
     if (unitType.equals(UnitType.BACTERIA)) {
       troop = new Bacteria(playerType, lane);
     } else if (unitType.equals(UnitType.FLU)) {
-      System.out.println("FluSpawn");
       troop = new Flu(this, playerType, lane);
     } else if (unitType.equals(UnitType.VIRUS)) {
       troop = new Virus(playerType, lane);
