@@ -67,13 +67,13 @@ public class RaceSelection implements Screen {
   private Server server;
   private Communicator communicator;
 
-  public RaceSelection(BodyConquest game, Server server, Communicator communicator) {
+  public RaceSelection(BodyConquest game, Server server, Communicator communicator, String gameType) {
     this.communicator = communicator;
     this.server = server;
     this.game = game;
     setup();
 
-    g = new Game(server, communicator);
+    g = new Game(server, communicator, gameType);
     g.start();
     server.startServerLogic(g.getEncounterState());
   }
