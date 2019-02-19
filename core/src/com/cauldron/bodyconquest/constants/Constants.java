@@ -164,11 +164,18 @@ public class Constants {
     public static final Sound buttonSound= Gdx.audio.newSound(Gdx.files.internal("core/assets/buttonClick.wav"));
 
     public static final int baseTopX = 130;
-    public static final int baseTopY = 460;
+    public static final int baseTopY = 450;
     public static final int baseBottomX = 545;
     public static final int baseBottomY = 70;
     public static final int baseWidth = 120;
     public static final int baseHeight = 120;
+
+
+    public static final int healthBarWidth = 120;
+    public static final int healthBarHeight = 20;
+
+    public static final int healthYAdjustmentBottom = 20;
+    public static final int healthYAdjustmentTop = 120;
 
     // Resources
     public static enum ResourceType {PROTEIN, LIPID, CARBS}

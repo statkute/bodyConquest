@@ -20,7 +20,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.entities.HealthBar;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
@@ -35,6 +37,8 @@ public class HUD {
   private Stage stage;
   private Image unitBar;
   private DragAndDrop dragAndDrop;
+  private HealthBar healthBarBottom;
+  private HealthBar healthBarTop;
 
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     this.screen = screen;
@@ -44,6 +48,9 @@ public class HUD {
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
     stage = new Stage(viewport, sb);
     Gdx.input.setInputProcessor(stage);
+
+    healthBarBottom = setUpHealthBar(healthBarBottom, PlayerType.PLAYER_BOTTOM);
+    healthBarTop = setUpHealthBar(healthBarTop, PlayerType.PLAYER_TOP);
 
     // Load bar, skins and dragAndDrop mechanics
     setupUnitBar();
@@ -69,15 +76,15 @@ public class HUD {
     dragAndDrop = new DragAndDrop();
 
     // Bottom player spawn points
-    if(playerType == PlayerType.PLAYER_BOTTOM){
-      addSpawnPoint(475, 50,  Lane.BOTTOM);
+    if (playerType == PlayerType.PLAYER_BOTTOM) {
+      addSpawnPoint(475, 50, Lane.BOTTOM);
       addSpawnPoint(475, 160, Lane.MIDDLE);
       addSpawnPoint(575, 200, Lane.TOP);
     } else {
       // Top player spawn points
-      addSpawnPoint(250, 500,Lane.TOP);
-      addSpawnPoint(220, 410,Lane.MIDDLE);
-      addSpawnPoint(130, 370,Lane.BOTTOM);
+      addSpawnPoint(250, 500, Lane.TOP);
+      addSpawnPoint(220, 410, Lane.MIDDLE);
+      addSpawnPoint(130, 370, Lane.BOTTOM);
     }
 
     addDragAndDropSource(0, "bacteria");
@@ -119,17 +126,22 @@ public class HUD {
   private void addDragAndDropSource(int index, final String name) {
     final ImageButton troopButton;
     if (name.equals("bacteria")) {
-      //troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/bacteria_button.png")).getDrawable());
+      // troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
+      troopButton =
+          new ImageButton(new Image(new Texture("core/assets/bacteria_button.png")).getDrawable());
     } else if (name.equals("flu")) {
-      //troopButton = new ImageButton(new Flu().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/flu_button.png")).getDrawable());
+      // troopButton = new ImageButton(new Flu().sprite.getDrawable());
+      troopButton =
+          new ImageButton(new Image(new Texture("core/assets/flu_button.png")).getDrawable());
     } else if (name.equals("virus")) {
-      //troopButton = new ImageButton(new Virus().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/virus_button.png")).getDrawable());
+      // troopButton = new ImageButton(new Virus().sprite.getDrawable());
+      troopButton =
+          new ImageButton(new Image(new Texture("core/assets/virus_button.png")).getDrawable());
     } else { // default
-      //troopButton = new ImageButton(new Flu().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
+      // troopButton = new ImageButton(new Flu().sprite.getDrawable());
+      troopButton =
+          new ImageButton(
+              new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
     }
     troopButton.setBounds(
         unitBar.getWidth() / 4 + 25 * index,
@@ -175,5 +187,30 @@ public class HUD {
 
   public Image getUnitBar() {
     return unitBar;
+  }
+
+  public HealthBar setUpHealthBar(HealthBar healthBar, PlayerType playerType) {
+
+    if (playerType == PlayerType.PLAYER_BOTTOM) {
+      healthBar =
+          new HealthBar(
+              Constants.healthBarWidth,
+              Constants.healthBarHeight,
+              screen,
+              PlayerType.PLAYER_BOTTOM);
+      healthBar.setPosition(
+          Constants.baseBottomX, Constants.baseBottomY - Constants.healthYAdjustmentBottom);
+    }
+    // AI or Top
+    else {
+      healthBar =
+          new HealthBar(
+              Constants.healthBarWidth, Constants.healthBarHeight, screen, PlayerType.PLAYER_TOP);
+      healthBar.setPosition(
+          Constants.baseTopX, Constants.baseTopY + Constants.healthYAdjustmentTop);
+    }
+
+    stage.addActor(healthBar);
+    return healthBar;
   }
 }

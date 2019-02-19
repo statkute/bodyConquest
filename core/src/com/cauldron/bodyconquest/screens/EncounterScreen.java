@@ -127,12 +127,15 @@ public class EncounterScreen implements Screen {
         }
       }
 
-    for (ViewObject vo : viewObjects) {
+      for (ViewObject vo : viewObjects) {
 
         stage.addActor(vo);
       }
       // Update the camera
       gameCamera.update();
+      //
+      //      hud.updateBottomHealthBar();
+      //      hud.updateTopHealthBar();
 
       // Render background
       Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -149,11 +152,11 @@ public class EncounterScreen implements Screen {
       // Draw HUD
       hud.getStage().draw();
 
-    // Start, draw and end spriteBatch
-    game.batch.begin();
-    game.batch.end();
-    for(ViewObject vo : viewObjects) vo.remove();
-  }
+      // Start, draw and end spriteBatch
+      game.batch.begin();
+      game.batch.end();
+      for (ViewObject vo : viewObjects) vo.remove();
+    }
 
     if (((healthTopBase == Constants.MINHEALTH) || (healthBottomBase == Constants.MINHEALTH))
         && accumulatorAfterBaseConquered < Constants.INCREASEACCUMULATORTILL) {
@@ -190,5 +193,11 @@ public class EncounterScreen implements Screen {
     clientSender.sendMessage(message);
   }
 
+  public int getHealthBottomBase() {
+    return healthBottomBase;
+  }
 
+  public int getHealthTopBase() {
+    return healthTopBase;
+  }
 }
