@@ -19,10 +19,10 @@ public class Game extends Thread {
 
   private GameStateManager gsm;
 
-  public Game(Server server, Communicator communicator) {
+  public Game(Server server, Communicator communicator, String gameType) {
     this.server = server;
     comms = communicator;
-    encounterState = new EncounterState(comms, server.getServerSender());
+    encounterState = new EncounterState(comms, server.getServerSender(), gameType);
   }
 
   private void init() {
