@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 import com.cauldron.bodyconquest.handlers.GifDecoder;
 
@@ -29,7 +30,9 @@ public class ViewObject extends Actor {
     //texture = new Texture(pathTexture);
     this.elapsedTime = elapsedTime;
     walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, 0.2f, pathTexture);
-
+    if(bo.getMapObjectType() == Constants.MapObjectType.FLUPROJECTILE){
+      setRotation((float)bo.getRotation());
+    }
     stateTime = 0f;
   }
 
@@ -40,6 +43,9 @@ public class ViewObject extends Actor {
     setHeight((float)bo.getHeight());
     walkAnimation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(pathTexture).read());
     this.elapsedTime = elapsedTime;
+    if(bo.getMapObjectType() == Constants.MapObjectType.FLUPROJECTILE){
+      setRotation((float)bo.getRotation());
+    }
     stateTime = 0f;
   }
 
@@ -58,7 +64,8 @@ public class ViewObject extends Actor {
 
     Color color = getColor();
     batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-    batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+    //batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+    batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 
     super.draw(batch, parentAlpha);
   }
