@@ -15,6 +15,7 @@ public abstract class ResourceBar extends Actor {
     private TextureRegion outline;
     private TextureRegion inside;
     private TextureRegion currentFrame;
+    private int insideY;
 
     protected float getResource() {
         return resource;
@@ -45,17 +46,30 @@ public abstract class ResourceBar extends Actor {
         this.inside = inside;
     }
 
+    public void setInsideY(int y){
+        insideY = y;
+    }
+
+    private int getInsideY(){
+        return insideY;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         //stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
 
         // Get current frame of animation for the current stateTime
         //currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-        currentFrame = getOutline();
         this.setWidth(BodyConquest.V_WIDTH / 20.0f);
-        this.setHeight(BodyConquest.V_HEIGHT - 50);
-        this.setY(50);
-        //super.draw(batch, parentAlpha);
+        this.setHeight(BodyConquest.V_HEIGHT - 50);currentFrame = getInside();
+        currentFrame = getInside();
+        this.setY(getInsideY());
         batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+
+        currentFrame = getOutline();
+        this.setY(50);
+        batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+
+
     }
 }

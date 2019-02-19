@@ -18,9 +18,9 @@ public class Resources extends Thread {
   public Resources(ServerSender serverSender, String player) {
     this.serverSender = serverSender;
     this.player = player;
-    lipids = MAX_RESOURCE;
-    sugars = MAX_RESOURCE;
-    proteins = MAX_RESOURCE;
+    lipids = 0;
+    sugars = 0;
+    proteins = 0;
     regenerationLipids = 7;
     regenerationSugars = 5;
     regenerationProteins = 6;

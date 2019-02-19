@@ -68,6 +68,8 @@ public class EncounterScreen implements Screen {
   @Override
   public void render(float delta) {
 
+    updateResourceBars();
+
     healthBottomBase = comms.getBottomHealthPercentage();
     healthTopBase = comms.getTopHealthPercentage();
 
@@ -168,6 +170,14 @@ public class EncounterScreen implements Screen {
       // TO DO once accumulator is between 40 and 50 make a pop up box to winnign screen or just
       // make a winning screen for Friday
     }
+  }
+
+  private void updateResourceBars(){
+    int l = comms.getLipidsBottom();
+    int p = comms.getProteinsBottom();
+    int c = comms.getSugarsBottom();
+
+    hud.updateResourceBars(l, p, c);
   }
 
   @Override
