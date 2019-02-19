@@ -91,10 +91,15 @@ public class EncounterScreen implements Screen {
                     Constants.frameRowsFlu,
                     elapsedSeconds));
             break;
-            //        case VIRUS:
-            //          viewObjects.add(new
-            // ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus,elapsedSeconds));
-            //          break;
+          case VIRUS:
+            viewObjects.add(
+                new ViewObject(
+                    o,
+                    Constants.pathVirus,
+                    Constants.frameColsVirus,
+                    Constants.frameRowsVirus,
+                    elapsedSeconds));
+            break;
           case BACTERIA:
             viewObjects.add(
                 new ViewObject(
@@ -127,7 +132,7 @@ public class EncounterScreen implements Screen {
         }
       }
 
-    for (ViewObject vo : viewObjects) {
+      for (ViewObject vo : viewObjects) {
 
         stage.addActor(vo);
       }
@@ -149,11 +154,11 @@ public class EncounterScreen implements Screen {
       // Draw HUD
       hud.getStage().draw();
 
-    // Start, draw and end spriteBatch
-    game.batch.begin();
-    game.batch.end();
-    for(ViewObject vo : viewObjects) vo.remove();
-  }
+      // Start, draw and end spriteBatch
+      game.batch.begin();
+      game.batch.end();
+      for (ViewObject vo : viewObjects) vo.remove();
+    }
 
     if (((healthTopBase == Constants.MINHEALTH) || (healthBottomBase == Constants.MINHEALTH))
         && accumulatorAfterBaseConquered < Constants.INCREASEACCUMULATORTILL) {
@@ -189,6 +194,4 @@ public class EncounterScreen implements Screen {
     String message = MessageMaker.spawnTroopsMessage(unitType, lane, playerType);
     clientSender.sendMessage(message);
   }
-
-
 }
