@@ -14,9 +14,10 @@ import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.entities.projectiles.Projectile;
+import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
 import com.cauldron.bodyconquest.game_logic.Communicator;
-import com.cauldron.bodyconquest.networking.MessageMaker;
+import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
 
@@ -64,6 +65,9 @@ public class EncounterState extends GameState {
   private Base topBase;
   private Base bottomBase;
 
+  private Resources topResources;
+  private Resources bottomResources;
+
   /**
    * Constructor.
    *
@@ -93,6 +97,12 @@ public class EncounterState extends GameState {
 
     projectilesBottom = new CopyOnWriteArrayList<Projectile>();
     projectilesTop = new CopyOnWriteArrayList<Projectile>();
+
+    bottomResources = new Resources(serverSender, "BOTTOM");
+    topResources = new Resources(serverSender, "TOP");
+
+    bottomResources.start();
+    topResources.start();
 
     new BasicTestAI(this, PlayerType.PLAYER_TOP).start();
   }
@@ -273,5 +283,13 @@ public class EncounterState extends GameState {
       return;
     }
     allMapObjects.add(projectile);
+  }
+
+  public Resources getBottomResources() {
+    return bottomResources;
+  }
+
+  public Resources getTopResources() {
+    return topResources;
   }
 }

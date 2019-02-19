@@ -11,12 +11,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.constants.Constants.*;
 import com.cauldron.bodyconquest.entities.BasicObject;
-import com.cauldron.bodyconquest.entities.Troops.Troop.*;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
-import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.networking.ClientSender;
-import com.cauldron.bodyconquest.networking.MessageMaker;
+import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
