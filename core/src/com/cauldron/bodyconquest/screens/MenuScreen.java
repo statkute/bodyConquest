@@ -116,20 +116,22 @@ public class MenuScreen implements Screen {
         playButtonSound();
         System.out.println("Multiplayer Is touched");
 
+        game.setScreen(new HostScreen(game));
 
-        client = new Client();
-        Communicator communicator = new Communicator();
-        try {
-          client.startClient(communicator);
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+
+//        client = new Client();
+//        Communicator communicator = new Communicator();
+//        try {
+//          client.startClient(communicator);
+//        } catch (IOException e) {
+//          e.printStackTrace();
+//        }
         //              game.setScreen(new RaceSelectionScreen(game));
         //              dispose();
       }
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        System.out.println("Singleplayer Is touched");
+        //System.out.println("Singleplayer Is touched");
         server = new Server();
         try {
           timeOfServer = System.currentTimeMillis();

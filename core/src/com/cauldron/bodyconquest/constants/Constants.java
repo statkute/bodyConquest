@@ -21,6 +21,10 @@ public class Constants {
     public static String pathBacteria = pathAssets + "bacteria.png";
     public static String pathFlu = pathAssets + "flu.png";
     public static String pathProjectile = pathAssets + "projectile.png";
+    public static String pathHost = pathAssets + "host.png";
+    public static String pathHostBackground = pathAssets+ "hostScreen.png";
+    public static String pathJoin= pathAssets + "join.png";
+
 
     public static int frameColsBacteria = 7;
     public static int frameRowsBacteria = 1;
@@ -30,8 +34,6 @@ public class Constants {
     public static int frameRowsVirus = 1;
     public static int frameColsProjectile = 5;//6;
     public static int frameRowsProjectile = 1;
-    public static int frameColsBacteriaBase = 1;
-    public static int frameRowsBacteriaBase = 1;
 
 
     // EVERYTHINGS

@@ -155,7 +155,6 @@ public class EncounterScreen implements Screen {
       game.batch.end();
       //    System.out.println(viewObjects.size());
       for (ViewObject vo : viewObjects) vo.remove();
-
     }
 
     if (((healthTopBase == Constants.MINHEALTH) || (healthBottomBase == Constants.MINHEALTH))
