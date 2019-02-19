@@ -119,6 +119,6 @@ public class HostScreen implements Screen {
   }
 
   public void playButtonSound() {
-    Constants.buttonSound.play();
+   game.audioPlayer.playSFX("button_click");
   }
 }
