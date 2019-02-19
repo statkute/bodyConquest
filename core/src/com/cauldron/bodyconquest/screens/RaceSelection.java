@@ -71,6 +71,22 @@ public class RaceSelection implements Screen {
     this.communicator = communicator;
     this.server = server;
     this.game = game;
+    setup();
+
+    g = new Game(server, communicator);
+    g.start();
+    server.startServerLogic(g.getEncounterState());
+  }
+
+  public RaceSelection(BodyConquest game, Communicator communicator) {
+    System.out.println("inside");
+    this.communicator = communicator;
+    this.game = game;
+    this.server = null;
+    setup();
+  }
+
+  private void setup() {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800, 600);
 
@@ -171,10 +187,9 @@ public class RaceSelection implements Screen {
 
         if (playBounds.contains(tmp.x, tmp.y)) {
           playButtonSound();
-          g = new Game(server, communicator);
-          g.start();
-          // Communicator comms = new Communicator();
-          server.startServerLogic(g.getEncounterState());
+//          g = new Game(server, communicator);
+//          g.start();
+//          server.startServerLogic(g.getEncounterState());
           game.setScreen(new EncounterScreen(game, communicator, game.getClient().clientSender));
           dispose();
         }
