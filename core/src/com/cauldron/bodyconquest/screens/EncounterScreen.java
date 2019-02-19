@@ -40,6 +40,8 @@ public class EncounterScreen implements Screen {
   private int healthTopBase;
   int accumulatorAfterBaseConquered = 0;
 
+  float elapsedSeconds;
+
   public EncounterScreen(BodyConquest game, Communicator comms, ClientSender clientSender) {
     this.comms = comms;
     this.clientSender = clientSender;
@@ -68,6 +70,8 @@ public class EncounterScreen implements Screen {
   @Override
   public void render(float delta) {
 
+    updateResourceBars();
+
     healthBottomBase = comms.getBottomHealthPercentage();
     healthTopBase = comms.getTopHealthPercentage();
 
@@ -78,7 +82,7 @@ public class EncounterScreen implements Screen {
       viewObjects = new ArrayList<ViewObject>();
       long tEnd = System.currentTimeMillis();
       long tDelta = tEnd - MenuScreen.timeOfServer;
-      float elapsedSeconds = tDelta / 1000.0f;
+      elapsedSeconds = tDelta / 1000.0f;
       for (BasicObject o : objects) {
 
         switch (o.getMapObjectType()) {
@@ -91,10 +95,15 @@ public class EncounterScreen implements Screen {
                     Constants.frameRowsFlu,
                     elapsedSeconds));
             break;
-            //        case VIRUS:
-            //          viewObjects.add(new
-            // ViewObject(o,Constants.pathVirus,Constants.frameColsVirus,Constants.frameRowsVirus,elapsedSeconds));
-            //          break;
+          case VIRUS:
+            viewObjects.add(
+                new ViewObject(
+                    o,
+                    Constants.pathVirus,
+                    Constants.frameColsVirus,
+                    Constants.frameRowsVirus,
+                    elapsedSeconds));
+            break;
           case BACTERIA:
             viewObjects.add(
                 new ViewObject(
@@ -133,9 +142,6 @@ public class EncounterScreen implements Screen {
       }
       // Update the camera
       gameCamera.update();
-      //
-      //      hud.updateBottomHealthBar();
-      //      hud.updateTopHealthBar();
 
       // Render background
       Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -166,6 +172,14 @@ public class EncounterScreen implements Screen {
       // TO DO once accumulator is between 40 and 50 make a pop up box to winnign screen or just
       // make a winning screen for Friday
     }
+  }
+
+  private void updateResourceBars(){
+    int l = comms.getLipidsBottom();
+    int p = comms.getProteinsBottom();
+    int c = comms.getSugarsBottom();
+
+    hud.updateResourceBars(l, p, c, elapsedSeconds);
   }
 
   @Override

@@ -23,15 +23,16 @@ public class Virus extends Troop {
   }
   private void init(){
     // Dimensions
-    setSize(50, 50);
+    setSize(85, 85);
+    setCSize(85, 85);
 
     // Troop Stats
-    health = maxHealth = 100;
-    maxSpeed = 1;
-    cooldown = 1000; // Milliseconds
+    health = maxHealth = 250;
+    maxSpeed = 0.6;
+    cooldown = 1800; // Milliseconds
     lastAttack = 0;
     range = 50;
-    damage = 30;
+    damage = 45;
     mapObjectType = MapObjectType.VIRUS;
 
     // Temporary implementation for images for the HUD

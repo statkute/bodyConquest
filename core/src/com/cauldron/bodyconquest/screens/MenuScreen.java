@@ -1,18 +1,18 @@
 package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.cauldron.bodyconquest.constants.Constants;
-import com.cauldron.bodyconquest.game_logic.Communicator;
-import com.cauldron.bodyconquest.networking.*;
-import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.cauldron.bodyconquest.screens.CreditsScreen;
-import com.cauldron.bodyconquest.screens.RaceSelection;
+import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.networking.Client;
+import com.cauldron.bodyconquest.networking.Server;
+import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -74,6 +74,8 @@ public class MenuScreen implements Screen {
             30,
             creditsButton.getWidth(),
             creditsButton.getHeight());
+
+    game.audioPlayer.loadSFX("button_click", Constants.buttonSoundPath);
   }
 
   @Override
@@ -108,6 +110,10 @@ public class MenuScreen implements Screen {
 
   public void checkPressed() {
 
+    if(Gdx.input.isKeyJustPressed(Input.Keys.M) && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+      game.audioPlayer.toggleMuted();
+    }
+
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
     if (Gdx.input.justTouched()) {
@@ -141,7 +147,7 @@ public class MenuScreen implements Screen {
           client.startClient(communicator);
           game.setServer(server);
           game.setClient(client);
-          game.setScreen(new RaceSelection(game, server, communicator));
+          game.setScreen(new RaceSelection(game, server, communicator, "singleplayer"));
           dispose();
         } catch (SocketException e) {
           e.printStackTrace();
@@ -193,6 +199,6 @@ public class MenuScreen implements Screen {
   }
 
   public void playButtonSound() {
-    Constants.buttonSound.play();
+    game.audioPlayer.playSFX("button_click");
   }
 }

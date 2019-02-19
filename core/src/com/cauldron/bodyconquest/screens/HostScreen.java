@@ -102,7 +102,7 @@ public class HostScreen implements Screen {
         client.startClient(communicator);
         game.setServer(server);
         game.setClient(client);
-        game.setScreen(new RaceSelection(game, server, communicator));
+        game.setScreen(new RaceSelection(game, server, communicator, "multiplayer"));
       }
       if (joinBounds.contains(tmp.x, tmp.y)) {
         System.out.println("join pressed");
