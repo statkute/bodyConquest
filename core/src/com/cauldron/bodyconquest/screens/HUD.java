@@ -120,13 +120,13 @@ public class HUD {
     final ImageButton troopButton;
     if (name.equals("bacteria")) {
       //troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/bacteria_button.png")).getDrawable());
     } else if (name.equals("flu")) {
       //troopButton = new ImageButton(new Flu().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/flu_button.png")).getDrawable());
     } else if (name.equals("virus")) {
       //troopButton = new ImageButton(new Virus().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
+      troopButton = new ImageButton(new Image(new Texture("core/assets/virus_button.png")).getDrawable());
     } else { // default
       //troopButton = new ImageButton(new Flu().sprite.getDrawable());
       troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
