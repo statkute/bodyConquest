@@ -14,8 +14,10 @@ import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.entities.projectiles.Projectile;
+import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
 
@@ -63,6 +65,9 @@ public class EncounterState extends GameState {
   private Base topBase;
   private Base bottomBase;
 
+  private Resources topResources;
+  private Resources bottomResources;
+
   /**
    * Constructor.
    *
@@ -92,6 +97,12 @@ public class EncounterState extends GameState {
 
     projectilesBottom = new CopyOnWriteArrayList<Projectile>();
     projectilesTop = new CopyOnWriteArrayList<Projectile>();
+
+    bottomResources = new Resources(serverSender, "BOTTOM");
+    topResources = new Resources(serverSender, "TOP");
+
+    bottomResources.start();
+    topResources.start();
 
     new BasicTestAI(this, PlayerType.PLAYER_TOP).start();
   }
@@ -147,9 +158,6 @@ public class EncounterState extends GameState {
   @Override
   public void update() {
 
-    if(topBase.getHealth() > 0 && bottomBase.getHealth() > 0){}
-
-
     for (MapObject mo : allMapObjects) mo.update();
 
     // Update All Units
@@ -168,6 +176,24 @@ public class EncounterState extends GameState {
     try {
       json = Serialization.serialize(sentObjects);
       serverSender.sendObjectUpdates(json);
+
+      double healthBottom = bottomBase.getHealth();
+      double healthBottomMax = bottomBase.getMaxHealth();
+      double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
+      int health = (int) healthPercentage;
+      String messageb = MessageMaker.healthUpdate(health, "BOTTOM");
+
+      double healthTop = topBase.getHealth();
+      double healthTopMax = topBase.getMaxHealth();
+      double healthPercentageT = (healthTop / healthTopMax) * 100.0;
+      int healthT = (int) healthPercentageT;
+
+      String messaget = MessageMaker.healthUpdate(healthT, "TOP");
+
+      serverSender.sendMessage(messageb);
+      serverSender.sendMessage(messaget);
+//      serverSender
+//      comms.populateObjectList(sentObjectsDeserialized);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -251,5 +277,13 @@ public class EncounterState extends GameState {
       return;
     }
     allMapObjects.add(projectile);
+  }
+
+  public Resources getBottomResources() {
+    return bottomResources;
+  }
+
+  public Resources getTopResources() {
+    return topResources;
   }
 }

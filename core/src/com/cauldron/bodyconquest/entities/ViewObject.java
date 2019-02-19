@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 import com.cauldron.bodyconquest.handlers.GifDecoder;
 
@@ -20,27 +21,32 @@ public class ViewObject extends Actor {
   private float elapsedTime;
 
   public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows,float elapsedTime) {
-    setX((float)bo.getX());
-    setY((float)bo.getY());
-    setWidth((float)bo.getWidth());
-    setHeight((float)bo.getHeight());
     // Right now all textures are the default buckets
     //texture = new Texture("core/assets/bucket.png");
     //texture = new Texture(pathTexture);
     this.elapsedTime = elapsedTime;
     walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, 0.2f, pathTexture);
-
-    stateTime = 0f;
-  }
-
-  public ViewObject(BasicObject bo, String pathTexture, float elapsedTime) {
+    if(bo.getMapObjectType() == Constants.MapObjectType.FLUPROJECTILE){
+      setRotation((float)bo.getRotation());
+    }
     setX((float)bo.getX());
     setY((float)bo.getY());
     setWidth((float)bo.getWidth());
     setHeight((float)bo.getHeight());
+    stateTime = 0f;
+  }
+
+  public ViewObject(BasicObject bo, String pathTexture, float elapsedTime) {
     walkAnimation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(pathTexture).read());
     this.elapsedTime = elapsedTime;
+    if(bo.getMapObjectType() == Constants.MapObjectType.FLUPROJECTILE){
+      setRotation((float)bo.getRotation());
+    }
     stateTime = 0f;
+    setX((float)bo.getX());
+    setY((float)bo.getY());
+    setWidth((float)bo.getWidth());
+    setHeight((float)bo.getHeight());
   }
 
   @Override
@@ -58,7 +64,8 @@ public class ViewObject extends Actor {
 
     Color color = getColor();
     batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-    batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+    //batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+    batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 
     super.draw(batch, parentAlpha);
   }

@@ -12,10 +12,11 @@ public class FluProjectile extends Projectile {
     xInit = x;
     yInit = y;
     this.damage = damage;
-    setSize(20, 20);
+    setSize(60, 60);
     setPosition(x - (getWidth() / 2), y - (getHeight() / 2));
     this.xDest = xDest;
     this.yDest = yDest;
+    setCSize(60, 60);
     init();
   }
 
@@ -25,6 +26,7 @@ public class FluProjectile extends Projectile {
     mapObjectType = Constants.MapObjectType.FLUPROJECTILE;
     piercing = false;
     moveTowards(xDest, yDest);
+
   }
 
   @Override

@@ -29,6 +29,17 @@ public class Client {
     clientSender.sendMessage("Hi btw");
   }
 
+  public static void main (String args[]) throws IOException {
+    ClientReceiver clientReceiver = new ClientReceiver();
+    ClientSender clientSender = new ClientSender(clientReceiver);
+
+    clientReceiver.start();
+    clientSender.start();
+
+    clientSender.sendMessage("connected");
+    clientSender.sendMessage("Hi btw");
+  }
+
   //  public static void main(String argv[]) throws Exception {
   //    ClientReceiver clientReceiver = new ClientReceiver();
   //    ClientSender clientSender = new ClientSender(clientReceiver);

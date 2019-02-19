@@ -370,7 +370,11 @@ public abstract class MapObject {
    * @param y The y co-ordinate to set the movement direction towards.
    */
   public void moveTowards(double x, double y) {
+    //
     double angle = Math.atan((y - this.getCentreY()) / (x - this.getCentreX()));
+
+    //double angle = Math.atan(y/x);
+    angle += Math.PI;
     setDirection(angle);
     System.out.println("Proj Dest Rel To SHooter | X: " + (x - getCentreX()) + " Y: " + (y - getCentreY()));
     System.out.println("x: " + x  + "\ty: " + y);
@@ -438,6 +442,8 @@ public abstract class MapObject {
     bo.setDirection(direction);
     bo.setCurrentSpeed(currentSpeed);
     bo.setMapObjectType(mapObjectType);
+    //bo.setRotation((direction+Math.PI)*(180/Math.PI));
+    bo.setRotation(90*(180/Math.PI));
     return bo;
   }
 }

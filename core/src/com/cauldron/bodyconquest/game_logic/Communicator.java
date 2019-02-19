@@ -8,6 +8,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Communicator {
 
   private CopyOnWriteArrayList<BasicObject> objects;
+  private int bottomHealthPercentage;
+  private int topHealthPercentage;
+
+  private int lipidsTop;
+  private int sugarsTop;
+  private int proteinsTop;
+  private int lipidsBottom;
+  private int sugarsBottom;
+  private int proteinsBottom;
 
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();
@@ -21,4 +30,67 @@ public class Communicator {
     this.objects = os;
   }
 
+  public void setBottomHealthPercentage(int health) {
+    bottomHealthPercentage = health;
+  }
+
+  public void setTopHealthPercentage(int health) {
+    topHealthPercentage = health;
+  }
+
+  public void setLipidsTop(int lipidsTop) {
+    this.lipidsTop = lipidsTop;
+  }
+
+  public void setSugarsTop(int sugarsTop) {
+    this.sugarsTop = sugarsTop;
+  }
+
+  public void setProteinsTop(int proteinsTop) {
+    this.proteinsTop = proteinsTop;
+  }
+
+  public void setLipidsBottom(int lipidsBottom) {
+    this.lipidsBottom = lipidsBottom;
+  }
+
+  public void setSugarsBottom(int sugarsBottom) {
+    this.sugarsBottom = sugarsBottom;
+  }
+
+  public void setProteinsBottom(int proteinsBottom) {
+    this.proteinsBottom = proteinsBottom;
+  }
+
+  public int getBottomHealthPercentage() {
+    return bottomHealthPercentage;
+  }
+
+  public int getTopHealthPercentage() {
+    return topHealthPercentage;
+  }
+
+  public int getLipidsTop() {
+    return lipidsTop;
+  }
+
+  public int getSugarsTop() {
+    return sugarsTop;
+  }
+
+  public int getProteinsTop() {
+    return proteinsTop;
+  }
+
+  public int getLipidsBottom() {
+    return lipidsBottom;
+  }
+
+  public int getSugarsBottom() {
+    return sugarsBottom;
+  }
+
+  public int getProteinsBottom() {
+    return proteinsBottom;
+  }
 }
