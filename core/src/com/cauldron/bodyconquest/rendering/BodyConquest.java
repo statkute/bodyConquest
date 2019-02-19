@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.cauldron.bodyconquest.audio.AudioPlayer;
 import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.screens.MenuScreen;
@@ -22,6 +23,8 @@ public class BodyConquest extends Game {
 
   public static final int V_WIDTH = 800;
   public static final int V_HEIGHT = 600;
+
+  public static final AudioPlayer audioPlayer = new AudioPlayer();
 
   private FPSLogger fpsLogger = new FPSLogger();
   public SpriteBatch batch;

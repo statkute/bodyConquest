@@ -161,7 +161,7 @@ public class Constants {
     public float topLaneTPSpawnY = 525;
 
     //Sounds
-    public static final Sound buttonSound= Gdx.audio.newSound(Gdx.files.internal("core/assets/buttonClick.wav"));
+    public static final String buttonSoundPath = "core/assets/buttonClick.wav";
 
     public static final int baseTopX = 130;
     public static final int baseTopY = 460;

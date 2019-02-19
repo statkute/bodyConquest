@@ -77,6 +77,6 @@ public class CreditsScreen implements Screen {
     background.dispose();
   }
   public void playButtonSound(){
-    Constants.buttonSound.play();
+    game.audioPlayer.playSFX("button_click");
   }
 }

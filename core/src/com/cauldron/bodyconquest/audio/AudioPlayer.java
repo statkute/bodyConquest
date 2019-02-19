@@ -1,137 +1,125 @@
 package com.cauldron.bodyconquest.audio;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+
 import java.util.HashMap;
-
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-
-// import org.apache.log4j.Logger;
 
 /* Controls audio within the game*/
 public class AudioPlayer {
 
-  // private static final Logger log = Logger.getLogger(AudioPlayer.class);
+  public static float MASTER_VOLUME = 1.0f;
+  public static float SFX_VOLUME = 1.0f;
+  public static float MUSIC_VOLUME = 1.0f;
 
-  private static HashMap<String, Clip> clips;
-  private static int gap;
-  private static boolean mute = false;
+  private final float MUTED_VOLUME = 0.0f;
 
-  public static void init() {
-    // The hash map that stores all the sound clips
-    clips = new HashMap<String, Clip>();
-    gap = 0;
+  private HashMap<String, Sound> soundFX;
+  private HashMap<String, Music> music;
+
+  private Music currentMusic;
+
+  private boolean mutedSFX;
+  private boolean mutedMusic;
+  private boolean muted;
+
+  public AudioPlayer(){
+    soundFX = new HashMap<String, Sound>();
+    music = new HashMap<String, Music>();
+
+    muted = false;
+    mutedSFX = false;
+    mutedMusic = false;
+
+    currentMusic = null;
   }
 
-  public static void load(String s, String n) {
-    if (clips.get(n) != null) return;
-    Clip clip;
-    try {
-      // Loading in the audio clips in the correct format
-      AudioInputStream ais =
-          AudioSystem.getAudioInputStream(AudioPlayer.class.getResourceAsStream(s));
-      AudioFormat baseFormat = ais.getFormat();
-      AudioFormat decodeFormat =
-          new AudioFormat(
-              AudioFormat.Encoding.PCM_SIGNED,
-              baseFormat.getSampleRate(),
-              16,
-              baseFormat.getChannels(),
-              baseFormat.getChannels() * 2,
-              baseFormat.getSampleRate(),
-              false);
-      AudioInputStream dais = AudioSystem.getAudioInputStream(decodeFormat, ais);
-      clip = AudioSystem.getClip();
-      clip.open(dais);
-      // Storing the clip in the hash map
-      clips.put(n, clip);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
+  public void toggleMuted() {
 
-  // Play the audio without a given start frame
-  public static void play(String s) {
-    play(s, gap);
-  }
-
-  // Play the audio with a given start frame
-  public static void play(String s, int i) {
-    if (mute) return;
-    // log.info("Mute = " + mute + " and playing");
-    Clip c = clips.get(s);
-    if (c == null) return;
-    if (c.isRunning()) c.stop();
-    c.setFramePosition(i);
-    while (!c.isRunning()) c.start();
-    // log.info(s + " played.");
-  }
-
-  // Stop the audio
-  public static void stop(String s) {
-    if (clips.get(s) == null) return;
-    if (clips.get(s).isRunning()) clips.get(s).stop();
-  }
-
-  // Essentially plays the the audio but at the last frame it was on
-  public static void resume(String s) {
-    if (mute) return;
-    if (clips.get(s).isRunning()) return;
-    clips.get(s).start();
-  }
-
-  // Loops the whole clip
-  public static void loop(String s) {
-    loop(s, gap, gap, clips.get(s).getFrameLength() - 1);
-  }
-
-  // Loops starting at a particular frame
-  public static void loop(String s, int frame) {
-    loop(s, frame, gap, clips.get(s).getFrameLength() - 1);
-  }
-
-  // Loops between a given starting frame and end frame
-  public static void loop(String s, int start, int end) {
-    loop(s, gap, start, end);
-  }
-
-  // Loops between a given starting frame and end frame with a given initial starting frame
-  public static void loop(String s, int frame, int start, int end) {
-    stop(s);
-    if (mute) return;
-    clips.get(s).setLoopPoints(start, end);
-    clips.get(s).setFramePosition(frame);
-    clips.get(s).loop(Clip.LOOP_CONTINUOUSLY);
-  }
-
-  // A mute function which stop sounds being played
-  public static void toggleMute() {
-    System.out.println(mute);
-    if (mute) {
-      mute = false;
-      // System.out.println(mute);
+    if(muted) {
+      muted = false;
+      if(currentMusic != null) currentMusic.setVolume(MUSIC_VOLUME);
     } else {
-      mute = true;
-      // System.out.println(mute);
+      muted = true;
+      if(currentMusic != null) currentMusic.setVolume(MUTED_VOLUME);
     }
   }
 
-  // Sets the current frame
-  public static void setPosition(String s, int frame) {
-    clips.get(s).setFramePosition(frame);
+  public void toggleMutedSFX() {
+    if(mutedSFX) {
+      mutedSFX = false;
+    } else {
+      mutedSFX = true;
+    }
   }
 
-  public static int getFrames(String s) {
-    return clips.get(s).getFrameLength();
+  public void toggleMutedMusic() {
+    if(mutedMusic) {
+      mutedMusic = false;
+      if(!muted && currentMusic != null) currentMusic.setVolume(MUSIC_VOLUME);
+    } else {
+      mutedMusic = true;
+      if(currentMusic != null) currentMusic.setVolume(MUTED_VOLUME);
+    }
   }
 
-  public static int getPosition(String s) {
-    return clips.get(s).getFramePosition();
+  public void loadSFX(String name, String path) {
+    soundFX.put(name, Gdx.audio.newSound(Gdx.files.internal(path)));
   }
 
-  public static void close(String s) {
-    stop(s);
-    clips.get(s).close();
+  /**
+   * Load in any (background) music files that will be used in the game.
+   * @param name The string used to refer to a particular music file to play it later on.
+   * @param path The path to the location of the audio file to be loaded in.
+   */
+  public void loadMusic(String name, String path) {
+    music.put(name, Gdx.audio.newMusic(Gdx.files.internal(path)));
   }
+
+  public void playSFX(String name) {
+    if(muted) {
+      soundFX.get(name).play(MUTED_VOLUME * MASTER_VOLUME);
+    } else {
+      soundFX.get(name).play(SFX_VOLUME * MASTER_VOLUME);
+    }
+  }
+
+  public void playMusicOnce(String name) {
+    playMusic(name, false);
+  }
+
+  public void playMusicLoop(String name) {
+    playMusic(name, true);
+  }
+
+  public void playMusic(String name, boolean loop) {
+    if(currentMusic != null) currentMusic.stop();
+    currentMusic = music.get(name);
+    if(muted) {
+      currentMusic.setVolume(MUTED_VOLUME);
+    } else {
+      currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME);
+    }
+    currentMusic.setLooping(loop);
+    currentMusic.play();
+  }
+
+  public void changeMasterVolume(float volume) {
+    if(volume > 1.0f || volume < 0.0f) {
+      MASTER_VOLUME = volume;
+    }
+  }
+
+  public void changeSFXVolume(float volume) {
+    if(volume > 1.0f || volume < 0.0f) return;
+    SFX_VOLUME = volume;
+  }
+
+  public void changeMusicVolume(float volume) {
+    if(volume > 1.0f || volume < 0.0f) return;
+    MUSIC_VOLUME = volume;
+    if(!muted) currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME);
+  }
+
 }
