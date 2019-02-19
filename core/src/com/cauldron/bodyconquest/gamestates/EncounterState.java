@@ -73,7 +73,7 @@ public class EncounterState extends GameState {
    *
    * @param comms The communication object to receive information from the Server/Model.
    */
-  public EncounterState(Communicator comms, ServerSender serverSender) {
+  public EncounterState(Communicator comms, ServerSender serverSender, String gameType) {
     this.comms = comms;
     this.serverSender = serverSender;
     map = new Map();
@@ -104,7 +104,9 @@ public class EncounterState extends GameState {
     bottomResources.start();
     topResources.start();
 
-    new BasicTestAI(this, PlayerType.PLAYER_TOP).start();
+    if (gameType.equals("singleplayer")){
+      new BasicTestAI(this, PlayerType.PLAYER_TOP).start();
+    }
   }
 
   /**

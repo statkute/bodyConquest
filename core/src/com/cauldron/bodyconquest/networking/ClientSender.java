@@ -27,12 +27,6 @@ public class ClientSender extends Thread {
    * @param message
    */
   public void sendMessage(String message) {
-    if (clientReceiver.id.toString().equals("1")) {
-      message = "a" + message;
-    } else if (clientReceiver.toString().equals("2")) {
-      message = "b" + message;
-    }
-
     try {
       DatagramPacket packet =
           new DatagramPacket(message.getBytes(), message.length(), clientReceiver.address, 3000);
