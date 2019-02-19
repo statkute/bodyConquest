@@ -40,6 +40,8 @@ public class EncounterScreen implements Screen {
   private int healthTopBase;
   int accumulatorAfterBaseConquered = 0;
 
+  float elapsedSeconds;
+
   public EncounterScreen(BodyConquest game, Communicator comms, ClientSender clientSender) {
     this.comms = comms;
     this.clientSender = clientSender;
@@ -80,7 +82,7 @@ public class EncounterScreen implements Screen {
       viewObjects = new ArrayList<ViewObject>();
       long tEnd = System.currentTimeMillis();
       long tDelta = tEnd - MenuScreen.timeOfServer;
-      float elapsedSeconds = tDelta / 1000.0f;
+      elapsedSeconds = tDelta / 1000.0f;
       for (BasicObject o : objects) {
 
         switch (o.getMapObjectType()) {
@@ -177,7 +179,7 @@ public class EncounterScreen implements Screen {
     int p = comms.getProteinsBottom();
     int c = comms.getSugarsBottom();
 
-    hud.updateResourceBars(l, p, c);
+    hud.updateResourceBars(l, p, c, elapsedSeconds);
   }
 
   @Override

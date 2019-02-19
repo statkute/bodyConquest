@@ -82,7 +82,7 @@ public class HUD {
     stage.addActor(lipidsResourceBar);
   }
 
-  public void updateResourceBars(int lipids, int proteins, int carbs){
+  public void updateResourceBars(int lipids, int proteins, int carbs, float s){
     int mappedLipids = mapResource(lipids);
     int mappedProteins = mapResource(proteins);
     int mappedCarbs = mapResource(carbs);
@@ -90,11 +90,18 @@ public class HUD {
     lipidsResourceBar.setInsideY(mappedLipids);
     proteinResourceBar.setInsideY(mappedProteins);
     carbsResourceBar.setInsideY(mappedCarbs);
+//    lipidsResourceBar.setInsideY(0);
+//    proteinResourceBar.setInsideY(0);
+//    carbsResourceBar.setInsideY(0);
+
+    lipidsResourceBar.updateTime(s);
+    carbsResourceBar.updateTime(s);
+    proteinResourceBar.updateTime(s);
   }
 
   private int mapResource(int resource){
     int y = resource * (BodyConquest.V_HEIGHT/100);
-    return y;
+    return y - BodyConquest.V_HEIGHT;
   }
 
   private void setUpDragAndDrop() {
