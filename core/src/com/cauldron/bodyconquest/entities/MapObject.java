@@ -442,7 +442,8 @@ public abstract class MapObject {
     bo.setDirection(direction);
     bo.setCurrentSpeed(currentSpeed);
     bo.setMapObjectType(mapObjectType);
-    bo.setRotation((direction+Math.PI)*(180/Math.PI));
+    //bo.setRotation((direction+Math.PI)*(180/Math.PI));
+    bo.setRotation(90*(180/Math.PI));
     return bo;
   }
 }

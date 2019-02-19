@@ -49,7 +49,7 @@ public class EncounterScreen implements Screen {
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    hud = new HUD(game.batch, this, Constants.PlayerType.PLAYER_BOTTOM);
+    hud = new HUD(game.batch, this, PlayerType.PLAYER_BOTTOM);
     accumulatorAfterBaseConquered = 0;
 
     // Set up map

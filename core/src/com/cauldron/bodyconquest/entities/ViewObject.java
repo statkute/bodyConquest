@@ -21,10 +21,6 @@ public class ViewObject extends Actor {
   private float elapsedTime;
 
   public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows,float elapsedTime) {
-    setX((float)bo.getX());
-    setY((float)bo.getY());
-    setWidth((float)bo.getWidth());
-    setHeight((float)bo.getHeight());
     // Right now all textures are the default buckets
     //texture = new Texture("core/assets/bucket.png");
     //texture = new Texture(pathTexture);
@@ -33,20 +29,24 @@ public class ViewObject extends Actor {
     if(bo.getMapObjectType() == Constants.MapObjectType.FLUPROJECTILE){
       setRotation((float)bo.getRotation());
     }
-    stateTime = 0f;
-  }
-
-  public ViewObject(BasicObject bo, String pathTexture, float elapsedTime) {
     setX((float)bo.getX());
     setY((float)bo.getY());
     setWidth((float)bo.getWidth());
     setHeight((float)bo.getHeight());
+    stateTime = 0f;
+  }
+
+  public ViewObject(BasicObject bo, String pathTexture, float elapsedTime) {
     walkAnimation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(pathTexture).read());
     this.elapsedTime = elapsedTime;
     if(bo.getMapObjectType() == Constants.MapObjectType.FLUPROJECTILE){
       setRotation((float)bo.getRotation());
     }
     stateTime = 0f;
+    setX((float)bo.getX());
+    setY((float)bo.getY());
+    setWidth((float)bo.getWidth());
+    setHeight((float)bo.getHeight());
   }
 
   @Override

@@ -68,9 +68,17 @@ public class HUD {
   private void setUpDragAndDrop() {
     dragAndDrop = new DragAndDrop();
 
-    addSpawnPoint(475, 50, Lane.BOTTOM);
-    addSpawnPoint(475, 160, Lane.MIDDLE);
-    addSpawnPoint(575, 200, Lane.TOP);
+    // Bottom player spawn points
+    if(playerType == PlayerType.PLAYER_BOTTOM){
+      addSpawnPoint(475, 50,  Lane.BOTTOM);
+      addSpawnPoint(475, 160, Lane.MIDDLE);
+      addSpawnPoint(575, 200, Lane.TOP);
+    } else {
+      // Top player spawn points
+      addSpawnPoint(250, 500,Lane.TOP);
+      addSpawnPoint(220, 410,Lane.MIDDLE);
+      addSpawnPoint(130, 370,Lane.BOTTOM);
+    }
 
     addDragAndDropSource(0, "bacteria");
     addDragAndDropSource(1, "flu");
