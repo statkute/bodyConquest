@@ -32,19 +32,19 @@ public class HealthBar extends ProgressBar {
 
   @Override
   public void draw(Batch batch, float parentAlpha) {
-    // System.out.println(encounterScreen.getHealthBottomBase() + "health");
-    if (playerType == Constants.PlayerType.PLAYER_TOP){
-      batch.draw(healthBorder,Constants.baseTopX -4, Constants.baseTopY + Constants.healthYAdjustmentTop-3);
+    if (playerType == Constants.PlayerType.PLAYER_TOP) {
+      batch.draw(
+          healthBorder,
+          Constants.baseTopX - 4,
+          Constants.baseTopY + Constants.healthYAdjustmentTop - 3);
       updateTop();
-    }
-
-    else {
-      batch.draw(healthBorder,Constants.baseBottomX -5, Constants.baseBottomY - Constants.healthYAdjustmentBottom - 4);
+    } else {
+      batch.draw(
+          healthBorder,
+          Constants.baseBottomX - 5,
+          Constants.baseBottomY - Constants.healthYAdjustmentBottom - 4);
       updateBottom();
     }
-
-
-
 
     super.draw(batch, parentAlpha);
   }

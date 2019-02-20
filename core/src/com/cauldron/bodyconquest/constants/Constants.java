@@ -9,8 +9,8 @@ public class Constants {
     public static final int MINHEALTH = 0;
 
 
-    public static final int UPDATESCREENTILL = 40;
-    public static final int INCREASEACCUMULATORTILL = 50;
+    public static final int UPDATESCREENTILL = 200;
+    public static final int INCREASEACCUMULATORTILL = 280;
 
 
     private static String pathAssets = "core/assets/";

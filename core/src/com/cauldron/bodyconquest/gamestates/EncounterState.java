@@ -20,6 +20,7 @@ import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
+import com.cauldron.bodyconquest.screens.EncounterScreen;
 
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -68,6 +69,7 @@ public class EncounterState extends GameState {
   private Resources topResources;
   private Resources bottomResources;
 
+
   /**
    * Constructor.
    *
@@ -77,6 +79,7 @@ public class EncounterState extends GameState {
     this.comms = comms;
     this.serverSender = serverSender;
     map = new Map();
+
 
     allMapObjects = new CopyOnWriteArrayList<MapObject>();
 
@@ -160,45 +163,56 @@ public class EncounterState extends GameState {
   @Override
   public void update() {
 
-    for (MapObject mo : allMapObjects) mo.update();
-
-    // Update All Units
-    checkAttack(troopsTop, troopsBottom);
-    checkAttack(troopsBottom, troopsTop);
-    checkProjectiles(projectilesTop, troopsBottom);
-    checkProjectiles(projectilesBottom, troopsTop);
+    // ! Important if you do not want to update encounter state, bases health should go to minus because
+    // Encounter state is instantiated before encounter screen and it starts getting health before game is started of the base
 
 
-    // Change this so it only add new objects
-    CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
-    for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
+//    if(comms.getBottomHealthPercentage() >= 0 && comms.getTopHealthPercentage() >= 0){
+//
+//     System.out.println(comms.getBottomHealthPercentage());
 
-    // TO DO: send this to the client
-    String json = "";
-    try {
-      json = Serialization.serialize(sentObjects);
-      serverSender.sendObjectUpdates(json);
+      for (MapObject mo : allMapObjects) mo.update();
 
-      double healthBottom = bottomBase.getHealth();
-      double healthBottomMax = bottomBase.getMaxHealth();
-      double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
-      int health = (int) healthPercentage;
-      String messageb = MessageMaker.healthUpdate(health, "BOTTOM");
+      // Update All Units
+      checkAttack(troopsTop, troopsBottom);
+      checkAttack(troopsBottom, troopsTop);
+      checkProjectiles(projectilesTop, troopsBottom);
+      checkProjectiles(projectilesBottom, troopsTop);
 
-      double healthTop = topBase.getHealth();
-      double healthTopMax = topBase.getMaxHealth();
-      double healthPercentageT = (healthTop / healthTopMax) * 100.0;
-      int healthT = (int) healthPercentageT;
 
-      String messaget = MessageMaker.healthUpdate(healthT, "TOP");
+      // Change this so it only add new objects
+      CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
+      for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
 
-      serverSender.sendMessage(messageb);
-      serverSender.sendMessage(messaget);
+      // TO DO: send this to the client
+      String json = "";
+      try {
+        json = Serialization.serialize(sentObjects);
+        serverSender.sendObjectUpdates(json);
+
+        double healthBottom = bottomBase.getHealth();
+        double healthBottomMax = bottomBase.getMaxHealth();
+        double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
+        int health = (int) healthPercentage;
+        String messageb = MessageMaker.healthUpdate(health, "BOTTOM");
+
+        double healthTop = topBase.getHealth();
+        double healthTopMax = topBase.getMaxHealth();
+        double healthPercentageT = (healthTop / healthTopMax) * 100.0;
+        int healthT = (int) healthPercentageT;
+
+        String messaget = MessageMaker.healthUpdate(healthT, "TOP");
+
+        serverSender.sendMessage(messageb);
+        serverSender.sendMessage(messaget);
 //      serverSender
 //      comms.populateObjectList(sentObjectsDeserialized);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    //}
+
+
   }
 
   /**

@@ -2,11 +2,15 @@ package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.constants.Constants.*;
@@ -32,6 +36,10 @@ public class EncounterScreen implements Screen {
   private final HUD hud;
   private Communicator comms;
   private ClientSender clientSender;
+
+  private MenuScreen menuScreen;
+
+  private boolean destroyed = false;
 
 
   private ArrayList<ViewObject> viewObjects;
@@ -61,12 +69,14 @@ public class EncounterScreen implements Screen {
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
+    menuScreen = new MenuScreen(game);
   }
 
   private void testInit() {}
 
   @Override
-  public void show() {}
+  public void show() {
+  }
 
   @Override
   public void render(float delta) {
@@ -163,6 +173,14 @@ public class EncounterScreen implements Screen {
       game.batch.begin();
       game.batch.end();
       for (ViewObject vo : viewObjects) vo.remove();
+
+
+      if(accumulatorAfterBaseConquered > 5 && !destroyed){
+        boolean destroyed = true;
+        determineWinner();
+        switchScreen(game,menuScreen);
+      }
+
     }
 
     if (((healthTopBase == Constants.MINHEALTH) || (healthBottomBase == Constants.MINHEALTH))
@@ -170,8 +188,6 @@ public class EncounterScreen implements Screen {
 
       accumulatorAfterBaseConquered++;
 
-      // TO DO once accumulator is between 40 and 50 make a pop up box to winnign screen or just
-      // make a winning screen for Friday
     }
   }
 
@@ -214,5 +230,62 @@ public class EncounterScreen implements Screen {
 
   public int getHealthTopBase() {
     return healthTopBase;
+  }
+
+  public void switchScreen(final BodyConquest game,final Screen newScreen){
+    //System.out.println("Why it does not change the screen");
+    stage.getRoot().getColor().a = 1;
+    SequenceAction sequenceAction = new SequenceAction();
+    sequenceAction.addAction(Actions.fadeOut(1.0f));
+    sequenceAction.addAction(
+        Actions.run(
+            new Runnable() {
+              @Override
+              public void run() {
+                game.setScreen(newScreen);
+              }
+            }));
+    stage.getRoot().addAction(sequenceAction);
+  }
+
+  public void DrawShadowed(String str, float x, float y, float width, int align, Color color)
+  {
+    game.font.getData().setScale(4,4);
+    game.font.setColor(Color.BLACK);
+
+    for (int i = -1; i < 2; i++)
+    {
+      for (int j = -1; j < 2; j++)
+      {
+        game.font.draw(game.batch, str, x + i, y + j, width, align, false);
+      }
+    }
+
+    game.font.setColor(color);
+    game.font.draw(game.batch, str, x, y, width, align, false);
+    game.font.setColor(Color.WHITE);
+  }
+
+  private void ShowGameResult(String result)
+  {
+    DrawShadowed(result,
+            0,
+            BodyConquest.V_HEIGHT / 2 + 30,
+            stage.getWidth(),
+            Align.center,
+            Color.RED);
+  }
+
+  private void determineWinner(){
+    game.batch.begin();
+    if (healthBottomBase <= 0)
+    {
+      ShowGameResult("DEFEAT!");
+    }
+    else
+    {
+      ShowGameResult("VICTORY!");
+    }
+    game.batch.end();
   }
 }

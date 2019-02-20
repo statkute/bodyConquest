@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.constants.Constants;
@@ -54,6 +56,7 @@ public class RaceSelection implements Screen {
   private Rectangle playBounds;
 
   private Viewport gamePort;
+  private Stage stage;
 
   private List<Texture> listTextures;
 
@@ -91,6 +94,7 @@ public class RaceSelection implements Screen {
     camera.setToOrtho(false, 800, 600);
 
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, camera);
+    stage = new Stage();
 
     background = new Texture("core/assets/backgroundRaceSelection.png");
     confirmButton = new Texture("core/assets/confirmbutton.v3.png");
@@ -126,7 +130,10 @@ public class RaceSelection implements Screen {
   }
 
   @Override
-  public void show() {}
+  public void show() {
+//    stage.getRoot().getColor().a = 0;
+//    stage.getRoot().addAction(Actions.fadeIn(1.0f));
+  }
 
   @Override
   public void render(float delta) {
