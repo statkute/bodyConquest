@@ -47,6 +47,7 @@ public class HUD {
   private ResourceBar lipidsResourceBar;
   private ResourceBar carbsResourceBar;
 
+
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     this.screen = screen;
     this.playerType = playerType;
@@ -215,6 +216,7 @@ public class HUD {
     dragAndDrop.addSource(s);
   }
 
+
   public Stage getStage() {
     return stage;
   }
@@ -232,6 +234,7 @@ public class HUD {
               Constants.healthBarHeight,
               screen,
               PlayerType.PLAYER_BOTTOM);
+
       healthBar.setPosition(
           Constants.baseBottomX, Constants.baseBottomY - Constants.healthYAdjustmentBottom);
     }

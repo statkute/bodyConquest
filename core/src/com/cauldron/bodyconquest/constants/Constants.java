@@ -6,7 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 public class Constants {
 
 
-    public static final int MINHEALTH =0;
+    public static final int MINHEALTH = 0;
 
 
     public static final int UPDATESCREENTILL = 40;
@@ -166,7 +166,7 @@ public class Constants {
     public static final int baseTopX = 130;
     public static final int baseTopY = 450;
     public static final int baseBottomX = 545;
-    public static final int baseBottomY = 70;
+    public static final int baseBottomY = 80;
     public static final int baseWidth = 120;
     public static final int baseHeight = 120;
 
@@ -174,8 +174,10 @@ public class Constants {
     public static final int healthBarWidth = 120;
     public static final int healthBarHeight = 20;
 
-    public static final int healthYAdjustmentBottom = 20;
+    public static final int healthYAdjustmentBottom = 25;
     public static final int healthYAdjustmentTop = 120;
+
+    public static String pathBorder = pathAssets + "bordernewest2.png";
 
     // Resources
     public static enum ResourceType {PROTEIN, LIPID, CARBS}

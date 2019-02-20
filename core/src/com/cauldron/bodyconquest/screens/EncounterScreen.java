@@ -33,6 +33,7 @@ public class EncounterScreen implements Screen {
   private Communicator comms;
   private ClientSender clientSender;
 
+
   private ArrayList<ViewObject> viewObjects;
   private CopyOnWriteArrayList<BasicObject> objects;
 
