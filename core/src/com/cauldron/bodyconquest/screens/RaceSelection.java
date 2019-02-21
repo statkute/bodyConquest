@@ -34,6 +34,9 @@ public class RaceSelection implements Screen {
   private Texture blueVirus;
   private Texture greenVirus;
   private Texture yellowVirus;
+  private Texture blueVirusSelected;
+  private Texture greenVirusSelected;
+  private Texture yellowVirusSelected;
 
   OrthographicCamera camera;
 
@@ -42,6 +45,8 @@ public class RaceSelection implements Screen {
   private String diseaseName3 = "Disease 3";
 
   private String warning = "You cannot re-select race once it is confirmed";
+
+  private int selection = 0;
 
   //  private Texture disease1;
   //  private Texture disease2;
@@ -55,6 +60,10 @@ public class RaceSelection implements Screen {
   //  private Texture playButton;
 
   private Rectangle headerBounds;
+
+  private Rectangle blueVirusBounds;
+  private Rectangle greenVirusBounds;
+  private Rectangle yellowVirusBounds;
   //
   //  private Rectangle disease1Bounds;
   //  private Rectangle disease2Bounds;
@@ -109,6 +118,9 @@ public class RaceSelection implements Screen {
     blueVirus = new Texture("core/assets/bluevirus.png");
     greenVirus = new Texture("core/assets/greenvirus.png");
     yellowVirus = new Texture("core/assets/yellowvirus.png");
+    blueVirusSelected = new Texture("core/assets/bluevirusselected.png");
+    greenVirusSelected = new Texture("core/assets/greenvirusselected.png");
+    yellowVirusSelected = new Texture("core/assets/yellowvirusselected.png");
 
     headerBounds =
         new Rectangle(
@@ -116,6 +128,27 @@ public class RaceSelection implements Screen {
             450,
             header.getWidth(),
             header.getHeight());
+
+    blueVirusBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2,
+            220,
+            blueVirus.getWidth(),
+            blueVirus.getHeight());
+
+    greenVirusBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2,
+            220,
+            greenVirus.getWidth(),
+            greenVirus.getHeight());
+
+    yellowVirusBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2,
+            220,
+            yellowVirus.getWidth(),
+            yellowVirus.getHeight());
     //    confirmButton = new Texture("core/assets/confirmbutton.v3.png");
     //    disease1 = new Texture("core/assets/bacteria1resized.png");
     //    disease2 = new Texture("core/assets/monster1resized.png");
@@ -214,17 +247,51 @@ public class RaceSelection implements Screen {
       Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
       camera.unproject(tmp);
 
-      //      if (confirmed) {
-      //
-              if (headerBounds.contains(tmp.x, tmp.y)) {
-                playButtonSound();
-      //          g = new Game(server, communicator);
-      //          g.start();
-      //          server.startServerLogic(g.getEncounterState());
-                game.setScreen(new EncounterScreen(game, communicator,
-       game.getClient().clientSender));
-                dispose();
-              }
+      if (headerBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
+        game.setScreen(new EncounterScreen(game, communicator, game.getClient().clientSender));
+        dispose();
+      }
+
+      if (blueVirusBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
+        if (selection != 0){
+          cleanSelections();
+        }
+        if (selection != 1){
+          blueVirus = blueVirusSelected;
+          selection = 1;
+        } else{
+          selection = 0;
+        }
+      }
+
+      if (greenVirusBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
+        if (selection != 0){
+          cleanSelections();
+        }
+        if (selection != 2){
+          greenVirus = greenVirusSelected;
+          selection = 2;
+        } else{
+          selection = 0;
+        }
+      }
+
+      if (yellowVirusBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
+        if (selection != 0){
+          cleanSelections();
+        }
+        if (selection != 3){
+          yellowVirus = yellowVirusSelected;
+          selection = 3;
+        } else{
+          selection = 0;
+        }
+      }
+
       //      } else if (!confirmed) {
       //
       //        if (disease1Bounds.contains(tmp.x, tmp.y)) {
@@ -244,6 +311,12 @@ public class RaceSelection implements Screen {
       //        }
       //      }
     }
+  }
+
+  public void cleanSelections(){
+    blueVirus = new Texture("core/assets/bluevirus.png");
+    greenVirus = new Texture("core/assets/greenvirus.png");
+    yellowVirus = new Texture("core/assets/yellowvirus.png");
   }
 
   public void changeTexture(Texture newTexture) {
