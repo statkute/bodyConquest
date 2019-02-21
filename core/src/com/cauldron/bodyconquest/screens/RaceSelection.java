@@ -25,6 +25,7 @@ public class RaceSelection implements Screen {
   private Texture background;
   private Texture header;
   private Texture continueText;
+  private Texture backButton;
 
   private Texture blueVirus;
   private Texture greenVirus;
@@ -42,6 +43,7 @@ public class RaceSelection implements Screen {
   private int selection = 0;
 
   private Rectangle continueBounds;
+  private Rectangle backBounds;
 
   private Rectangle blueVirusBounds;
   private Rectangle greenVirusBounds;
@@ -98,11 +100,12 @@ public class RaceSelection implements Screen {
     yellowDescription = new Texture("core/assets/yellowvirus_characteristics.png");
 
     continueText = new Texture("core/assets/continue_new.png");
+    backButton = new Texture("core/assets/back_new.png");
 
     continueBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2,
-            60,
+            80,
             continueText.getWidth(),
             continueText.getHeight());
 
@@ -126,6 +129,13 @@ public class RaceSelection implements Screen {
             220,
             yellowVirus.getWidth(),
             yellowVirus.getHeight());
+
+    backBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+            30,
+            backButton.getWidth(),
+            backButton.getHeight());
   }
 
   @Override
@@ -151,7 +161,8 @@ public class RaceSelection implements Screen {
     game.batch.draw(blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), 160);
     game.batch.draw(greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), 160);
     game.batch.draw(yellowDescription, (BodyConquest.V_WIDTH / 5 * 4- yellowDescription.getWidth() / 2), 160);
-    game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 60);
+    game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
+    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
 
     //    if (!selected) {
     //      game.batch.draw(selectionFrame1, 100, 250);
@@ -246,24 +257,12 @@ public class RaceSelection implements Screen {
         }
       }
 
-      //      } else if (!confirmed) {
-      //
-      //        if (disease1Bounds.contains(tmp.x, tmp.y)) {
-      //          playButtonSound();
-      //
-      //          changeTexture(disease1);
-      //        } else if (disease2Bounds.contains(tmp.x, tmp.y)) {
-      //          playButtonSound();
-      //          // System.out.println("disease 2 selected");
-      //          changeTexture(disease2);
-      //        } else if (disease3Bounds.contains(tmp.x, tmp.y)) {
-      //          playButtonSound();
-      //          changeTexture(disease3);
-      //        } else if (confirmBounds.contains(tmp.x, tmp.y) && selected) {
-      //          playButtonSound();
-      //          confirmed = true;
-      //        }
-      //      }
+      if (backBounds.contains(tmp.x, tmp.y)) {
+        System.out.println("back pressed");
+        playButtonSound();
+        game.setScreen(new MenuScreen(game));
+        dispose();
+      }
     }
   }
 

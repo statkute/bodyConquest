@@ -26,10 +26,12 @@ public class MenuScreen implements Screen {
   private Texture playButtonSinglePlayer;
   private Texture settingsButton;
   private Texture creditsButton;
+  private Texture exitButton;
   private Rectangle multiplayerBounds;
   private Rectangle singleplayerBounds;
   private Rectangle settingsBounds;
   private Rectangle creditsBounds;
+  private Rectangle exitBounds;
 
   public static long timeOfServer;
 
@@ -49,6 +51,7 @@ public class MenuScreen implements Screen {
     playButtonSinglePlayer = new Texture("core/assets/singleplayer_new.png");
     settingsButton = new Texture("core/assets/settings_new.png");
     creditsButton = new Texture("core/assets/credits_new.png");
+    exitButton = new Texture("core/assets/exit_new.png");
 
     singleplayerBounds =
         new Rectangle(
@@ -76,6 +79,12 @@ public class MenuScreen implements Screen {
             120,
             creditsButton.getWidth(),
             creditsButton.getHeight());
+    exitBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,
+            60,
+            exitButton.getWidth(),
+            exitButton.getHeight());
 
     game.audioPlayer.loadSFX("button_click", Constants.buttonSoundPath);
   }
@@ -104,6 +113,7 @@ public class MenuScreen implements Screen {
         240);
     game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 180);
     game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 120);
+    game.batch.draw(exitButton, BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2, 60);
 
     checkPressed();
 
@@ -125,19 +135,10 @@ public class MenuScreen implements Screen {
       if (multiplayerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         System.out.println("Multiplayer Is touched");
-
         game.setScreen(new HostScreen(game));
-
-        //        client = new Client();
-        //        Communicator communicator = new Communicator();
-        //        try {
-        //          client.startClient(communicator);
-        //        } catch (IOException e) {
-        //          e.printStackTrace();
-        //        }
-        //              game.setScreen(new RaceSelectionScreen(game));
-        //              dispose();
+        dispose();
       }
+
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         // System.out.println("Singleplayer Is touched");
@@ -166,8 +167,16 @@ public class MenuScreen implements Screen {
       }
       if (creditsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        game.setScreen(new CreditsScreen(game));
+        System.out.println("Credits Is touched");
+//        game.setScreen(new CreditsScreen(game));
+//        dispose();
+      }
+
+      if(exitBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
         dispose();
+        Gdx.app.exit();
+        System.exit(0);
       }
     }
   }

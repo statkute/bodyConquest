@@ -22,8 +22,10 @@ public class HostScreen implements Screen {
   private Texture header;
   private Texture hostButtton;
   private Texture joinButton;
+  private Texture backButton;
   private Rectangle hostBounds;
   private Rectangle joinBounds;
+  private Rectangle backBounds;
   OrthographicCamera camera;
 
   private Server server;
@@ -37,8 +39,7 @@ public class HostScreen implements Screen {
     header = new Texture("core/assets/multiplayerheader_new.png");
     hostButtton = new Texture("core/assets/host_new.png");
     joinButton = new Texture("core/assets/join_new.png");
-    hostBounds = new Rectangle(140, 152, hostButtton.getWidth(), hostButtton.getHeight());
-    joinBounds = new Rectangle(480, 125, joinButton.getWidth(), joinButton.getHeight());
+    backButton = new Texture("core/assets/back_new.png");
 
     hostBounds =
         new Rectangle(
@@ -53,6 +54,13 @@ public class HostScreen implements Screen {
             240,
             joinButton.getWidth(),
             joinButton.getHeight());
+
+    backBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+            60,
+            backButton.getWidth(),
+            backButton.getHeight());
   }
 
   @Override
@@ -72,8 +80,8 @@ public class HostScreen implements Screen {
     game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
 
     game.batch.draw(hostButtton, BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2, 300);
-
     game.batch.draw(joinButton, BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2, 240);
+    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
 
     try {
       checkIfPressed();
@@ -113,6 +121,7 @@ public class HostScreen implements Screen {
     if (Gdx.input.justTouched()) {
       if (hostBounds.contains(tmp.x, tmp.y)) {
         System.out.println("host pressed");
+        playButtonSound();
         server = new Server();
         server.startServer("multiplayer");
         client = new Client();
@@ -124,6 +133,7 @@ public class HostScreen implements Screen {
       }
       if (joinBounds.contains(tmp.x, tmp.y)) {
         System.out.println("join pressed");
+        playButtonSound();
         client = new Client();
         Communicator communicator = new Communicator();
         client.startClient(communicator);
@@ -131,6 +141,17 @@ public class HostScreen implements Screen {
         System.out.println("setting the raceselection screen");
         game.setScreen(new RaceSelection(game, communicator));
       }
+
+      if (backBounds.contains(tmp.x, tmp.y)) {
+        System.out.println("back pressed");
+        playButtonSound();
+        game.setScreen(new MenuScreen(game));
+        dispose();
+      }
     }
+  }
+
+  public void playButtonSound() {
+    game.audioPlayer.playSFX("button_click");
   }
 }
