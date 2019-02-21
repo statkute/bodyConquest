@@ -22,7 +22,7 @@ public class Game extends Thread {
   public Game(Server server, Communicator communicator, String gameType) {
     this.server = server;
     comms = communicator;
-    encounterState = new EncounterState(comms, server.getServerSender(), gameType);
+    encounterState = new EncounterState(comms, server, gameType);
   }
 
   private void init() {
@@ -43,7 +43,9 @@ public class Game extends Thread {
 
     // Game loop
     while (running) {
-
+      if (server.isGameEnded()){
+        break;
+      }
       start = System.nanoTime();
 
       update();

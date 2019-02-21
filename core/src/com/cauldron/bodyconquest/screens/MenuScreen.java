@@ -21,14 +21,17 @@ public class MenuScreen implements Screen {
 
   private BodyConquest game;
   private Texture background;
+  private Texture title;
   private Texture playButtonMultiplayer;
   private Texture playButtonSinglePlayer;
   private Texture settingsButton;
   private Texture creditsButton;
+  private Texture exitButton;
   private Rectangle multiplayerBounds;
   private Rectangle singleplayerBounds;
   private Rectangle settingsBounds;
   private Rectangle creditsBounds;
+  private Rectangle exitBounds;
 
   public static long timeOfServer;
 
@@ -40,13 +43,15 @@ public class MenuScreen implements Screen {
   public MenuScreen(BodyConquest game) {
     this.game = game;
     camera = new OrthographicCamera();
-    camera.setToOrtho(false, 800, 600);
+    camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
 
-    background = new Texture("core/assets/logosmall.png");
-    playButtonMultiplayer = new Texture("core/assets/multiplayer1.png");
-    playButtonSinglePlayer = new Texture("core/assets/singleplayer.png");
-    settingsButton = new Texture("core/assets/settings.png");
-    creditsButton = new Texture("core/assets/Credits.png");
+    background = new Texture("core/assets/background_new.png");
+    title = new Texture("core/assets/title_new.png");
+    playButtonMultiplayer = new Texture("core/assets/multiplayer_new.png");
+    playButtonSinglePlayer = new Texture("core/assets/singleplayer_new.png");
+    settingsButton = new Texture("core/assets/settings_new.png");
+    creditsButton = new Texture("core/assets/credits_new.png");
+    exitButton = new Texture("core/assets/exit_new.png");
 
     singleplayerBounds =
         new Rectangle(
@@ -58,30 +63,34 @@ public class MenuScreen implements Screen {
     multiplayerBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-            226,
+            240,
             playButtonMultiplayer.getWidth(),
             playButtonMultiplayer.getHeight());
 
     settingsBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
-            126,
+            180,
             settingsButton.getWidth(),
             settingsButton.getHeight());
     creditsBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
-            30,
+            120,
             creditsButton.getWidth(),
             creditsButton.getHeight());
+    exitBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,
+            60,
+            exitButton.getWidth(),
+            exitButton.getHeight());
 
     game.audioPlayer.loadSFX("button_click", Constants.buttonSoundPath);
   }
 
   @Override
-  public void show() {
-
-  }
+  public void show() {}
 
   @Override
   public void render(float delta) {
@@ -93,7 +102,7 @@ public class MenuScreen implements Screen {
 
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-
+    game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450);
     game.batch.draw(
         playButtonSinglePlayer,
         BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
@@ -101,9 +110,10 @@ public class MenuScreen implements Screen {
     game.batch.draw(
         playButtonMultiplayer,
         BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-        226);
-    game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 126);
-    game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 30);
+        240);
+    game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 180);
+    game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 120);
+    game.batch.draw(exitButton, BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2, 60);
 
     checkPressed();
 
@@ -112,7 +122,9 @@ public class MenuScreen implements Screen {
 
   public void checkPressed() {
 
-    if(Gdx.input.isKeyJustPressed(Input.Keys.M) && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+    if (Gdx.input.isKeyJustPressed(Input.Keys.M)
+        && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
+            || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
       game.audioPlayer.toggleMuted();
     }
 
@@ -123,39 +135,21 @@ public class MenuScreen implements Screen {
       if (multiplayerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         System.out.println("Multiplayer Is touched");
-
         game.setScreen(new HostScreen(game));
-
-
-//        client = new Client();
-//        Communicator communicator = new Communicator();
-//        try {
-//          client.startClient(communicator);
-//        } catch (IOException e) {
-//          e.printStackTrace();
-//        }
-        //              game.setScreen(new RaceSelectionScreen(game));
-        //              dispose();
+        dispose();
       }
+
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        //System.out.println("Singleplayer Is touched");
+        // System.out.println("Singleplayer Is touched");
         server = new Server();
-        try {
-          timeOfServer = System.currentTimeMillis();
-          server.startServer("singleplayer");
-          client = new Client();
-          Communicator communicator = new Communicator();
-          client.startClient(communicator);
-          game.setServer(server);
-          game.setClient(client);
-          game.setScreen(new RaceSelection(game, server, communicator, "singleplayer"));
-          dispose();
-        } catch (SocketException e) {
-          e.printStackTrace();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+        timeOfServer = System.currentTimeMillis();
+        client = new Client();
+        Communicator communicator = new Communicator();
+        game.setServer(server);
+        game.setClient(client);
+        game.setScreen(new RaceSelection(game, server, communicator, "singleplayer"));
+        dispose();
       }
       if (settingsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
@@ -165,8 +159,16 @@ public class MenuScreen implements Screen {
       }
       if (creditsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        game.setScreen(new CreditsScreen(game));
+        System.out.println("Credits Is touched");
+        //        game.setScreen(new CreditsScreen(game));
+        //        dispose();
+      }
+
+      if (exitBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
         dispose();
+        Gdx.app.exit();
+        System.exit(0);
       }
     }
   }
@@ -194,6 +196,7 @@ public class MenuScreen implements Screen {
   @Override
   public void dispose() {
     background.dispose();
+    title.dispose();
     playButtonSinglePlayer.dispose();
     playButtonMultiplayer.dispose();
     settingsButton.dispose();

@@ -19,10 +19,13 @@ public class HostScreen implements Screen {
 
   private BodyConquest game;
   private Texture background;
+  private Texture header;
   private Texture hostButtton;
   private Texture joinButton;
+  private Texture backButton;
   private Rectangle hostBounds;
   private Rectangle joinBounds;
+  private Rectangle backBounds;
   OrthographicCamera camera;
 
   private Server server;
@@ -31,12 +34,33 @@ public class HostScreen implements Screen {
   public HostScreen(BodyConquest game) {
     this.game = game;
     camera = new OrthographicCamera();
-    camera.setToOrtho(false, 800, 600);
-    background = new Texture(Constants.pathHostBackground);
-    hostButtton = new Texture(Constants.pathHost);
-    joinButton = new Texture(Constants.pathJoin);
-    hostBounds = new Rectangle(140, 152, hostButtton.getWidth(), hostButtton.getHeight());
-    joinBounds = new Rectangle(480, 125, joinButton.getWidth(), joinButton.getHeight());
+    camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
+    background = new Texture("core/assets/background_new.png");
+    header = new Texture("core/assets/multiplayerheader_new.png");
+    hostButtton = new Texture("core/assets/host_new.png");
+    joinButton = new Texture("core/assets/join_new.png");
+    backButton = new Texture("core/assets/back_new.png");
+
+    hostBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2,
+            300,
+            hostButtton.getWidth(),
+            hostButtton.getHeight());
+
+    joinBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2,
+            240,
+            joinButton.getWidth(),
+            joinButton.getHeight());
+
+    backBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+            60,
+            backButton.getWidth(),
+            backButton.getHeight());
   }
 
   @Override
@@ -53,10 +77,11 @@ public class HostScreen implements Screen {
     game.batch.begin();
 
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
+    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
 
-    game.batch.draw(hostButtton, 140, 152, 210, 130);
-
-    game.batch.draw(joinButton, 480, 125, 210, 130);
+    game.batch.draw(hostButtton, BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2, 300);
+    game.batch.draw(joinButton, BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2, 240);
+    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
 
     try {
       checkIfPressed();
@@ -83,6 +108,7 @@ public class HostScreen implements Screen {
   public void dispose() {
 
     background.dispose();
+    header.dispose();
     hostButtton.dispose();
     joinButton.dispose();
   }
@@ -95,6 +121,7 @@ public class HostScreen implements Screen {
     if (Gdx.input.justTouched()) {
       if (hostBounds.contains(tmp.x, tmp.y)) {
         System.out.println("host pressed");
+        playButtonSound();
         server = new Server();
         server.startServer("multiplayer");
         client = new Client();
@@ -106,13 +133,25 @@ public class HostScreen implements Screen {
       }
       if (joinBounds.contains(tmp.x, tmp.y)) {
         System.out.println("join pressed");
+        playButtonSound();
         client = new Client();
         Communicator communicator = new Communicator();
         client.startClient(communicator);
         game.setClient(client);
         System.out.println("setting the raceselection screen");
-        game.setScreen(new RaceSelection(game, communicator));
+        game.setScreen(new RaceSelection(game, communicator, "multiplayer"));
+      }
+
+      if (backBounds.contains(tmp.x, tmp.y)) {
+        System.out.println("back pressed");
+        playButtonSound();
+        game.setScreen(new MenuScreen(game));
+        dispose();
       }
     }
+  }
+
+  public void playButtonSound() {
+    game.audioPlayer.playSFX("button_click");
   }
 }

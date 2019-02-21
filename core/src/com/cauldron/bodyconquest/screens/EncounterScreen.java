@@ -17,7 +17,9 @@ import com.cauldron.bodyconquest.constants.Constants.*;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.ClientSender;
+import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
@@ -36,6 +38,8 @@ public class EncounterScreen implements Screen {
   private final HUD hud;
   private Communicator comms;
   private ClientSender clientSender;
+  private Client client;
+  private Server server;
 
   private MenuScreen menuScreen;
 
@@ -51,9 +55,34 @@ public class EncounterScreen implements Screen {
 
   float elapsedSeconds;
 
-  public EncounterScreen(BodyConquest game, Communicator comms, ClientSender clientSender) {
+  public EncounterScreen(BodyConquest game, Communicator comms, Client client) {
     this.comms = comms;
-    this.clientSender = clientSender;
+    this.clientSender = client.clientSender;
+    this.client = client;
+    this.server = null;
+    testInit();
+    this.game = game;
+    gameCamera = new OrthographicCamera();
+    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
+    stage = new Stage(gamePort);
+    Gdx.input.setInputProcessor(stage);
+    hud = new HUD(game.batch, this, PlayerType.PLAYER_TOP);
+    accumulatorAfterBaseConquered = 0;
+
+    // Set up map
+    map = new Image(new Texture("core/assets/Basic Map v2.png"));
+    float topOfUnitBar = hud.getUnitBar().getTop();
+    mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
+    map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
+    stage.addActor(map);
+    menuScreen = new MenuScreen(game);
+  }
+
+  public EncounterScreen(BodyConquest game, Communicator comms, Client client, Server server) {
+    this.comms = comms;
+    this.clientSender = client.clientSender;
+    this.client = client;
+    this.server = server;
     testInit();
     this.game = game;
     gameCamera = new OrthographicCamera();
@@ -281,10 +310,18 @@ public class EncounterScreen implements Screen {
     if (healthBottomBase <= 0)
     {
       ShowGameResult("DEFEAT!");
+      client.closeEverything();
+      if (server != null){
+        server.closeEverything();
+      }
     }
     else
     {
       ShowGameResult("VICTORY!");
+      client.closeEverything();
+      if (server != null){
+        server.closeEverything();
+      }
     }
     game.batch.end();
   }

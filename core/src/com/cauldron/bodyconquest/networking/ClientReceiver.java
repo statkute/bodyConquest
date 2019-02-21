@@ -16,6 +16,7 @@ public class ClientReceiver extends Thread {
   public InetAddress group;
   public AtomicInteger id;
   public LinkedBlockingQueue<String> receivedMessages;
+  private boolean run;
 
   /**
    * ClientReceiver initialization
@@ -27,6 +28,7 @@ public class ClientReceiver extends Thread {
     socket = new DatagramSocket(3001);
     id = new AtomicInteger(0);
     receivedMessages = new LinkedBlockingQueue<String>();
+    run = true;
   }
 
   /**
@@ -58,11 +60,13 @@ public class ClientReceiver extends Thread {
    */
   public void run() {
     gameSetup();
-    while (true) {
+    while (run) {
       try {
         byte[] buf = new byte[1000000];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
-        socket.receive(packet);
+        if (run){
+          socket.receive(packet);
+        }
         String received = new String(packet.getData()).trim();
 //        System.out.println(
 //            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
@@ -120,5 +124,10 @@ public class ClientReceiver extends Thread {
         socket.joinGroup(group);
       }
     }
+  }
+
+  public void stopRunning(){
+    run = false;
+    socket.close();
   }
 }

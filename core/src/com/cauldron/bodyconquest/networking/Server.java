@@ -9,6 +9,8 @@ public class Server {
   private ServerSender serverSender;
   private ServerReceiver serverReceiver;
   private ServerLogic serverLogic;
+  private Ping ping;
+  private boolean gameEnded;
 
   /**
    * Server initialization: receiver, sender and logic threads are started
@@ -17,16 +19,17 @@ public class Server {
    * @throws SocketException
    */
   public void startServer(String type) throws SocketException {
-    Ping ping = new Ping();
+    gameEnded = false;
+    ping = new Ping();
     ping.start();
 
     serverSender = new ServerSender();
     serverReceiver = new ServerReceiver(serverSender, type);
-    //serverLogic = new ServerLogic(serverReceiver, encounterState);
+    // serverLogic = new ServerLogic(serverReceiver, encounterState);
 
     serverSender.start();
     serverReceiver.start();
-    //serverLogic.start();
+    // serverLogic.start();
   }
 
   public ServerSender getServerSender() {
@@ -38,17 +41,37 @@ public class Server {
     serverLogic.start();
   }
 
-    public static void main(String args[]) throws Exception {
-      Ping ping = new Ping();
-      ping.start();
+  public static void main(String args[]) throws Exception {
+    Ping ping = new Ping();
+    ping.start();
 
-      ServerSender serverSender = new ServerSender();
-      ServerReceiver serverReceiver = new ServerReceiver(serverSender, "multiplayer");
+    ServerSender serverSender = new ServerSender();
+    ServerReceiver serverReceiver = new ServerReceiver(serverSender, "multiplayer");
 
-      serverSender.start();
-      serverReceiver.start();
+    serverSender.start();
+    serverReceiver.start();
 
-      serverSender.sendMessage(
-          "This is a message from the server sent just after the game has started");
+    serverSender.sendMessage(
+        "This is a message from the server sent just after the game has started");
+  }
+
+  public void closeEverything() {
+    if (serverSender != null) {
+      serverSender.stopRunning();
     }
+    if (serverReceiver != null) {
+      serverReceiver.stopRunning();
+    }
+    if (serverLogic != null) {
+      serverLogic.stopRunning();
+    }
+    if (ping != null) {
+      ping.stopRunning();
+    }
+    gameEnded = true;
+  }
+
+  public boolean isGameEnded() {
+    return gameEnded;
+  }
 }

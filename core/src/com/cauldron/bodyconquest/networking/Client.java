@@ -40,6 +40,18 @@ public class Client {
     clientSender.sendMessage("Hi btw");
   }
 
+  public void closeEverything(){
+    if (clientSender!= null){
+      clientSender.stopRunning();
+    }
+    if (clientReceiver!= null){
+      clientReceiver.stopRunning();
+    }
+    if (clientLogic!= null){
+      clientLogic.stopRunning();
+    }
+  }
+
   //  public static void main(String argv[]) throws Exception {
   //    ClientReceiver clientReceiver = new ClientReceiver();
   //    ClientSender clientSender = new ClientSender(clientReceiver);
