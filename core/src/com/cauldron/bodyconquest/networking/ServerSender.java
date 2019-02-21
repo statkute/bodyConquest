@@ -11,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ServerSender extends Thread {
   public CopyOnWriteArrayList<InetAddress> connectedClients;
   public DatagramSocket socket;
+  private boolean run;
 
   /**
    * ServerSender initialization
@@ -20,6 +21,7 @@ public class ServerSender extends Thread {
   public ServerSender() throws SocketException {
     connectedClients = new CopyOnWriteArrayList<InetAddress>();
     socket = new DatagramSocket();
+    run = true;
   }
 
   /**
@@ -46,6 +48,11 @@ public class ServerSender extends Thread {
   }
 
   public void run() {
-    while (true) {}
+    while (run) {}
+  }
+
+  public void stopRunning(){
+    run = false;
+    socket.close();
   }
 }

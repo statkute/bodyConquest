@@ -9,6 +9,7 @@ import java.net.SocketException;
 public class ClientSender extends Thread {
   public DatagramSocket socket;
   public ClientReceiver clientReceiver;
+  private boolean run;
 
   /**
    * ClientSender initialization
@@ -19,6 +20,7 @@ public class ClientSender extends Thread {
   public ClientSender(ClientReceiver clientReceiver) throws SocketException {
     socket = new DatagramSocket();
     this.clientReceiver = clientReceiver;
+    run = true;
   }
 
   /**
@@ -34,5 +36,9 @@ public class ClientSender extends Thread {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+  public void stopRunning(){
+    run = false;
+    socket.close();
   }
 }

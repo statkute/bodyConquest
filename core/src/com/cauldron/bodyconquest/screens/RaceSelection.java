@@ -69,11 +69,12 @@ public class RaceSelection implements Screen {
     setup();
   }
 
-  public RaceSelection(BodyConquest game, Communicator communicator) {
+  public RaceSelection(BodyConquest game, Communicator communicator, String gameType) {
     System.out.println("inside");
     this.communicator = communicator;
     this.game = game;
     this.server = null;
+    this.gameType = gameType;
     setup();
   }
 
@@ -164,35 +165,6 @@ public class RaceSelection implements Screen {
     game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
     game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
 
-    //    if (!selected) {
-    //      game.batch.draw(selectionFrame1, 100, 250);
-    //      game.batch.draw(selectionFrame2, 550, 250);
-    //    }
-    //
-    //    if (selected && !opponentSelected) {
-    //
-    //      game.batch.draw(confirmButton, BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2,
-    // 250);
-    //      game.batch.draw(selectionFrame2, 550, 250);
-    //      selectionFrameRendererSelected();
-    //    }
-    //
-    //    if (selected && confirmed && !opponentSelected) {
-    //      generateOpponent(selectionFrame1);
-    //    }
-    //
-    //    if (selected && opponentSelected) {
-    //      game.batch.draw(playButton, BodyConquest.V_WIDTH / 2 - playButton.getWidth() / 2, 250);
-    //      selectionFrameRendererConfirmed();
-    //      checkSelectsAfterConfirmation();
-    //    }
-    //
-    //    game.batch.draw(disease1, 60, 50);
-    //    game.batch.draw(disease2, 310, 30);
-    //    game.batch.draw(disease3, 610, 40);
-    //    game.font.draw(game.batch, diseaseName1, 70, 30);
-    //    game.font.draw(game.batch, diseaseName2, 366, 30);
-    //    game.font.draw(game.batch, diseaseName3, 642, 30);
 
     try {
       checkPressed();
@@ -211,10 +183,14 @@ public class RaceSelection implements Screen {
 
       if (continueBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        g = new Game(server, communicator, gameType);
-        g.start();
-        server.startServerLogic(g.getEncounterState());
-        game.setScreen(new EncounterScreen(game, communicator, game.getClient().clientSender));
+        if (server != null){
+          g = new Game(server, communicator, gameType);
+          g.start();
+          server.startServerLogic(g.getEncounterState());
+          game.setScreen(new EncounterScreen(game, communicator, game.getClient(), server));
+        } else{
+          game.setScreen(new EncounterScreen(game, communicator, game.getClient()));
+        }
         dispose();
       }
 
@@ -271,48 +247,6 @@ public class RaceSelection implements Screen {
     greenVirus = new Texture("core/assets/greenvirus.png");
     yellowVirus = new Texture("core/assets/yellowvirus.png");
   }
-
-  //  public void selectionFrameRendererSelected() {
-  //
-  //    if (selectionFrame1.equals(disease2)) {
-  //      game.batch.draw(selectionFrame1, 80, 220);
-  //    } else if (selectionFrame1.equals(disease3)) {
-  //      game.batch.draw(selectionFrame1, 100, 220);
-  //    } else {
-  //      game.batch.draw(selectionFrame1, 100, 250);
-  //    }
-  //  }
-
-  //  public void selectionFrameRendererConfirmed() {
-  //
-  //    if (selectionFrame1.equals(disease2)) {
-  //      game.batch.draw(selectionFrame1, 80, 220);
-  //    } else if (selectionFrame1.equals(disease3)) {
-  //      game.batch.draw(selectionFrame1, 100, 220);
-  //    } else if (selectionFrame1.equals(disease1)) {
-  //      game.batch.draw(selectionFrame1, 100, 250);
-  //    }
-  //
-  //    if (selectionFrame2.equals(disease2)) {
-  //      game.batch.draw(selectionFrame2, 550, 220);
-  //    } else if (selectionFrame2.equals(disease3)) {
-  //      game.batch.draw(selectionFrame2, 570, 230);
-  //    } else if (selectionFrame2.equals(disease1)) {
-  //      game.batch.draw(selectionFrame2, 570, 250);
-  //    }
-  //  }
-  //
-  //  public void checkSelectsAfterConfirmation() {
-  //    Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-  //    camera.unproject(tmp);
-  //    if (disease1Bounds.contains(tmp.x, tmp.y)
-  //        || disease2Bounds.contains(tmp.x, tmp.y)
-  //        || disease3Bounds.contains(tmp.x, tmp.y)) {
-  //      playButtonSound();
-  //      game.font.draw(
-  //          game.batch, warning, BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2, 200);
-  //    }
-  //  }
 
   @Override
   public void resize(int width, int height) {}

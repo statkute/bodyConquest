@@ -139,7 +139,7 @@ public class HostScreen implements Screen {
         client.startClient(communicator);
         game.setClient(client);
         System.out.println("setting the raceselection screen");
-        game.setScreen(new RaceSelection(game, communicator));
+        game.setScreen(new RaceSelection(game, communicator, "singleplayer"));
       }
 
       if (backBounds.contains(tmp.x, tmp.y)) {

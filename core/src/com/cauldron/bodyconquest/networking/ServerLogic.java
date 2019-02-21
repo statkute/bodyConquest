@@ -7,6 +7,7 @@ import com.cauldron.bodyconquest.gamestates.EncounterState;
 public class ServerLogic extends Thread {
   public ServerReceiver serverReceiver;
   private EncounterState encounterState;
+  private boolean run;
 
   /**
    * ServerLogic initialisation
@@ -16,11 +17,12 @@ public class ServerLogic extends Thread {
   public ServerLogic(ServerReceiver serverReceiver, EncounterState encounterState) {
     this.serverReceiver = serverReceiver;
     this.encounterState = encounterState;
+    this.run = true;
   }
 
   /** Deals with game logic tasks of the incoming messages */
   public void run() {
-    while (true) {
+    while (run) {
       try {
         String message = serverReceiver.receivedMessages.take();
         if (message.startsWith("ACTION")){
@@ -52,5 +54,8 @@ public class ServerLogic extends Thread {
         e.printStackTrace();
       }
     }
+  }
+  public void stopRunning(){
+    run = false;
   }
 }

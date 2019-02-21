@@ -10,14 +10,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ClientLogic extends Thread {
   private ClientReceiver clientReceiver;
   private Communicator communicator;
+  private boolean run;
 
   public ClientLogic(ClientReceiver clientReceiver, Communicator communicator) {
     this.clientReceiver = clientReceiver;
     this.communicator = communicator;
+    this.run = true;
   }
   /** Deals with game logic tasks of the incoming messages */
   public void run() {
-    while (true) {
+    while (run) {
       try {
         String message = clientReceiver.receivedMessages.take();
         if (message.startsWith("OBJECT_UPDATE_")) {
@@ -58,5 +60,8 @@ public class ClientLogic extends Thread {
         e.printStackTrace();
       }
     }
+  }
+  public void stopRunning(){
+    run = false;
   }
 }

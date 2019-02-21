@@ -13,6 +13,7 @@ public class ServerReceiver extends Thread {
   public LinkedBlockingQueue<String> receivedMessages;
   public String type;
   public int numberOfClients;
+  private boolean run;
 
   /**
    * ServerReceiver initialization
@@ -27,6 +28,7 @@ public class ServerReceiver extends Thread {
     receivedMessages = new LinkedBlockingQueue<String>();
     this.type = type;
     numberOfClients = 0;
+    run = true;
   }
 
   /** A method that continuously checks for incoming messages */
@@ -53,7 +55,7 @@ public class ServerReceiver extends Thread {
 
   /** A method that deals with receiving and storing client ID and waiting for the game to start */
   public void gameSetup() {
-    while (true) {
+    while (run) {
       try {
         byte[] buf = new byte[1024];
         DatagramPacket packet = new DatagramPacket(buf, 1024);
@@ -92,5 +94,9 @@ public class ServerReceiver extends Thread {
         e.printStackTrace();
       }
     }
+  }
+  public void stopRunning(){
+    run = false;
+    socket.close();
   }
 }
