@@ -32,7 +32,7 @@ public class HostScreen implements Screen {
   public HostScreen(BodyConquest game) {
     this.game = game;
     camera = new OrthographicCamera();
-    camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_WIDTH);
+    camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
     background = new Texture("core/assets/background_new.png");
     header = new Texture("core/assets/multiplayerheader_new.png");
     hostButtton = new Texture("core/assets/host_new.png");

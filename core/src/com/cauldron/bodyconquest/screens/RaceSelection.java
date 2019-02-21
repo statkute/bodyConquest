@@ -39,47 +39,20 @@ public class RaceSelection implements Screen {
 
   OrthographicCamera camera;
 
-  private String diseaseName1 = "Disease 1";
-  private String diseaseName2 = "Disease 2";
-  private String diseaseName3 = "Disease 3";
-
-  private String warning = "You cannot re-select race once it is confirmed";
-
   private int selection = 0;
-
-  //  private Texture disease1;
-  //  private Texture disease2;
-  //  private Texture disease3;
-
-  // private Texture disease4;
-  private Texture selectionFrame1;
-  private Texture selectionFrame2;
-
-  //  private Texture confirmButton;
-  //  private Texture playButton;
 
   private Rectangle continueBounds;
 
   private Rectangle blueVirusBounds;
   private Rectangle greenVirusBounds;
   private Rectangle yellowVirusBounds;
-  //
-  //  private Rectangle disease1Bounds;
-  //  private Rectangle disease2Bounds;
-  //  private Rectangle disease3Bounds;
-  //  private Rectangle confirmBounds;
-  //  private Rectangle playBounds;
 
   private Viewport gamePort;
   private Stage stage;
 
-  private List<Texture> listTextures;
-
-  private boolean selected = false;
-  private boolean confirmed = false;
-  private boolean opponentSelected = false;
 
   private Game g;
+  String gameType;
 
   private Random random;
   private Server server;
@@ -90,11 +63,8 @@ public class RaceSelection implements Screen {
     this.communicator = communicator;
     this.server = server;
     this.game = game;
+    this.gameType = gameType;
     setup();
-
-    g = new Game(server, communicator, gameType);
-    g.start();
-    server.startServerLogic(g.getEncounterState());
   }
 
   public RaceSelection(BodyConquest game, Communicator communicator) {
@@ -156,36 +126,6 @@ public class RaceSelection implements Screen {
             220,
             yellowVirus.getWidth(),
             yellowVirus.getHeight());
-    //    confirmButton = new Texture("core/assets/confirmbutton.v3.png");
-    //    disease1 = new Texture("core/assets/bacteria1resized.png");
-    //    disease2 = new Texture("core/assets/monster1resized.png");
-    //    disease3 = new Texture("core/assets/monster2resized.png");
-    //    selectionFrame1 = new Texture("core/assets/unknownUserresized.png");
-    //    selectionFrame2 = new Texture("core/assets/unknownUserresized.png");
-    //    playButton = new Texture("core/assets/playButton.png");
-    //
-    //    disease1Bounds = new Rectangle(70, 30, disease1.getWidth(), disease1.getHeight());
-    //    disease2Bounds = new Rectangle(366, 30, disease2.getWidth(), disease2.getHeight());
-    //    disease3Bounds = new Rectangle(642, 30, disease3.getWidth(), disease3.getHeight());
-    //    confirmBounds =
-    //        new Rectangle(
-    //            BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2,
-    //            250,
-    //            confirmButton.getWidth(),
-    //            confirmButton.getHeight());
-    //    playBounds =
-    //        new Rectangle(
-    //            BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2,
-    //            250,
-    //            playButton.getWidth(),
-    //            playButton.getHeight());
-    //
-    //    listTextures = new ArrayList<Texture>();
-    //    listTextures.add(disease1);
-    //    listTextures.add(disease2);
-    //    listTextures.add(disease3);
-    //
-    //    random = new Random();
   }
 
   @Override
@@ -260,6 +200,9 @@ public class RaceSelection implements Screen {
 
       if (continueBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
+        g = new Game(server, communicator, gameType);
+        g.start();
+        server.startServerLogic(g.getEncounterState());
         game.setScreen(new EncounterScreen(game, communicator, game.getClient().clientSender));
         dispose();
       }
@@ -328,19 +271,6 @@ public class RaceSelection implements Screen {
     blueVirus = new Texture("core/assets/bluevirus.png");
     greenVirus = new Texture("core/assets/greenvirus.png");
     yellowVirus = new Texture("core/assets/yellowvirus.png");
-  }
-
-  public void changeTexture(Texture newTexture) {
-
-    selected = true;
-    selectionFrame1 = newTexture;
-  }
-
-  public void generateOpponent(Texture selectedTexture) {
-
-    listTextures.remove(selectedTexture);
-    selectionFrame2 = listTextures.get(random.nextInt(listTextures.size()));
-    opponentSelected = true;
   }
 
   //  public void selectionFrameRendererSelected() {
