@@ -29,6 +29,7 @@ public class ServerLogic extends Thread {
             PlayerType playerType = PlayerType.decode(message.substring(13, 15));
             Lane lane = Lane.decode(message.substring(message.length() - 1));
             System.out.println("TRYING TO SPAWN NOW");
+
             encounterState.spawnUnit(unit, lane, playerType);
               System.out.println("FINISHED SPAWNING");
           } else if (message.startsWith("ACTION_A")){

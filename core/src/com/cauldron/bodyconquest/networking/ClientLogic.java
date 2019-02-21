@@ -34,6 +34,7 @@ public class ClientLogic extends Thread {
             communicator.setTopHealthPercentage(health);
           }
         } else if (message.startsWith("RESOURCES_")){
+          System.out.println("THE MESSAGE: " + message);
           String baseLocation = message.substring("RESOURCES_".length(), "RESOURCES_".length()+1);
           String lipidsString = message.substring("RESOURCES_".length()+2, "RESOURCES_".length()+5);
           int lipids = Integer.parseInt(lipidsString);

@@ -81,7 +81,9 @@ public class Resources extends Thread {
   }
 
   public void buy(Spawnable spawnable) {
-    buy(spawnable.getLipidCost(), spawnable.getSugarCost(), spawnable.getProteinCost());
+//    if (canAfford(spawnable)){
+      buy(spawnable.getLipidCost(), spawnable.getSugarCost(), spawnable.getProteinCost());
+//    }
   }
 
   public void buy(int priceLipids, int priceSugars, int priceProteins) {

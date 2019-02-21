@@ -128,7 +128,9 @@ public class BasicTestAI extends Thread {
           new Runnable() {
             @Override
             public void run() {
-              resources.buy(unit);
+              if (resources.canAfford(unit)){
+                resources.buy(unit);
+              }
               game.spawnUnit(unitType, lane, playerType);
             }
           });
