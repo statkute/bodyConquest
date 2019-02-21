@@ -1,6 +1,7 @@
 package com.cauldron.bodyconquest.entities.resources;
 
 import com.cauldron.bodyconquest.game_logic.utils.Timer;
+import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 
@@ -14,9 +15,11 @@ public class Resources extends Thread {
   private int regenerationProteins;
   private ServerSender serverSender;
   private String player;
+  private Server server;
 
-  public Resources(ServerSender serverSender, String player) {
-    this.serverSender = serverSender;
+  public Resources(Server server, String player) {
+    this.serverSender = server.getServerSender();
+    this.server = server;
     this.player = player;
     lipids = 0;
     sugars = 0;
@@ -30,7 +33,7 @@ public class Resources extends Thread {
 
   public void run() {
     // wait for a second before increasing the resources
-    while(true){
+    while(!server.isGameEnded()){
       boolean successfulTimer = Timer.startTimer(1000);
       while (!successfulTimer){
         successfulTimer = Timer.startTimer(1000);
@@ -59,7 +62,9 @@ public class Resources extends Thread {
           proteins += regenerationProteins;
         }
       }
-      sendUpdate(player, serverSender);
+      if (!server.isGameEnded()){
+        sendUpdate(player, serverSender);
+      }
     }
   }
 

@@ -1,5 +1,7 @@
 package com.cauldron.bodyconquest.networking;
 
+import com.cauldron.bodyconquest.game_logic.utils.Timer;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -34,22 +36,28 @@ public class ServerReceiver extends Thread {
   /** A method that continuously checks for incoming messages */
   public void run() {
     gameSetup();
-    while (true) {
-      try {
-        byte[] buf = new byte[1024];
-        DatagramPacket packet = new DatagramPacket(buf, 1024);
-        socket.receive(packet);
-        String receivedMessage = new String(packet.getData(), 0, packet.getLength());
-        System.out.println(
-            "Server received -> " + receivedMessage + "------- from: " + packet.getAddress());
-        receivedMessages.put(receivedMessage.trim());
-      } catch (SocketException e) {
-        e.printStackTrace();
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+    try{
+      while (run) {
+        try {
+          byte[] buf = new byte[1024];
+          DatagramPacket packet = new DatagramPacket(buf, 1024);
+          if (run){
+            socket.receive(packet);
+          }
+          String receivedMessage = new String(packet.getData(), 0, packet.getLength());
+          System.out.println(
+              "Server received -> " + receivedMessage + "------- from: " + packet.getAddress());
+          receivedMessages.put(receivedMessage.trim());
+        } catch (SocketException e) {
+          e.printStackTrace();
+        } catch (IOException e) {
+          e.printStackTrace();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
+    } finally{
+//      socket.close();
     }
   }
 
@@ -97,6 +105,9 @@ public class ServerReceiver extends Thread {
   }
   public void stopRunning(){
     run = false;
-    socket.close();
+//    Timer.startTimer(100);
+//    if (socket != null){
+      socket.close();
+//    }
   }
 }

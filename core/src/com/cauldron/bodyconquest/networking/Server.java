@@ -10,6 +10,7 @@ public class Server {
   private ServerReceiver serverReceiver;
   private ServerLogic serverLogic;
   private Ping ping;
+  private boolean gameEnded;
 
   /**
    * Server initialization: receiver, sender and logic threads are started
@@ -18,6 +19,7 @@ public class Server {
    * @throws SocketException
    */
   public void startServer(String type) throws SocketException {
+    gameEnded = false;
     ping = new Ping();
     ping.start();
 
@@ -53,10 +55,23 @@ public class Server {
         "This is a message from the server sent just after the game has started");
   }
 
-  public void closeEverything(){
-    serverSender.stopRunning();
-    serverReceiver.stopRunning();
-    serverLogic.stopRunning();
-    ping.stopRunning();
+  public void closeEverything() {
+    if (serverSender != null) {
+      serverSender.stopRunning();
+    }
+    if (serverReceiver != null) {
+      serverReceiver.stopRunning();
+    }
+    if (serverLogic != null) {
+      serverLogic.stopRunning();
+    }
+    if (ping != null) {
+      ping.stopRunning();
+    }
+    gameEnded = true;
+  }
+
+  public boolean isGameEnded() {
+    return gameEnded;
   }
 }

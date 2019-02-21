@@ -41,9 +41,15 @@ public class Client {
   }
 
   public void closeEverything(){
-    clientSender.stopRunning();
-    clientReceiver.stopRunning();
-    clientLogic.stopRunning();
+    if (clientSender!= null){
+      clientSender.stopRunning();
+    }
+    if (clientReceiver!= null){
+      clientReceiver.stopRunning();
+    }
+    if (clientLogic!= null){
+      clientLogic.stopRunning();
+    }
   }
 
   //  public static void main(String argv[]) throws Exception {

@@ -52,7 +52,6 @@ public class RaceSelection implements Screen {
   private Viewport gamePort;
   private Stage stage;
 
-
   private Game g;
   String gameType;
 
@@ -159,12 +158,14 @@ public class RaceSelection implements Screen {
     game.batch.draw(blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), 220);
     game.batch.draw(greenVirus, (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2), 220);
     game.batch.draw(yellowVirus, (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2), 220);
-    game.batch.draw(blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), 160);
-    game.batch.draw(greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), 160);
-    game.batch.draw(yellowDescription, (BodyConquest.V_WIDTH / 5 * 4- yellowDescription.getWidth() / 2), 160);
+    game.batch.draw(
+        blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), 160);
+    game.batch.draw(
+        greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), 160);
+    game.batch.draw(
+        yellowDescription, (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2), 160);
     game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
     game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
-
 
     try {
       checkPressed();
@@ -183,12 +184,17 @@ public class RaceSelection implements Screen {
 
       if (continueBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        if (server != null){
+        if (server != null && !gameType.equals("Multiplayer")) {
+          server.startServer(gameType);
+          game.getClient().startClient(communicator);
+        }
+        if (server != null) {
           g = new Game(server, communicator, gameType);
           g.start();
           server.startServerLogic(g.getEncounterState());
           game.setScreen(new EncounterScreen(game, communicator, game.getClient(), server));
-        } else{
+        } else {
+          game.getClient().startClient(communicator);
           game.setScreen(new EncounterScreen(game, communicator, game.getClient()));
         }
         dispose();
@@ -196,39 +202,39 @@ public class RaceSelection implements Screen {
 
       if (blueVirusBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        if (selection != 0){
+        if (selection != 0) {
           cleanSelections();
         }
-        if (selection != 1){
+        if (selection != 1) {
           blueVirus = blueVirusSelected;
           selection = 1;
-        } else{
+        } else {
           selection = 0;
         }
       }
 
       if (greenVirusBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        if (selection != 0){
+        if (selection != 0) {
           cleanSelections();
         }
-        if (selection != 2){
+        if (selection != 2) {
           greenVirus = greenVirusSelected;
           selection = 2;
-        } else{
+        } else {
           selection = 0;
         }
       }
 
       if (yellowVirusBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        if (selection != 0){
+        if (selection != 0) {
           cleanSelections();
         }
-        if (selection != 3){
+        if (selection != 3) {
           yellowVirus = yellowVirusSelected;
           selection = 3;
-        } else{
+        } else {
           selection = 0;
         }
       }
@@ -236,13 +242,17 @@ public class RaceSelection implements Screen {
       if (backBounds.contains(tmp.x, tmp.y)) {
         System.out.println("back pressed");
         playButtonSound();
+        if (server != null) {
+          server.closeEverything();
+        }
+        game.getClient().closeEverything();
         game.setScreen(new MenuScreen(game));
         dispose();
       }
     }
   }
 
-  public void cleanSelections(){
+  public void cleanSelections() {
     blueVirus = new Texture("core/assets/bluevirus.png");
     greenVirus = new Texture("core/assets/greenvirus.png");
     yellowVirus = new Texture("core/assets/yellowvirus.png");

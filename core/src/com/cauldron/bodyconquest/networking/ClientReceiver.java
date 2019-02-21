@@ -64,7 +64,9 @@ public class ClientReceiver extends Thread {
       try {
         byte[] buf = new byte[1000000];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
-        socket.receive(packet);
+        if (run){
+          socket.receive(packet);
+        }
         String received = new String(packet.getData()).trim();
 //        System.out.println(
 //            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());

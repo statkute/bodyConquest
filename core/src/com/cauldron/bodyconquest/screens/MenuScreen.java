@@ -143,21 +143,13 @@ public class MenuScreen implements Screen {
         playButtonSound();
         // System.out.println("Singleplayer Is touched");
         server = new Server();
-        try {
-          timeOfServer = System.currentTimeMillis();
-          server.startServer("singleplayer");
-          client = new Client();
-          Communicator communicator = new Communicator();
-          client.startClient(communicator);
-          game.setServer(server);
-          game.setClient(client);
-          game.setScreen(new RaceSelection(game, server, communicator, "singleplayer"));
-          dispose();
-        } catch (SocketException e) {
-          e.printStackTrace();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+        timeOfServer = System.currentTimeMillis();
+        client = new Client();
+        Communicator communicator = new Communicator();
+        game.setServer(server);
+        game.setClient(client);
+        game.setScreen(new RaceSelection(game, server, communicator, "singleplayer"));
+        dispose();
       }
       if (settingsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
@@ -168,11 +160,11 @@ public class MenuScreen implements Screen {
       if (creditsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         System.out.println("Credits Is touched");
-//        game.setScreen(new CreditsScreen(game));
-//        dispose();
+        //        game.setScreen(new CreditsScreen(game));
+        //        dispose();
       }
 
-      if(exitBounds.contains(tmp.x, tmp.y)) {
+      if (exitBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         dispose();
         Gdx.app.exit();

@@ -17,6 +17,7 @@ import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
@@ -75,9 +76,9 @@ public class EncounterState extends GameState {
    *
    * @param comms The communication object to receive information from the Server/Model.
    */
-  public EncounterState(Communicator comms, ServerSender serverSender, String gameType) {
+  public EncounterState(Communicator comms, Server server, String gameType) {
     this.comms = comms;
-    this.serverSender = serverSender;
+    this.serverSender = server.getServerSender();
     map = new Map();
 
 
@@ -101,8 +102,8 @@ public class EncounterState extends GameState {
     projectilesBottom = new CopyOnWriteArrayList<Projectile>();
     projectilesTop = new CopyOnWriteArrayList<Projectile>();
 
-    bottomResources = new Resources(serverSender, "BOTTOM");
-    topResources = new Resources(serverSender, "TOP");
+    bottomResources = new Resources(server, "BOTTOM");
+    topResources = new Resources(server, "TOP");
 
     bottomResources.start();
     topResources.start();
@@ -170,6 +171,7 @@ public class EncounterState extends GameState {
 //    if(comms.getBottomHealthPercentage() >= 0 && comms.getTopHealthPercentage() >= 0){
 //
 //     System.out.println(comms.getBottomHealthPercentage());
+
 
       for (MapObject mo : allMapObjects) mo.update();
 

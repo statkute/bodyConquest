@@ -38,6 +38,10 @@ public class ServerSender extends Thread {
       }
     } catch (IOException e) {
       e.printStackTrace();
+      socket.close();
+    }
+    finally{
+//      socket.close();
     }
   }
 
