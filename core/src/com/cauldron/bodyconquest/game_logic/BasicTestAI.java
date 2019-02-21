@@ -60,8 +60,6 @@ public class BasicTestAI extends Thread {
         Thread.sleep(1000);
       }
 
-      System.out.println("Hi");
-
       final Lane lane;
 
       CopyOnWriteArrayList<Troop> enemies = null;
