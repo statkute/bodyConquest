@@ -2,6 +2,9 @@ package com.cauldron.bodyconquest.constants;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.cauldron.bodyconquest.entities.Troops.Bacteria;
+import com.cauldron.bodyconquest.entities.Troops.Flu;
+import com.cauldron.bodyconquest.entities.Troops.Virus;
 
 public class Constants {
 
@@ -42,11 +45,20 @@ public class Constants {
     public static enum MapObjectType {BACTERIA, FLU, BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE}
     // ALL units
     public static enum UnitType {
-        BACTERIA, FLU, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE;
+        BACTERIA("BAC", Bacteria.class), FLU("FLU", Flu.class), VIRUS("VIR", Virus.class);
 
         private static final String ENCODED_BACTERIA  = "BAC";
         private static final String ENCODED_FLU       = "FLU";
         private static final String ENCODED_VIRUS     = "VIR";
+
+
+        private String encodedUnit;
+        private Class associatedClass;
+
+        private UnitType(String encodedForm, Class associatedClass) {
+            this.encodedUnit = encodedForm;
+            this.associatedClass = associatedClass;
+        }
 
         public static UnitType decode(String unitString) {
             UnitType unitType = null;
@@ -59,12 +71,11 @@ public class Constants {
         }
 
         public String encode() {
-            switch(this) {
-                case BACTERIA:  return ENCODED_BACTERIA;
-                case FLU:       return ENCODED_FLU;
-                case VIRUS:     return ENCODED_VIRUS;
-                default:        return null;
-            }
+            return encodedUnit;
+        }
+
+        public Class getUnitClass() {
+            return associatedClass;
         }
     }
 

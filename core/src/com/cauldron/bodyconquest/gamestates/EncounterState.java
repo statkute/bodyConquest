@@ -296,6 +296,14 @@ public class EncounterState extends GameState {
     allMapObjects.add(projectile);
   }
 
+  public CopyOnWriteArrayList<Troop> getTroopsTop() {
+    return troopsTop;
+  }
+
+  public CopyOnWriteArrayList<Troop> getTroopsBottom() {
+    return troopsBottom;
+  }
+
   public Resources getBottomResources() {
     return bottomResources;
   }

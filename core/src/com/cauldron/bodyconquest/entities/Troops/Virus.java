@@ -1,12 +1,14 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.cauldron.bodyconquest.handlers.AnimationWrapper;
-import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.constants.Constants.Lane;
+import com.cauldron.bodyconquest.constants.Constants.MapObjectType;
+import com.cauldron.bodyconquest.constants.Constants.PlayerType;
 
 public class Virus extends Troop {
+
+  public static final int SUGARS_COST = 20;
+  public static final int PROTEINS_COST = 20;
+  public static final int LIPIDS_COST = 40;
 
   public Virus() {
     super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
@@ -34,6 +36,10 @@ public class Virus extends Troop {
     range = 50;
     damage = 45;
     mapObjectType = MapObjectType.VIRUS;
+
+    lipidsCost = LIPIDS_COST;
+    sugarsCost = SUGARS_COST;
+    proteinCost = PROTEINS_COST;
 
     // Temporary implementation for images for the HUD
     //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/virus.png");

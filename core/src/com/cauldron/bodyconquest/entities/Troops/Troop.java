@@ -4,13 +4,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.entities.Spawnable;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The parent class for all spawn-able troops that can be spawned by each player (or the AI).
  */
-public abstract class Troop extends MapObject {
+public abstract class Troop extends MapObject implements Spawnable {
 
   /** The finalised representation of the minimum health a Troop can have. */
   public static final int NO_HEALTH = 0;
@@ -41,11 +42,11 @@ public abstract class Troop extends MapObject {
 
   // Resources Requirements
   /** The lipid cost for a player to spawn this Troop. */
-  private int lipidsCost;
+  protected int lipidsCost;
   /** The sugar cost for a player to spawn this Troop. */
-  private int sugarsCost;
+  protected int sugarsCost;
   /** The protien cost for a player to spawn this Troop. */
-  private int proteinCost;
+  protected int proteinCost;
 
   // States
   /** The state that represents if the unit is currently attacking. (Unused as all attacks are currently instantaneous) */
@@ -234,7 +235,7 @@ public abstract class Troop extends MapObject {
    * Get the lipid cost to spawn this Troop.
    * @return The lipid cost to spawn this Troop.
    */
-  public double getLipidsCost() {
+  public int getLipidCost() {
     return lipidsCost;
   }
 
@@ -242,7 +243,7 @@ public abstract class Troop extends MapObject {
    * Get the protein cost to spawn this Troop.
    * @return The protein cost to spawn this Troop.
    */
-  public double getProteinCost() {
+  public int getProteinCost() {
     return proteinCost;
   }
 
@@ -250,7 +251,7 @@ public abstract class Troop extends MapObject {
    * Get the sugar cost to spawn this Troop.
    * @return The sugar cost to spawn this Troop.
    */
-  public double getSugarsCost() {
+  public int getSugarCost() {
     return sugarsCost;
   }
 

@@ -1,5 +1,6 @@
 package com.cauldron.bodyconquest.entities.resources;
 
+import com.cauldron.bodyconquest.entities.Spawnable;
 import com.cauldron.bodyconquest.game_logic.utils.Timer;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
@@ -68,11 +69,19 @@ public class Resources extends Thread {
     serverSender.sendMessage(message);
   }
 
+  public boolean canAfford(Spawnable spawnableObject) {
+    return canAfford(spawnableObject.getLipidCost(), spawnableObject.getSugarCost(), spawnableObject.getProteinCost());
+  }
+
   public boolean canAfford(int priceLipids, int priceSugars, int priceProteins) {
     if (lipids >= priceLipids && sugars >= priceSugars && proteins >= priceProteins) {
       return true;
     }
     return false;
+  }
+
+  public void buy(Spawnable spawnable) {
+    buy(spawnable.getLipidCost(), spawnable.getSugarCost(), spawnable.getProteinCost());
   }
 
   public void buy(int priceLipids, int priceSugars, int priceProteins) {

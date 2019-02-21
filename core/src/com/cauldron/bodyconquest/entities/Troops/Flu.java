@@ -8,6 +8,10 @@ import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 public class Flu extends Troop {
 
+  public static final int SUGARS_COST = 30;
+  public static final int PROTEINS_COST = 10;
+  public static final int LIPIDS_COST = 10;
+
   private EncounterState map;
 
   public Flu() {
@@ -41,6 +45,10 @@ public class Flu extends Troop {
     damage = 40;
 
     mapObjectType = MapObjectType.FLU;
+
+    lipidsCost = LIPIDS_COST;
+    sugarsCost = SUGARS_COST;
+    proteinCost = PROTEINS_COST;
 
     // Temporary implementation for images for the HUD
     //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/flu.png");
