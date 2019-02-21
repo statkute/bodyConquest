@@ -1,149 +1,50 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.cauldron.bodyconquest.constants.Constants;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen.Lane;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType;
-import com.cauldron.bodyconquest.handlers.AnimationWrapper;
+import com.cauldron.bodyconquest.constants.Constants.Lane;
+import com.cauldron.bodyconquest.constants.Constants.MapObjectType;
+import com.cauldron.bodyconquest.constants.Constants.PlayerType;
 
 public class Bacteria extends Troop {
 
-  float stateTime;
-  private TextureRegion[] walkFrames;
-  private Animation<TextureRegion> walkAnimation;
+  public static final int MAX_HEALTH = 100;
+  public static final double MAX_SPEED = 1;
+  public static final long COOLDOWN = 1000;
+  public static final int RANGE = 50;
+  public static final int DAMAGE = 30;
 
-  private EncounterScreen map;
-  private PlayerType playerType;
-  // Some above head health bar?
-  // private UnitHealthBar healthBar;
-
-  private Rectangle collisionBox; // + Sprite for now at least
+  public static final int SUGARS_COST = 0;
+  public static final int PROTEINS_COST = 15;
+  public static final int LIPIDS_COST = 5;
 
   public Bacteria() {
-    super(Lane.BOT);
-    init();
-    playerType = PlayerType.BOT_PLAYER;
-  }
-
-
-  /*
-  Each moving unit could be given a queue of checkpoints to reach
-  and then one left at the enemy base it would be within range and attack
-  */
-  public Bacteria(EncounterScreen map, PlayerType playerType, Lane lane) {
-    super(lane);
-    this.playerType = playerType;
-    this.map = map;
+    super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
     init();
   }
-  private void init(){
+
+  public Bacteria(PlayerType playerType, Lane lane) {
+    super(lane, playerType);
+    init();
+  }
+
+  private void init() {
     // Dimensions
     setSize(50, 50);
+    setCSize(50, 50);
 
     // Troop Stats
-    health = maxHealth = 100;
-    speed = 100;
-    attackable = true;
-    moving = true;
-    attacking = false;
-    // attackCooldown = 20;
+    health = maxHealth = MAX_HEALTH;
+    maxSpeed = 1;
     cooldown = 1000; // Milliseconds
-    lastAttack = 0;
     range = 50;
     damage = 30;
+    mapObjectType = MapObjectType.BACTERIA;
 
-    walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");
+    lipidsCost = LIPIDS_COST;
+    sugarsCost = SUGARS_COST;
+    proteinCost = PROTEINS_COST;
 
-    stateTime = 0f;
-
-
-
-    // maybe better to use Rectangle class? instead of Image class (found in Tutorials)
-    sprite = new Image(walkAnimation.getKeyFrame(0));
+    // Temporary implementation for images for the HUD
+    //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");
+    //sprite = new Image(walkAnimation.getKeyFrame(0));
   }
-
-  @Override
-  public void draw(Batch batch, float parentAlpha) {
-    stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
-
-    // Get current frame of animation for the current stateTime
-    currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-
-    super.draw(batch, parentAlpha);
-  }
-
-  @Override
-  public void act(float delta) {
-    super.act(delta);
-
-    if (moving) {
-      if (playerType == PlayerType.BOT_PLAYER) {
-        /*if (lane == Lane.BOT) {
-          System.out.println(getX());
-          *//*System.out.println(
-              "X: "
-                  + getX()
-                  + "\tCentre X: "
-                  + getCentreX()
-                  + "\tOrigin X: "
-                  + getOriginX()
-                  + "\tScale X: "
-                  + getScaleX());*//*
-          //if (getCentreX() > map.getBotTurnPointX()) {
-          if (getX() > 150) {
-            moveLeft(delta);
-          } else {
-            moveUp(delta);
-          }
-        }*/
-
-        // Turn values are too hard coded, have turn points sent in the EncounterScreen that this can access so every
-        // Troop conforms to the same turn location
-        // And the unit should turn when the centre of the unit has passed the respective turn point
-        if (lane == Lane.BOT) {
-          if (getX() > Constants.BOT_TURNPOINT_X) {
-            moveLeft(delta);
-          } else {
-            moveUp(delta);
-          }
-        } else if (lane == Lane.MID) {
-          moveLeft(delta / 2);
-          moveUp(delta / 2);
-        } else if (lane == Lane.TOP) {
-          if (getY() < Constants.TOP_TURNPOINT_Y) {
-            moveUp(delta);
-          } else {
-            moveLeft(delta);
-          }
-        }
-      } else if (playerType == PlayerType.TOP_PLAYER) {
-        if (lane == Lane.BOT) {
-          if (getCentreY() > Constants.BOT_TURNPOINT_Y) {
-            moveDown(delta);
-          } else {
-            moveRight(delta);
-          }
-        } else if (lane == Lane.MID){
-          moveRight(delta / 2);
-          moveDown(delta / 2);
-        } else if (lane == Lane.TOP) {
-          if (getX() < Constants.TOP_TURNPOINT_X) {
-            moveRight(delta);
-            //System.out.println("move right");
-          } else {
-            moveDown(delta);
-          }
-          //moveRight(delta);
-        }
-      }
-    }
-  }
-
-
 }

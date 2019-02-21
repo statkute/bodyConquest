@@ -1,5 +1,7 @@
 package com.cauldron.bodyconquest.networking;
 
+import com.cauldron.bodyconquest.game_logic.utils.Timer;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -13,6 +15,7 @@ public class ServerReceiver extends Thread {
   public LinkedBlockingQueue<String> receivedMessages;
   public String type;
   public int numberOfClients;
+  private boolean run;
 
   /**
    * ServerReceiver initialization
@@ -27,33 +30,40 @@ public class ServerReceiver extends Thread {
     receivedMessages = new LinkedBlockingQueue<String>();
     this.type = type;
     numberOfClients = 0;
+    run = true;
   }
 
   /** A method that continuously checks for incoming messages */
   public void run() {
     gameSetup();
-    while (true) {
-      try {
-        byte[] buf = new byte[1024];
-        DatagramPacket packet = new DatagramPacket(buf, 1024);
-        socket.receive(packet);
-        String receivedMessage = new String(packet.getData(), 0, packet.getLength());
-        System.out.println(
-            "Server received -> " + receivedMessage + "------- from: " + packet.getAddress());
-        receivedMessages.put(receivedMessage.trim());
-      } catch (SocketException e) {
-        e.printStackTrace();
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+    try{
+      while (run) {
+        try {
+          byte[] buf = new byte[1024];
+          DatagramPacket packet = new DatagramPacket(buf, 1024);
+          if (run){
+            socket.receive(packet);
+          }
+          String receivedMessage = new String(packet.getData(), 0, packet.getLength());
+          System.out.println(
+              "Server received -> " + receivedMessage + "------- from: " + packet.getAddress());
+          receivedMessages.put(receivedMessage.trim());
+        } catch (SocketException e) {
+          e.printStackTrace();
+        } catch (IOException e) {
+          e.printStackTrace();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
+    } finally{
+//      socket.close();
     }
   }
 
   /** A method that deals with receiving and storing client ID and waiting for the game to start */
   public void gameSetup() {
-    while (true) {
+    while (run) {
       try {
         byte[] buf = new byte[1024];
         DatagramPacket packet = new DatagramPacket(buf, 1024);
@@ -92,5 +102,12 @@ public class ServerReceiver extends Thread {
         e.printStackTrace();
       }
     }
+  }
+  public void stopRunning(){
+    run = false;
+//    Timer.startTimer(100);
+//    if (socket != null){
+      socket.close();
+//    }
   }
 }

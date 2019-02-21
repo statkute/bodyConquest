@@ -1,17 +1,12 @@
 package com.cauldron.bodyconquest.entities.Troops.Bases;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
-import com.cauldron.bodyconquest.handlers.GifDecoder;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
+import com.cauldron.bodyconquest.constants.Constants.*;
 
 public class BacteriaBase extends Base {
 
-    private float stateTime;
-
-    public BacteriaBase(EncounterScreen.Lane lane, EncounterScreen.PlayerType pt){
+    public BacteriaBase(Lane lane, PlayerType pt){
         super(lane, pt);
         init();
     }
@@ -19,22 +14,18 @@ public class BacteriaBase extends Base {
     private void init(){
         this.health = 100;
         this.damage = 3;
-        this.imageBase =
-                GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("core/assets/castle1.gif").read());
         this.range = 130;
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
-
-        // Get current frame of animation for the current stateTime
-        currentFrame = imageBase.getKeyFrame(stateTime, true);
-        super.draw(batch, parentAlpha);
+        this.maxHealth = health;
+        mapObjectType = MapObjectType.BACTERTIA_BASE;
     }
 
     @Override
     public void attack(Troop troop) {
         super.attack(troop);
+    }
+
+    @Override
+    public void update() {
+
     }
 }

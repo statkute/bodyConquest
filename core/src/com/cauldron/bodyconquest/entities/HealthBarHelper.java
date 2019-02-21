@@ -12,7 +12,6 @@ public class HealthBarHelper {
 
     private HealthBarHelper(){}
 
-
     public static Drawable getColoredDrawable(int width, int height, Color color){
         Pixmap pixmap = new Pixmap(width, height, Format.RGBA8888);
         pixmap.setColor(color);
