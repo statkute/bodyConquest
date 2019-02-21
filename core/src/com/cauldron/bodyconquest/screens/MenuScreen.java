@@ -41,7 +41,7 @@ public class MenuScreen implements Screen {
   public MenuScreen(BodyConquest game) {
     this.game = game;
     camera = new OrthographicCamera();
-    camera.setToOrtho(false, 800, 600);
+    camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
 
     background = new Texture("core/assets/background_new.png");
     title = new Texture("core/assets/title_new.png");
@@ -60,7 +60,7 @@ public class MenuScreen implements Screen {
     multiplayerBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-             240,
+            240,
             playButtonMultiplayer.getWidth(),
             playButtonMultiplayer.getHeight());
 
@@ -81,9 +81,7 @@ public class MenuScreen implements Screen {
   }
 
   @Override
-  public void show() {
-
-  }
+  public void show() {}
 
   @Override
   public void render(float delta) {
@@ -95,7 +93,7 @@ public class MenuScreen implements Screen {
 
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 400);
+    game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450);
     game.batch.draw(
         playButtonSinglePlayer,
         BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
@@ -114,7 +112,9 @@ public class MenuScreen implements Screen {
 
   public void checkPressed() {
 
-    if(Gdx.input.isKeyJustPressed(Input.Keys.M) && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+    if (Gdx.input.isKeyJustPressed(Input.Keys.M)
+        && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
+            || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
       game.audioPlayer.toggleMuted();
     }
 
@@ -128,20 +128,19 @@ public class MenuScreen implements Screen {
 
         game.setScreen(new HostScreen(game));
 
-
-//        client = new Client();
-//        Communicator communicator = new Communicator();
-//        try {
-//          client.startClient(communicator);
-//        } catch (IOException e) {
-//          e.printStackTrace();
-//        }
+        //        client = new Client();
+        //        Communicator communicator = new Communicator();
+        //        try {
+        //          client.startClient(communicator);
+        //        } catch (IOException e) {
+        //          e.printStackTrace();
+        //        }
         //              game.setScreen(new RaceSelectionScreen(game));
         //              dispose();
       }
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        //System.out.println("Singleplayer Is touched");
+        // System.out.println("Singleplayer Is touched");
         server = new Server();
         try {
           timeOfServer = System.currentTimeMillis();
@@ -196,6 +195,7 @@ public class MenuScreen implements Screen {
   @Override
   public void dispose() {
     background.dispose();
+    title.dispose();
     playButtonSinglePlayer.dispose();
     playButtonMultiplayer.dispose();
     settingsButton.dispose();

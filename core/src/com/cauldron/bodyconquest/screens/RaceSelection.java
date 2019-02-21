@@ -29,6 +29,11 @@ public class RaceSelection implements Screen {
 
   private BodyConquest game;
   private Texture background;
+  private Texture header;
+
+  private Texture blueVirus;
+  private Texture greenVirus;
+  private Texture yellowVirus;
 
   OrthographicCamera camera;
 
@@ -38,22 +43,24 @@ public class RaceSelection implements Screen {
 
   private String warning = "You cannot re-select race once it is confirmed";
 
-  private Texture disease1;
-  private Texture disease2;
-  private Texture disease3;
+  //  private Texture disease1;
+  //  private Texture disease2;
+  //  private Texture disease3;
 
   // private Texture disease4;
   private Texture selectionFrame1;
   private Texture selectionFrame2;
 
-  private Texture confirmButton;
-  private Texture playButton;
+  //  private Texture confirmButton;
+  //  private Texture playButton;
 
-  private Rectangle disease1Bounds;
-  private Rectangle disease2Bounds;
-  private Rectangle disease3Bounds;
-  private Rectangle confirmBounds;
-  private Rectangle playBounds;
+  private Rectangle headerBounds;
+  //
+  //  private Rectangle disease1Bounds;
+  //  private Rectangle disease2Bounds;
+  //  private Rectangle disease3Bounds;
+  //  private Rectangle confirmBounds;
+  //  private Rectangle playBounds;
 
   private Viewport gamePort;
   private Stage stage;
@@ -70,7 +77,8 @@ public class RaceSelection implements Screen {
   private Server server;
   private Communicator communicator;
 
-  public RaceSelection(BodyConquest game, Server server, Communicator communicator, String gameType) {
+  public RaceSelection(
+      BodyConquest game, Server server, Communicator communicator, String gameType) {
     this.communicator = communicator;
     this.server = server;
     this.game = game;
@@ -91,48 +99,59 @@ public class RaceSelection implements Screen {
 
   private void setup() {
     camera = new OrthographicCamera();
-    camera.setToOrtho(false, 800, 600);
+    camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
 
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, camera);
     stage = new Stage();
 
-    background = new Texture("core/assets/backgroundRaceSelection.png");
-    confirmButton = new Texture("core/assets/confirmbutton.v3.png");
-    disease1 = new Texture("core/assets/bacteria1resized.png");
-    disease2 = new Texture("core/assets/monster1resized.png");
-    disease3 = new Texture("core/assets/monster2resized.png");
-    selectionFrame1 = new Texture("core/assets/unknownUserresized.png");
-    selectionFrame2 = new Texture("core/assets/unknownUserresized.png");
-    playButton = new Texture("core/assets/playButton.png");
+    background = new Texture("core/assets/background_new.png");
+    header = new Texture("core/assets/selectvirusheader_new.png");
+    blueVirus = new Texture("core/assets/bluevirus.png");
+    greenVirus = new Texture("core/assets/greenvirus.png");
+    yellowVirus = new Texture("core/assets/yellowvirus.png");
 
-    disease1Bounds = new Rectangle(70, 30, disease1.getWidth(), disease1.getHeight());
-    disease2Bounds = new Rectangle(366, 30, disease2.getWidth(), disease2.getHeight());
-    disease3Bounds = new Rectangle(642, 30, disease3.getWidth(), disease3.getHeight());
-    confirmBounds =
+    headerBounds =
         new Rectangle(
-            BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2,
-            250,
-            confirmButton.getWidth(),
-            confirmButton.getHeight());
-    playBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2,
-            250,
-            playButton.getWidth(),
-            playButton.getHeight());
-
-    listTextures = new ArrayList<Texture>();
-    listTextures.add(disease1);
-    listTextures.add(disease2);
-    listTextures.add(disease3);
-
-    random = new Random();
+            BodyConquest.V_WIDTH / 2 - header.getWidth() / 2,
+            450,
+            header.getWidth(),
+            header.getHeight());
+    //    confirmButton = new Texture("core/assets/confirmbutton.v3.png");
+    //    disease1 = new Texture("core/assets/bacteria1resized.png");
+    //    disease2 = new Texture("core/assets/monster1resized.png");
+    //    disease3 = new Texture("core/assets/monster2resized.png");
+    //    selectionFrame1 = new Texture("core/assets/unknownUserresized.png");
+    //    selectionFrame2 = new Texture("core/assets/unknownUserresized.png");
+    //    playButton = new Texture("core/assets/playButton.png");
+    //
+    //    disease1Bounds = new Rectangle(70, 30, disease1.getWidth(), disease1.getHeight());
+    //    disease2Bounds = new Rectangle(366, 30, disease2.getWidth(), disease2.getHeight());
+    //    disease3Bounds = new Rectangle(642, 30, disease3.getWidth(), disease3.getHeight());
+    //    confirmBounds =
+    //        new Rectangle(
+    //            BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2,
+    //            250,
+    //            confirmButton.getWidth(),
+    //            confirmButton.getHeight());
+    //    playBounds =
+    //        new Rectangle(
+    //            BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2,
+    //            250,
+    //            playButton.getWidth(),
+    //            playButton.getHeight());
+    //
+    //    listTextures = new ArrayList<Texture>();
+    //    listTextures.add(disease1);
+    //    listTextures.add(disease2);
+    //    listTextures.add(disease3);
+    //
+    //    random = new Random();
   }
 
   @Override
   public void show() {
-//    stage.getRoot().getColor().a = 0;
-//    stage.getRoot().addAction(Actions.fadeIn(1.0f));
+    //    stage.getRoot().getColor().a = 0;
+    //    stage.getRoot().addAction(Actions.fadeIn(1.0f));
   }
 
   @Override
@@ -145,35 +164,40 @@ public class RaceSelection implements Screen {
 
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
+    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
+    game.batch.draw(blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), 220);
+    game.batch.draw(greenVirus, (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2), 220);
+    game.batch.draw(yellowVirus, (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2), 220);
 
-    if (!selected) {
-      game.batch.draw(selectionFrame1, 100, 250);
-      game.batch.draw(selectionFrame2, 550, 250);
-    }
-
-    if (selected && !opponentSelected) {
-
-      game.batch.draw(confirmButton, BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2, 250);
-      game.batch.draw(selectionFrame2, 550, 250);
-      selectionFrameRendererSelected();
-    }
-
-    if (selected && confirmed && !opponentSelected) {
-      generateOpponent(selectionFrame1);
-    }
-
-    if (selected && opponentSelected) {
-      game.batch.draw(playButton, BodyConquest.V_WIDTH / 2 - playButton.getWidth() / 2, 250);
-      selectionFrameRendererConfirmed();
-      checkSelectsAfterConfirmation();
-    }
-
-    game.batch.draw(disease1, 60, 50);
-    game.batch.draw(disease2, 310, 30);
-    game.batch.draw(disease3, 610, 40);
-    game.font.draw(game.batch, diseaseName1, 70, 30);
-    game.font.draw(game.batch, diseaseName2, 366, 30);
-    game.font.draw(game.batch, diseaseName3, 642, 30);
+    //    if (!selected) {
+    //      game.batch.draw(selectionFrame1, 100, 250);
+    //      game.batch.draw(selectionFrame2, 550, 250);
+    //    }
+    //
+    //    if (selected && !opponentSelected) {
+    //
+    //      game.batch.draw(confirmButton, BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2,
+    // 250);
+    //      game.batch.draw(selectionFrame2, 550, 250);
+    //      selectionFrameRendererSelected();
+    //    }
+    //
+    //    if (selected && confirmed && !opponentSelected) {
+    //      generateOpponent(selectionFrame1);
+    //    }
+    //
+    //    if (selected && opponentSelected) {
+    //      game.batch.draw(playButton, BodyConquest.V_WIDTH / 2 - playButton.getWidth() / 2, 250);
+    //      selectionFrameRendererConfirmed();
+    //      checkSelectsAfterConfirmation();
+    //    }
+    //
+    //    game.batch.draw(disease1, 60, 50);
+    //    game.batch.draw(disease2, 310, 30);
+    //    game.batch.draw(disease3, 610, 40);
+    //    game.font.draw(game.batch, diseaseName1, 70, 30);
+    //    game.font.draw(game.batch, diseaseName2, 366, 30);
+    //    game.font.draw(game.batch, diseaseName3, 642, 30);
 
     try {
       checkPressed();
@@ -190,34 +214,35 @@ public class RaceSelection implements Screen {
       Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
       camera.unproject(tmp);
 
-      if (confirmed) {
-
-        if (playBounds.contains(tmp.x, tmp.y)) {
-          playButtonSound();
-//          g = new Game(server, communicator);
-//          g.start();
-//          server.startServerLogic(g.getEncounterState());
-          game.setScreen(new EncounterScreen(game, communicator, game.getClient().clientSender));
-          dispose();
-        }
-      } else if (!confirmed) {
-
-        if (disease1Bounds.contains(tmp.x, tmp.y)) {
-          playButtonSound();
-
-          changeTexture(disease1);
-        } else if (disease2Bounds.contains(tmp.x, tmp.y)) {
-          playButtonSound();
-          // System.out.println("disease 2 selected");
-          changeTexture(disease2);
-        } else if (disease3Bounds.contains(tmp.x, tmp.y)) {
-          playButtonSound();
-          changeTexture(disease3);
-        } else if (confirmBounds.contains(tmp.x, tmp.y) && selected) {
-          playButtonSound();
-          confirmed = true;
-        }
-      }
+      //      if (confirmed) {
+      //
+              if (headerBounds.contains(tmp.x, tmp.y)) {
+                playButtonSound();
+      //          g = new Game(server, communicator);
+      //          g.start();
+      //          server.startServerLogic(g.getEncounterState());
+                game.setScreen(new EncounterScreen(game, communicator,
+       game.getClient().clientSender));
+                dispose();
+              }
+      //      } else if (!confirmed) {
+      //
+      //        if (disease1Bounds.contains(tmp.x, tmp.y)) {
+      //          playButtonSound();
+      //
+      //          changeTexture(disease1);
+      //        } else if (disease2Bounds.contains(tmp.x, tmp.y)) {
+      //          playButtonSound();
+      //          // System.out.println("disease 2 selected");
+      //          changeTexture(disease2);
+      //        } else if (disease3Bounds.contains(tmp.x, tmp.y)) {
+      //          playButtonSound();
+      //          changeTexture(disease3);
+      //        } else if (confirmBounds.contains(tmp.x, tmp.y) && selected) {
+      //          playButtonSound();
+      //          confirmed = true;
+      //        }
+      //      }
     }
   }
 
@@ -234,47 +259,47 @@ public class RaceSelection implements Screen {
     opponentSelected = true;
   }
 
-  public void selectionFrameRendererSelected() {
+  //  public void selectionFrameRendererSelected() {
+  //
+  //    if (selectionFrame1.equals(disease2)) {
+  //      game.batch.draw(selectionFrame1, 80, 220);
+  //    } else if (selectionFrame1.equals(disease3)) {
+  //      game.batch.draw(selectionFrame1, 100, 220);
+  //    } else {
+  //      game.batch.draw(selectionFrame1, 100, 250);
+  //    }
+  //  }
 
-    if (selectionFrame1.equals(disease2)) {
-      game.batch.draw(selectionFrame1, 80, 220);
-    } else if (selectionFrame1.equals(disease3)) {
-      game.batch.draw(selectionFrame1, 100, 220);
-    } else {
-      game.batch.draw(selectionFrame1, 100, 250);
-    }
-  }
-
-  public void selectionFrameRendererConfirmed() {
-
-    if (selectionFrame1.equals(disease2)) {
-      game.batch.draw(selectionFrame1, 80, 220);
-    } else if (selectionFrame1.equals(disease3)) {
-      game.batch.draw(selectionFrame1, 100, 220);
-    } else if (selectionFrame1.equals(disease1)) {
-      game.batch.draw(selectionFrame1, 100, 250);
-    }
-
-    if (selectionFrame2.equals(disease2)) {
-      game.batch.draw(selectionFrame2, 550, 220);
-    } else if (selectionFrame2.equals(disease3)) {
-      game.batch.draw(selectionFrame2, 570, 230);
-    } else if (selectionFrame2.equals(disease1)) {
-      game.batch.draw(selectionFrame2, 570, 250);
-    }
-  }
-
-  public void checkSelectsAfterConfirmation() {
-    Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-    camera.unproject(tmp);
-    if (disease1Bounds.contains(tmp.x, tmp.y)
-        || disease2Bounds.contains(tmp.x, tmp.y)
-        || disease3Bounds.contains(tmp.x, tmp.y)) {
-      playButtonSound();
-      game.font.draw(
-          game.batch, warning, BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2, 200);
-    }
-  }
+  //  public void selectionFrameRendererConfirmed() {
+  //
+  //    if (selectionFrame1.equals(disease2)) {
+  //      game.batch.draw(selectionFrame1, 80, 220);
+  //    } else if (selectionFrame1.equals(disease3)) {
+  //      game.batch.draw(selectionFrame1, 100, 220);
+  //    } else if (selectionFrame1.equals(disease1)) {
+  //      game.batch.draw(selectionFrame1, 100, 250);
+  //    }
+  //
+  //    if (selectionFrame2.equals(disease2)) {
+  //      game.batch.draw(selectionFrame2, 550, 220);
+  //    } else if (selectionFrame2.equals(disease3)) {
+  //      game.batch.draw(selectionFrame2, 570, 230);
+  //    } else if (selectionFrame2.equals(disease1)) {
+  //      game.batch.draw(selectionFrame2, 570, 250);
+  //    }
+  //  }
+  //
+  //  public void checkSelectsAfterConfirmation() {
+  //    Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+  //    camera.unproject(tmp);
+  //    if (disease1Bounds.contains(tmp.x, tmp.y)
+  //        || disease2Bounds.contains(tmp.x, tmp.y)
+  //        || disease3Bounds.contains(tmp.x, tmp.y)) {
+  //      playButtonSound();
+  //      game.font.draw(
+  //          game.batch, warning, BodyConquest.V_WIDTH / 2 - confirmButton.getWidth() / 2, 200);
+  //    }
+  //  }
 
   @Override
   public void resize(int width, int height) {}
@@ -291,14 +316,14 @@ public class RaceSelection implements Screen {
   @Override
   public void dispose() {
 
-    background.dispose();
-    disease1.dispose();
-    disease2.dispose();
-    disease3.dispose();
-    playButton.dispose();
-    confirmButton.dispose();
-    selectionFrame1.dispose();
-    selectionFrame2.dispose();
+    //    background.dispose();
+    //    disease1.dispose();
+    //    disease2.dispose();
+    //    disease3.dispose();
+    //    playButton.dispose();
+    //    confirmButton.dispose();
+    //    selectionFrame1.dispose();
+    //    selectionFrame2.dispose();
   }
 
   public Game getG() {
