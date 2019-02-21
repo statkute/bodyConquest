@@ -18,7 +18,7 @@ public class DesktopLauncher {
     final int SCREEN_HEIGHT = (int) screenSize.getHeight();
     final int SCREEN_WIDTH = (int) screenSize.getWidth();
 
-    boolean fullscreen = false;
+    boolean fullscreen = true;
     if (fullscreen) {
       config.height = SCREEN_HEIGHT;
       config.width = SCREEN_WIDTH;
