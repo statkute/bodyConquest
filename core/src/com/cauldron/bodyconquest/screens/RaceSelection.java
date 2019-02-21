@@ -184,7 +184,7 @@ public class RaceSelection implements Screen {
 
       if (continueBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        if (server != null && !gameType.equals("Multiplayer")) {
+        if (server != null && !gameType.toLowerCase().equals("multiplayer")) {
           server.startServer(gameType);
           game.getClient().startClient(communicator);
         }
@@ -194,7 +194,6 @@ public class RaceSelection implements Screen {
           server.startServerLogic(g.getEncounterState());
           game.setScreen(new EncounterScreen(game, communicator, game.getClient(), server));
         } else {
-          game.getClient().startClient(communicator);
           game.setScreen(new EncounterScreen(game, communicator, game.getClient()));
         }
         dispose();
