@@ -5,23 +5,17 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.game_logic.Game;
-import com.cauldron.bodyconquest.game_logic.utils.Timer;
-import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.networking.Server;
-import com.cauldron.bodyconquest.networking.utilities.Serialization;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -30,6 +24,7 @@ public class RaceSelection implements Screen {
   private BodyConquest game;
   private Texture background;
   private Texture header;
+  private Texture continueText;
 
   private Texture blueVirus;
   private Texture greenVirus;
@@ -37,6 +32,10 @@ public class RaceSelection implements Screen {
   private Texture blueVirusSelected;
   private Texture greenVirusSelected;
   private Texture yellowVirusSelected;
+
+  private Texture blueDescription;
+  private Texture greenDescription;
+  private Texture yellowDescription;
 
   OrthographicCamera camera;
 
@@ -59,7 +58,7 @@ public class RaceSelection implements Screen {
   //  private Texture confirmButton;
   //  private Texture playButton;
 
-  private Rectangle headerBounds;
+  private Rectangle continueBounds;
 
   private Rectangle blueVirusBounds;
   private Rectangle greenVirusBounds;
@@ -115,19 +114,27 @@ public class RaceSelection implements Screen {
 
     background = new Texture("core/assets/background_new.png");
     header = new Texture("core/assets/selectvirusheader_new.png");
+
     blueVirus = new Texture("core/assets/bluevirus.png");
     greenVirus = new Texture("core/assets/greenvirus.png");
     yellowVirus = new Texture("core/assets/yellowvirus.png");
+
     blueVirusSelected = new Texture("core/assets/bluevirusselected.png");
     greenVirusSelected = new Texture("core/assets/greenvirusselected.png");
     yellowVirusSelected = new Texture("core/assets/yellowvirusselected.png");
 
-    headerBounds =
+    blueDescription = new Texture("core/assets/bluevirus_characteristics.png");
+    greenDescription = new Texture("core/assets/greenvirus_characteristics.png");
+    yellowDescription = new Texture("core/assets/yellowvirus_characteristics.png");
+
+    continueText = new Texture("core/assets/continue_new.png");
+
+    continueBounds =
         new Rectangle(
-            BodyConquest.V_WIDTH / 2 - header.getWidth() / 2,
-            450,
-            header.getWidth(),
-            header.getHeight());
+            BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2,
+            60,
+            continueText.getWidth(),
+            continueText.getHeight());
 
     blueVirusBounds =
         new Rectangle(
@@ -201,6 +208,10 @@ public class RaceSelection implements Screen {
     game.batch.draw(blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), 220);
     game.batch.draw(greenVirus, (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2), 220);
     game.batch.draw(yellowVirus, (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2), 220);
+    game.batch.draw(blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), 160);
+    game.batch.draw(greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), 160);
+    game.batch.draw(yellowDescription, (BodyConquest.V_WIDTH / 5 * 4- yellowDescription.getWidth() / 2), 160);
+    game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 60);
 
     //    if (!selected) {
     //      game.batch.draw(selectionFrame1, 100, 250);
@@ -247,7 +258,7 @@ public class RaceSelection implements Screen {
       Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
       camera.unproject(tmp);
 
-      if (headerBounds.contains(tmp.x, tmp.y)) {
+      if (continueBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         game.setScreen(new EncounterScreen(game, communicator, game.getClient().clientSender));
         dispose();
