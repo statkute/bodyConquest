@@ -69,6 +69,7 @@ public class EncounterState extends GameState {
   private Resources topResources;
   private Resources bottomResources;
 
+  private BasicTestAI ai;
 
   /**
    * Constructor.
@@ -108,7 +109,8 @@ public class EncounterState extends GameState {
     topResources.start();
 
     if (gameType.equals("singleplayer")){
-      new BasicTestAI(this, PlayerType.PLAYER_TOP).start();
+      ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
+      ai.start();
     }
   }
 
@@ -205,8 +207,7 @@ public class EncounterState extends GameState {
 
         serverSender.sendMessage(messageb);
         serverSender.sendMessage(messaget);
-//      serverSender
-//      comms.populateObjectList(sentObjectsDeserialized);
+
       } catch (IOException e) {
         e.printStackTrace();
       }

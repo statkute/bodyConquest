@@ -1,6 +1,7 @@
 package com.cauldron.bodyconquest.game_logic;
 
 import com.badlogic.gdx.Gdx;
+import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.constants.Constants.*;
 
@@ -12,7 +13,7 @@ public class BasicTestAI extends Thread {
   private EncounterState game;
   private PlayerType playerType;
 
-  public BasicTestAI(EncounterState game, PlayerType playerType) {
+  public BasicTestAI(EncounterState game, PlayerType playerType, Resources topResources) {
     this.game = game;
     this.playerType = playerType;
     running = true;
