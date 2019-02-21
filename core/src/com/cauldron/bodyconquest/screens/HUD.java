@@ -51,6 +51,7 @@ public class HUD {
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     this.screen = screen;
     this.playerType = playerType;
+//    this.playerType = PlayerType.PLAYER_TOP;
 
     viewport =
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());

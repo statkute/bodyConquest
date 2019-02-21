@@ -21,6 +21,7 @@ public class MenuScreen implements Screen {
 
   private BodyConquest game;
   private Texture background;
+  private Texture title;
   private Texture playButtonMultiplayer;
   private Texture playButtonSinglePlayer;
   private Texture settingsButton;
@@ -42,11 +43,12 @@ public class MenuScreen implements Screen {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, 800, 600);
 
-    background = new Texture("core/assets/logosmall.png");
-    playButtonMultiplayer = new Texture("core/assets/multiplayer1.png");
-    playButtonSinglePlayer = new Texture("core/assets/singleplayer.png");
-    settingsButton = new Texture("core/assets/settings.png");
-    creditsButton = new Texture("core/assets/Credits.png");
+    background = new Texture("core/assets/background_new.png");
+    title = new Texture("core/assets/title_new.png");
+    playButtonMultiplayer = new Texture("core/assets/multiplayer_new.png");
+    playButtonSinglePlayer = new Texture("core/assets/singleplayer_new.png");
+    settingsButton = new Texture("core/assets/settings_new.png");
+    creditsButton = new Texture("core/assets/credits_new.png");
 
     singleplayerBounds =
         new Rectangle(
@@ -58,20 +60,20 @@ public class MenuScreen implements Screen {
     multiplayerBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-            226,
+             240,
             playButtonMultiplayer.getWidth(),
             playButtonMultiplayer.getHeight());
 
     settingsBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
-            126,
+            180,
             settingsButton.getWidth(),
             settingsButton.getHeight());
     creditsBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
-            30,
+            120,
             creditsButton.getWidth(),
             creditsButton.getHeight());
 
@@ -93,7 +95,7 @@ public class MenuScreen implements Screen {
 
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-
+    game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 400);
     game.batch.draw(
         playButtonSinglePlayer,
         BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
@@ -101,9 +103,9 @@ public class MenuScreen implements Screen {
     game.batch.draw(
         playButtonMultiplayer,
         BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-        226);
-    game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 126);
-    game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 30);
+        240);
+    game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 180);
+    game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 120);
 
     checkPressed();
 
