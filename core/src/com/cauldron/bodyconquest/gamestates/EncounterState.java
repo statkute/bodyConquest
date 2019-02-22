@@ -17,6 +17,7 @@ import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.game_logic.MultiplayerTestAI;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.ServerSender;
@@ -70,8 +71,6 @@ public class EncounterState extends GameState {
   private Resources topResources;
   private Resources bottomResources;
 
-  private BasicTestAI ai;
-
   /**
    * Constructor.
    *
@@ -110,7 +109,10 @@ public class EncounterState extends GameState {
     topResources.start();
 
     if (gameType.equals("singleplayer")){
-      ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
+      BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
+      ai.start();
+    } else {
+      MultiplayerTestAI ai = new MultiplayerTestAI(this);
       ai.start();
     }
   }

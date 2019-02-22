@@ -23,6 +23,7 @@ public class MultiplayerTestAI extends Thread {
 
     @Override
     public void run() {
+        super.run();
         long time;
         long lastWave = 0;
         while (running) {
