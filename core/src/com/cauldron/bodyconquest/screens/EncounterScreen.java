@@ -310,20 +310,34 @@ public class EncounterScreen implements Screen {
 
   private void determineWinner(){
     game.batch.begin();
-    if (healthBottomBase <= 0 && playerType == PlayerType.PLAYER_BOTTOM )
-    {
-      ShowGameResult("DEFEAT!");
-      client.closeEverything();
-      if (server != null){
-        server.closeEverything();
+
+    if (playerType == PlayerType.PLAYER_BOTTOM){
+      if (healthBottomBase <= 0){
+        ShowGameResult("DEFEAT!");
+        client.closeEverything();
+        if (server != null){
+          server.closeEverything();
+        }
+      } else if (healthTopBase <= 0){
+        ShowGameResult("VICTORY!");
+        client.closeEverything();
+        if (server != null){
+          server.closeEverything();
+        }
       }
-    }
-    else
-    {
-      ShowGameResult("VICTORY!");
-      client.closeEverything();
-      if (server != null){
-        server.closeEverything();
+    } else {
+      if (healthTopBase <= 0){
+        ShowGameResult("DEFEAT!");
+        client.closeEverything();
+        if (server != null){
+          server.closeEverything();
+        }
+      } else if (healthBottomBase <= 0){
+        ShowGameResult("VICTORY!");
+        client.closeEverything();
+        if (server != null){
+          server.closeEverything();
+        }
       }
     }
     game.batch.end();
