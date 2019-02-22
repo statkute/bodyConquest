@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.game_logic.utils;
+package com.cauldron.bodyconquest.game_logic;
 
 import com.badlogic.gdx.Gdx;
 import com.cauldron.bodyconquest.constants.Constants;
