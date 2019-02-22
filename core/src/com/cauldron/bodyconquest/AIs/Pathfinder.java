@@ -10,7 +10,7 @@ import java.util.PriorityQueue;
 public class Pathfinder {
 
     private Map map = new Map();
-    private Node[][] cell = new Node[map.getMaxX()][map.getMaxY()];
+    private Node[][] cell = new Node[(int)map.getMaxX()][(int)map.getMaxY()];
     private Location initialLocation;
     private Location finalLocation;
     private ArrayList<Node> pathList = new ArrayList<Node>();
@@ -35,21 +35,21 @@ public class Pathfinder {
     }
 
     private void generateNodeMap() {
-        for (int x = 0; x < map.getMaxX(); x++) {
-            for (int y = 0; y < map.getMaxY(); y++) {
-                // keeping the first point in the map as (1,1)
-                cell[x][y] = new Node(x, y);
-                if (map.isAccessible(new Location(x, y))) {
-                    // Assigning the Manhattan Heuristic value
-                    cell[x][y].hValue =
-                            (Math.abs(x - finalLocation.getX()) + Math.abs(y - finalLocation.getY()));
-                } else {
-                    // If the boolean value is false, then assigning -1 instead of the absolute
-                    // length
-                    cell[x][y].hValue = -1;
-                }
-            }
-        }
+//        for (int x = 0; x < map.getMaxX(); x++) {
+//            for (int y = 0; y < map.getMaxY(); y++) {
+//                // keeping the first point in the map as (1,1)
+//                cell[x][y] = new Node(x, y);
+//                if (map.isAccessible(new Location(x, y))) {
+//                    // Assigning the Manhattan Heuristic value
+//                    cell[x][y].hValue =
+//                            (Math.abs(x - finalLocation.getX()) + Math.abs(y - finalLocation.getY()));
+//                } else {
+//                    // If the boolean value is false, then assigning -1 instead of the absolute
+//                    // length
+//                    cell[x][y].hValue = -1;
+//                }
+//            }
+//        }
     }
 
     private void findPath() {

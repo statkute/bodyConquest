@@ -6,13 +6,18 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
-/**
- * Server Pinging thread that deals with notifying newly connected clients of the Server's IP
- */
+/** Server Pinging thread that deals with notifying newly connected clients of the Server's IP */
 public class Ping extends Thread {
+  private MulticastSocket socket;
+  private boolean run;
+
+  public Ping(){
+    run = true;
+  }
+
   public void run() {
     try {
-      MulticastSocket socket = new MulticastSocket(4445);
+      socket = new MulticastSocket(4445);
       InetAddress group = InetAddress.getByName("239.255.255.255");
 
       byte[] buf;
@@ -20,7 +25,7 @@ public class Ping extends Thread {
       buf = message.getBytes();
       DatagramPacket sending = new DatagramPacket(buf, 0, buf.length, group, 4446);
 
-      while (true) {
+      while (run) {
         Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();
         while (faces.hasMoreElements()) {
           NetworkInterface iface = faces.nextElement();
@@ -40,5 +45,10 @@ public class Ping extends Thread {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public void stopRunning() {
+    run = false;
+    socket.close();
   }
 }

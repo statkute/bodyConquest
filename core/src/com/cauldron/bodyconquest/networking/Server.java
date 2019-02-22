@@ -1,12 +1,16 @@
 package com.cauldron.bodyconquest.networking;
 
+import com.cauldron.bodyconquest.gamestates.EncounterState;
+
 import java.net.SocketException;
 
 /** Server class */
 public class Server {
-  public ServerSender serverSender;
-  public ServerReceiver serverReceiver;
-  public ServerLogic serverLogic;
+  private ServerSender serverSender;
+  private ServerReceiver serverReceiver;
+  private ServerLogic serverLogic;
+  private Ping ping;
+  private boolean gameEnded;
 
   /**
    * Server initialization: receiver, sender and logic threads are started
@@ -15,33 +19,59 @@ public class Server {
    * @throws SocketException
    */
   public void startServer(String type) throws SocketException {
-    Ping ping = new Ping();
+    gameEnded = false;
+    ping = new Ping();
     ping.start();
 
     serverSender = new ServerSender();
     serverReceiver = new ServerReceiver(serverSender, type);
-    serverLogic = new ServerLogic(serverReceiver);
+    // serverLogic = new ServerLogic(serverReceiver, encounterState);
 
     serverSender.start();
     serverReceiver.start();
+    // serverLogic.start();
+  }
+
+  public ServerSender getServerSender() {
+    return serverSender;
+  }
+
+  public void startServerLogic(EncounterState encounterState) {
+    serverLogic = new ServerLogic(serverReceiver, encounterState);
     serverLogic.start();
   }
 
-  //  public static void main(String args[]) throws Exception {
-  //    Ping ping = new Ping();
-  //    ping.start();
-  //
-  //    ServerSender serverSender = new ServerSender();
-  //    ServerReceiver serverReceiver = new ServerReceiver(serverSender);
-  //    ServerLogic serverLogic = new ServerLogic(serverReceiver);
-  //
-  //    serverSender.start();
-  //    serverReceiver.start();
-  //    serverLogic.start();
-  //
-  //    setupSinglePlayer(serverSender);
-  //
-  //    serverSender.sendMessage(
-  //        "This is a message from the server sent just after the game has started");
-  //  }
+  public static void main(String args[]) throws Exception {
+    Ping ping = new Ping();
+    ping.start();
+
+    ServerSender serverSender = new ServerSender();
+    ServerReceiver serverReceiver = new ServerReceiver(serverSender, "multiplayer");
+
+    serverSender.start();
+    serverReceiver.start();
+
+    serverSender.sendMessage(
+        "This is a message from the server sent just after the game has started");
+  }
+
+  public void closeEverything() {
+    if (serverSender != null) {
+      serverSender.stopRunning();
+    }
+    if (serverReceiver != null) {
+      serverReceiver.stopRunning();
+    }
+    if (serverLogic != null) {
+      serverLogic.stopRunning();
+    }
+    if (ping != null) {
+      ping.stopRunning();
+    }
+    gameEnded = true;
+  }
+
+  public boolean isGameEnded() {
+    return gameEnded;
+  }
 }

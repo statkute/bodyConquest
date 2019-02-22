@@ -1,30 +1,42 @@
 package com.cauldron.bodyconquest.entities.resources;
 
+import com.cauldron.bodyconquest.entities.Spawnable;
 import com.cauldron.bodyconquest.game_logic.utils.Timer;
+import com.cauldron.bodyconquest.networking.Server;
+import com.cauldron.bodyconquest.networking.ServerSender;
+import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 
 public class Resources extends Thread {
-  private double MAX_RESOURCE = 100.0;
-  private double lipids;
-  private double sugars;
-  private double proteins;
-  private double regenerationLipids;
-  private double regenerationSugars;
-  private double regenerationProteins;
+  private final int MAX_RESOURCE = 100;
+  private int lipids;
+  private int sugars;
+  private int proteins;
+  private int regenerationLipids;
+  private int regenerationSugars;
+  private int regenerationProteins;
+  private ServerSender serverSender;
+  private String player;
+  private Server server;
 
-  public Resources() {
-    lipids = 100.0;
-    sugars = 100.0;
-    proteins = 100.0;
-    regenerationLipids = 7.6;
-    regenerationSugars = 5.8;
-    regenerationProteins = 6.3;
+  public Resources(Server server, String player) {
+    this.serverSender = server.getServerSender();
+    this.server = server;
+    this.player = player;
+    lipids = 0;
+    sugars = 0;
+    proteins = 0;
+    regenerationLipids = 7;
+    regenerationSugars = 5;
+    regenerationProteins = 6;
+
+    sendUpdate(player, serverSender);
   }
 
   public void run() {
-    while (true) {
-      // wait for a second before increasing the resources
+    // wait for a second before increasing the resources
+    while(!server.isGameEnded()){
       boolean successfulTimer = Timer.startTimer(1000);
-      while (!successfulTimer) {
+      while (!successfulTimer){
         successfulTimer = Timer.startTimer(1000);
       }
 
@@ -51,45 +63,62 @@ public class Resources extends Thread {
           proteins += regenerationProteins;
         }
       }
+      if (!server.isGameEnded()){
+        sendUpdate(player, serverSender);
+      }
     }
-    // TO DO: send resource update to the client
   }
 
-  public boolean canAfford(double priceLipids, double priceSugars, double priceProteins) {
+  private void sendUpdate(String player, ServerSender serverSender) {
+    String message = MessageMaker.resourceUpdate(lipids, sugars, proteins, player);
+    serverSender.sendMessage(message);
+  }
+
+  public boolean canAfford(Spawnable spawnableObject) {
+    return canAfford(spawnableObject.getLipidCost(), spawnableObject.getSugarCost(), spawnableObject.getProteinCost());
+  }
+
+  public boolean canAfford(int priceLipids, int priceSugars, int priceProteins) {
     if (lipids >= priceLipids && sugars >= priceSugars && proteins >= priceProteins) {
       return true;
     }
     return false;
   }
 
-  public void buy(double priceLipids, double priceSugars, double priceProteins) {
+  public void buy(Spawnable spawnable) {
+//    if (canAfford(spawnable)){
+    buy(spawnable.getLipidCost(), spawnable.getSugarCost(), spawnable.getProteinCost());
+//    }
+  }
+
+  public void buy(int priceLipids, int priceSugars, int priceProteins) {
     lipids -= priceLipids;
     sugars -= priceSugars;
     proteins -= priceProteins;
-    // TO DO: send resource update to the client
+    sendUpdate(player, serverSender);
   }
 
-  public void increaseLipidRegeneration(double increase) {
+  public void increaseLipidRegeneration(int increase) {
     regenerationLipids += increase;
   }
 
-  public void increaseSugarRegeneration(double increase) {
+  public void increaseSugarRegeneration(int increase) {
     regenerationSugars += increase;
   }
 
-  public void increaseProteinRegeneration(double increase) {
+  public void increaseProteinRegeneration(int increase) {
     regenerationProteins += increase;
   }
 
-  public double getLipids() {
+  public int getLipids() {
     return lipids;
   }
 
-  public double getProteins() {
+  public int getProteins() {
     return proteins;
   }
 
-  public double getSugars() {
+  public int getSugars() {
     return sugars;
   }
 }

@@ -11,14 +11,14 @@ public class DesktopLauncher {
   public static void main(String[] arg) {
     LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-    config.title = "Body Wars";
+    config.title = "Body Conquest";
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     final int SCREEN_HEIGHT = (int) screenSize.getHeight();
     final int SCREEN_WIDTH = (int) screenSize.getWidth();
 
-    boolean fullscreen = false;
+    boolean fullscreen = true;
     if (fullscreen) {
       config.height = SCREEN_HEIGHT;
       config.width = SCREEN_WIDTH;
