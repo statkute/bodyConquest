@@ -12,7 +12,7 @@ public class BacteriaBase extends Base {
     }
 
     private void init(){
-        this.health = 100;
+        this.health = 1000;
         this.damage = 3;
         this.range = 130;
         this.maxHealth = health;

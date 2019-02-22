@@ -40,6 +40,7 @@ public class EncounterScreen implements Screen {
   private ClientSender clientSender;
   private Client client;
   private Server server;
+  private PlayerType playerType;
 
   private MenuScreen menuScreen;
 
@@ -68,6 +69,7 @@ public class EncounterScreen implements Screen {
     Gdx.input.setInputProcessor(stage);
     hud = new HUD(game.batch, this, PlayerType.PLAYER_TOP);
     accumulatorAfterBaseConquered = 0;
+    playerType = PlayerType.PLAYER_TOP;
 
     // Set up map
     map = new Image(new Texture("core/assets/Basic Map v2.png"));
@@ -91,6 +93,7 @@ public class EncounterScreen implements Screen {
     Gdx.input.setInputProcessor(stage);
     hud = new HUD(game.batch, this, PlayerType.PLAYER_BOTTOM);
     accumulatorAfterBaseConquered = 0;
+    playerType = PlayerType.PLAYER_BOTTOM;
 
     // Set up map
     map = new Image(new Texture("core/assets/Basic Map v2.png"));
@@ -307,7 +310,7 @@ public class EncounterScreen implements Screen {
 
   private void determineWinner(){
     game.batch.begin();
-    if (healthBottomBase <= 0)
+    if (healthBottomBase <= 0 && playerType == PlayerType.PLAYER_BOTTOM )
     {
       ShowGameResult("DEFEAT!");
       client.closeEverything();

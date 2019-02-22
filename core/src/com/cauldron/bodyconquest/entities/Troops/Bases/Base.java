@@ -11,6 +11,7 @@ public abstract class Base extends Troop {
       this.attackable = true;
       this.moving = false;
       this.attacking = false;
+      this.cooldown = 1500;
       this.setSize(Constants.baseWidth, Constants.baseHeight);
       this.setCSize(Constants.baseWidth, Constants.baseHeight);
       mapObjectType = MapObjectType.BASE;
