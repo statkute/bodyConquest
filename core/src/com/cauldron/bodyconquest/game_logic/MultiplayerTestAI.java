@@ -40,7 +40,7 @@ public class MultiplayerTestAI extends Thread {
     private Constants.PlayerType decidePlayer() {
         Constants.PlayerType losingPlayer;
         Random rand = new Random();
-        int player = rand.nextInt(1);
+        int player = rand.nextInt(2);
 
         if (player == 1) {
             losingPlayer = Constants.PlayerType.PLAYER_TOP;
