@@ -1,8 +1,8 @@
-package com.cauldron.bodyconquest.gamestates;
+package com.cauldron.bodyconquest.game_logic;
 
 import com.badlogic.gdx.Gdx;
-import com.cauldron.bodyconquest.entities.Troops.Troop.*;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen.*;
+import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 import java.util.Random;
 
@@ -12,11 +12,11 @@ public class MultiplayerTestAI extends Thread {
 
     private final int COOLDOWN = 5000;
 
-    private EncounterScreen game;
+    private EncounterState game;
     private boolean running;
-    private PlayerType playerType;
+    private Constants.PlayerType playerType;
 
-    public MultiplayerTestAI(EncounterScreen game) {
+    public MultiplayerTestAI(EncounterState game) {
         this.game = game;
         running = true;
     }
@@ -36,15 +36,15 @@ public class MultiplayerTestAI extends Thread {
     }
 
     //decides whom the AI sides with -- the losingPlayer
-    private PlayerType decidePlayer() {
-        PlayerType losingPlayer;
+    private Constants.PlayerType decidePlayer() {
+        Constants.PlayerType losingPlayer;
         Random rand = new Random();
         int player = rand.nextInt(1);
 
         if (player == 1) {
-            losingPlayer = PlayerType.TOP_PLAYER;
+            losingPlayer = Constants.PlayerType.PLAYER_TOP;
         } else {
-            losingPlayer = PlayerType.BOT_PLAYER;
+            losingPlayer = Constants.PlayerType.PLAYER_BOTTOM;
         }
 
         return losingPlayer;
@@ -54,9 +54,9 @@ public class MultiplayerTestAI extends Thread {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                game.spawnUnit(UnitType.BACTERIA, Lane.BOT, playerType);
-                game.spawnUnit(UnitType.BACTERIA, Lane.MID, playerType);
-                game.spawnUnit(UnitType.FLU, Lane.TOP, playerType);
+                game.spawnUnit(Constants.UnitType.BACTERIA, Constants.Lane.BOTTOM, playerType);
+                game.spawnUnit(Constants.UnitType.BACTERIA, Constants.Lane.MIDDLE, playerType);
+                game.spawnUnit(Constants.UnitType.FLU, Constants.Lane.TOP, playerType);
             }
         });
     }
