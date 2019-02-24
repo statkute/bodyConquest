@@ -154,8 +154,8 @@ public class MenuScreen implements Screen {
       if (settingsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         System.out.println("Settings Is touched");
-        //              game.setScreen(new SettingsScreen(game));
-        //              dispose();
+        game.setScreen(new SettingsScreen(game));
+        dispose();
       }
       if (creditsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();

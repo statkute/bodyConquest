@@ -168,4 +168,7 @@ public class AudioPlayer {
     if(!muted) currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME);
   }
 
+  public boolean getmuted() {
+    return muted;
+  }
 }
