@@ -18,10 +18,15 @@ public class SettingsScreen implements Screen {
   private Texture header;
   private Texture backButton;
   private Texture soundHeader;
+  private Texture musicHeader;
   private Texture soundOn;
   private Texture soundOff;
+  private Texture musicOn;
+  private Texture musicOff;
   private Rectangle soundBounds;
+  private Rectangle musicBounds;
   private Rectangle soundToggleBounds;
+  private Rectangle musicToggleBounds;
   private Rectangle backBounds;
   OrthographicCamera camera;
 
@@ -32,8 +37,11 @@ public class SettingsScreen implements Screen {
     background = new Texture("core/assets/background_new.png");
     header = new Texture("core/assets/settingsheader_new.png");
     soundHeader = new Texture("core/assets/sound.png");
+    musicHeader = new Texture("core/assets/music.png");
     soundOn = new Texture("core/assets/on.png");
     soundOff = new Texture("core/assets/off.png");
+    musicOn = new Texture("core/assets/on.png");
+    musicOff = new Texture("core/assets/off.png");
     backButton = new Texture("core/assets/back_new.png");
 
     backBounds =
@@ -47,7 +55,11 @@ public class SettingsScreen implements Screen {
         new Rectangle(
             BodyConquest.V_WIDTH / 5, 300, soundHeader.getWidth(), soundHeader.getHeight());
 
-    if (game.audioPlayer.getmuted()) {
+    musicBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5, 240, musicHeader.getWidth(), musicHeader.getHeight());
+
+    if (game.audioPlayer.getMutedSFX()) {
       soundToggleBounds =
           new Rectangle(
               BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
@@ -61,6 +73,22 @@ public class SettingsScreen implements Screen {
               300,
               soundOn.getWidth(),
               soundOn.getHeight());
+    }
+
+    if (game.audioPlayer.getMutedMusic()) {
+      musicToggleBounds =
+          new Rectangle(
+              BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
+              240,
+              musicOff.getWidth(),
+              musicOff.getHeight());
+    } else {
+      musicToggleBounds =
+          new Rectangle(
+              BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(),
+              240,
+              musicOn.getWidth(),
+              musicOn.getHeight());
     }
   }
 
@@ -82,10 +110,18 @@ public class SettingsScreen implements Screen {
 
     game.batch.draw(soundHeader, BodyConquest.V_WIDTH / 5, 300);
 
-    if (game.audioPlayer.getmuted()) {
+    if (game.audioPlayer.getMutedSFX()) {
       game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), 300);
     } else {
       game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), 300);
+    }
+
+    game.batch.draw(musicHeader, BodyConquest.V_WIDTH / 5, 240);
+
+    if (game.audioPlayer.getMutedMusic()) {
+      game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), 240);
+    } else {
+      game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), 240);
     }
 
     game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
@@ -132,12 +168,22 @@ public class SettingsScreen implements Screen {
       }
 
       if(soundBounds.contains(tmp.x, tmp.y) || soundToggleBounds.contains(tmp.x, tmp.y)){
-        game.audioPlayer.toggleMuted();
+        game.audioPlayer.toggleMutedSFX();
         playButtonSound();
-        if (game.audioPlayer.getmuted()) {
+        if (game.audioPlayer.getMutedSFX()) {
           game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), 300);
         } else {
           game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), 300);
+        }
+      }
+
+      if(musicBounds.contains(tmp.x, tmp.y) || musicToggleBounds.contains(tmp.x, tmp.y)){
+        game.audioPlayer.toggleMutedMusic();
+        playButtonSound();
+        if (game.audioPlayer.getMutedMusic()) {
+          game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), 240);
+        } else {
+          game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), 240);
         }
       }
     }

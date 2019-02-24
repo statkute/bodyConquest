@@ -6,9 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 
 import java.util.HashMap;
 
-/**
- *  Controls audio within the game
- */
+/** Controls audio within the game */
 public class AudioPlayer {
 
   /** The the max volume for all sounds inside the game. (Initialised to {@value MASTER_VOLUME}) */
@@ -33,10 +31,8 @@ public class AudioPlayer {
   private boolean mutedMusic;
   private boolean muted;
 
-  /**
-   * Constructor.
-   */
-  public AudioPlayer(){
+  /** Constructor. */
+  public AudioPlayer() {
     soundFX = new HashMap<String, Sound>();
     music = new HashMap<String, Music>();
 
@@ -47,45 +43,40 @@ public class AudioPlayer {
     currentMusic = null;
   }
 
-  /**
-   * Toggle if all sounds are muted.
-   */
+  /** Toggle if all sounds are muted. */
   public void toggleMuted() {
-    if(muted) {
+    if (muted) {
       muted = false;
-      if(currentMusic != null) currentMusic.setVolume(MUSIC_VOLUME);
+      if (currentMusic != null) currentMusic.setVolume(MUSIC_VOLUME);
     } else {
       muted = true;
-      if(currentMusic != null) currentMusic.setVolume(MUTED_VOLUME);
+      if (currentMusic != null) currentMusic.setVolume(MUTED_VOLUME);
     }
   }
 
-  /**
-   * Toggle if sound FX are muted.
-   */
+  /** Toggle if sound FX are muted. */
   public void toggleMutedSFX() {
-    if(mutedSFX) {
+    if (mutedSFX) {
       mutedSFX = false;
     } else {
       mutedSFX = true;
     }
   }
 
-  /**
-   * Toggle if music is muted.
-   */
+  /** Toggle if music is muted. */
   public void toggleMutedMusic() {
-    if(mutedMusic) {
+    if (mutedMusic) {
       mutedMusic = false;
-      if(!muted && currentMusic != null) currentMusic.setVolume(MUSIC_VOLUME);
+      if (!muted && currentMusic != null) currentMusic.setVolume(MUSIC_VOLUME);
     } else {
       mutedMusic = true;
-      if(currentMusic != null) currentMusic.setVolume(MUTED_VOLUME);
+      if (currentMusic != null) currentMusic.setVolume(MUTED_VOLUME);
     }
   }
 
   /**
    * Load in a new sound effect.
+   *
    * @param name The name used to play this sound.
    * @param path The path to location of the sound file.
    */
@@ -95,6 +86,7 @@ public class AudioPlayer {
 
   /**
    * Load in any (background) music files that will be used in the game.
+   *
    * @param name The string used to refer to a particular music file to play it later on.
    * @param path The path to the location of the audio file to be loaded in.
    */
@@ -103,21 +95,24 @@ public class AudioPlayer {
   }
 
   /**
-   * Play the sound effect that was loaded in with the same name.
-   * Plays the sound silently if the all the sounds or SFX have been muted.
+   * Play the sound effect that was loaded in with the same name. Plays the sound silently if the
+   * all the sounds or SFX have been muted.
+   *
    * @param name The sound to play.
    */
   public void playSFX(String name) {
-    if(muted) {
+    if (muted || mutedSFX) {
       soundFX.get(name).play(MUTED_VOLUME * MASTER_VOLUME);
     } else {
       soundFX.get(name).play(SFX_VOLUME * MASTER_VOLUME);
+      muted = false;
     }
   }
 
   /**
-   * Play the music that was loaded in with the same name once.
-   * Plays the music silently if all the sounds or music have been muted.
+   * Play the music that was loaded in with the same name once. Plays the music silently if all the
+   * sounds or music have been muted.
+   *
    * @param name The music to play.
    */
   public void playMusicOnce(String name) {
@@ -125,8 +120,9 @@ public class AudioPlayer {
   }
 
   /**
-   * Play the music that was loaded in with the same name on a constant loop.
-   * Plays the music silently if all the sounds or music have been muted.
+   * Play the music that was loaded in with the same name on a constant loop. Plays the music
+   * silently if all the sounds or music have been muted.
+   *
    * @param name The music to play.
    */
   public void playMusicLoop(String name) {
@@ -134,41 +130,47 @@ public class AudioPlayer {
   }
 
   /**
-   * Play the music that was loaded in with the same name, specifying whether the music should be played on a loop.
-   * Plays the music silently if all the sounds or music have been muted.
+   * Play the music that was loaded in with the same name, specifying whether the music should be
+   * played on a loop. Plays the music silently if all the sounds or music have been muted.
+   *
    * @param name
    * @param loop
    */
   public void playMusic(String name, boolean loop) {
-    if(currentMusic != null) currentMusic.stop();
+    if (currentMusic != null) currentMusic.stop();
     currentMusic = music.get(name);
-    if(muted) {
+    if (muted || mutedMusic) {
       currentMusic.setVolume(MUTED_VOLUME);
     } else {
       currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME);
+      muted = false;
     }
     currentMusic.setLooping(loop);
     currentMusic.play();
   }
 
   public void changeMasterVolume(float volume) {
-    if(volume > 1.0f || volume < 0.0f) {
+    if (volume > 1.0f || volume < 0.0f) {
       MASTER_VOLUME = volume;
     }
   }
 
   public void changeSFXVolume(float volume) {
-    if(volume > 1.0f || volume < 0.0f) return;
+    if (volume > 1.0f || volume < 0.0f) return;
     SFX_VOLUME = volume;
   }
 
   public void changeMusicVolume(float volume) {
-    if(volume > 1.0f || volume < 0.0f) return;
+    if (volume > 1.0f || volume < 0.0f) return;
     MUSIC_VOLUME = volume;
-    if(!muted) currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME);
+    if (!muted) currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME);
   }
 
-  public boolean getmuted() {
-    return muted;
+  public boolean getMutedSFX() {
+    return mutedSFX;
+  }
+
+  public boolean getMutedMusic() {
+    return mutedMusic;
   }
 }
