@@ -47,7 +47,7 @@ public class AudioPlayer {
   public void toggleMuted() {
     if (muted) {
       muted = false;
-      if (currentMusic != null) currentMusic.setVolume(MUSIC_VOLUME);
+      if (currentMusic != null) currentMusic.setVolume(MUSIC_VOLUME * 0.3f);
     } else {
       muted = true;
       if (currentMusic != null) currentMusic.setVolume(MUTED_VOLUME);
@@ -67,7 +67,7 @@ public class AudioPlayer {
   public void toggleMutedMusic() {
     if (mutedMusic) {
       mutedMusic = false;
-      if (!muted && currentMusic != null) currentMusic.setVolume(MUSIC_VOLUME);
+      if (!muted && currentMusic != null) currentMusic.setVolume(MUSIC_VOLUME * 0.3f);
     } else {
       mutedMusic = true;
       if (currentMusic != null) currentMusic.setVolume(MUTED_VOLUME);
@@ -102,9 +102,9 @@ public class AudioPlayer {
    */
   public void playSFX(String name) {
     if (muted || mutedSFX) {
-      soundFX.get(name).play(MUTED_VOLUME * MASTER_VOLUME);
+      soundFX.get(name).play(MUTED_VOLUME * MASTER_VOLUME * 0.3f);
     } else {
-      soundFX.get(name).play(SFX_VOLUME * MASTER_VOLUME);
+      soundFX.get(name).play(SFX_VOLUME * MASTER_VOLUME * 0.3f);
       muted = false;
     }
   }
@@ -142,7 +142,7 @@ public class AudioPlayer {
     if (muted || mutedMusic) {
       currentMusic.setVolume(MUTED_VOLUME);
     } else {
-      currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME);
+      currentMusic.setVolume(MUSIC_VOLUME * 0.3f);
       muted = false;
     }
     currentMusic.setLooping(loop);
@@ -163,7 +163,7 @@ public class AudioPlayer {
   public void changeMusicVolume(float volume) {
     if (volume > 1.0f || volume < 0.0f) return;
     MUSIC_VOLUME = volume;
-    if (!muted) currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME);
+    if (!muted) currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME * 0.3f);
   }
 
   public boolean getMutedSFX() {

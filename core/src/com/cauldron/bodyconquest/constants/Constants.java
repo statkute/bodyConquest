@@ -173,6 +173,7 @@ public class Constants {
 
     //Sounds
     public static final String buttonSoundPath = "core/assets/buttonClick.wav";
+    public static final String music = "core/assets/music_underclocked.wav";
 
     public static final int baseTopX = 130;
     public static final int baseTopY = 450;

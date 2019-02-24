@@ -85,8 +85,6 @@ public class MenuScreen implements Screen {
             60,
             exitButton.getWidth(),
             exitButton.getHeight());
-
-    game.audioPlayer.loadSFX("button_click", Constants.buttonSoundPath);
   }
 
   @Override

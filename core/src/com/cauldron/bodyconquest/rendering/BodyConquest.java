@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cauldron.bodyconquest.audio.AudioPlayer;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.screens.MenuScreen;
@@ -43,6 +44,9 @@ public class BodyConquest extends Game {
   public void create() {
     batch = new SpriteBatch();
     font = new BitmapFont();
+    audioPlayer.loadSFX("button_click", Constants.buttonSoundPath);
+    audioPlayer.loadMusic("music", Constants.music);
+    audioPlayer.playMusicLoop("music");
     setScreen(new MenuScreen(this)); //uncomment this to check the screen
   }
 

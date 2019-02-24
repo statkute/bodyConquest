@@ -72,7 +72,7 @@ public class EncounterScreen implements Screen {
     playerType = PlayerType.PLAYER_TOP;
 
     // Set up map
-    map = new Image(new Texture("core/assets/Basic Map v2.png"));
+    map = new Image(new Texture("core/assets/brainmap.png"));
     float topOfUnitBar = hud.getUnitBar().getTop();
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
@@ -96,7 +96,7 @@ public class EncounterScreen implements Screen {
     playerType = PlayerType.PLAYER_BOTTOM;
 
     // Set up map
-    map = new Image(new Texture("core/assets/Basic Map v2.png"));
+    map = new Image(new Texture("core/assets/brainmap.png"));
     float topOfUnitBar = hud.getUnitBar().getTop();
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
