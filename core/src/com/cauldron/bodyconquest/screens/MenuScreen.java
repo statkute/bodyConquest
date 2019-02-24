@@ -160,8 +160,8 @@ public class MenuScreen implements Screen {
       if (creditsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         System.out.println("Credits Is touched");
-        //        game.setScreen(new CreditsScreen(game));
-        //        dispose();
+        game.setScreen(new CreditsScreen(game));
+        dispose();
       }
 
       if (exitBounds.contains(tmp.x, tmp.y)) {
