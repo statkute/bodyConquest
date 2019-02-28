@@ -11,7 +11,7 @@ public class DesktopLauncher {
   public static void main(String[] arg) {
     LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-    config.title = "Body Wars";
+    config.title = "Body Conquest";
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 

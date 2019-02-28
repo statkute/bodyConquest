@@ -56,6 +56,9 @@ project(":desktop") {
         compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
         compile group: 'com.googlecode.soundlibs', name: 'tritonus-share', version: '0.3.7-1'
         compile group: 'com.googlecode.soundlibs', name: 'mp3spi', version: '1.9.5-1'
+        // https://mvnrepository.com/artifact/com.cedarsoftware/json-io
+
+
 
     }
 }
@@ -75,6 +78,7 @@ project(":core") {
         compile group: 'com.googlecode.soundlibs', name: 'mp3spi', version: '1.9.5-1'
         compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
         compile "org.mini2Dx:universal-tween-engine:6.3.3"
+        compile group: 'com.cedarsoftware', name: 'json-io', version: '2.2.29'
 
     }
 }

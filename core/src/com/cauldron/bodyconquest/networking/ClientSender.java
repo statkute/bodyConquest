@@ -1,76 +1,44 @@
 package com.cauldron.bodyconquest.networking;
 
 import java.io.IOException;
-import java.net.*;
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 
-/** The class that is responsible for sending messages from the client to the server */
+/** Client thread responsible for sending messages to the server */
 public class ClientSender extends Thread {
-  InetAddress address;
-  MulticastSocket socket;
-  String inetAddress;
-  ClientReceiver clientReceiver;
+  public DatagramSocket socket;
+  public ClientReceiver clientReceiver;
+  private boolean run;
 
   /**
-   * ClientSender constructor
+   * ClientSender initialization
    *
-   * @param inetAddress selected ip address that should be used for communication
-   * @param clientReceiver the ClientReceiver thread of the same client as this ClientSender object
-   * @throws IOException
+   * @param clientReceiver ClientReceiver thread of the same client
+   * @throws SocketException
    */
-  public ClientSender(String inetAddress, ClientReceiver clientReceiver) throws IOException {
-    address = InetAddress.getByName("239.255.255.255");
-    socket = new MulticastSocket();
-    this.inetAddress = inetAddress;
+  public ClientSender(ClientReceiver clientReceiver) throws SocketException {
+    socket = new DatagramSocket();
     this.clientReceiver = clientReceiver;
+    run = true;
   }
 
   /**
-   * Sends a packet of the specified message to the server
+   * Sends the specified message to the server with an added client ID at the front
    *
-   * @param message the message that must be sent to the server
-   * @throws IOException
+   * @param message
    */
-  public void sendPacket(String message) throws IOException {
-    DatagramPacket packet;
-    byte[] buf = new byte[256];
-    buf = message.getBytes();
-    DatagramPacket sending = new DatagramPacket(buf, 0, buf.length, address, 4446);
-
-    Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();
-
-    while (faces.hasMoreElements()) {
-      NetworkInterface iface = faces.nextElement();
-      if (iface.isLoopback() || !iface.isUp()) continue;
-
-      Enumeration<InetAddress> addresses = iface.getInetAddresses();
-
-      while (addresses.hasMoreElements()) {
-        InetAddress addr = addresses.nextElement();
-        socket.setInterface(addr);
-        if (inetAddress.equals(addr.toString())) {
-          socket.send(sending);
-          break;
-        }
-      }
+  public void sendMessage(String message) {
+    try {
+      DatagramPacket packet =
+          new DatagramPacket(message.getBytes(), message.length(), clientReceiver.address, 3000);
+      socket.send(packet);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-
-    while (clientReceiver.clientAllowedToSend.get() == false) {}
   }
-
-  /** Always checks if any packet needs to be sent repeatedly and does so */
-  public void run() {
-    while (true) {
-      if (clientReceiver.repeatServerPacketId.get() != 0) {
-        String formattedNum = String.format("%08d", clientReceiver.repeatServerPacketId.get());
-        try {
-          sendPacket("a" + formattedNum + " repeat");
-          clientReceiver.repeatServerPacketId.set(0);
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
-    }
+  public void stopRunning(){
+    run = false;
+    socket.close();
   }
 }

@@ -1,23 +1,19 @@
 package com.cauldron.bodyconquest.entities.Troops.Bases;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen.PlayerType;
+import com.cauldron.bodyconquest.constants.Constants.*;
 
 public abstract class Base extends Troop {
 
-    protected Animation<TextureRegion> imageBase;
-
-    public Base(EncounterScreen.Lane lane, PlayerType playerType) {
-      super(lane);
-      this.playerType = playerType;
+    public Base(Lane lane, PlayerType playerType) {
+      super(lane, playerType);
       this.attackable = true;
       this.moving = false;
       this.attacking = false;
-      setSize(120, 120);
-
+      this.cooldown = 1500;
+      this.setSize(Constants.baseWidth, Constants.baseHeight);
+      this.setCSize(Constants.baseWidth, Constants.baseHeight);
+      mapObjectType = MapObjectType.BASE;
     }
-
 }

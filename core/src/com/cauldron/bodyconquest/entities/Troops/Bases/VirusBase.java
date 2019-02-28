@@ -1,26 +1,18 @@
 package com.cauldron.bodyconquest.entities.Troops.Bases;
 
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.gamestates.EncounterScreen;
-import com.cauldron.bodyconquest.handlers.GifDecoder;
-
-import java.util.ArrayList;
+import com.cauldron.bodyconquest.constants.Constants.*;
 
 public class VirusBase extends Base {
 
-    public VirusBase(EncounterScreen.Lane lane, EncounterScreen.PlayerType pt){
-        super(lane, pt);
-        init();
-    }
+  public VirusBase(Lane lane, PlayerType pt) {
+    super(lane, pt);
+    init();
+  }
 
-    private void init(){
-        this.health = 70;
-        this.damage = 10;
-        this.imageBase =
-                GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("core/assets/castle1.gif").read());
-    }
-
+  private void init() {
+    this.health = 70;
+    this.maxHealth = health;
+    this.damage = 10;
+    mapObjectType = MapObjectType.VIRUS_BASE;
+  }
 }
