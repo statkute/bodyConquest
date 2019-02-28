@@ -54,6 +54,11 @@ public class BodyConquest extends Game {
   public void render() {
     super.render();
     if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
+    if (Gdx.input.isKeyJustPressed(Input.Keys.M)
+            && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
+            || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+      audioPlayer.toggleMuted();
+    }
   }
 
   @Override

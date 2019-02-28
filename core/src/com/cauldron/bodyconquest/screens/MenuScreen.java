@@ -120,12 +120,6 @@ public class MenuScreen implements Screen {
 
   public void checkPressed() {
 
-    if (Gdx.input.isKeyJustPressed(Input.Keys.M)
-        && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
-            || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
-      game.audioPlayer.toggleMuted();
-    }
-
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
     if (Gdx.input.justTouched()) {
