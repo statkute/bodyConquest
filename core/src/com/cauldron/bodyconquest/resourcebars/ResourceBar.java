@@ -22,6 +22,7 @@ public abstract class ResourceBar extends Actor {
     float stateTime;
     private float elapsedTime;
     private int insideY;
+    private String insideTexturePath;
 
     public ResourceBar(){
         walkAnimation = AnimationWrapper.getSpriteSheet(4, 1, 0.2f, "core/assets/protein_inside.png");
@@ -55,6 +56,8 @@ public abstract class ResourceBar extends Actor {
     public void setInside(TextureRegion inside) {
         this.inside = inside;
     }
+
+    public void setInsideTexturePath(String path){this.insideTexturePath = path;}
 
     public void setInsideY(int y){
         insideY = y;
