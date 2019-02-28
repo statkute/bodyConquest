@@ -11,6 +11,7 @@ public class LipidsResourceBar extends ResourceBar {
         setResourceType(Constants.ResourceType.LIPID);
         setOutline(new TextureRegion(new Texture("core/assets/lipid_outline.png")));
         setInside(new TextureRegion(new Texture("core/assets/lipids_inside.png")));
+        setInsideTexturePath("core/assets/lipids_inside.png");
         setX(getX() + BodyConquest.V_WIDTH / 20.0f);
     }
 }

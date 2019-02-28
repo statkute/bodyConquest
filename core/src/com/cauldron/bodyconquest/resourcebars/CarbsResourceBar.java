@@ -11,6 +11,7 @@ public class CarbsResourceBar extends ResourceBar {
         setResourceType(Constants.ResourceType.CARBS);
         setOutline(new TextureRegion(new Texture("core/assets/carbs_outline.png")));
         setInside(new TextureRegion(new Texture("core/assets/carbs_inside.png")));
+        setInsideTexturePath("core/assets/carbs_inside.png");
         setX(getX()+2*(BodyConquest.V_WIDTH / 20.0f));
     }
 

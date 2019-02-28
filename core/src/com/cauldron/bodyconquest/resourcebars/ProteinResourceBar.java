@@ -10,6 +10,7 @@ public class ProteinResourceBar extends ResourceBar {
         setResourceType(Constants.ResourceType.PROTEIN);
         setOutline(new TextureRegion(new Texture("core/assets/protein_outline.png")));
         setInside(new TextureRegion(new Texture("core/assets/protein_inside.png")));
+        setInsideTexturePath("core/assets/protein_inside.png");
     }
 
 }
