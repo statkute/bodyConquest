@@ -18,14 +18,14 @@ public abstract class ResourceBar extends Actor {
     private TextureRegion outline;
     private TextureRegion inside;
     private TextureRegion currentFrame;
-    private Animation<TextureRegion> walkAnimation;
+    protected Animation<TextureRegion> walkAnimation;
     float stateTime;
     private float elapsedTime;
     private int insideY;
     private String insideTexturePath;
 
     public ResourceBar(){
-        walkAnimation = AnimationWrapper.getSpriteSheet(4, 1, 0.2f, "core/assets/protein_inside.png");
+//        walkAnimation = AnimationWrapper.getSpriteSheet(4, 1, 0.2f, getInsideTexturePath());
     }
 
     protected float getResource() {
@@ -90,5 +90,9 @@ public abstract class ResourceBar extends Actor {
         batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 
 
+    }
+
+    public String getInsideTexturePath() {
+        return insideTexturePath;
     }
 }
