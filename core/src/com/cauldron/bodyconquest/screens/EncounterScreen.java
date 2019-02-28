@@ -247,7 +247,7 @@ public class EncounterScreen implements Screen {
 
   @Override
   public void dispose() {
-    game.dispose();
+    //game.dispose();
     stage.dispose();
   }
 
@@ -271,13 +271,16 @@ public class EncounterScreen implements Screen {
     sequenceAction.addAction(Actions.fadeOut(1.0f));
     sequenceAction.addAction(
         Actions.run(
+
             new Runnable() {
               @Override
               public void run() {
+                //dispose();
                 game.setScreen(newScreen);
               }
             }));
     stage.getRoot().addAction(sequenceAction);
+    //dispose();
   }
 
   public void DrawShadowed(String str, float x, float y, float width, int align, Color color)

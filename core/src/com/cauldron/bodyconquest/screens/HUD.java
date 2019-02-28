@@ -25,6 +25,7 @@ import com.cauldron.bodyconquest.constants.Constants.Lane;
 import com.cauldron.bodyconquest.constants.Constants.PlayerType;
 import com.cauldron.bodyconquest.constants.Constants.UnitType;
 import com.cauldron.bodyconquest.entities.HealthBar;
+import com.cauldron.bodyconquest.entities.UnitBar;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.cauldron.bodyconquest.resourcebars.CarbsResourceBar;
 import com.cauldron.bodyconquest.resourcebars.LipidsResourceBar;
@@ -46,6 +47,8 @@ public class HUD {
   private ResourceBar lipidsResourceBar;
   private ResourceBar carbsResourceBar;
 
+  private UnitBar newUnitBar;
+
 
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
     this.screen = screen;
@@ -64,6 +67,9 @@ public class HUD {
     setupUnitBar();
     loadSkins();
     setupResourceBars();
+    //setUpDragAndDrop();
+    setupNewUnitBar();
+
     setUpDragAndDrop();
   }
 
@@ -79,6 +85,11 @@ public class HUD {
     unitBar = new Image(new Texture("core/assets/Action Bar v1.png"));
     unitBar.setBounds(0, 0, BodyConquest.V_WIDTH, 50);
     stage.addActor(unitBar);
+  }
+
+  private void setupNewUnitBar(){
+    newUnitBar = new UnitBar();
+    stage.addActor(newUnitBar);
   }
 
   private void setupResourceBars(){
