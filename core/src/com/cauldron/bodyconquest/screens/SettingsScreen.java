@@ -62,14 +62,14 @@ public class SettingsScreen implements Screen {
     if (game.audioPlayer.getMutedSFX()) {
       soundToggleBounds =
           new Rectangle(
-              BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
+              BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(),
               300 * BodyConquest.scaleRatio,
-              soundOff.getWidth(),
-              soundOff.getHeight());
+              soundOn.getWidth(),
+              soundOn.getHeight());
     } else {
       soundToggleBounds =
           new Rectangle(
-              BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(),
+              BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
               300 * BodyConquest.scaleRatio,
               soundOn.getWidth(),
               soundOn.getHeight());
@@ -78,17 +78,17 @@ public class SettingsScreen implements Screen {
     if (game.audioPlayer.getMutedMusic()) {
       musicToggleBounds =
           new Rectangle(
-              BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
-              240 * BodyConquest.scaleRatio,
-              musicOff.getWidth(),
-              musicOff.getHeight());
-    } else {
-      musicToggleBounds =
-          new Rectangle(
               BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(),
               240 * BodyConquest.scaleRatio,
               musicOn.getWidth(),
               musicOn.getHeight());
+    } else {
+      musicToggleBounds =
+          new Rectangle(
+              BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
+              240 * BodyConquest.scaleRatio,
+              musicOff.getWidth(),
+              musicOff.getHeight());
     }
   }
 
