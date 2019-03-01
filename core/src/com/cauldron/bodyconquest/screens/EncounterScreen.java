@@ -93,7 +93,7 @@ public class EncounterScreen implements Screen {
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
     // Set up map
-    map = new Image(new Texture("core/assets/brainmap.png"));
+    map = new Image(new Texture("core/assets/eyemap.png"));
     //float topOfUnitBar = hud.getUnitBar().getTop();
     float topOfUnitBar = 27;
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
