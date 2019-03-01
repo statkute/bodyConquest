@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.networking.Server;
@@ -16,7 +17,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Random;
 
 public class RaceSelection implements Screen {
@@ -53,26 +53,17 @@ public class RaceSelection implements Screen {
   private Stage stage;
 
   private Game g;
-  String gameType;
+  private GameType gameType;
 
   private Random random;
   private Server server;
   private Communicator communicator;
 
   public RaceSelection(
-      BodyConquest game, Server server, Communicator communicator, String gameType) {
+      BodyConquest game, Communicator communicator, GameType gameType) {
     this.communicator = communicator;
-    this.server = server;
+    this.server = game.getServer();
     this.game = game;
-    this.gameType = gameType;
-    setup();
-  }
-
-  public RaceSelection(BodyConquest game, Communicator communicator, String gameType) {
-    System.out.println("inside");
-    this.communicator = communicator;
-    this.game = game;
-    this.server = null;
     this.gameType = gameType;
     setup();
   }
@@ -181,21 +172,21 @@ public class RaceSelection implements Screen {
 
       Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
       camera.unproject(tmp);
-
+      if (server == null) {
+        System.err.println("Server not instantiated");
+        return;
+      }
       if (continueBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        if (server != null && !gameType.toLowerCase().equals("multiplayer")) {
+        if (gameType != GameType.MULTIPLAYER_JOIN) {
           server.startServer(gameType);
+          // This is strange, we could maybe call this in the RaceSelection constructor
           game.getClient().startClient(communicator);
-        }
-        if (server != null) {
-          g = new Game(server, communicator, gameType);
+          g = new Game(server, gameType);
           g.start();
           server.startServerLogic(g.getEncounterState());
-          game.setScreen(new EncounterScreen(game, communicator, game.getClient(), server));
-        } else {
-          game.setScreen(new EncounterScreen(game, communicator, game.getClient()));
         }
+          game.setScreen(new EncounterScreen(game, communicator, gameType));
         dispose();
       }
 

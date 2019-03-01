@@ -4,7 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
@@ -13,7 +13,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 import java.io.IOException;
-import java.net.SocketException;
 
 public class HostScreen implements Screen {
 
@@ -118,28 +117,15 @@ public class HostScreen implements Screen {
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
 
+    // Lots of unnecessarily repeated code
     if (Gdx.input.justTouched()) {
       if (hostBounds.contains(tmp.x, tmp.y)) {
         System.out.println("host pressed");
-        playButtonSound();
-        server = new Server();
-        server.startServer("multiplayer");
-        client = new Client();
-        Communicator communicator = new Communicator();
-        client.startClient(communicator);
-        game.setServer(server);
-        game.setClient(client);
-        game.setScreen(new RaceSelection(game, server, communicator, "multiplayer"));
+        startGame(GameType.MULTIPLAYER_HOST);
       }
       if (joinBounds.contains(tmp.x, tmp.y)) {
         System.out.println("join pressed");
-        playButtonSound();
-        client = new Client();
-        Communicator communicator = new Communicator();
-        client.startClient(communicator);
-        game.setClient(client);
-        System.out.println("setting the raceselection screen");
-        game.setScreen(new RaceSelection(game, communicator, "multiplayer"));
+        startGame(GameType.MULTIPLAYER_JOIN);
       }
 
       if (backBounds.contains(tmp.x, tmp.y)) {
@@ -151,7 +137,28 @@ public class HostScreen implements Screen {
     }
   }
 
-  public void playButtonSound() {
+  private void startGame(GameType gameType) throws IOException {
+    if (gameType == GameType.SINGLE_PLAYER) {
+      System.err.println("[ERROR] Game type is set to single player on the host screen.");
+      return;
+    }
+    Communicator communicator = new Communicator();
+    playButtonSound();
+    if (gameType == GameType.MULTIPLAYER_HOST) {
+
+      server = new Server();
+      server.startServer(gameType);
+      game.setServer(server);
+    }
+
+    game.getClient().startClient(communicator);
+
+    // Clients are created when the game loads in because they are always required
+    // game.setClient(client);
+    game.setScreen(new RaceSelection(game, communicator, gameType));
+  }
+
+  private void playButtonSound() {
     game.audioPlayer.playSFX("button_click");
   }
 }

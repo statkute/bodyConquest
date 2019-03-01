@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.Server;
@@ -97,14 +98,13 @@ public class MenuScreen implements Screen {
 
     camera.update();
     game.batch.setProjectionMatrix(camera.combined);
-
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
     game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450);
     game.batch.draw(
         playButtonSinglePlayer,
         BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-        300);
+        300, 100, 100);
     game.batch.draw(
         playButtonMultiplayer,
         BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
@@ -140,7 +140,7 @@ public class MenuScreen implements Screen {
         Communicator communicator = new Communicator();
         game.setServer(server);
         game.setClient(client);
-        game.setScreen(new RaceSelection(game, server, communicator, "singleplayer"));
+        game.setScreen(new RaceSelection(game, communicator, GameType.SINGLE_PLAYER));
         dispose();
       }
       if (settingsBounds.contains(tmp.x, tmp.y)) {

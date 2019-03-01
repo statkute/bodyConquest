@@ -25,7 +25,7 @@ public class BodyConquest extends Game {
   public static final int V_WIDTH = 800;
   public static final int V_HEIGHT = 600;
 
-  public static final AudioPlayer audioPlayer = new AudioPlayer();
+  public final AudioPlayer audioPlayer = new AudioPlayer();
 
   private FPSLogger fpsLogger = new FPSLogger();
   public SpriteBatch batch;
@@ -47,7 +47,8 @@ public class BodyConquest extends Game {
     audioPlayer.loadSFX("button_click", Constants.buttonSoundPath);
     audioPlayer.loadMusic("music", Constants.music);
     audioPlayer.playMusicLoop("music");
-    setScreen(new MenuScreen(this)); //uncomment this to check the screen
+    setScreen(new MenuScreen(this));
+    client = new Client();
   }
 
   @Override
