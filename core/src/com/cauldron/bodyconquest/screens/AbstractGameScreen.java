@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
@@ -23,14 +24,14 @@ public abstract class AbstractGameScreen implements Screen {
 
     protected Vector3 tmp;
 
-    protected static final float TARGET_SCREEN_WIDTH = Gdx.graphics.getWidth();
-    protected static final float TARGET_SCREEN_HEIGHT = Gdx.graphics.getHeight();
+//    protected static final float TARGET_SCREEN_WIDTH = Gdx.graphics.getWidth();
+//    protected static final float TARGET_SCREEN_HEIGHT = Gdx.graphics.getHeight();
 
     public AbstractGameScreen(BodyConquest game) {
         this.game = game;
         if (camera == null) {
             camera = new OrthographicCamera();
-            ((OrthographicCamera) camera).setToOrtho(false, 800, 600);
+            ((OrthographicCamera) camera).setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
         }
         if (viewport == null) {
             viewport = new FitViewport(BodyConquest.V_WIDTH,BodyConquest.V_HEIGHT,camera);
@@ -91,4 +92,17 @@ public abstract class AbstractGameScreen implements Screen {
     public void playButtonSound() {
         game.audioPlayer.playSFX("button_click");
     }
+
+    public void loadAssets(){
+        manager.load(Assets.menuBackground, Texture.class);
+    }
+
+    public void getAssets(){
+        background = manager.get(Assets.menuBackground, Texture.class);
+    }
+
+    public void setRectangles(){
+
+    }
+
 }

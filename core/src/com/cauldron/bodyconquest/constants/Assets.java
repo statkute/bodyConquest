@@ -19,6 +19,18 @@ public class Assets {
     public static String creditsButton =  "core/assets/credits_new.png";
     public static String exitButton =  "core/assets/exit_new.png";
 
+    /* Credit Screen Assets */
+
+    public static String alexandru =  "core/assets/alexandru_new.png";
+    public static String augustas =  "core/assets/augustas_new.png";
+    public static String brandon =  "core/assets/brandon_new.png";
+    public static String gintare =  "core/assets/gintare_new.png";
+    public static String paul =  "core/assets/paul_new.png";
+    public static String creditsHeader =  "core/assets/creditsheader_new.png";
+    public static String backButton =  "core/assets/back_new.png";
+
+
+
 
     public static final int MINHEALTH = 0;
 

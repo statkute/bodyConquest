@@ -6,16 +6,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-public class CreditsScreen implements Screen {
+public class CreditsScreen extends AbstractGameScreen implements Screen {
 
-  private BodyConquest game;
   private Texture backButton;
-  private Texture background;
   private Texture header;
   private Texture alexandru;
   private Texture augustas;
@@ -24,28 +23,12 @@ public class CreditsScreen implements Screen {
   private Texture paul;
   private Rectangle backBounds;
 
-  OrthographicCamera camera;
 
   public CreditsScreen(BodyConquest game) {
-    this.game = game;
-    camera = new OrthographicCamera();
-    camera.setToOrtho(false, 800, 600);
-
-    background = new Texture("core/assets/background_new.png");
-    header = new Texture("core/assets/creditsheader_new.png");
-    backButton = new Texture("core/assets/back_new.png");
-    alexandru = new Texture("core/assets/alexandru_new.png");
-    augustas = new Texture("core/assets/augustas_new.png");
-    brandon = new Texture("core/assets/brandon_new.png");
-    gintare = new Texture("core/assets/gintare_new.png");
-    paul = new Texture("core/assets/paul_new.png");
-
-    backBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-            60,
-            backButton.getWidth(),
-            backButton.getHeight());
+    super(game);
+    loadAssets();
+    getAssets();
+    setRectangles();
   }
 
   @Override
@@ -55,10 +38,7 @@ public class CreditsScreen implements Screen {
   @Override
   public void render(float delta) {
 
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-    camera.update();
-    game.batch.setProjectionMatrix(camera.combined);
+    super.render(delta);
     game.batch.begin();
 
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
@@ -78,35 +58,58 @@ public class CreditsScreen implements Screen {
 
   public void checkPressed() {
 
-    if (Gdx.input.isTouched()) {
-      Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-      camera.unproject(tmp);
+    super.checkPressed();
+
+    if (Gdx.input.justTouched()) {
       if (backBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        game.setScreen(new MenuScreen(game));
         dispose();
+        game.setScreen(new MenuScreen(game));
       }
     }
   }
 
   @Override
-  public void resize(int width, int height) {}
-
-  @Override
-  public void pause() {}
-
-  @Override
-  public void resume() {}
-
-  @Override
-  public void hide() {}
-
-  @Override
-  public void dispose() {
-    backButton.dispose();
-    background.dispose();
+  public void resize(int width, int height) {
+    super.resize(width,height);
   }
-  public void playButtonSound(){
-    game.audioPlayer.playSFX("button_click");
+
+  @Override
+  public void loadAssets() {
+    super.loadAssets();
+//    manager.load(Assets.menuBackground, Texture.class);
+    manager.load(Assets.creditsHeader, Texture.class);
+    manager.load(Assets.alexandru, Texture.class);
+    manager.load(Assets.augustas, Texture.class);
+    manager.load(Assets.brandon, Texture.class);
+    manager.load(Assets.gintare, Texture.class);
+    manager.load(Assets.paul, Texture.class);
+    manager.load(Assets.backButton, Texture.class);
+    manager.finishLoading();
+  }
+
+  @Override
+  public void getAssets() {
+    super.getAssets();
+    header = manager.get(Assets.creditsHeader, Texture.class);
+    alexandru = manager.get(Assets.alexandru, Texture.class);
+    augustas = manager.get(Assets.augustas, Texture.class);
+    brandon = manager.get(Assets.brandon, Texture.class);
+    gintare = manager.get(Assets.gintare, Texture.class);
+    paul = manager.get(Assets.paul,Texture.class);
+    backButton = manager.get(Assets.backButton, Texture.class);
+
+  }
+
+  @Override
+  public void setRectangles() {
+    super.setRectangles();
+    backBounds =
+            new Rectangle(
+                    BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+                    60,
+                    backButton.getWidth(),
+                    backButton.getHeight());
+
   }
 }

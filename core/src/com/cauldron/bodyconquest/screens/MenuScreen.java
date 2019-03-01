@@ -43,6 +43,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
 
   @Override
   public void show() {
+
   }
 
   @Override
@@ -127,8 +128,10 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
     return client;
   }
 
+  @Override
   public void loadAssets(){
-    manager.load(Assets.menuBackground, Texture.class);
+//    manager.load(Assets.menuBackground, Texture.class);
+    super.loadAssets();
     manager.load(Assets.menuTitle, Texture.class);
     manager.load(Assets.multiplayerButton, Texture.class);
     manager.load(Assets.singleplayerButton, Texture.class);
@@ -138,9 +141,13 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
     manager.finishLoading();
   }
 
+  @Override
   public void getAssets(){
-    background = manager.get(Assets.menuBackground, Texture.class);
+    super.getAssets();
+//    background = manager.get(Assets.menuBackground, Texture.class);
     title = manager.get(Assets.menuTitle, Texture.class);
+    if(title == null)
+      System.out.println("NULL");
     playButtonMultiplayer = manager.get(Assets.multiplayerButton, Texture.class);
     playButtonSinglePlayer = manager.get(Assets.singleplayerButton, Texture.class);
     settingsButton = manager.get(Assets.settingsButton, Texture.class);
