@@ -130,7 +130,6 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
 
   @Override
   public void loadAssets(){
-//    manager.load(Assets.menuBackground, Texture.class);
     super.loadAssets();
     manager.load(Assets.menuTitle, Texture.class);
     manager.load(Assets.multiplayerButton, Texture.class);

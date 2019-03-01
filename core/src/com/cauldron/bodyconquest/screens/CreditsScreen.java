@@ -77,7 +77,6 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
   @Override
   public void loadAssets() {
     super.loadAssets();
-//    manager.load(Assets.menuBackground, Texture.class);
     manager.load(Assets.creditsHeader, Texture.class);
     manager.load(Assets.alexandru, Texture.class);
     manager.load(Assets.augustas, Texture.class);
