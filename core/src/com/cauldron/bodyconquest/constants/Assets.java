@@ -6,7 +6,7 @@ import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
 
-public class Constants {
+public class Assets {
 
 
     public static final int MINHEALTH = 0;

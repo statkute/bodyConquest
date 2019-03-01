@@ -1,7 +1,7 @@
 package com.cauldron.bodyconquest.game_logic;
 
 import com.badlogic.gdx.Gdx;
-import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 import java.util.Random;
@@ -14,7 +14,7 @@ public class MultiplayerTestAI extends Thread {
 
     private EncounterState game;
     private boolean running;
-    private Constants.PlayerType playerType;
+    private Assets.PlayerType playerType;
 
     public MultiplayerTestAI(EncounterState game) {
         this.game = game;
@@ -37,15 +37,15 @@ public class MultiplayerTestAI extends Thread {
     }
 
     //decides whom the AI sides with -- the losingPlayer
-    private Constants.PlayerType decidePlayer() {
-        Constants.PlayerType losingPlayer;
+    private Assets.PlayerType decidePlayer() {
+        Assets.PlayerType losingPlayer;
         Random rand = new Random();
         int player = rand.nextInt(2);
 
         if (player == 1) {
-            losingPlayer = Constants.PlayerType.PLAYER_TOP;
+            losingPlayer = Assets.PlayerType.PLAYER_TOP;
         } else {
-            losingPlayer = Constants.PlayerType.PLAYER_BOTTOM;
+            losingPlayer = Assets.PlayerType.PLAYER_BOTTOM;
         }
 
         return losingPlayer;
@@ -55,9 +55,9 @@ public class MultiplayerTestAI extends Thread {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                game.spawnUnit(Constants.UnitType.BACTERIA, Constants.Lane.BOTTOM, playerType);
-                game.spawnUnit(Constants.UnitType.BACTERIA, Constants.Lane.MIDDLE, playerType);
-                game.spawnUnit(Constants.UnitType.FLU, Constants.Lane.TOP, playerType);
+                game.spawnUnit(Assets.UnitType.BACTERIA, Assets.Lane.BOTTOM, playerType);
+                game.spawnUnit(Assets.UnitType.BACTERIA, Assets.Lane.MIDDLE, playerType);
+                game.spawnUnit(Assets.UnitType.FLU, Assets.Lane.TOP, playerType);
             }
         });
     }

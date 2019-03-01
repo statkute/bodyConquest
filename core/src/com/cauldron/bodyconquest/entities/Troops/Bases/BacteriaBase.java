@@ -1,8 +1,7 @@
 package com.cauldron.bodyconquest.entities.Troops.Bases;
 
 import com.cauldron.bodyconquest.entities.Troops.Troop;
-import com.cauldron.bodyconquest.gamestates.EncounterState;
-import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.constants.Assets.*;
 
 public class BacteriaBase extends Base {
 

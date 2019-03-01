@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.cauldron.bodyconquest.constants.Constants;
-import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.Assets.*;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
@@ -67,7 +67,7 @@ public class EncounterScreen implements Screen {
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    hud = new HUD(game.batch, this, PlayerType.PLAYER_TOP);
+    hud = new HUD(game.batch, this, PlayerType.PLAYER_TOP,stage);
     accumulatorAfterBaseConquered = 0;
     playerType = PlayerType.PLAYER_TOP;
 
@@ -91,16 +91,18 @@ public class EncounterScreen implements Screen {
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    hud = new HUD(game.batch, this, PlayerType.PLAYER_BOTTOM);
-    accumulatorAfterBaseConquered = 0;
-    playerType = PlayerType.PLAYER_BOTTOM;
-
     // Set up map
     map = new Image(new Texture("core/assets/brainmap.png"));
-    float topOfUnitBar = hud.getUnitBar().getTop();
+    //float topOfUnitBar = hud.getUnitBar().getTop();
+    float topOfUnitBar = 30;
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
+    hud = new HUD(game.batch, this, PlayerType.PLAYER_BOTTOM,stage);
+    accumulatorAfterBaseConquered = 0;
+    playerType = PlayerType.PLAYER_BOTTOM;
+
+
     menuScreen = new MenuScreen(game);
   }
 
@@ -108,6 +110,16 @@ public class EncounterScreen implements Screen {
 
   @Override
   public void show() {
+
+    stage.getRoot().getColor().a = 0;
+
+    stage.getRoot().addAction(Actions.fadeIn(0.5f));
+
+    // Draw HUD
+
+//    hud.getStage().getRoot().getColor().a = 0;
+//    hud.getStage().getRoot().addAction(Actions.fadeIn(0.5f));
+    //hud.getStage().draw();
   }
 
   @Override
@@ -118,7 +130,7 @@ public class EncounterScreen implements Screen {
     healthBottomBase = comms.getBottomHealthPercentage();
     healthTopBase = comms.getTopHealthPercentage();
 
-    if (accumulatorAfterBaseConquered < Constants.UPDATESCREENTILL) {
+    if (accumulatorAfterBaseConquered < Assets.UPDATESCREENTILL) {
       objects = comms.getAllObjects();
 
       // Turn BasicObjects from server/communicator into ViewObjects (and gives them a texture)
@@ -133,31 +145,31 @@ public class EncounterScreen implements Screen {
             viewObjects.add(
                 new ViewObject(
                     o,
-                    Constants.pathFlu,
-                    Constants.frameColsFlu,
-                    Constants.frameRowsFlu,
+                    Assets.pathFlu,
+                    Assets.frameColsFlu,
+                    Assets.frameRowsFlu,
                     elapsedSeconds));
             break;
           case VIRUS:
             viewObjects.add(
                 new ViewObject(
                     o,
-                    Constants.pathVirus,
-                    Constants.frameColsVirus,
-                    Constants.frameRowsVirus,
+                    Assets.pathVirus,
+                    Assets.frameColsVirus,
+                    Assets.frameRowsVirus,
                     elapsedSeconds));
             break;
           case BACTERIA:
             viewObjects.add(
                 new ViewObject(
                     o,
-                    Constants.pathBacteria,
-                    Constants.frameColsBacteria,
-                    Constants.frameRowsBacteria,
+                    Assets.pathBacteria,
+                    Assets.frameColsBacteria,
+                    Assets.frameRowsBacteria,
                     elapsedSeconds));
             break;
           case BACTERTIA_BASE:
-            viewObjects.add(new ViewObject(o, Constants.pathBaseImage, elapsedSeconds));
+            viewObjects.add(new ViewObject(o, Assets.pathBaseImage, elapsedSeconds));
             break;
             //        case VIRUS_BASE:
             //          ////TO DO add Virus base Texture
@@ -166,15 +178,15 @@ public class EncounterScreen implements Screen {
             //          ////TO DO add Monster base Texture
             //          break;
             //        case BUCKET:
-            //          viewObjects.add(new ViewObject(o,Constants.pathBucket,1,1));
+            //          viewObjects.add(new ViewObject(o,Assets.pathBucket,1,1));
             //          break;
           case FLUPROJECTILE:
             viewObjects.add(
                 new ViewObject(
                     o,
-                    Constants.pathProjectile,
-                    Constants.frameColsProjectile,
-                    Constants.frameRowsProjectile,
+                    Assets.pathProjectile,
+                    Assets.frameColsProjectile,
+                    Assets.frameRowsProjectile,
                     elapsedSeconds));
         }
       }
@@ -191,7 +203,7 @@ public class EncounterScreen implements Screen {
       Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
       // Combine encounter and hud views
-      game.batch.setProjectionMatrix(hud.getStage().getCamera().combined);
+      game.batch.setProjectionMatrix(stage.getCamera().combined);
 
       // Make all actors call their act methods
       stage.act();
@@ -199,7 +211,8 @@ public class EncounterScreen implements Screen {
       stage.draw();
 
       // Draw HUD
-      hud.getStage().draw();
+      //hud.getStage().draw();
+
 
       // Start, draw and end spriteBatch
       game.batch.begin();
@@ -215,8 +228,8 @@ public class EncounterScreen implements Screen {
 
     }
 
-    if (((healthTopBase == Constants.MINHEALTH) || (healthBottomBase == Constants.MINHEALTH))
-        && accumulatorAfterBaseConquered < Constants.INCREASEACCUMULATORTILL) {
+    if (((healthTopBase == Assets.MINHEALTH) || (healthBottomBase == Assets.MINHEALTH))
+        && accumulatorAfterBaseConquered < Assets.INCREASEACCUMULATORTILL) {
 
       accumulatorAfterBaseConquered++;
 

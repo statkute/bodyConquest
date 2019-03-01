@@ -1,8 +1,8 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
-import com.cauldron.bodyconquest.constants.Constants.Lane;
-import com.cauldron.bodyconquest.constants.Constants.MapObjectType;
-import com.cauldron.bodyconquest.constants.Constants.PlayerType;
+import com.cauldron.bodyconquest.constants.Assets.Lane;
+import com.cauldron.bodyconquest.constants.Assets.MapObjectType;
+import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.entities.projectiles.FluProjectile;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 

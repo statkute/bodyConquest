@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 import com.cauldron.bodyconquest.handlers.GifDecoder;
 
@@ -26,7 +26,7 @@ public class ViewObject extends Actor {
     //texture = new Texture(pathTexture);
     this.elapsedTime = elapsedTime;
     walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, 0.2f, pathTexture);
-    if(bo.getMapObjectType() == Constants.MapObjectType.FLUPROJECTILE){
+    if(bo.getMapObjectType() == Assets.MapObjectType.FLUPROJECTILE){
       setRotation((float)bo.getRotation());
     }
     setX((float)bo.getX());
@@ -39,7 +39,7 @@ public class ViewObject extends Actor {
   public ViewObject(BasicObject bo, String pathTexture, float elapsedTime) {
     walkAnimation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(pathTexture).read());
     this.elapsedTime = elapsedTime;
-    if(bo.getMapObjectType() == Constants.MapObjectType.FLUPROJECTILE){
+    if(bo.getMapObjectType() == Assets.MapObjectType.FLUPROJECTILE){
       setRotation((float)bo.getRotation());
     }
     stateTime = 0f;

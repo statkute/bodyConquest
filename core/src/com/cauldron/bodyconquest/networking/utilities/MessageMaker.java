@@ -1,6 +1,6 @@
 package com.cauldron.bodyconquest.networking.utilities;
 
-import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.constants.Assets.*;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

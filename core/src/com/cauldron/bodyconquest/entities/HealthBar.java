@@ -5,16 +5,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.screens.EncounterScreen;
 
 public class HealthBar extends ProgressBar {
 
   private EncounterScreen encounterScreen;
-  private Constants.PlayerType playerType;
+  private Assets.PlayerType playerType;
   private Texture healthBorder;
 
-  public HealthBar(int width, int height, EncounterScreen screen, Constants.PlayerType playerType) {
+  public HealthBar(int width, int height, EncounterScreen screen, Assets.PlayerType playerType) {
 
     super(0f, 1f, 0.2f, false, new ProgressBarStyle());
 
@@ -23,7 +23,7 @@ public class HealthBar extends ProgressBar {
     getStyle().knobBefore = HealthBarHelper.getColoredDrawable(width, height, Color.GREEN);
     encounterScreen = screen;
     this.playerType = playerType;
-    healthBorder = new Texture(Gdx.files.internal(Constants.pathBorder));
+    healthBorder = new Texture(Gdx.files.internal(Assets.pathBorder));
 
     setWidth(width);
     setHeight(height);
@@ -32,17 +32,17 @@ public class HealthBar extends ProgressBar {
 
   @Override
   public void draw(Batch batch, float parentAlpha) {
-    if (playerType == Constants.PlayerType.PLAYER_TOP) {
+    if (playerType == Assets.PlayerType.PLAYER_TOP) {
       batch.draw(
           healthBorder,
-          Constants.baseTopX - 4,
-          Constants.baseTopY + Constants.healthYAdjustmentTop - 3);
+          Assets.baseTopX - 4,
+          Assets.baseTopY + Assets.healthYAdjustmentTop - 3);
       updateTop();
     } else {
       batch.draw(
           healthBorder,
-          Constants.baseBottomX - 5,
-          Constants.baseBottomY - Constants.healthYAdjustmentBottom - 4);
+          Assets.baseBottomX - 5,
+          Assets.baseBottomY - Assets.healthYAdjustmentBottom - 4);
       updateBottom();
     }
 

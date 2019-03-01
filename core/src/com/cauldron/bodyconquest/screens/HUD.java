@@ -1,6 +1,7 @@
 package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -20,10 +22,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cauldron.bodyconquest.constants.Constants;
-import com.cauldron.bodyconquest.constants.Constants.Lane;
-import com.cauldron.bodyconquest.constants.Constants.PlayerType;
-import com.cauldron.bodyconquest.constants.Constants.UnitType;
+import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.Assets.Lane;
+import com.cauldron.bodyconquest.constants.Assets.PlayerType;
+import com.cauldron.bodyconquest.constants.Assets.UnitType;
 import com.cauldron.bodyconquest.entities.HealthBar;
 import com.cauldron.bodyconquest.entities.UnitBar;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
@@ -50,14 +52,15 @@ public class HUD {
   private UnitBar newUnitBar;
 
 
-  public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType) {
+  public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType, Stage stage) {
     this.screen = screen;
     this.playerType = playerType;
 //    this.playerType = PlayerType.PLAYER_TOP;
 
     viewport =
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
-    stage = new Stage(viewport, sb);
+    //this.stage = new Stage(viewport, sb);
+    this.stage = stage;
     Gdx.input.setInputProcessor(stage);
 
     healthBarBottom = setUpHealthBar(healthBarBottom, PlayerType.PLAYER_BOTTOM);
@@ -241,24 +244,26 @@ public class HUD {
     if (playerType == PlayerType.PLAYER_BOTTOM) {
       healthBar =
           new HealthBar(
-              Constants.healthBarWidth,
-              Constants.healthBarHeight,
+              Assets.healthBarWidth,
+              Assets.healthBarHeight,
               screen,
               PlayerType.PLAYER_BOTTOM);
 
       healthBar.setPosition(
-          Constants.baseBottomX, Constants.baseBottomY - Constants.healthYAdjustmentBottom);
+          Assets.baseBottomX, Assets.baseBottomY - Assets.healthYAdjustmentBottom);
     }
     // AI or Top
     else {
       healthBar =
           new HealthBar(
-              Constants.healthBarWidth, Constants.healthBarHeight, screen, PlayerType.PLAYER_TOP);
+              Assets.healthBarWidth, Assets.healthBarHeight, screen, PlayerType.PLAYER_TOP);
       healthBar.setPosition(
-          Constants.baseTopX, Constants.baseTopY + Constants.healthYAdjustmentTop);
+          Assets.baseTopX, Assets.baseTopY + Assets.healthYAdjustmentTop);
     }
 
     stage.addActor(healthBar);
     return healthBar;
   }
+
+
 }

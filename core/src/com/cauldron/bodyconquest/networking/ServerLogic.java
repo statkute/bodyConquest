@@ -1,6 +1,6 @@
 package com.cauldron.bodyconquest.networking;
 
-import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.constants.Assets.*;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 /** Server Thread responsible for dealing with game logic based on incoming messages */

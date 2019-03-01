@@ -1,9 +1,9 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.entities.MapObject;
-import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.constants.Assets.*;
 import com.cauldron.bodyconquest.entities.Spawnable;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -143,7 +143,7 @@ public abstract class Troop extends MapObject implements Spawnable {
     if (moving) {
       if (playerType == PlayerType.PLAYER_BOTTOM) {
         if (lane == Lane.BOTTOM) {
-          if (getX() > Constants.BOT_TURNPOINT_X) {
+          if (getX() > Assets.BOT_TURNPOINT_X) {
             setDirectionLeft();
           } else {
             setDirectionUp();
@@ -151,7 +151,7 @@ public abstract class Troop extends MapObject implements Spawnable {
         } else if (lane == Lane.MIDDLE) {
           setDirectionUpLeft();
         } else if (lane == Lane.TOP) {
-          if (getY() < Constants.TOP_TURNPOINT_Y) {
+          if (getY() < Assets.TOP_TURNPOINT_Y) {
             setDirectionUp();
           } else {
             setDirectionLeft();
@@ -159,7 +159,7 @@ public abstract class Troop extends MapObject implements Spawnable {
         }
       } else if (playerType == PlayerType.PLAYER_TOP) {
         if (lane == Lane.BOTTOM) {
-          if (getCentreY() > Constants.BOT_TURNPOINT_Y) {
+          if (getCentreY() > Assets.BOT_TURNPOINT_Y) {
             setDirectionDown();
           } else {
             setDirectionRight();
@@ -167,7 +167,7 @@ public abstract class Troop extends MapObject implements Spawnable {
         } else if (lane == Lane.MIDDLE) {
           setDirectionDownRight();
         } else if (lane == Lane.TOP) {
-          if (getX() < Constants.TOP_TURNPOINT_X) {
+          if (getX() < Assets.TOP_TURNPOINT_X) {
             setDirectionRight();
           } else {
             setDirectionDown();

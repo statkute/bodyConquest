@@ -4,7 +4,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 import java.io.IOException;
-import java.net.SocketException;
 
 public class HostScreen implements Screen {
 

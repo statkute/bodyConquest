@@ -1,21 +1,16 @@
 package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.cauldron.bodyconquest.constants.Constants;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
-
-import java.io.IOException;
-import java.net.SocketException;
 
 public class MenuScreen implements Screen {
 

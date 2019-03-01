@@ -1,8 +1,8 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
-import com.cauldron.bodyconquest.constants.Constants.Lane;
-import com.cauldron.bodyconquest.constants.Constants.MapObjectType;
-import com.cauldron.bodyconquest.constants.Constants.PlayerType;
+import com.cauldron.bodyconquest.constants.Assets.Lane;
+import com.cauldron.bodyconquest.constants.Assets.MapObjectType;
+import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 
 public class Bacteria extends Troop {
 

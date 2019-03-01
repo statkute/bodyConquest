@@ -2,11 +2,10 @@ package com.cauldron.bodyconquest.game_logic;
 
 import com.badlogic.gdx.Gdx;
 import com.cauldron.bodyconquest.entities.Spawnable;
-import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
-import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.constants.Assets.*;
 
 import java.util.ArrayList;
 import java.util.Random;

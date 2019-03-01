@@ -1,6 +1,6 @@
 package com.cauldron.bodyconquest.entities.projectiles;
 
-import com.cauldron.bodyconquest.constants.Constants;
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 
@@ -32,7 +32,7 @@ public abstract class Projectile extends MapObject {
     // Maxed out because I don't want to do fine tuning right now
     stopSpeed = 100000;
     acceleration = 100000;
-    mapObjectType = Constants.MapObjectType.FLU;
+    mapObjectType = Assets.MapObjectType.FLU;
     distanceTraveled = 0;
     moving = true;
     collidable = true;

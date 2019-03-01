@@ -4,12 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.cauldron.bodyconquest.constants.Constants.ResourceType;
-import com.cauldron.bodyconquest.entities.MapObject;
-import com.cauldron.bodyconquest.handlers.AnimationWrapper;
+import com.cauldron.bodyconquest.constants.Assets.ResourceType;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
-import com.cauldron.bodyconquest.screens.MenuScreen;
 
 public abstract class ResourceBar extends Actor {
 

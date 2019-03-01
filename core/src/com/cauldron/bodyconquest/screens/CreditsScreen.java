@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -47,7 +49,8 @@ public class CreditsScreen implements Screen {
   }
 
   @Override
-  public void show() {}
+  public void show() {
+  }
 
   @Override
   public void render(float delta) {

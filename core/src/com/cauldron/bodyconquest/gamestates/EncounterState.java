@@ -1,9 +1,9 @@
 package com.cauldron.bodyconquest.gamestates;
 
-import com.cauldron.bodyconquest.constants.Constants;
-import com.cauldron.bodyconquest.constants.Constants.Lane;
-import com.cauldron.bodyconquest.constants.Constants.PlayerType;
-import com.cauldron.bodyconquest.constants.Constants.UnitType;
+import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.Assets.Lane;
+import com.cauldron.bodyconquest.constants.Assets.PlayerType;
+import com.cauldron.bodyconquest.constants.Assets.UnitType;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
 import com.cauldron.bodyconquest.entities.MapObject;
@@ -22,7 +22,6 @@ import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
-import com.cauldron.bodyconquest.screens.EncounterScreen;
 
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -90,12 +89,12 @@ public class EncounterState extends GameState {
 
     // Create player bases
     bottomBase = new BacteriaBase(Lane.ALL, PlayerType.PLAYER_BOTTOM);
-    bottomBase.setPosition(Constants.baseBottomX,Constants.baseBottomY);
+    bottomBase.setPosition(Assets.baseBottomX, Assets.baseBottomY);
     troopsBottom.add(bottomBase);
     allMapObjects.add(bottomBase);
 
     topBase = new BacteriaBase(Lane.ALL, PlayerType.PLAYER_TOP);
-    topBase.setPosition(Constants.baseTopX,Constants.baseTopY);
+    topBase.setPosition(Assets.baseTopX, Assets.baseTopY);
     troopsTop.add(topBase);
     allMapObjects.add(topBase);
 
@@ -246,16 +245,16 @@ public class EncounterState extends GameState {
     if (playerType.equals(PlayerType.PLAYER_BOTTOM)) {
       if (lane == Lane.BOTTOM) {
         troop.setPosition(
-            Constants.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Constants.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+            Assets.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+            Assets.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.MIDDLE) {
         troop.setPosition(
-            Constants.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Constants.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+            Assets.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+            Assets.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.TOP) {
         troop.setPosition(
-            Constants.BP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Constants.BP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+            Assets.BP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+            Assets.BP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       }
       troopsBottom.add(troop);
     }
@@ -264,16 +263,16 @@ public class EncounterState extends GameState {
     if (playerType.equals(PlayerType.PLAYER_TOP)) {
       if (lane == Lane.BOTTOM) {
         troop.setPosition(
-            Constants.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Constants.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+            Assets.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+            Assets.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.MIDDLE) {
         troop.setPosition(
-            Constants.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Constants.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+            Assets.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+            Assets.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.TOP) {
         troop.setPosition(
-            Constants.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Constants.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+            Assets.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+            Assets.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       }
       troopsTop.add(troop);
     }
