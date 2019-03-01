@@ -29,7 +29,12 @@ public class Assets {
     public static String creditsHeader =  "core/assets/creditsheader_new.png";
     public static String backButton =  "core/assets/back_new.png";
 
+    /* Host Screen Assets */
 
+    public static String hostHeader = "core/assets/multiplayerheader_new.png";
+    public static String hostButton = "core/assets/host_new.png";
+    public static String joinButton = "core/assets/join_new.png";
+    public static String hostBack = "core/assets/back_new.png";
 
 
     public static final int MINHEALTH = 0;

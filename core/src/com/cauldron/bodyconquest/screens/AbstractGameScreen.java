@@ -19,13 +19,8 @@ public abstract class AbstractGameScreen implements Screen {
     protected Viewport viewport;
     protected Camera camera;
     protected AssetManager manager;
-
     protected Texture background;
-
     protected Vector3 tmp;
-
-//    protected static final float TARGET_SCREEN_WIDTH = Gdx.graphics.getWidth();
-//    protected static final float TARGET_SCREEN_HEIGHT = Gdx.graphics.getHeight();
 
     public AbstractGameScreen(BodyConquest game) {
         this.game = game;
