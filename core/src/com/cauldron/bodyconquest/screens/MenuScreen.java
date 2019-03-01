@@ -2,16 +2,15 @@ package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
+
+import java.io.IOException;
 
 public class MenuScreen extends AbstractGameScreen implements Screen {
 
@@ -73,13 +72,16 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,
         60 * BodyConquest.scaleRatio);
 
-    checkPressed();
-
+    try {
+      checkPressed();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     game.batch.end();
   }
 
   @Override
-  public void checkPressed() {
+  public void checkPressed() throws IOException {
 
     super.checkPressed();
 
@@ -103,6 +105,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         dispose();
         game.setScreen(new RaceSelection(game, server, communicator, "singleplayer"));
       }
+
       if (settingsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         System.out.println("Settings Is touched");
@@ -135,7 +138,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
 
   public void loadAssets() {
     manager.load(Assets.menuBackground, Texture.class);
-    manager.load(Assets.menuTitle, Texture.class);
+    manager.load(Assets.mainMenuTitle, Texture.class);
     manager.load(Assets.multiplayerButton, Texture.class);
     manager.load(Assets.singleplayerButton, Texture.class);
     manager.load(Assets.settingsButton, Texture.class);
@@ -146,7 +149,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
 
   public void getAssets() {
     background = manager.get(Assets.menuBackground, Texture.class);
-    title = manager.get(Assets.menuTitle, Texture.class);
+    title = manager.get(Assets.mainMenuTitle, Texture.class);
     playButtonMultiplayer = manager.get(Assets.multiplayerButton, Texture.class);
     playButtonSinglePlayer = manager.get(Assets.singleplayerButton, Texture.class);
     settingsButton = manager.get(Assets.settingsButton, Texture.class);

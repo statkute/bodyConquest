@@ -85,7 +85,7 @@ public class RaceSelection implements Screen {
     stage = new Stage();
 
     background = new Texture("core/assets/background_new.png");
-    header = new Texture("core/assets/selectvirusheader_new.png");
+    header = new Texture("core/assets/selectvirusheader_new_big.png");
 
     blueVirus = new Texture("core/assets/bluevirus.png");
     greenVirus = new Texture("core/assets/greenvirus.png");
@@ -95,45 +95,45 @@ public class RaceSelection implements Screen {
     greenVirusSelected = new Texture("core/assets/greenvirusselected.png");
     yellowVirusSelected = new Texture("core/assets/yellowvirusselected.png");
 
-    blueDescription = new Texture("core/assets/bluevirus_characteristics.png");
-    greenDescription = new Texture("core/assets/greenvirus_characteristics.png");
-    yellowDescription = new Texture("core/assets/yellowvirus_characteristics.png");
+    blueDescription = new Texture("core/assets/bluevirus_characteristics_big.png");
+    greenDescription = new Texture("core/assets/greenvirus_characteristics_big.png");
+    yellowDescription = new Texture("core/assets/yellowvirus_characteristics_big.png");
 
-    continueText = new Texture("core/assets/continue_new.png");
-    backButton = new Texture("core/assets/back_new.png");
+    continueText = new Texture("core/assets/continue_new_big.png");
+    backButton = new Texture("core/assets/back_new_big.png");
 
     continueBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2,
-            80,
+            80 * BodyConquest.scaleRatio,
             continueText.getWidth(),
             continueText.getHeight());
 
     blueVirusBounds =
         new Rectangle(
-            BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2,
-            220,
-            blueVirus.getWidth(),
-            blueVirus.getHeight());
+            BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() * 1.7f / 2,
+            220 * BodyConquest.scaleRatio,
+            blueVirus.getWidth() * 1.7f,
+            blueVirus.getHeight() * 1.7f);
 
     greenVirusBounds =
         new Rectangle(
-            BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2,
-            220,
-            greenVirus.getWidth(),
-            greenVirus.getHeight());
+            BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() * 1.7f / 2,
+            220 * BodyConquest.scaleRatio,
+            greenVirus.getWidth() * 1.7f,
+            greenVirus.getHeight() * 1.7f);
 
     yellowVirusBounds =
         new Rectangle(
-            BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2,
-            220,
-            yellowVirus.getWidth(),
-            yellowVirus.getHeight());
+            BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() * 1.7f / 2,
+            220 * BodyConquest.scaleRatio,
+            yellowVirus.getWidth() * 1.7f,
+            yellowVirus.getHeight() * 1.7f);
 
     backBounds =
         new Rectangle(
-            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-            30,
+            BodyConquest.V_WIDTH / 2 - backButton.getWidth()/ 2,
+            30 * BodyConquest.scaleRatio,
             backButton.getWidth(),
             backButton.getHeight());
   }
@@ -154,18 +154,46 @@ public class RaceSelection implements Screen {
 
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
-    game.batch.draw(blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), 220);
-    game.batch.draw(greenVirus, (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2), 220);
-    game.batch.draw(yellowVirus, (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2), 220);
     game.batch.draw(
-        blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), 160);
+        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
     game.batch.draw(
-        greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), 160);
+        blueVirus,
+        (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() * 1.7f / 2),
+        220 * BodyConquest.scaleRatio,
+        blueVirus.getWidth() * 1.7f,
+        blueVirus.getHeight() * 1.7f);
     game.batch.draw(
-        yellowDescription, (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2), 160);
-    game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
-    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
+        greenVirus,
+        (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() * 1.7f / 2),
+        220 * BodyConquest.scaleRatio,
+        greenVirus.getWidth() * 1.7f,
+        greenVirus.getHeight() * 1.7f);
+    game.batch.draw(
+        yellowVirus,
+        (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() * 1.7f / 2),
+        220 * BodyConquest.scaleRatio,
+        yellowVirus.getWidth() * 1.7f,
+        yellowVirus.getHeight() * 1.7f);
+    game.batch.draw(
+        blueDescription,
+        (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2),
+        160 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        greenDescription,
+        (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2),
+        160 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        yellowDescription,
+        (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2),
+        160 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        continueText,
+        BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2,
+        80 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        backButton,
+        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+        30 * BodyConquest.scaleRatio);
 
     try {
       checkPressed();
