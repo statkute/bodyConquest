@@ -34,29 +34,29 @@ public class HostScreen implements Screen {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
     background = new Texture("core/assets/background_new.png");
-    header = new Texture("core/assets/multiplayerheader_new.png");
-    hostButtton = new Texture("core/assets/host_new.png");
-    joinButton = new Texture("core/assets/join_new.png");
-    backButton = new Texture("core/assets/back_new.png");
+    header = new Texture("core/assets/multiplayerheader_new_big.png");
+    hostButtton = new Texture("core/assets/host_new_big.png");
+    joinButton = new Texture("core/assets/join_new_big.png");
+    backButton = new Texture("core/assets/back_new_big.png");
 
     hostBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2,
-            300,
+            300 * BodyConquest.scaleRatio,
             hostButtton.getWidth(),
             hostButtton.getHeight());
 
     joinBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2,
-            240,
+            240 * BodyConquest.scaleRatio,
             joinButton.getWidth(),
             joinButton.getHeight());
 
     backBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-            60,
+            60 * BodyConquest.scaleRatio,
             backButton.getWidth(),
             backButton.getHeight());
   }
@@ -75,11 +75,11 @@ public class HostScreen implements Screen {
     game.batch.begin();
 
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
+    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
 
-    game.batch.draw(hostButtton, BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2, 300);
-    game.batch.draw(joinButton, BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2, 240);
-    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
+    game.batch.draw(hostButtton, BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2, 300 * BodyConquest.scaleRatio);
+    game.batch.draw(joinButton, BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2, 240 * BodyConquest.scaleRatio);
+    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60 * BodyConquest.scaleRatio);
 
     try {
       checkIfPressed();
