@@ -1,5 +1,6 @@
 package com.cauldron.bodyconquest.networking;
 
+import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.utils.Timer;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class ServerReceiver extends Thread {
   public DatagramSocket socket;
   public ServerSender serverSender;
   public LinkedBlockingQueue<String> receivedMessages;
-  public String type;
+  public GameType type;
   public int numberOfClients;
   private boolean run;
 
@@ -24,7 +25,7 @@ public class ServerReceiver extends Thread {
    * @param type the type of the game: either "singleplayer" or "multiplayer"
    * @throws SocketException
    */
-  public ServerReceiver(ServerSender serverSender, String type) throws SocketException {
+  public ServerReceiver(ServerSender serverSender, GameType type) throws SocketException {
     socket = new DatagramSocket(3000);
     this.serverSender = serverSender;
     receivedMessages = new LinkedBlockingQueue<String>();
@@ -79,13 +80,13 @@ public class ServerReceiver extends Thread {
         }
 
         if (receivedMessage.trim().equals("connected")
-            && type.equals("singleplayer")
+            && type == GameType.SINGLE_PLAYER
             && numberOfClients == 0) {
           serverSender.sendMessage("ID: a");
           serverSender.sendMessage("start game");
           numberOfClients++;
           break;
-        } else if (receivedMessage.trim().equals("connected") && type.equals("multiplayer")) {
+        } else if (receivedMessage.trim().equals("connected") && type == GameType.MULTIPLAYER_HOST) {
           if (numberOfClients == 0) {
             serverSender.sendMessage("ID: a");
             numberOfClients++;
