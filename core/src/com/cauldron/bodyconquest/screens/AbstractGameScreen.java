@@ -7,8 +7,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,18 +21,19 @@ public abstract class AbstractGameScreen implements Screen {
 
     protected Texture background;
 
-    protected static final float TARGET_SCREEN_WIDTH = 800.0f;
-    protected static final float TARGET_SCREEN_HEIGHT = 600.0f;
-    private static final float MAX_SCENE_WIDTH = 1920.0f;
-    private static final float MAX_SCENE_HEIGHT = 1080.0f;
+    protected Vector3 tmp;
+
+    protected static final float TARGET_SCREEN_WIDTH = Gdx.graphics.getWidth();
+    protected static final float TARGET_SCREEN_HEIGHT = Gdx.graphics.getHeight();
 
     public AbstractGameScreen(BodyConquest game) {
         this.game = game;
         if (camera == null) {
             camera = new OrthographicCamera();
+            ((OrthographicCamera) camera).setToOrtho(false, 800, 600);
         }
         if (viewport == null) {
-            viewport = new ExtendViewport(TARGET_SCREEN_WIDTH, TARGET_SCREEN_HEIGHT, MAX_SCENE_WIDTH, MAX_SCENE_HEIGHT, camera);
+            viewport = new FitViewport(BodyConquest.V_WIDTH,BodyConquest.V_HEIGHT,camera);
         }
         viewport.apply();
         manager = new AssetManager();
@@ -52,8 +52,6 @@ public abstract class AbstractGameScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         viewport.apply();
-//        game.batch.setProjectionMatrix(camera.combined);
-
 
     }
 
@@ -81,11 +79,12 @@ public abstract class AbstractGameScreen implements Screen {
 
     @Override
     public void dispose() {
+        manager.dispose();
 
     }
 
     public void checkPressed(){
-        Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(tmp);
     }
 
