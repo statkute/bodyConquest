@@ -13,9 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cauldron.bodyconquest.constants.Assets;
-import com.cauldron.bodyconquest.constants.Assets.*;
-import com.cauldron.bodyconquest.constants.Constants;
-import com.cauldron.bodyconquest.constants.Constants.*;
+import com.cauldron.bodyconquest.constants.Assets.Lane;
+import com.cauldron.bodyconquest.constants.Assets.PlayerType;
+import com.cauldron.bodyconquest.constants.Assets.UnitType;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.ViewObject;
@@ -88,45 +88,14 @@ public class EncounterScreen implements Screen {
     hud = new HUD(game.batch, this, playerType, stage);
     accumulatorAfterBaseConquered = 0;
 
-    hud = new HUD(game.batch, this, PlayerType.PLAYER_TOP,stage);
-    accumulatorAfterBaseConquered = 0;
-    playerType = PlayerType.PLAYER_TOP;
-
-
-
-//    testInit();
-//    this.game = game;
-//    gameCamera = new OrthographicCamera();
-//    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
-//    stage = new Stage(gamePort);
-//    Gdx.input.setInputProcessor(stage);
-//    hud = new HUD(game.batch, this, PlayerType.PLAYER_BOTTOM);
-//    accumulatorAfterBaseConquered = 0;
-//    playerType = PlayerType.PLAYER_BOTTOM;
-//
-//    // Set up map
-//    map = new Image(new Texture("core/assets/brainmap.png"));
-//    float topOfUnitBar = hud.getUnitBar().getTop();
-//    mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
-//    map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
-//    stage.addActor(map);
-//    menuScreen = new MenuScreen(game);
   }
 
   private void testInit() {}
 
   @Override
   public void show() {
-
     stage.getRoot().getColor().a = 0;
-
     stage.getRoot().addAction(Actions.fadeIn(0.5f));
-
-    // Draw HUD
-
-//    hud.getStage().getRoot().getColor().a = 0;
-//    hud.getStage().getRoot().addAction(Actions.fadeIn(0.5f));
-    //hud.getStage().draw();
   }
 
   @Override
@@ -267,7 +236,6 @@ public class EncounterScreen implements Screen {
 
   @Override
   public void dispose() {
-    //game.dispose();
     stage.dispose();
   }
 

@@ -1,15 +1,11 @@
 package com.cauldron.bodyconquest.gamestates;
 
 import com.badlogic.gdx.Gdx;
-import com.cauldron.bodyconquest.constants.Constants;
-import com.cauldron.bodyconquest.constants.Constants.Lane;
-import com.cauldron.bodyconquest.constants.Constants.PlayerType;
-import com.cauldron.bodyconquest.constants.Constants.UnitType;
-import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
+import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
 import com.cauldron.bodyconquest.entities.MapObject;
@@ -22,11 +18,10 @@ import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
-import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.game_logic.MultiplayerTestAI;
 import com.cauldron.bodyconquest.networking.Server;
-import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.ServerSender;
+import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
 
 import java.io.IOException;
