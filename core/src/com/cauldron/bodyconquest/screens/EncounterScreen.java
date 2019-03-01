@@ -13,7 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cauldron.bodyconquest.constants.Assets;
-import com.cauldron.bodyconquest.constants.Assets.*;
+import com.cauldron.bodyconquest.constants.Assets.Lane;
+import com.cauldron.bodyconquest.constants.Assets.PlayerType;
+import com.cauldron.bodyconquest.constants.Assets.UnitType;
+import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
@@ -56,71 +59,43 @@ public class EncounterScreen implements Screen {
 
   float elapsedSeconds;
 
-  public EncounterScreen(BodyConquest game, Communicator comms, Client client) {
+  public EncounterScreen(BodyConquest game, Communicator comms, GameType gameType) {
     this.comms = comms;
-    this.clientSender = client.clientSender;
-    this.client = client;
-    this.server = null;
-    testInit();
     this.game = game;
+    client = game.getClient();
+    clientSender = client.clientSender;
+
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
+
+
+    if(gameType != GameType.MULTIPLAYER_JOIN) {
+      server = game.getServer();
+      playerType = PlayerType.PLAYER_BOTTOM;
+    } else {
+      playerType = PlayerType.PLAYER_TOP;
+    }
+
     // Set up map
     map = new Image(new Texture("core/assets/brainmap.png"));
     float topOfUnitBar = 27;
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
-    hud = new HUD(game.batch, this, PlayerType.PLAYER_TOP,stage);
-    accumulatorAfterBaseConquered = 0;
-    playerType = PlayerType.PLAYER_TOP;
-
-
     menuScreen = new MenuScreen(game);
-  }
-
-  public EncounterScreen(BodyConquest game, Communicator comms, Client client, Server server) {
-    this.comms = comms;
-    this.clientSender = client.clientSender;
-    this.client = client;
-    this.server = server;
-    testInit();
-    this.game = game;
-    gameCamera = new OrthographicCamera();
-    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
-    stage = new Stage(gamePort);
-    Gdx.input.setInputProcessor(stage);
-    // Set up map
-    map = new Image(new Texture("core/assets/brainmap.png"));
-    //float topOfUnitBar = hud.getUnitBar().getTop();
-    float topOfUnitBar = 27;
-    mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
-    map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
-    stage.addActor(map);
-    hud = new HUD(game.batch, this, PlayerType.PLAYER_BOTTOM,stage);
+    hud = new HUD(game.batch, this, playerType, stage);
     accumulatorAfterBaseConquered = 0;
-    playerType = PlayerType.PLAYER_BOTTOM;
 
-
-    menuScreen = new MenuScreen(game);
   }
 
   private void testInit() {}
 
   @Override
   public void show() {
-
     stage.getRoot().getColor().a = 0;
-
     stage.getRoot().addAction(Actions.fadeIn(0.5f));
-
-    // Draw HUD
-
-//    hud.getStage().getRoot().getColor().a = 0;
-//    hud.getStage().getRoot().addAction(Actions.fadeIn(0.5f));
-    //hud.getStage().draw();
   }
 
   @Override
@@ -261,7 +236,6 @@ public class EncounterScreen implements Screen {
 
   @Override
   public void dispose() {
-    //game.dispose();
     stage.dispose();
   }
 

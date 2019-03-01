@@ -1,9 +1,11 @@
 package com.cauldron.bodyconquest.gamestates;
 
+import com.badlogic.gdx.Gdx;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
+import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
 import com.cauldron.bodyconquest.entities.MapObject;
@@ -16,11 +18,10 @@ import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
-import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.game_logic.MultiplayerTestAI;
 import com.cauldron.bodyconquest.networking.Server;
-import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.ServerSender;
+import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
 
 import java.io.IOException;
@@ -61,7 +62,6 @@ public class EncounterState extends GameState {
    * Client). This may remain for quick and easy implementation of single player without using a
    * Client/Server.
    */
-  private Communicator comms;
   private ServerSender serverSender;
 
   private Base topBase;
@@ -73,10 +73,8 @@ public class EncounterState extends GameState {
   /**
    * Constructor.
    *
-   * @param comms The communication object to receive information from the Server/Model.
    */
-  public EncounterState(Communicator comms, Server server, String gameType) {
-    this.comms = comms;
+  public EncounterState(Server server, GameType gameType) {
     this.serverSender = server.getServerSender();
     map = new Map();
 
@@ -107,7 +105,7 @@ public class EncounterState extends GameState {
     bottomResources.start();
     topResources.start();
 
-    if (gameType.equals("singleplayer")){
+    if (gameType == GameType.SINGLE_PLAYER){
       BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
       ai.start();
     } else {
@@ -297,6 +295,13 @@ public class EncounterState extends GameState {
       return;
     }
     allMapObjects.add(projectile);
+  }
+
+  private void checkPressed() {
+    if(Gdx.input.isKeyJustPressed(1)) {
+      //activate1();
+
+    }
   }
 
 

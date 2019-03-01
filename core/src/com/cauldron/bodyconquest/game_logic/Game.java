@@ -1,15 +1,12 @@
 package com.cauldron.bodyconquest.game_logic;
 
+import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.gamestates.GameStateManager;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
 
 public class Game extends Thread {
-
-  // Place holder for server processes
-  // This could stay for single player
-  public volatile Communicator comms;
 
   private boolean running;
   private int FPS = 60; // The number of time the game will refresh each second
@@ -19,10 +16,9 @@ public class Game extends Thread {
 
   private GameStateManager gsm;
 
-  public Game(Server server, Communicator communicator, String gameType) {
+  public Game(Server server, GameType gameType) {
     this.server = server;
-    comms = communicator;
-    encounterState = new EncounterState(comms, server, gameType);
+    encounterState = new EncounterState(server, gameType);
   }
 
   private void init() {

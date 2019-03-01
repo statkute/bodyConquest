@@ -10,11 +10,11 @@ import java.util.HashMap;
 public class AudioPlayer {
 
   /** The the max volume for all sounds inside the game. (Initialised to {@value MASTER_VOLUME}) */
-  public static float MASTER_VOLUME = 1.0f;
+  private static float MASTER_VOLUME = 1.0f;
   /** The volume for all sound FX inside the game. (Initialised to {@value SFX_VOLUME}) */
-  public static float SFX_VOLUME = 1.0f;
+  private static float SFX_VOLUME = 1.0f;
   /** The volume for all the music inside the game. (Initialised to {@value MUSIC_VOLUME}) */
-  public static float MUSIC_VOLUME = 1.0f;
+  private static float MUSIC_VOLUME = 1.0f;
 
   /** The volume to set for muted sounds. */
   private final float MUTED_VOLUME = 0.0f;

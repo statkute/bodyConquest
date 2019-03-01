@@ -2,12 +2,10 @@ package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.Server;
@@ -92,9 +90,8 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         Communicator communicator = new Communicator();
         game.setServer(server);
         game.setClient(client);
+        game.setScreen(new RaceSelection(game, communicator, GameType.SINGLE_PLAYER));
         dispose();
-        game.setScreen(new RaceSelection(game, server, communicator, "singleplayer"));
-
       }
       if (settingsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
