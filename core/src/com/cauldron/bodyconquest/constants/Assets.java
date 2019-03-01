@@ -18,21 +18,6 @@ public class Assets {
   public static String creditsButton = "core/assets/credits_new_big.png";
   public static String exitButton = "core/assets/exit_new_big.png";
 
-  /* Race Selection menu Screen Assets */
-  public static String raceSelectionTitle = "core/assets/selectvirusheader_new.png";
-  public static String blueVirus = "core/assets/bluevirus.png";
-  public static String greenVirus = "core/assets/greenvirus.png";
-  public static String yellowVirus = "core/assets/yellowvirus.png";
-  public static String blueVirusSelected = "core/assets/bluevirusselected.png";
-  public static String greenVirusSelected = "core/assets/greenvirusselected.png";
-  public static String yellowVirusSelected = "core/assets/yellowvirusselected.png";
-  public static String blueDescription = "core/assets/bluevirus_characteristics.png";
-  public static String greenDescription = "core/assets/greenvirus_characteristics.png";
-  public static String yellowDescription = "core/assets/yellowvirus_characteristics.png";
-  public static String continueButton = "core/assets/continue_new.png";
-  public static String backButton = "core/assets/back_new.png";
-
-
   public static final int MINHEALTH = 0;
 
   public static final int UPDATESCREENTILL = 200;
