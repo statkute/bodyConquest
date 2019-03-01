@@ -12,12 +12,12 @@ public class Assets {
     /* Menu Screen Assets */
 
     public static String menuBackground ="core/assets/background_new.png";
-    public static String menuTitle =  "core/assets/title_new.png";
-    public static String multiplayerButton =  "core/assets/multiplayer_new.png";
-    public static String singleplayerButton =  "core/assets/singleplayer_new.png";
-    public static String settingsButton =  "core/assets/settings_new.png";
-    public static String creditsButton =  "core/assets/credits_new.png";
-    public static String exitButton =  "core/assets/exit_new.png";
+    public static String menuTitle =  "core/assets/title_new_big.png";
+    public static String multiplayerButton =  "core/assets/multiplayer_new_big.png";
+    public static String singleplayerButton =  "core/assets/singleplayer_new_big.png";
+    public static String settingsButton =  "core/assets/settings_new_big.png";
+    public static String creditsButton =  "core/assets/credits_new_big.png";
+    public static String exitButton =  "core/assets/exit_new_big.png";
 
 
     public static final int MINHEALTH = 0;
