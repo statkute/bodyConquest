@@ -35,42 +35,42 @@ public class SettingsScreen implements Screen {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
     background = new Texture("core/assets/background_new.png");
-    header = new Texture("core/assets/settingsheader_new.png");
-    soundHeader = new Texture("core/assets/sound.png");
-    musicHeader = new Texture("core/assets/music.png");
-    soundOn = new Texture("core/assets/on.png");
-    soundOff = new Texture("core/assets/off.png");
-    musicOn = new Texture("core/assets/on.png");
-    musicOff = new Texture("core/assets/off.png");
-    backButton = new Texture("core/assets/back_new.png");
+    header = new Texture("core/assets/settingsheader_new_big.png");
+    soundHeader = new Texture("core/assets/sound_big.png");
+    musicHeader = new Texture("core/assets/music_big.png");
+    soundOn = new Texture("core/assets/on_big.png");
+    soundOff = new Texture("core/assets/off_big.png");
+    musicOn = new Texture("core/assets/on_big.png");
+    musicOff = new Texture("core/assets/off_big.png");
+    backButton = new Texture("core/assets/back_new_big.png");
 
     backBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-            60,
+            60 * BodyConquest.scaleRatio,
             backButton.getWidth(),
             backButton.getHeight());
 
     soundBounds =
         new Rectangle(
-            BodyConquest.V_WIDTH / 5, 300, soundHeader.getWidth(), soundHeader.getHeight());
+            BodyConquest.V_WIDTH / 5, 300 * BodyConquest.scaleRatio, soundHeader.getWidth(), soundHeader.getHeight());
 
     musicBounds =
         new Rectangle(
-            BodyConquest.V_WIDTH / 5, 240, musicHeader.getWidth(), musicHeader.getHeight());
+            BodyConquest.V_WIDTH / 5, 240 * BodyConquest.scaleRatio, musicHeader.getWidth(), musicHeader.getHeight());
 
     if (game.audioPlayer.getMutedSFX()) {
       soundToggleBounds =
           new Rectangle(
               BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
-              300,
+              300 * BodyConquest.scaleRatio,
               soundOff.getWidth(),
               soundOff.getHeight());
     } else {
       soundToggleBounds =
           new Rectangle(
               BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(),
-              300,
+              300 * BodyConquest.scaleRatio,
               soundOn.getWidth(),
               soundOn.getHeight());
     }
@@ -79,14 +79,14 @@ public class SettingsScreen implements Screen {
       musicToggleBounds =
           new Rectangle(
               BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
-              240,
+              240 * BodyConquest.scaleRatio,
               musicOff.getWidth(),
               musicOff.getHeight());
     } else {
       musicToggleBounds =
           new Rectangle(
               BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(),
-              240,
+              240 * BodyConquest.scaleRatio,
               musicOn.getWidth(),
               musicOn.getHeight());
     }
@@ -106,25 +106,25 @@ public class SettingsScreen implements Screen {
     game.batch.begin();
 
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
+    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
 
-    game.batch.draw(soundHeader, BodyConquest.V_WIDTH / 5, 300);
+    game.batch.draw(soundHeader, BodyConquest.V_WIDTH / 5, 300 * BodyConquest.scaleRatio);
 
     if (game.audioPlayer.getMutedSFX()) {
-      game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), 300);
+      game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), 300 * BodyConquest.scaleRatio);
     } else {
-      game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), 300);
+      game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), 300 * BodyConquest.scaleRatio);
     }
 
-    game.batch.draw(musicHeader, BodyConquest.V_WIDTH / 5, 240);
+    game.batch.draw(musicHeader, BodyConquest.V_WIDTH / 5, 240 * BodyConquest.scaleRatio);
 
     if (game.audioPlayer.getMutedMusic()) {
-      game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), 240);
+      game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), 240 * BodyConquest.scaleRatio);
     } else {
-      game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), 240);
+      game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), 240 * BodyConquest.scaleRatio);
     }
 
-    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
+    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60 * BodyConquest.scaleRatio);
 
     try {
       checkIfPressed();
@@ -171,9 +171,9 @@ public class SettingsScreen implements Screen {
         game.audioPlayer.toggleMutedSFX();
         playButtonSound();
         if (game.audioPlayer.getMutedSFX()) {
-          game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), 300);
+          game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), 300 * BodyConquest.scaleRatio);
         } else {
-          game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), 300);
+          game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), 300 * BodyConquest.scaleRatio);
         }
       }
 
@@ -181,9 +181,9 @@ public class SettingsScreen implements Screen {
         game.audioPlayer.toggleMutedMusic();
         playButtonSound();
         if (game.audioPlayer.getMutedMusic()) {
-          game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), 240);
+          game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), 240 * BodyConquest.scaleRatio);
         } else {
-          game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), 240);
+          game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), 240 * BodyConquest.scaleRatio);
         }
       }
     }

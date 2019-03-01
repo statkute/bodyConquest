@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -29,21 +30,21 @@ public class CreditsScreen implements Screen {
   public CreditsScreen(BodyConquest game) {
     this.game = game;
     camera = new OrthographicCamera();
-    camera.setToOrtho(false, 800, 600);
+    camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
 
     background = new Texture("core/assets/background_new.png");
-    header = new Texture("core/assets/creditsheader_new.png");
-    backButton = new Texture("core/assets/back_new.png");
-    alexandru = new Texture("core/assets/alexandru_new.png");
-    augustas = new Texture("core/assets/augustas_new.png");
-    brandon = new Texture("core/assets/brandon_new.png");
-    gintare = new Texture("core/assets/gintare_new.png");
-    paul = new Texture("core/assets/paul_new.png");
+    header = new Texture("core/assets/creditsheader_new_big.png");
+    backButton = new Texture("core/assets/back_new_big.png");
+    alexandru = new Texture("core/assets/alexandru_new_big.png");
+    augustas = new Texture("core/assets/augustas_new_big.png");
+    brandon = new Texture("core/assets/brandon_new_big.png");
+    gintare = new Texture("core/assets/gintare_new_big.png");
+    paul = new Texture("core/assets/paul_new_big.png");
 
     backBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-            60,
+            60 * BodyConquest.scaleRatio,
             backButton.getWidth(),
             backButton.getHeight());
   }
@@ -62,15 +63,15 @@ public class CreditsScreen implements Screen {
     game.batch.begin();
 
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
+    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
 
-    game.batch.draw(alexandru, BodyConquest.V_WIDTH / 2 - alexandru.getWidth() / 2, 350);
-    game.batch.draw(augustas, BodyConquest.V_WIDTH / 2 - augustas.getWidth() / 2, 300);
-    game.batch.draw(brandon, BodyConquest.V_WIDTH / 2 - brandon.getWidth() / 2, 250);
-    game.batch.draw(gintare, BodyConquest.V_WIDTH / 2 - gintare.getWidth() / 2, 200);
-    game.batch.draw(paul, BodyConquest.V_WIDTH / 2 - paul.getWidth() / 2, 150);
+    game.batch.draw(alexandru, BodyConquest.V_WIDTH / 2 - alexandru.getWidth() / 2, 350 * BodyConquest.scaleRatio);
+    game.batch.draw(augustas, BodyConquest.V_WIDTH / 2 - augustas.getWidth() / 2, 300 * BodyConquest.scaleRatio);
+    game.batch.draw(brandon, BodyConquest.V_WIDTH / 2 - brandon.getWidth() / 2, 250 * BodyConquest.scaleRatio);
+    game.batch.draw(gintare, BodyConquest.V_WIDTH / 2 - gintare.getWidth() / 2, 200 * BodyConquest.scaleRatio);
+    game.batch.draw(paul, BodyConquest.V_WIDTH / 2 - paul.getWidth() / 2, 150 * BodyConquest.scaleRatio);
 
-    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
+    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60 * BodyConquest.scaleRatio);
 
     checkPressed();
     game.batch.end();
