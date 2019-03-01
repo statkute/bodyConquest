@@ -26,8 +26,13 @@ public class BodyConquest extends Game {
 
   static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-  public static final int V_WIDTH = (int) screenSize.getWidth();
-  public static final int V_HEIGHT = (int) screenSize.getHeight();
+  public static final float V_WIDTH = (float) screenSize.getWidth();
+  public static final float V_HEIGHT = (float) screenSize.getHeight();
+
+  public static final float originalAspectRatio = 4/3;
+  public static float yourAspectRatio = V_WIDTH/V_HEIGHT;
+  public static float scaleRatio = yourAspectRatio/originalAspectRatio;
+
 
   public static final AudioPlayer audioPlayer = new AudioPlayer();
 
