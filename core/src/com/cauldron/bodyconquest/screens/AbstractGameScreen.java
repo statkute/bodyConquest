@@ -36,6 +36,7 @@ public abstract class AbstractGameScreen implements Screen {
             viewport = new ExtendViewport(TARGET_SCREEN_WIDTH, TARGET_SCREEN_HEIGHT, MAX_SCENE_WIDTH, MAX_SCENE_HEIGHT, camera);
         }
         viewport.apply();
+        manager = new AssetManager();
     }
 
     @Override
@@ -50,7 +51,7 @@ public abstract class AbstractGameScreen implements Screen {
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-//        viewport.apply();
+        viewport.apply();
 //        game.batch.setProjectionMatrix(camera.combined);
 
 

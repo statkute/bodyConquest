@@ -67,16 +67,17 @@ public class EncounterScreen implements Screen {
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
+    // Set up map
+    map = new Image(new Texture("core/assets/brainmap.png"));
+    float topOfUnitBar = 27;
+    mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
+    map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
+    stage.addActor(map);
     hud = new HUD(game.batch, this, PlayerType.PLAYER_TOP,stage);
     accumulatorAfterBaseConquered = 0;
     playerType = PlayerType.PLAYER_TOP;
 
-    // Set up map
-    map = new Image(new Texture("core/assets/brainmap.png"));
-    float topOfUnitBar = hud.getUnitBar().getTop();
-    mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
-    map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
-    stage.addActor(map);
+
     menuScreen = new MenuScreen(game);
   }
 
@@ -94,7 +95,7 @@ public class EncounterScreen implements Screen {
     // Set up map
     map = new Image(new Texture("core/assets/brainmap.png"));
     //float topOfUnitBar = hud.getUnitBar().getTop();
-    float topOfUnitBar = 30;
+    float topOfUnitBar = 27;
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
