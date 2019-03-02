@@ -56,7 +56,6 @@ public class RaceSelection implements Screen {
   private GameType gameType;
 
   private Random random;
-  private Server server;
 
   public RaceSelection(
       BodyConquest game, GameType gameType) throws IOException {
@@ -160,16 +159,12 @@ public class RaceSelection implements Screen {
     game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
     game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
 
-    try {
-      checkPressed();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    checkPressed();
 
     game.batch.end();
   }
 
-  public void checkPressed() throws IOException {
+  public void checkPressed() {
     if (Gdx.input.justTouched()) {
 
       Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -229,9 +224,7 @@ public class RaceSelection implements Screen {
       if (backBounds.contains(tmp.x, tmp.y)) {
         System.out.println("back pressed");
         playButtonSound();
-        if (server != null) {
-          server.closeEverything();
-        }
+        g.closeEverything();
         game.getClient().closeEverything();
         game.setScreen(new MenuScreen(game));
         dispose();

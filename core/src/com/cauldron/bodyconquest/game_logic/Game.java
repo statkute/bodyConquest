@@ -103,4 +103,8 @@ public class Game extends Thread {
   public GameType getGameType() {
     return gameType;
   }
+
+  public void closeEverything() {
+    server.closeEverything();
+  }
 }
