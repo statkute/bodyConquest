@@ -4,6 +4,7 @@ import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.gamestates.GameStateManager;
 import com.cauldron.bodyconquest.networking.Server;
+import com.cauldron.bodyconquest.networking.ServerLogic;
 
 import java.net.SocketException;
 
@@ -12,32 +13,35 @@ public class Game extends Thread {
   private boolean running;
   /** The number of time the game will refresh each second. */
   private final int FPS = 60;
+
   private long targetTime = 1000 / FPS;
-  private EncounterState encounterState;
   private Server server;
   private GameStateManager gsm;
+  private final GameType gameType;
+  private ServerLogic serverLogic;
 
   private Player player1;
   private Player player2;
 
   /**
    * Constructor
+   *
    * @param gameType The type of game that this server is running.
    * @throws SocketException
    */
   public Game(GameType gameType) throws SocketException {
+    this.gameType = gameType;
     server = new Server();
     server.startServer(gameType);
     player1 = new Player();
     player2 = new Player();
-    encounterState = new EncounterState(this, gameType);
   }
 
   private void init() {
     running = true;
     gsm = new GameStateManager(this);
     // Starting state
-    gsm.setCurrentGameState(encounterState);
+    // gsm.setCurrentGameState(raceSelectState);
   }
 
   @Override
@@ -48,8 +52,6 @@ public class Game extends Thread {
     long start;
     long elapsed;
     long wait;
-
-
 
     // Game loop
     while (running) {
@@ -89,7 +91,16 @@ public class Game extends Thread {
     return player2;
   }
 
+  public void startEncounterState() {
+    EncounterState encounterState = new EncounterState(this);
+    gsm.setCurrentGameState(encounterState);
+  }
+
   public void startEncounterLogic(EncounterState encounterState) {
-    server.startServerLogic(encounterState);
+    server.startEncounterLogic(encounterState);
+  }
+
+  public GameType getGameType() {
+    return gameType;
   }
 }

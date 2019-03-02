@@ -74,7 +74,7 @@ public class EncounterState extends GameState {
   /**
    * Constructor.
    */
-  public EncounterState(Game game, GameType gameType) {
+  public EncounterState(Game game) {
     super(game);
     Server server = game.getServer();
     serverSender = server.getServerSender();
@@ -108,7 +108,7 @@ public class EncounterState extends GameState {
     bottomResources.start();
     topResources.start();
 
-    if (gameType == GameType.SINGLE_PLAYER){
+    if (game.getGameType() == GameType.SINGLE_PLAYER){
       BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
       ai.start();
     } else {

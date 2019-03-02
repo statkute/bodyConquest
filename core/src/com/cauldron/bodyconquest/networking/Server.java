@@ -27,18 +27,19 @@ public class Server {
 
     serverSender = new ServerSender();
     serverReceiver = new ServerReceiver(serverSender, type);
+    serverLogic = new ServerLogic(serverReceiver);
 
     serverSender.start();
     serverReceiver.start();
+    serverLogic.start();
   }
 
   public ServerSender getServerSender() {
     return serverSender;
   }
 
-  public void startServerLogic(EncounterState encounterState) {
-    serverLogic = new ServerLogic(serverReceiver, encounterState);
-    serverLogic.start();
+  public void startEncounterLogic(EncounterState encounterState) {
+    serverLogic.setEncounterLogic(encounterState);
   }
 
   public static void main(String args[]) throws Exception {

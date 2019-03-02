@@ -181,11 +181,7 @@ public class RaceSelection implements Screen {
       if (continueBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         if (gameType != GameType.MULTIPLAYER_JOIN) {
-//          g = new Game(gameType);
-//          game.getClient().startClient();
-//          game.setGame(g);
-//          g.start();
-          //server.startServerLogic(g.getEncounterState());
+          g.startEncounterState();
         }
           game.setScreen(new EncounterScreen(game, gameType));
         dispose();

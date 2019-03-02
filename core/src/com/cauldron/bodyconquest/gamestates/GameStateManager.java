@@ -10,9 +10,11 @@ public class GameStateManager {
 
   public GameStateManager(Game game) {
     this.game = game;
+    currentGameState = null;
   }
 
   public void update() {
+    if(currentGameState == null) return;
     currentGameState.update();
   }
 
