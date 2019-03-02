@@ -13,6 +13,7 @@ public class Server {
   private Ping ping;
   private boolean gameEnded;
 
+
   /**
    * Server initialization: receiver, sender and logic threads are started
    *
@@ -26,11 +27,9 @@ public class Server {
 
     serverSender = new ServerSender();
     serverReceiver = new ServerReceiver(serverSender, type);
-    // serverLogic = new ServerLogic(serverReceiver, encounterState);
 
     serverSender.start();
     serverReceiver.start();
-    // serverLogic.start();
   }
 
   public ServerSender getServerSender() {
@@ -57,22 +56,16 @@ public class Server {
   }
 
   public void closeEverything() {
-    if (serverSender != null) {
-      serverSender.stopRunning();
-    }
-    if (serverReceiver != null) {
-      serverReceiver.stopRunning();
-    }
-    if (serverLogic != null) {
-      serverLogic.stopRunning();
-    }
-    if (ping != null) {
-      ping.stopRunning();
-    }
+    if (serverSender != null) serverSender.stopRunning();
+    if (serverReceiver != null) serverReceiver.stopRunning();
+    if (serverLogic != null) serverLogic.stopRunning();
+    if (ping != null) ping.stopRunning();
+
     gameEnded = true;
   }
 
   public boolean isGameEnded() {
     return gameEnded;
   }
+
 }

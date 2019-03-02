@@ -62,6 +62,7 @@ public class ClientLogic extends Thread {
       }
     }
   }
+
   public void stopRunning(){
     run = false;
   }

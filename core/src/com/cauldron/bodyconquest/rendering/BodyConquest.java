@@ -1,6 +1,5 @@
 package com.cauldron.bodyconquest.rendering;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.FPSLogger;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cauldron.bodyconquest.audio.AudioPlayer;
 import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.screens.MenuScreen;
@@ -20,7 +20,7 @@ The core of the rendering engine, hosts the sprite batch for the current screen,
 calls all act methods for actors in stages of children and calls all render functions
 for implementing screens.
  */
-public class BodyConquest extends Game {
+public class BodyConquest extends com.badlogic.gdx.Game {
 
   // private static final Logger log = Logger.getLogger(MyGdxGame.class);
 
@@ -41,7 +41,7 @@ public class BodyConquest extends Game {
   // so that we could add text
   public BitmapFont font;
 
-  private Server server;
+  private Game game;
   private Client client;
 
   @Override
@@ -72,12 +72,14 @@ public class BodyConquest extends Game {
     font.dispose();
   }
 
-  public Server getServer() {
-    return server;
+  public Game getGame() {
+    return game;
   }
 
-  public void setServer(Server server) {
-    this.server = server;
+  public Server getServer() { return game.getServer(); }
+
+  public void setGame(Game game) {
+    this.game = game;
   }
 
   public Client getClient() {

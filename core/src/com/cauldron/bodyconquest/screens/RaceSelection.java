@@ -57,18 +57,15 @@ public class RaceSelection implements Screen {
 
   private Random random;
   private Server server;
-  private Communicator communicator;
 
   public RaceSelection(
-      BodyConquest game, Communicator communicator, GameType gameType) {
-    this.communicator = communicator;
-    this.server = game.getServer();
+      BodyConquest game, GameType gameType) throws IOException {
     this.game = game;
     this.gameType = gameType;
     setup();
   }
 
-  private void setup() {
+  private void setup() throws IOException {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
 
@@ -127,6 +124,11 @@ public class RaceSelection implements Screen {
             30,
             backButton.getWidth(),
             backButton.getHeight());
+
+    g = new Game(gameType);
+    game.getClient().startClient();
+    game.setGame(g);
+    g.start();
   }
 
   @Override
@@ -172,21 +174,20 @@ public class RaceSelection implements Screen {
 
       Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
       camera.unproject(tmp);
-      if (server == null) {
+      if (game.getGame() == null) {
         System.err.println("Server not instantiated");
         return;
       }
       if (continueBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         if (gameType != GameType.MULTIPLAYER_JOIN) {
-          server.startServer(gameType);
-          // This is strange, we could maybe call this in the RaceSelection constructor
-          game.getClient().startClient(communicator);
-          g = new Game(server, gameType);
-          g.start();
-          server.startServerLogic(g.getEncounterState());
+//          g = new Game(gameType);
+//          game.getClient().startClient();
+//          game.setGame(g);
+//          g.start();
+          //server.startServerLogic(g.getEncounterState());
         }
-          game.setScreen(new EncounterScreen(game, communicator, gameType));
+          game.setScreen(new EncounterScreen(game, gameType));
         dispose();
       }
 
@@ -261,21 +262,7 @@ public class RaceSelection implements Screen {
   public void hide() {}
 
   @Override
-  public void dispose() {
-
-    //    background.dispose();
-    //    disease1.dispose();
-    //    disease2.dispose();
-    //    disease3.dispose();
-    //    playButton.dispose();
-    //    confirmButton.dispose();
-    //    selectionFrame1.dispose();
-    //    selectionFrame2.dispose();
-  }
-
-  public Game getG() {
-    return g;
-  }
+  public void dispose() {}
 
   public void playButtonSound() {
     game.audioPlayer.playSFX("button_click");

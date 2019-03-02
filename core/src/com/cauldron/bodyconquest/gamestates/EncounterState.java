@@ -18,6 +18,7 @@ import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
+import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.game_logic.MultiplayerTestAI;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.ServerSender;
@@ -72,12 +73,14 @@ public class EncounterState extends GameState {
 
   /**
    * Constructor.
-   *
    */
-  public EncounterState(Server server, GameType gameType) {
-    this.serverSender = server.getServerSender();
+  public EncounterState(Game game, GameType gameType) {
+    super(game);
+    Server server = game.getServer();
+    serverSender = server.getServerSender();
     map = new Map();
 
+    game.startEncounterLogic(this);
 
     allMapObjects = new CopyOnWriteArrayList<MapObject>();
 

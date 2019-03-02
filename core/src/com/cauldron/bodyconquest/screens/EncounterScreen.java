@@ -59,11 +59,11 @@ public class EncounterScreen implements Screen {
 
   float elapsedSeconds;
 
-  public EncounterScreen(BodyConquest game, Communicator comms, GameType gameType) {
-    this.comms = comms;
+  public EncounterScreen(BodyConquest game, GameType gameType) {
     this.game = game;
     client = game.getClient();
     clientSender = client.clientSender;
+    comms = client.getCommunicator();
 
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
