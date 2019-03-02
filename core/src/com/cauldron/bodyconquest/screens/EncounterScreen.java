@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.cauldron.bodyconquest.constants.Ability;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
@@ -244,6 +245,15 @@ public class EncounterScreen implements Screen {
     clientSender.sendMessage(message);
   }
 
+  public void useAbility(Ability ability, Lane lane, PlayerType playerType) {
+    String message = MessageMaker.castAbilityMessage(ability, lane, playerType);
+    clientSender.sendMessage(message);
+  }
+
+  public void useAbility(Ability ability, int xAxis, int yAxis, PlayerType playerType) {
+    String message = MessageMaker.castAbilityMessage(ability, xAxis, yAxis, playerType);
+    clientSender.sendMessage(message);
+  }
   public int getHealthBottomBase() {
     return healthBottomBase;
   }

@@ -1,5 +1,6 @@
 package com.cauldron.bodyconquest.networking.utilities;
 
+import com.cauldron.bodyconquest.constants.Ability;
 import com.cauldron.bodyconquest.constants.Assets.*;
 
 import java.text.DecimalFormat;
@@ -18,26 +19,48 @@ public class MessageMaker {
     return (message);
   }
 
-  public static String castAbilityMessage(String abilityName, int xAxis, int yAxis) {
-    String message = "ACTION_A_";
+  public static String castAbilityMessage(Ability ability, int xAxis, int yAxis, PlayerType playerType) {
+    String message = "ACTION_AA_";
 
-    if (abilityName.equals("fireball")) {
-      message += "F_";
-    } else {
-      message += "W_"; // water blast
-    }
-    if (xAxis < 10) {
-      message += ("0" + xAxis);
-    } else {
-      message += xAxis;
-    }
+    String xPadded = String.format("%04d", xAxis);
+    String yPadded = String.format("%04d", yAxis);
+
+//    if (ability.equals("fireball")) {
+//      message += "F_";
+//    } else {
+//      message += "W_"; // water blast
+//    }
+//    if (xAxis < 10) {
+//      message += ("0" + xAxis);
+//    } else {
+//      message += xAxis;
+//    }
+//    message += "_";
+//    if (yAxis < 10) {
+//      message += ("0" + yAxis);
+//    } else {
+//      message += yAxis;
+//    }
+
+    message += ability.getEncoded();
     message += "_";
-    if (yAxis < 10) {
-      message += ("0" + yAxis);
-    } else {
-      message += yAxis;
-    }
+    message += playerType.encoded();
+    message += "_";
+    message += xPadded;
+    message += "_";
+    message += yPadded;
 
+    return (message);
+  }
+
+  public static String castAbilityMessage(Ability ability, Lane lane, PlayerType playerType) {
+    String message = "ACTION_AL_";
+
+    message += ability.getEncoded();
+    message += "_";
+    message += playerType.encoded();
+    message += "_";
+    message += lane.encoded();
     return (message);
   }
 
