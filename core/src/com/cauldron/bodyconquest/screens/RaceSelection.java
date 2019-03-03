@@ -135,6 +135,12 @@ public class RaceSelection implements Screen {
     }
 
     game.getClient().startClient();
+    if(gameType != GameType.MULTIPLAYER_JOIN) {
+      game.getClient().getCommunicator().setPlayerType(Assets.PlayerType.PLAYER_BOTTOM);
+    } else {
+      game.getClient().getCommunicator().setPlayerType(Assets.PlayerType.PLAYER_TOP);
+    }
+
     game.getClient().setRaceSelectionLogic();
   }
 

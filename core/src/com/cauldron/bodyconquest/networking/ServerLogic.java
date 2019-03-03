@@ -17,9 +17,12 @@ public class ServerLogic extends Thread {
     ENCOUNTER_LOGIC
   }
 
-  private ServerReceiver serverReceiver;
-  private boolean run;
   private Logic currentLogic;
+
+  private ServerReceiver serverReceiver;
+  private ServerSender serverSender;
+
+  private boolean run;
 
   // Encounter Logic Variables
   private EncounterState encounterState;
@@ -33,8 +36,9 @@ public class ServerLogic extends Thread {
    *
    * @param serverReceiver The ServerReceiver thread of the same Server.
    */
-  public ServerLogic(ServerReceiver serverReceiver) {
+  public ServerLogic(ServerReceiver serverReceiver, ServerSender serverSender) {
     this.serverReceiver = serverReceiver;
+    this.serverSender = serverSender;
     this.run = true;
     init();
   }
@@ -85,11 +89,15 @@ public class ServerLogic extends Thread {
       playerType = PlayerType.decode(encodedPlayerType);
       pointer += PlayerType.getEncodedLength() + 1;
 
-      if(playerType == PlayerType.PLAYER_TOP)     playerTop = new Player(playerType, disease);
+      if(playerType == PlayerType.PLAYER_TOP) {
+        playerTop = new Player(playerType, disease);
+        String responseMessage = MessageMaker.diseaseMessage(disease, playerType);
+        serverSender.sendMessage(responseMessage);
+      }
       if(playerType == PlayerType.PLAYER_BOTTOM)  playerBottom = new Player(playerType, disease);
       // Does nothing for player type AI as of now
       // if(playerType == PlayerType.AI)          playerTop = new Player(playerType, disease);
-    } else {
+    } else if (message.equals(MessageMaker.CONFIRMED_RACE)) {
       System.err.println("[ERROR] This message doesn't conform to the current logic.");
     }
   }

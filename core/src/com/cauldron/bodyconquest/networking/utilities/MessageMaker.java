@@ -13,13 +13,18 @@ public class MessageMaker {
   public static final String ABILITY_CAST_HEADER = "ACTION_A_";
   public static final String HEALTH_HEADER = "HEALTH_";
   public static final String RESOURCES_HEADER = "RESOURCES_";
-  public static final String PAUSE_MESSAGE = "PAUSE";
-  public static final String EXIT_MESSAGE = "EXIT";
   public static final String RACE_HEADER = "RACE_";
+  public static final String CHOOSE_RACE_HEADER = "CHOOSE_RACE_";
+  public static final String FIRST_PICKER_HEADER = "FIRST_PICKER_";
 
   public static final int RESOURCE_PADDING = 3;
   public static final int HEALTH_PADDING = 3;
   public static final int COORDINATE_PADDING = 3;
+
+  public static final String CONFIRMED_RACE = "CONFIRMED_RACE";
+  public static final String PAUSE_MESSAGE = "PAUSE";
+  public static final String EXIT_MESSAGE = "EXIT";
+
 
   public static String spawnTroopsMessage(UnitType troopClass, Lane lane, PlayerType playerType) {
     String message = TROOP_SPAWN_HEADER;
@@ -86,6 +91,18 @@ public class MessageMaker {
     message += disease.getEncoded();
     message += "_";
     message += playerType.getEncoded();
+    return message;
+  }
+
+  public static String chooseRaceMessage(PlayerType player) {
+    String message = CHOOSE_RACE_HEADER;
+    message += player.getEncoded();
+    return message;
+  }
+
+  public static String firstPickerMessage(PlayerType player) {
+    String message = FIRST_PICKER_HEADER;
+    message += player.getEncoded();
     return message;
   }
 

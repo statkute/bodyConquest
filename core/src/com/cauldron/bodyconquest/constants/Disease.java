@@ -44,6 +44,15 @@ public enum Disease {
     return null;
   }
 
+  public static Disease decodeFromMessage(String message, Integer pointer) {
+    Disease disease;
+    String encodedDisease = message.substring(pointer, pointer + getEncodedLength());
+    disease = Disease.decode(encodedDisease);
+    pointer += Disease.getEncodedLength() + 1;
+
+    return disease;
+  }
+
   public static int getEncodedLength() {
     return ENCODED_LENGTH;
   }

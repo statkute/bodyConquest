@@ -1,6 +1,7 @@
 package com.cauldron.bodyconquest.networking;
 
 import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
@@ -49,9 +50,44 @@ public class ClientLogic extends Thread {
   }
 
   private void raceSelectionLogic(String message) {
-    // TO DO:
-    // - Receive if I'm choosing my race first
-    // - Receive other player's selected race and show it
+    int pointer;
+    if (message.startsWith(MessageMaker.RACE_HEADER)) {
+      Disease disease;
+      Assets.PlayerType player;
+
+      pointer = MessageMaker.RACE_HEADER.length();
+
+      String encodedDisease = message.substring(pointer, pointer + Disease.getEncodedLength());
+      disease = Disease.decode(encodedDisease);
+      pointer += Disease.getEncodedLength() + 1;
+
+      String encodedPlayerType =
+          message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
+      player = Assets.PlayerType.decode(encodedPlayerType);
+
+      if (communicator.getPlayerType() != player) communicator.setEnemyDisease(disease);
+    } else if (message.startsWith(MessageMaker.FIRST_PICKER_HEADER)) {
+      Assets.PlayerType firstPicker;
+
+      pointer = MessageMaker.FIRST_PICKER_HEADER.length();
+
+      String encodedPlayerType =
+          message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
+      firstPicker = Assets.PlayerType.decode(encodedPlayerType);
+
+      communicator.setPicker(firstPicker == communicator.getPlayerType());
+
+    } else if (message.startsWith(MessageMaker.CHOOSE_RACE_HEADER)) {
+      Assets.PlayerType player;
+
+      pointer = MessageMaker.CHOOSE_RACE_HEADER.length();
+
+      String encodedPlayerType =
+          message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
+      player = Assets.PlayerType.decode(encodedPlayerType);
+
+      if (player == communicator.getPlayerType()) communicator.setPicker(true);
+    }
   }
 
   private void encounterLogic(String message) throws IOException {
@@ -68,7 +104,8 @@ public class ClientLogic extends Thread {
 
       pointer = MessageMaker.HEALTH_HEADER.length();
 
-      String encodedPlayerType = message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
+      String encodedPlayerType =
+          message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
       player = Assets.PlayerType.decode(encodedPlayerType);
       pointer += Assets.PlayerType.getEncodedLength() + 1;
 
@@ -90,7 +127,8 @@ public class ClientLogic extends Thread {
 
       pointer = MessageMaker.RESOURCES_HEADER.length();
 
-      String encodedPlayerType = message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
+      String encodedPlayerType =
+          message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
       player = Assets.PlayerType.decode(encodedPlayerType);
       pointer += Assets.PlayerType.getEncodedLength() + 1;
 
@@ -104,7 +142,6 @@ public class ClientLogic extends Thread {
 
       String proteinsString = message.substring(pointer, pointer + MessageMaker.RESOURCE_PADDING);
       proteins = Integer.parseInt(proteinsString);
-
 
       // Lots of this doesn't make sense, the client doesn't need to know their opponents resources
       // As it doesn't need to print it or make any decisions based on it

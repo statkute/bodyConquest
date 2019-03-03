@@ -28,7 +28,7 @@ public class Server {
 
     serverSender = new ServerSender();
     serverReceiver = new ServerReceiver(serverSender, type);
-    serverLogic = new ServerLogic(serverReceiver);
+    serverLogic = new ServerLogic(serverReceiver, serverSender);
 
     serverSender.start();
     serverReceiver.start();

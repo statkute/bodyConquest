@@ -1,9 +1,9 @@
 package com.cauldron.bodyconquest.game_logic;
 
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.entities.BasicObject;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Communicator {
@@ -11,7 +11,6 @@ public class Communicator {
   private CopyOnWriteArrayList<BasicObject> objects;
   private int bottomHealthPercentage;
   private int topHealthPercentage;
-
   private int lipidsTop;
   private int sugarsTop;
   private int proteinsTop;
@@ -19,7 +18,12 @@ public class Communicator {
   private int sugarsBottom;
   private int proteinsBottom;
 
+  private boolean picker;
+
+  private Assets.PlayerType playerType;
+
   private Disease playerDisease;
+  private Disease enemyDisease;
 
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();
@@ -104,5 +108,30 @@ public class Communicator {
 
   public Disease getPlayerDisease() {
     return playerDisease;
+  }
+
+  public Assets.PlayerType getPlayerType() {
+    return playerType;
+  }
+
+  public void setPlayerType(Assets.PlayerType playerType) {
+    this.playerType = playerType;
+  }
+
+
+  public Disease getEnemyDisease() {
+    return enemyDisease;
+  }
+
+  public void setEnemyDisease(Disease enemyDisease) {
+    this.enemyDisease = enemyDisease;
+  }
+
+  public boolean isPicker() {
+    return picker;
+  }
+
+  public void setPicker(boolean picker) {
+    this.picker = picker;
   }
 }
