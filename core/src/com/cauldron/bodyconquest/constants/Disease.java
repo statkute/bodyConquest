@@ -5,7 +5,7 @@ public enum Disease {
           Assets.UnitType.FLU,
           Assets.UnitType.BACTERIA,
           Assets.UnitType.VIRUS,
-          Assets.UnitType.BACTERIA),
+          AbilityType.RIGOR_MORTIS),
   MEASLES("MES",
           Assets.UnitType.BACTERIA,
           Assets.UnitType.BACTERIA,

@@ -12,12 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.cauldron.bodyconquest.constants.Ability;
+import com.cauldron.bodyconquest.constants.AbilityType;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
-import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.ViewObject;
@@ -91,7 +90,7 @@ public class EncounterScreen implements Screen {
 //    while (comms.getPlayerDisease() == null) {
 //      try { Gdx.app.wait(); } catch (InterruptedException e) {e.printStackTrace();}
 //    }
-    hud = new HUD(game.batch, this, playerType, comms.getPlayerDisease(), stage);
+    hud = new HUD(this, playerType, comms.getPlayerDisease(), stage);
 
     accumulatorAfterBaseConquered = 0;
 
@@ -251,13 +250,13 @@ public class EncounterScreen implements Screen {
     clientSender.sendMessage(message);
   }
 
-  public void useAbility(Ability ability, Lane lane, PlayerType playerType) {
-    String message = MessageMaker.castAbilityMessage(ability, lane, playerType);
+  public void useAbility(AbilityType abilityType, Lane lane, PlayerType playerType) {
+    String message = MessageMaker.castAbilityMessage(abilityType, lane, playerType);
     clientSender.sendMessage(message);
   }
 
-  public void useAbility(Ability ability, int xAxis, int yAxis, PlayerType playerType) {
-    String message = MessageMaker.castAbilityMessage(ability, xAxis, yAxis, playerType);
+  public void useAbility(AbilityType abilityType, int xAxis, int yAxis, PlayerType playerType) {
+    String message = MessageMaker.castAbilityMessage(abilityType, xAxis, yAxis, playerType);
     clientSender.sendMessage(message);
   }
   public int getHealthBottomBase() {

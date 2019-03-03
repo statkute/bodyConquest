@@ -70,7 +70,7 @@ public class Assets {
   // EVERYTHINGS
   public static enum MapObjectType {BACTERIA, FLU, BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE}
   // ALL units
-  public static enum UnitType implements ClassOwner, Encodable{
+  public static enum UnitType implements ClassOwner, Encodable {
     BACTERIA("BAC", Bacteria.class), FLU("FLU", Flu.class), VIRUS("VIR", Virus.class);
 
     private static final int ENCODED_LENGTH = 3;

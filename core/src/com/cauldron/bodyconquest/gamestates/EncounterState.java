@@ -1,6 +1,7 @@
 package com.cauldron.bodyconquest.gamestates;
 
 import com.badlogic.gdx.Gdx;
+import com.cauldron.bodyconquest.constants.AbilityType;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
@@ -324,5 +325,13 @@ public class EncounterState extends GameState {
 
   public Resources getTopResources() {
     return topResources;
+  }
+
+  public void castAbility(AbilityType abilityType, PlayerType playerType, int xDest, int yDest) {
+    // Implement functionality
+  }
+
+  public void castAbility(AbilityType abilityType, PlayerType playerType, Lane lane) {
+    // Implement functionality
   }
 }

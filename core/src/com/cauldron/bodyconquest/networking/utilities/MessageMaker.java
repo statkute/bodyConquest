@@ -1,17 +1,17 @@
 package com.cauldron.bodyconquest.networking.utilities;
 
-import com.cauldron.bodyconquest.constants.Ability;
-import com.cauldron.bodyconquest.constants.Assets.*;
+import com.cauldron.bodyconquest.constants.AbilityType;
+import com.cauldron.bodyconquest.constants.Assets.Lane;
+import com.cauldron.bodyconquest.constants.Assets.PlayerType;
+import com.cauldron.bodyconquest.constants.Assets.UnitType;
 import com.cauldron.bodyconquest.constants.Disease;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 public class MessageMaker {
 
   public static final String OBJECT_UPDATE_HEADER = "OBJECT_UPDATE_";
   public static final String TROOP_SPAWN_HEADER = "ACTION_T_";
-  public static final String ABILITY_CAST_HEADER = "ACTION_A_";
+  public static final String LANE_ABILITY_CAST_HEADER = "ACTION_AL_";
+  public static final String ABILITY_CAST_HEADER = "ACTION_AA_";
   public static final String HEALTH_HEADER = "HEALTH_";
   public static final String RESOURCES_HEADER = "RESOURCES_";
   public static final String RACE_HEADER = "RACE_";
@@ -20,7 +20,7 @@ public class MessageMaker {
 
   public static final int RESOURCE_PADDING = 3;
   public static final int HEALTH_PADDING = 3;
-  public static final int COORDINATE_PADDING = 3;
+  public static final int COORDINATE_PADDING = 4;
 
   public static final String CONFIRMED_RACE = "CONFIRMED_RACE";
   public static final String PAUSE_MESSAGE = "PAUSE";
@@ -38,32 +38,15 @@ public class MessageMaker {
     return (message);
   }
 
-  public static String castAbilityMessage(Ability ability, int xAxis, int yAxis, PlayerType playerType) {
-    String message = "ACTION_AA_";
+  public static String castAbilityMessage(AbilityType abilityType, int xAxis, int yAxis, PlayerType playerType) {
+    String message = ABILITY_CAST_HEADER;
 
-    String xPadded = String.format("%04d", xAxis);
-    String yPadded = String.format("%04d", yAxis);
+    String xPadded = String.format("%0" + COORDINATE_PADDING + "d", xAxis);
+    String yPadded = String.format("%0" + COORDINATE_PADDING + "d", yAxis);
 
-//    if (ability.equals("fireball")) {
-//      message += "F_";
-//    } else {
-//      message += "W_"; // water blast
-//    }
-//    if (xAxis < 10) {
-//      message += ("0" + xAxis);
-//    } else {
-//      message += xAxis;
-//    }
-//    message += "_";
-//    if (yAxis < 10) {
-//      message += ("0" + yAxis);
-//    } else {
-//      message += yAxis;
-//    }
-
-    message += ability.getEncoded();
+    message += abilityType.getEncoded();
     message += "_";
-    message += playerType.encoded();
+    message += playerType.getEncoded();
     message += "_";
     message += xPadded;
     message += "_";
@@ -72,19 +55,17 @@ public class MessageMaker {
     return (message);
   }
 
-  public static String castAbilityMessage(Ability ability, Lane lane, PlayerType playerType) {
-    String message = "ACTION_AL_";
-  public static String castAbilityMessage(String abilityName, int xAxis, int yAxis) {
-    String message = ABILITY_CAST_HEADER;
+  public static String castAbilityMessage(AbilityType abilityType, Lane lane, PlayerType playerType) {
+    String message = LANE_ABILITY_CAST_HEADER;
 
-    message += ability.getEncoded();
+    message += abilityType.getEncoded();
     message += "_";
-    message += playerType.encoded();
+    message += playerType.getEncoded();
     message += "_";
-    message += lane.encoded();
+    message += lane.getEncoded();
+
     return (message);
   }
-
 
   public static String healthUpdate(int health, PlayerType player) {
     String message = HEALTH_HEADER;
@@ -108,7 +89,6 @@ public class MessageMaker {
     message += String.format("%0" + RESOURCE_PADDING + "d", proteins);
 
     return message;
-
   }
 
   public static String diseaseMessage(Disease disease, PlayerType playerType) {

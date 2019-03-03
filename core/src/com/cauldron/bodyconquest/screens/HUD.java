@@ -30,7 +30,9 @@ import com.cauldron.bodyconquest.constants.ClassOwner;
 import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.entities.HealthBar;
 import com.cauldron.bodyconquest.entities.Spawnable;
+import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.UnitBar;
+import com.cauldron.bodyconquest.entities.abilities.Ability;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.cauldron.bodyconquest.resourcebars.CarbsResourceBar;
 import com.cauldron.bodyconquest.resourcebars.LipidsResourceBar;
@@ -202,6 +204,20 @@ public class HUD {
             payload.setObject(spawnableEnum);
 
             payload.setDragActor(new Image(spawnableButton.getImage().getDrawable()));
+
+//            if(spawnableClass.getSuperclass().equals(Troop.class)) {
+//              payload.setDragActor(new Image(spawnableButton.getImage().getDrawable()));
+//            } else {
+//              // It's an ability it may have a unique drag actor.
+//
+//              try {
+//                Ability abilityInstance = (Ability) spawnableClass.newInstance();
+//                Image dragActor = new Image(new Texture(abilityInstance.damageAreaPath()));
+//              } catch (InstantiationException | IllegalAccessException e) {
+//                e.printStackTrace();
+//              }
+//
+//            }
 
             Label validLabel = new Label("Release to drop " + spawnableClass.getSimpleName() + "!", skin);
             validLabel.setColor(0, 1, 0, 1);

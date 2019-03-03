@@ -51,6 +51,11 @@ public abstract class Troop extends MapObject implements Spawnable {
   // States
   /** The state that represents if the unit is currently attacking. (Unused as all attacks are currently instantaneous) */
   protected boolean attacking;
+  protected boolean slowed;
+
+  // Effect Values
+  protected long slowTimeEnd;
+  protected int slowPercentage;
 
   // Properties
   /** The value that represents whether or not this Troop can be attacked by other Troops. */
@@ -78,6 +83,7 @@ public abstract class Troop extends MapObject implements Spawnable {
     stopSpeed = 100000;
     acceleration = 100000;
     lastAttack = 0;
+    slowTimeEnd = 0;
     attackable = true;
     moving = true;
     attacking = false;
@@ -132,7 +138,14 @@ public abstract class Troop extends MapObject implements Spawnable {
    */
   public void update() {
     updateMovement();
+    checkEffects();
     move();
+  }
+
+  private void checkEffects() {
+    if(slowed) {
+      if(slowTimeEnd < System.currentTimeMillis()) slowed = false;
+    }
   }
 
   /**
@@ -175,6 +188,14 @@ public abstract class Troop extends MapObject implements Spawnable {
         }
       }
     }
+  }
+
+  @Override
+  public void move() {
+    double normalMaxSpeed = maxSpeed;
+    maxSpeed = maxSpeed * (1 - (slowPercentage/100));
+    super.move();
+    maxSpeed = normalMaxSpeed;
   }
 
   /**
@@ -317,5 +338,10 @@ public abstract class Troop extends MapObject implements Spawnable {
   @Override
   public String toString() {
     return this.getClass().toString();
+  }
+
+  public void setSlowed(long time) {
+    slowed = true;
+    slowTimeEnd = System.currentTimeMillis() + time;
   }
 }
