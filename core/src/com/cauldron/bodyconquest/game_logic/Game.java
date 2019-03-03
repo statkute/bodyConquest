@@ -1,31 +1,49 @@
 package com.cauldron.bodyconquest.game_logic;
 
+import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.gamestates.GameStateManager;
 import com.cauldron.bodyconquest.networking.Server;
-import com.cauldron.bodyconquest.networking.utilities.Serialization;
+import com.cauldron.bodyconquest.networking.ServerLogic;
+
+import java.net.SocketException;
 
 public class Game extends Thread {
 
   private boolean running;
-  private int FPS = 60; // The number of time the game will refresh each second
+  /** The number of time the game will refresh each second. */
+  private final int FPS = 60;
+
   private long targetTime = 1000 / FPS;
-  private EncounterState encounterState;
   private Server server;
-
   private GameStateManager gsm;
+  private final GameType gameType;
+  private ServerLogic serverLogic;
 
-  public Game(Server server, GameType gameType) {
-    this.server = server;
-    encounterState = new EncounterState(server, gameType);
+  private Player playerBottom;
+  private Player playerTop;
+
+  /**
+   * Constructor
+   *
+   * @param gameType The type of game that this server is running.
+   * @throws SocketException
+   */
+  public Game(GameType gameType) throws SocketException {
+    this.gameType = gameType;
+    server = new Server();
+    server.startServer(gameType);
+    playerBottom = null;
+    playerTop = null;
   }
 
   private void init() {
     running = true;
-    gsm = new GameStateManager();
-    //encounterState = new EncounterState(comms, server.getServerSender());
-    gsm.setCurrentGameState(encounterState);
+    gsm = new GameStateManager(this);
+    // Starting state
+    // gsm.setCurrentGameState(raceSelectState);
   }
 
   @Override
@@ -39,7 +57,7 @@ public class Game extends Thread {
 
     // Game loop
     while (running) {
-      if (server.isGameEnded()){
+      if (server.isGameEnded()) {
         break;
       }
       start = System.nanoTime();
@@ -63,7 +81,37 @@ public class Game extends Thread {
     gsm.update();
   }
 
-  public EncounterState getEncounterState() {
-    return encounterState;
+  public Server getServer() {
+    return server;
   }
+
+  public Player getPlayerBottom() {
+    return playerBottom;
+  }
+
+  public Player getPlayerTop() {
+    return playerTop;
+  }
+
+  public void startEncounterState() {
+    EncounterState encounterState = new EncounterState(this);
+    gsm.setCurrentGameState(encounterState);
+  }
+
+  public void startEncounterLogic(EncounterState encounterState) {
+    server.startEncounterLogic(encounterState);
+  }
+
+  public void startRaceSelectionState() {
+    server.startRaceSelectionLogic(playerBottom, playerTop);
+  }
+
+  public GameType getGameType() {
+    return gameType;
+  }
+
+  public void closeEverything() {
+    server.closeEverything();
+  }
+
 }

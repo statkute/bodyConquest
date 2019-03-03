@@ -71,4 +71,8 @@ public class Flu extends Troop {
   }
 
 
+  @Override
+  public String getPortraitLocation() {
+    return "core/assets/flu_button.png";
+  }
 }

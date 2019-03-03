@@ -7,10 +7,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.networking.Server;
+import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -56,19 +59,15 @@ public class RaceSelection implements Screen {
   private GameType gameType;
 
   private Random random;
-  private Server server;
-  private Communicator communicator;
 
   public RaceSelection(
-      BodyConquest game, Communicator communicator, GameType gameType) {
-    this.communicator = communicator;
-    this.server = game.getServer();
+      BodyConquest game, GameType gameType) throws IOException {
     this.game = game;
     this.gameType = gameType;
     setup();
   }
 
-  private void setup() {
+  private void setup() throws IOException {
     camera = new OrthographicCamera();
     camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
 
@@ -127,6 +126,22 @@ public class RaceSelection implements Screen {
             30,
             backButton.getWidth(),
             backButton.getHeight());
+
+    if(gameType != GameType.MULTIPLAYER_JOIN) {
+      g = new Game(gameType);
+      game.setGame(g);
+      g.startRaceSelectionState();
+      g.start();
+    }
+
+    game.getClient().startClient();
+    if(gameType != GameType.MULTIPLAYER_JOIN) {
+      game.getClient().getCommunicator().setPlayerType(Assets.PlayerType.PLAYER_BOTTOM);
+    } else {
+      game.getClient().getCommunicator().setPlayerType(Assets.PlayerType.PLAYER_TOP);
+    }
+
+    game.getClient().setRaceSelectionLogic();
   }
 
   @Override
@@ -155,38 +170,41 @@ public class RaceSelection implements Screen {
         greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), 160);
     game.batch.draw(
         yellowDescription, (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2), 160);
-    game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
+    if(selection != 0) game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
     game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
 
-    try {
-      checkPressed();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    checkPressed();
 
     game.batch.end();
   }
 
-  public void checkPressed() throws IOException {
+  public void checkPressed() {
     if (Gdx.input.justTouched()) {
 
       Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
       camera.unproject(tmp);
-      if (server == null) {
+      if (game.getGame() == null) {
         System.err.println("Server not instantiated");
         return;
       }
-      if (continueBounds.contains(tmp.x, tmp.y)) {
+      if (continueBounds.contains(tmp.x, tmp.y) && selection != 0) {
         playButtonSound();
+        Disease playerDisease = null;
+        Assets.PlayerType playerType;
+        if(selection == 1) playerDisease = Disease.INFLUENZA;
+        if(selection == 2) playerDisease = Disease.MEASLES;
+        if(selection == 3) playerDisease = Disease.ROTAVIRUS;
         if (gameType != GameType.MULTIPLAYER_JOIN) {
-          server.startServer(gameType);
-          // This is strange, we could maybe call this in the RaceSelection constructor
-          game.getClient().startClient(communicator);
-          g = new Game(server, gameType);
-          g.start();
-          server.startServerLogic(g.getEncounterState());
+          // Should actually start the encounter state until all players have confirmed their Disease
+          g.startEncounterState();
+          playerType = Assets.PlayerType.PLAYER_BOTTOM;
+        } else {
+          playerType = Assets.PlayerType.PLAYER_TOP;
         }
-          game.setScreen(new EncounterScreen(game, communicator, gameType));
+        game.getClient().getCommunicator().setPlayerDisease(playerDisease);
+        String message = MessageMaker.diseaseMessage(playerDisease, playerType);
+        game.getClient().clientSender.sendMessage(message);
+        game.setScreen(new EncounterScreen(game, gameType));
         dispose();
       }
 
@@ -232,9 +250,7 @@ public class RaceSelection implements Screen {
       if (backBounds.contains(tmp.x, tmp.y)) {
         System.out.println("back pressed");
         playButtonSound();
-        if (server != null) {
-          server.closeEverything();
-        }
+        g.closeEverything();
         game.getClient().closeEverything();
         game.setScreen(new MenuScreen(game));
         dispose();
@@ -261,21 +277,7 @@ public class RaceSelection implements Screen {
   public void hide() {}
 
   @Override
-  public void dispose() {
-
-    //    background.dispose();
-    //    disease1.dispose();
-    //    disease2.dispose();
-    //    disease3.dispose();
-    //    playButton.dispose();
-    //    confirmButton.dispose();
-    //    selectionFrame1.dispose();
-    //    selectionFrame2.dispose();
-  }
-
-  public Game getG() {
-    return g;
-  }
+  public void dispose() {}
 
   public void playButtonSound() {
     game.audioPlayer.playSFX("button_click");

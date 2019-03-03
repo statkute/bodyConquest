@@ -15,4 +15,9 @@ public class VirusBase extends Base {
     this.damage = 10;
     mapObjectType = MapObjectType.VIRUS_BASE;
   }
+
+  @Override
+  public String getPortraitLocation() {
+    return null; // Shouldn't really be spawned
+  }
 }

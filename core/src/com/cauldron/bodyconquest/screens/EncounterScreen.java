@@ -17,6 +17,7 @@ import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
+import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.ViewObject;
@@ -60,11 +61,12 @@ public class EncounterScreen implements Screen {
 
   float elapsedSeconds;
 
-  public EncounterScreen(BodyConquest game, Communicator comms, GameType gameType) {
-    this.comms = comms;
+  public EncounterScreen(BodyConquest game, GameType gameType) {
     this.game = game;
     client = game.getClient();
+    client.setEncounterLogic();
     clientSender = client.clientSender;
+    comms = client.getCommunicator();
 
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
@@ -86,7 +88,11 @@ public class EncounterScreen implements Screen {
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
     menuScreen = new MenuScreen(game);
-    hud = new HUD(game.batch, this, playerType, stage);
+//    while (comms.getPlayerDisease() == null) {
+//      try { Gdx.app.wait(); } catch (InterruptedException e) {e.printStackTrace();}
+//    }
+    hud = new HUD(game.batch, this, playerType, comms.getPlayerDisease(), stage);
+
     accumulatorAfterBaseConquered = 0;
 
   }

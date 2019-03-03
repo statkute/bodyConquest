@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.networking.*;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
@@ -86,18 +87,10 @@ public class HostScreen extends AbstractGameScreen implements Screen {
       System.err.println("[ERROR] Game type is set to single player on the host screen.");
       return;
     }
-    Communicator communicator = new Communicator();
     playButtonSound();
-    if (gameType == GameType.MULTIPLAYER_HOST) {
 
-      server = new Server();
-      server.startServer(gameType);
-      game.setServer(server);
-    }
-
-    game.getClient().startClient(communicator);
     dispose();
-    game.setScreen(new RaceSelection(game, communicator, gameType));
+    game.setScreen(new RaceSelection(game, gameType));
   }
 
   @Override

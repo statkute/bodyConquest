@@ -4,19 +4,22 @@ import com.cauldron.bodyconquest.game_logic.Communicator;
 
 import java.io.IOException;
 
-/**
- * The Client thread
- */
+/** The Client thread */
 public class Client {
   public ClientReceiver clientReceiver;
   public ClientSender clientSender;
   private ClientLogic clientLogic;
 
+  private Communicator communicator;
+
   /**
    * Starts the receiver and sender threads
+   *
    * @throws IOException
    */
-  public void startClient(Communicator communicator) throws IOException {
+  public void startClient() throws IOException {
+    communicator = new Communicator();
+
     clientReceiver = new ClientReceiver();
     clientSender = new ClientSender(clientReceiver);
     clientLogic = new ClientLogic(clientReceiver, communicator);
@@ -28,7 +31,7 @@ public class Client {
     clientSender.sendMessage("connected");
   }
 
-  public static void main (String args[]) throws IOException {
+  public static void main(String args[]) throws IOException {
     ClientReceiver clientReceiver = new ClientReceiver();
     ClientSender clientSender = new ClientSender(clientReceiver);
 
@@ -38,16 +41,28 @@ public class Client {
     clientSender.sendMessage("connected");
   }
 
-  public void closeEverything(){
-    if (clientSender!= null){
+  public Communicator getCommunicator() {
+    return communicator;
+  }
+
+  public void closeEverything() {
+    if (clientSender != null) {
       clientSender.stopRunning();
     }
-    if (clientReceiver!= null){
+    if (clientReceiver != null) {
       clientReceiver.stopRunning();
     }
-    if (clientLogic!= null){
+    if (clientLogic != null) {
       clientLogic.stopRunning();
     }
+  }
+
+  public void setRaceSelectionLogic() {
+    clientLogic.setRaceSelectionLogic();
+  }
+
+  public void setEncounterLogic() {
+    clientLogic.setEncounterLogic();
   }
 
   //  public static void main(String argv[]) throws Exception {

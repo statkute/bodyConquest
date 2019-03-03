@@ -1,5 +1,6 @@
 package com.cauldron.bodyconquest.entities.resources;
 
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.entities.Spawnable;
 import com.cauldron.bodyconquest.game_logic.utils.Timer;
 import com.cauldron.bodyconquest.networking.Server;
@@ -15,10 +16,10 @@ public class Resources extends Thread {
   private int regenerationSugars;
   private int regenerationProteins;
   private ServerSender serverSender;
-  private String player;
+  private Assets.PlayerType player;
   private Server server;
 
-  public Resources(Server server, String player) {
+  public Resources(Server server, Assets.PlayerType player) {
     this.serverSender = server.getServerSender();
     this.server = server;
     this.player = player;
@@ -69,7 +70,7 @@ public class Resources extends Thread {
     }
   }
 
-  private void sendUpdate(String player, ServerSender serverSender) {
+  private void sendUpdate(Assets.PlayerType player, ServerSender serverSender) {
     String message = MessageMaker.resourceUpdate(lipids, sugars, proteins, player);
     serverSender.sendMessage(message);
   }

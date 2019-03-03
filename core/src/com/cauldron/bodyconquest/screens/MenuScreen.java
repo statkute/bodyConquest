@@ -11,6 +11,8 @@ import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
+import java.io.IOException;
+
 public class MenuScreen extends AbstractGameScreen implements Screen {
 
   private Texture title;
@@ -27,16 +29,11 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
 
   public static long timeOfServer;
 
-  private Server server;
-  private Client client;
-
   public MenuScreen(BodyConquest game) {
     super(game);
     loadAssets();
     getAssets();
     setRectangles();
-
-
   }
 
   @Override
@@ -84,14 +81,13 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         System.out.println("Singleplayer Is touched");
-        server = new Server();
+        try {
         timeOfServer = System.currentTimeMillis();
-        client = new Client();
-        Communicator communicator = new Communicator();
-        game.setServer(server);
-        game.setClient(client);
-        game.setScreen(new RaceSelection(game, communicator, GameType.SINGLE_PLAYER));
+        game.setScreen(new RaceSelection(game, GameType.SINGLE_PLAYER));
         dispose();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
       if (settingsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
@@ -115,14 +111,6 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         System.exit(0);
       }
     }
-  }
-
-  public Server getServer() {
-    return server;
-  }
-
-  public Client getClient() {
-    return client;
   }
 
   @Override

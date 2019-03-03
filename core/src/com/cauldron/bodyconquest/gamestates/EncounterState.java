@@ -18,6 +18,7 @@ import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
+import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.game_logic.MultiplayerTestAI;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.ServerSender;
@@ -72,12 +73,14 @@ public class EncounterState extends GameState {
 
   /**
    * Constructor.
-   *
    */
-  public EncounterState(Server server, GameType gameType) {
-    this.serverSender = server.getServerSender();
+  public EncounterState(Game game) {
+    super(game);
+    Server server = game.getServer();
+    serverSender = server.getServerSender();
     map = new Map();
 
+    game.startEncounterLogic(this);
 
     allMapObjects = new CopyOnWriteArrayList<MapObject>();
 
@@ -99,13 +102,15 @@ public class EncounterState extends GameState {
     projectilesBottom = new CopyOnWriteArrayList<Projectile>();
     projectilesTop = new CopyOnWriteArrayList<Projectile>();
 
-    bottomResources = new Resources(server, "BOTTOM");
-    topResources = new Resources(server, "TOP");
+    // Maybe make constructors for these in the Player class so they can be modified for each player
+    // And the modifications can be kept consistent across Encounters
+    bottomResources = new Resources(server, PlayerType.PLAYER_BOTTOM);
+    topResources = new Resources(server, PlayerType.PLAYER_TOP);
 
     bottomResources.start();
     topResources.start();
 
-    if (gameType == GameType.SINGLE_PLAYER){
+    if (game.getGameType() == GameType.SINGLE_PLAYER){
       BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
       ai.start();
     } else {
@@ -196,15 +201,15 @@ public class EncounterState extends GameState {
         double healthBottom = bottomBase.getHealth();
         double healthBottomMax = bottomBase.getMaxHealth();
         double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
-        int health = (int) healthPercentage;
-        String messageb = MessageMaker.healthUpdate(health, "BOTTOM");
+        int healthB = (int) healthPercentage;
+        String messageb = MessageMaker.healthUpdate(healthB, PlayerType.PLAYER_BOTTOM);
 
         double healthTop = topBase.getHealth();
         double healthTopMax = topBase.getMaxHealth();
         double healthPercentageT = (healthTop / healthTopMax) * 100.0;
         int healthT = (int) healthPercentageT;
 
-        String messaget = MessageMaker.healthUpdate(healthT, "TOP");
+        String messaget = MessageMaker.healthUpdate(healthT, PlayerType.PLAYER_TOP);
 
         serverSender.sendMessage(messageb);
         serverSender.sendMessage(messaget);

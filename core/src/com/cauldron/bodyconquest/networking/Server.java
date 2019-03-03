@@ -1,6 +1,7 @@
 package com.cauldron.bodyconquest.networking;
 
 import com.cauldron.bodyconquest.constants.GameType;
+import com.cauldron.bodyconquest.game_logic.Player;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 import java.net.SocketException;
@@ -12,6 +13,7 @@ public class Server {
   private ServerLogic serverLogic;
   private Ping ping;
   private boolean gameEnded;
+
 
   /**
    * Server initialization: receiver, sender and logic threads are started
@@ -26,20 +28,19 @@ public class Server {
 
     serverSender = new ServerSender();
     serverReceiver = new ServerReceiver(serverSender, type);
-    // serverLogic = new ServerLogic(serverReceiver, encounterState);
+    serverLogic = new ServerLogic(serverReceiver, serverSender);
 
     serverSender.start();
     serverReceiver.start();
-    // serverLogic.start();
+    serverLogic.start();
   }
 
   public ServerSender getServerSender() {
     return serverSender;
   }
 
-  public void startServerLogic(EncounterState encounterState) {
-    serverLogic = new ServerLogic(serverReceiver, encounterState);
-    serverLogic.start();
+  public void startEncounterLogic(EncounterState encounterState) {
+    serverLogic.setEncounterLogic(encounterState);
   }
 
   public static void main(String args[]) throws Exception {
@@ -57,22 +58,19 @@ public class Server {
   }
 
   public void closeEverything() {
-    if (serverSender != null) {
-      serverSender.stopRunning();
-    }
-    if (serverReceiver != null) {
-      serverReceiver.stopRunning();
-    }
-    if (serverLogic != null) {
-      serverLogic.stopRunning();
-    }
-    if (ping != null) {
-      ping.stopRunning();
-    }
+    if (serverSender != null) serverSender.stopRunning();
+    if (serverReceiver != null) serverReceiver.stopRunning();
+    if (serverLogic != null) serverLogic.stopRunning();
+    if (ping != null) ping.stopRunning();
+
     gameEnded = true;
   }
 
   public boolean isGameEnded() {
     return gameEnded;
+  }
+
+  public void startRaceSelectionLogic(Player playerBottom, Player playerTop) {
+    serverLogic.setRaceSelectionLogic(playerBottom, playerTop);
   }
 }
