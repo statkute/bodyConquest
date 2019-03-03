@@ -18,7 +18,9 @@ import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
 import com.cauldron.bodyconquest.constants.GameType;
+import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.entities.BasicObject;
+import com.cauldron.bodyconquest.entities.Map;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.Client;
@@ -33,7 +35,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class EncounterScreen implements Screen {
 
   private final float mapSize;
-  private final Image map;
+  private final Map map;
 
   private final OrthographicCamera gameCamera;
   private final FitViewport gamePort;
@@ -81,7 +83,8 @@ public class EncounterScreen implements Screen {
     }
 
     // Set up map
-    map = new Image(new Texture("core/assets/brainmap.png"));
+    //map = new Image(new Texture("core/assets/brainmap.png"));
+    map = new Map(Organ.LUNGS);
     float topOfUnitBar = 27;
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);

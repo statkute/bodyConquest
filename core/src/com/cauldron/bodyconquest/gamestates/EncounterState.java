@@ -79,7 +79,7 @@ public class EncounterState extends GameState {
     super(game);
     Server server = game.getServer();
     serverSender = server.getServerSender();
-    map = new Map();
+    //map = new Map();
 
     game.startEncounterLogic(this);
 
