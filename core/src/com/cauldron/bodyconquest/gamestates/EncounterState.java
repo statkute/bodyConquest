@@ -102,8 +102,10 @@ public class EncounterState extends GameState {
     projectilesBottom = new CopyOnWriteArrayList<Projectile>();
     projectilesTop = new CopyOnWriteArrayList<Projectile>();
 
-    bottomResources = new Resources(server, "BOTTOM");
-    topResources = new Resources(server, "TOP");
+    // Maybe make constructors for these in the Player class so they can be modified for each player
+    // And the modifications can be kept consistent across Encounters
+    bottomResources = new Resources(server, PlayerType.PLAYER_BOTTOM);
+    topResources = new Resources(server, PlayerType.PLAYER_TOP);
 
     bottomResources.start();
     topResources.start();
@@ -199,15 +201,15 @@ public class EncounterState extends GameState {
         double healthBottom = bottomBase.getHealth();
         double healthBottomMax = bottomBase.getMaxHealth();
         double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
-        int health = (int) healthPercentage;
-        String messageb = MessageMaker.healthUpdate(health, "BOTTOM");
+        int healthB = (int) healthPercentage;
+        String messageb = MessageMaker.healthUpdate(healthB, PlayerType.PLAYER_BOTTOM);
 
         double healthTop = topBase.getHealth();
         double healthTopMax = topBase.getMaxHealth();
         double healthPercentageT = (healthTop / healthTopMax) * 100.0;
         int healthT = (int) healthPercentageT;
 
-        String messaget = MessageMaker.healthUpdate(healthT, "TOP");
+        String messaget = MessageMaker.healthUpdate(healthT, PlayerType.PLAYER_TOP);
 
         serverSender.sendMessage(messageb);
         serverSender.sendMessage(messaget);

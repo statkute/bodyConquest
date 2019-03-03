@@ -8,6 +8,7 @@ import java.text.NumberFormat;
 
 public class MessageMaker {
 
+  public static final String OBJECT_UPDATE_HEADER = "OBJECT_UPDATE_";
   public static final String TROOP_SPAWN_HEADER = "ACTION_T_";
   public static final String ABILITY_CAST_HEADER = "ACTION_A_";
   public static final String HEALTH_HEADER = "HEALTH_";
@@ -16,12 +17,16 @@ public class MessageMaker {
   public static final String EXIT_MESSAGE = "EXIT";
   public static final String RACE_HEADER = "RACE_";
 
+  public static final int RESOURCE_PADDING = 3;
+  public static final int HEALTH_PADDING = 3;
+  public static final int COORDINATE_PADDING = 3;
+
   public static String spawnTroopsMessage(UnitType troopClass, Lane lane, PlayerType playerType) {
     String message = TROOP_SPAWN_HEADER;
 
-    message += troopClass.encode();
+    message += troopClass.getEncoded();
     message += "_";
-    message += playerType.encoded();
+    message += playerType.getEncoded();
     message += "_";
     message += lane.getEncoded();
     return (message);
@@ -51,33 +56,26 @@ public class MessageMaker {
   }
 
 
-  public static String healthUpdate(int health, String position) {
+  public static String healthUpdate(int health, PlayerType player) {
     String message = HEALTH_HEADER;
-    message += position.toUpperCase().charAt(0);
+    message += player.getEncoded();
     message += "_";
-    NumberFormat formatter = new DecimalFormat("000");
-    String formattedNumber = formatter.format(health);
-    message += formattedNumber;
-
+    message += String.format("%0" + HEALTH_PADDING + "d", health);
     return message;
   }
 
-  public static String resourceUpdate(int lipids, int sugars, int proteins, String player){
+  public static String resourceUpdate(int lipids, int sugars, int proteins, PlayerType player){
     String message = RESOURCES_HEADER;
-    message += player.toUpperCase().charAt(0);
+    message += player.getEncoded();
     message += "_";
 
-    NumberFormat formatter = new DecimalFormat("000");
-    String formattedLipids = formatter.format(lipids);
-    message += formattedLipids;
+    message += String.format("%0" + RESOURCE_PADDING + "d", lipids);
     message += "_";
 
-    String formattedSugars = formatter.format(sugars);
-    message += formattedSugars;
+    message += String.format("%0" + RESOURCE_PADDING + "d", sugars);
     message += "_";
 
-    String formattedProteins = formatter.format(proteins);
-    message += formattedProteins;
+    message += String.format("%0" + RESOURCE_PADDING + "d", proteins);
 
     return message;
 
@@ -87,7 +85,7 @@ public class MessageMaker {
     String message = RACE_HEADER;
     message += disease.getEncoded();
     message += "_";
-    message += playerType.encoded();
+    message += playerType.getEncoded();
     return message;
   }
 

@@ -99,7 +99,6 @@ public class Game extends Thread {
   }
 
   public void startEncounterLogic(EncounterState encounterState) {
-    //server.getServerSender().sendMessage();
     server.startEncounterLogic(encounterState);
   }
 
@@ -115,17 +114,4 @@ public class Game extends Thread {
     server.closeEverything();
   }
 
-//  public void setPlayerBottom(Disease playerDisease) {
-//    playerBottom = new Player(Assets.PlayerType.PLAYER_BOTTOM, playerDisease);
-//  }
-//
-//  public void setPlayerTop(Disease playerDisease) {
-//    playerTop = new Player(Assets.PlayerType.PLAYER_TOP, playerDisease);
-//  }
-
-  public void setPlayer(Assets.PlayerType playerType, Disease playerDisease) {
-    if(playerType == Assets.PlayerType.PLAYER_TOP)    playerTop = new Player(playerType, playerDisease);
-    if(playerType == Assets.PlayerType.PLAYER_BOTTOM) playerBottom = new Player(playerType, playerDisease);
-    // Doesn't do anything for AI just yet
-  }
 }

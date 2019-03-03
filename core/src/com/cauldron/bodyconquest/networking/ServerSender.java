@@ -1,5 +1,7 @@
 package com.cauldron.bodyconquest.networking;
 
+import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -46,7 +48,7 @@ public class ServerSender extends Thread {
   }
 
   public void sendObjectUpdates(String message){
-    String header = "OBJECT_UPDATE_";
+    String header = MessageMaker.OBJECT_UPDATE_HEADER;
     String fullMessage = header + message;
     sendMessage(fullMessage);
   }

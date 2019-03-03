@@ -1,6 +1,5 @@
 package com.cauldron.bodyconquest.constants;
 
-import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
@@ -71,7 +70,7 @@ public class Assets {
   // EVERYTHINGS
   public static enum MapObjectType {BACTERIA, FLU, BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE}
   // ALL units
-  public static enum UnitType implements ClassOwner{
+  public static enum UnitType implements ClassOwner, Encodable{
     BACTERIA("BAC", Bacteria.class), FLU("FLU", Flu.class), VIRUS("VIR", Virus.class);
 
     private static final int ENCODED_LENGTH = 3;
@@ -100,7 +99,7 @@ public class Assets {
       return unitType;
     }
 
-    public String encode() {
+    public String getEncoded() {
       return encodedUnit;
     }
 
@@ -114,7 +113,7 @@ public class Assets {
 
   public enum BaseType {BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE};
   // Player types
-  public enum PlayerType {
+  public enum PlayerType implements Encodable {
 
     PLAYER_TOP("PT"), PLAYER_BOTTOM("PB"), AI("AI");
 
@@ -124,8 +123,11 @@ public class Assets {
     private static final String ENCODED_PLAYER_BOTTOM = "PB";
     private static final String ENCODED_AI            = "AI";
 
-    PlayerType(String playerTypeEncoded) {
-      if (playerTypeEncoded.length() != ENCODED_LENGTH) System.err.println("[ERROR] Incorrect playerType encoding length");
+    private final String encodedPlayerType;
+
+    PlayerType(String encodedPlayerType) {
+      if (encodedPlayerType.length() != ENCODED_LENGTH) System.err.println("[ERROR] Incorrect playerType encoding length");
+      this.encodedPlayerType = encodedPlayerType;
     }
 
     public static PlayerType decode(String playerString) {
@@ -138,19 +140,14 @@ public class Assets {
       return playerType;
     }
 
-    public String encoded() {
-      switch (this) {
-        case PLAYER_BOTTOM: return ENCODED_PLAYER_BOTTOM;
-        case PLAYER_TOP:    return ENCODED_PLAYER_TOP;
-        case AI:            return ENCODED_AI;
-        default:            return null;
-      }
+    public String getEncoded() {
+      return encodedPlayerType;
     }
 
     public static int getEncodedLength() { return  ENCODED_LENGTH; }
   }
   // All lanes
-  public enum Lane {
+  public enum Lane implements Encodable {
 
     TOP("T"), BOTTOM("B"), MIDDLE("M"), ALL("A");
 
@@ -240,7 +237,7 @@ public class Assets {
   public static String pathBorder = pathAssets + "bordernewest2.png";
 
   // Resources
-  public static enum ResourceType {PROTEIN, LIPID, CARBS}
+  public enum ResourceType {PROTEIN, LIPID, CARBS}
 
 
 }
