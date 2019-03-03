@@ -16,6 +16,7 @@ import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
+import com.cauldron.bodyconquest.entities.abilities.Ability;
 import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
@@ -27,6 +28,7 @@ import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /** The {@link GameState} where all of the encounter logic takes place. */
@@ -72,14 +74,12 @@ public class EncounterState extends GameState {
   private Resources topResources;
   private Resources bottomResources;
 
-  /**
-   * Constructor.
-   */
+  /** Constructor. */
   public EncounterState(Game game) {
     super(game);
     Server server = game.getServer();
     serverSender = server.getServerSender();
-    //map = new Map();
+    // map = new Map();
 
     game.startEncounterLogic(this);
 
@@ -111,7 +111,7 @@ public class EncounterState extends GameState {
     bottomResources.start();
     topResources.start();
 
-    if (game.getGameType() == GameType.SINGLE_PLAYER){
+    if (game.getGameType() == GameType.SINGLE_PLAYER) {
       BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
       ai.start();
     } else {
@@ -171,55 +171,53 @@ public class EncounterState extends GameState {
   @Override
   public void update() {
 
-    // ! Important if you do not want to update encounter state, bases health should go to minus because
-    // Encounter state is instantiated before encounter screen and it starts getting health before game is started of the base
+    // ! Important if you do not want to update encounter state, bases health should go to minus
+    // because
+    // Encounter state is instantiated before encounter screen and it starts getting health before
+    // game is started of the base
 
+    //    if(comms.getBottomHealthPercentage() >= 0 && comms.getTopHealthPercentage() >= 0){
+    //
+    //     System.out.println(comms.getBottomHealthPercentage());
 
-//    if(comms.getBottomHealthPercentage() >= 0 && comms.getTopHealthPercentage() >= 0){
-//
-//     System.out.println(comms.getBottomHealthPercentage());
+    for (MapObject mo : allMapObjects) mo.update();
 
+    // Update All Units
+    checkAttack(troopsTop, troopsBottom);
+    checkAttack(troopsBottom, troopsTop);
+    checkProjectiles(projectilesTop, troopsBottom);
+    checkProjectiles(projectilesBottom, troopsTop);
 
-      for (MapObject mo : allMapObjects) mo.update();
+    // Change this so it only add new objects
+    CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
+    for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
 
-      // Update All Units
-      checkAttack(troopsTop, troopsBottom);
-      checkAttack(troopsBottom, troopsTop);
-      checkProjectiles(projectilesTop, troopsBottom);
-      checkProjectiles(projectilesBottom, troopsTop);
+    // TO DO: send this to the client
+    String json = "";
+    try {
+      json = Serialization.serialize(sentObjects);
+      serverSender.sendObjectUpdates(json);
 
+      double healthBottom = bottomBase.getHealth();
+      double healthBottomMax = bottomBase.getMaxHealth();
+      double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
+      int healthB = (int) healthPercentage;
+      String messageb = MessageMaker.healthUpdate(healthB, PlayerType.PLAYER_BOTTOM);
 
-      // Change this so it only add new objects
-      CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
-      for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
+      double healthTop = topBase.getHealth();
+      double healthTopMax = topBase.getMaxHealth();
+      double healthPercentageT = (healthTop / healthTopMax) * 100.0;
+      int healthT = (int) healthPercentageT;
 
-      // TO DO: send this to the client
-      String json = "";
-      try {
-        json = Serialization.serialize(sentObjects);
-        serverSender.sendObjectUpdates(json);
+      String messaget = MessageMaker.healthUpdate(healthT, PlayerType.PLAYER_TOP);
 
-        double healthBottom = bottomBase.getHealth();
-        double healthBottomMax = bottomBase.getMaxHealth();
-        double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
-        int healthB = (int) healthPercentage;
-        String messageb = MessageMaker.healthUpdate(healthB, PlayerType.PLAYER_BOTTOM);
+      serverSender.sendMessage(messageb);
+      serverSender.sendMessage(messaget);
 
-        double healthTop = topBase.getHealth();
-        double healthTopMax = topBase.getMaxHealth();
-        double healthPercentageT = (healthTop / healthTopMax) * 100.0;
-        int healthT = (int) healthPercentageT;
-
-        String messaget = MessageMaker.healthUpdate(healthT, PlayerType.PLAYER_TOP);
-
-        serverSender.sendMessage(messageb);
-        serverSender.sendMessage(messaget);
-
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    //}
-
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    // }
 
   }
 
@@ -304,12 +302,11 @@ public class EncounterState extends GameState {
   }
 
   private void checkPressed() {
-    if(Gdx.input.isKeyJustPressed(1)) {
-      //activate1();
+    if (Gdx.input.isKeyJustPressed(1)) {
+      // activate1();
 
     }
   }
-
 
   public CopyOnWriteArrayList<Troop> getTroopsTop() {
     return troopsTop;
@@ -332,6 +329,21 @@ public class EncounterState extends GameState {
   }
 
   public void castAbility(AbilityType abilityType, PlayerType playerType, Lane lane) {
-    // Implement functionality
+    try {
+      @SuppressWarnings("unchecked")
+      Ability ability =
+          (Ability)
+              abilityType
+                  .getAssociatedClass()
+                  .getDeclaredConstructor(PlayerType.class, Lane.class)
+                  .newInstance(playerType, lane);
+      ability.cast(this);
+      System.out.println("Casting ability");
+    } catch (InstantiationException
+        | IllegalAccessException
+        | NoSuchMethodException
+        | InvocationTargetException e) {
+      e.printStackTrace();
+    }
   }
 }

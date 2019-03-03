@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.constants.AbilityType;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
@@ -171,7 +172,11 @@ public class HUD {
 
           public void drop(Source source, Payload payload, float x, float y, int pointer) {
             System.out.println("SPAWN HERE");
-            screen.spawnUnit((UnitType) payload.getObject(), lane, playerType);
+            if (payload.getObject().getClass().equals(UnitType.class)) {
+              screen.spawnUnit((UnitType) payload.getObject(), lane, playerType);
+            } else {
+              screen.useAbility((AbilityType) payload.getObject(), lane, playerType);
+            }
           }
         });
   }

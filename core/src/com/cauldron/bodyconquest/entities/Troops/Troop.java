@@ -8,22 +8,24 @@ import com.cauldron.bodyconquest.entities.Spawnable;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/**
- * The parent class for all spawn-able troops that can be spawned by each player (or the AI).
- */
+/** The parent class for all spawn-able troops that can be spawned by each player (or the AI). */
 public abstract class Troop extends MapObject implements Spawnable {
 
   /** The finalised representation of the minimum health a Troop can have. */
   public static final int NO_HEALTH = 0;
 
-  /** The {@link Lane} that this Troop has been assigned to. (Used to make decisions on who to attack and how to move. */
+  /**
+   * The {@link Lane} that this Troop has been assigned to. (Used to make decisions on who to attack
+   * and how to move.
+   */
   protected final Lane lane;
-  /** The {@link PlayerType} that this Troop is affiliated with. (Used to make decisions on who to attack and how to
-   * move.*/
+  /**
+   * The {@link PlayerType} that this Troop is affiliated with. (Used to make decisions on who to
+   * attack and how to move.
+   */
   protected final PlayerType playerType;
 
   /** Enumeration for each type of Unit/Troop that exists. */
-
 
   /** The maximum health this Troop can have. */
   protected int maxHealth;
@@ -49,8 +51,12 @@ public abstract class Troop extends MapObject implements Spawnable {
   protected int proteinCost;
 
   // States
-  /** The state that represents if the unit is currently attacking. (Unused as all attacks are currently instantaneous) */
+  /**
+   * The state that represents if the unit is currently attacking. (Unused as all attacks are
+   * currently instantaneous)
+   */
   protected boolean attacking;
+
   protected boolean slowed;
 
   // Effect Values
@@ -66,6 +72,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * The constructor.
+   *
    * @param lane The {@link Lane} which this Troop is being spawned onto.
    * @param playerType The {@link PlayerType} which this Troop is assigned to.
    */
@@ -75,14 +82,13 @@ public abstract class Troop extends MapObject implements Spawnable {
     initDefault();
   }
 
-  /**
-   * Sets the default values for a Troop.
-   */
+  /** Sets the default values for a Troop. */
   private void initDefault() {
     // Maxed out because I don't want to do fine tuning right now
     stopSpeed = 100000;
     acceleration = 100000;
     lastAttack = 0;
+    slowPercentage = 0;
     slowTimeEnd = 0;
     attackable = true;
     moving = true;
@@ -92,6 +98,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Called by (usually by) {@link MapObject}'s to attack this Troop.
+   *
    * @param damage The amount of damage to deal to this Troop.
    */
   public void hit(int damage) {
@@ -99,8 +106,9 @@ public abstract class Troop extends MapObject implements Spawnable {
   }
 
   /**
-   * Attack the given Troop. (Defaulted to calling the given Troop's {@link Troop#hit(int)} method using this Troop's
-   * damage.
+   * Attack the given Troop. (Defaulted to calling the given Troop's {@link Troop#hit(int)} method
+   * using this Troop's damage.
+   *
    * @param troop The Troop to attack.
    */
   public void attack(Troop troop) {
@@ -108,10 +116,11 @@ public abstract class Troop extends MapObject implements Spawnable {
   }
 
   /**
-   * Checks if any of the Troops in the given {@link CopyOnWriteArrayList} are eligible to be attacked.
-   * By default a Troop is eligible to be attacked if it is in range and attack-able. If both of these conditions are
-   * fulfilled then this Troop will stop moving and attempt to attack the Troop (if this Troop's attack isn't on
-   * cooldown).
+   * Checks if any of the Troops in the given {@link CopyOnWriteArrayList} are eligible to be
+   * attacked. By default a Troop is eligible to be attacked if it is in range and attack-able. If
+   * both of these conditions are fulfilled then this Troop will stop moving and attempt to attack
+   * the Troop (if this Troop's attack isn't on cooldown).
+   *
    * @param enemies The {@link CopyOnWriteArrayList} of Troops to check to attack.
    */
   public void checkAttack(CopyOnWriteArrayList<Troop> enemies) {
@@ -133,9 +142,7 @@ public abstract class Troop extends MapObject implements Spawnable {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   public void update() {
     updateMovement();
     checkEffects();
@@ -143,14 +150,15 @@ public abstract class Troop extends MapObject implements Spawnable {
   }
 
   private void checkEffects() {
-    if(slowed) {
-      if(slowTimeEnd < System.currentTimeMillis()) slowed = false;
+    if (slowed && slowTimeEnd < System.currentTimeMillis()) {
+      slowed = false;
+      slowPercentage = 0;
     }
   }
 
   /**
-   * By default sets the movement direction according to what {@link Lane} and {@link PlayerType} this Troop is assigned
-   * to.
+   * By default sets the movement direction according to what {@link Lane} and {@link PlayerType}
+   * this Troop is assigned to.
    */
   protected void updateMovement() {
     if (moving) {
@@ -193,13 +201,18 @@ public abstract class Troop extends MapObject implements Spawnable {
   @Override
   public void move() {
     double normalMaxSpeed = maxSpeed;
-    maxSpeed = maxSpeed * (1 - (slowPercentage/100));
+    if (slowed) {
+      System.out.println("Before: " + maxSpeed);
+      maxSpeed = maxSpeed * (1 - (slowPercentage / 100f));
+      System.out.println("After: " + maxSpeed);
+    }
     super.move();
     maxSpeed = normalMaxSpeed;
   }
 
   /**
    * Check if the given Troop is in attacking range of this Troop.
+   *
    * @param troop The troop to check.
    * @return True if the given Troop is in attacking range.
    */
@@ -213,6 +226,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Set the maximum health value this Troop can have.
+   *
    * @param maxHealth The maximum health value this Troop can have.
    */
   public void setMaxHealth(int maxHealth) {
@@ -220,8 +234,9 @@ public abstract class Troop extends MapObject implements Spawnable {
   }
 
   /**
-   * Set the health value of this troop. If the given value is below {@value NO_HEALTH} then set health to
-   * {@value NO_HEALTH}.
+   * Set the health value of this troop. If the given value is below {@value NO_HEALTH} then set
+   * health to {@value NO_HEALTH}.
+   *
    * @param health The health of this Troop.
    */
   public void setHealth(int health) {
@@ -230,6 +245,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Get the maximum health value of this Troop.
+   *
    * @return The maximum health value of this Troop.
    */
   public int getMaxHealth() {
@@ -238,6 +254,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Get the health value of this Troop.
+   *
    * @return The health value of this Troop.
    */
   public int getHealth() {
@@ -245,7 +262,9 @@ public abstract class Troop extends MapObject implements Spawnable {
   }
 
   /**
-   * Get the maximum movement speed of this Troop (Note: Not the current movement speed). (Calls {@link MapObject#getMaxSpeed()})
+   * Get the maximum movement speed of this Troop (Note: Not the current movement speed). (Calls
+   * {@link MapObject#getMaxSpeed()})
+   *
    * @return The maximum movement speed of this Troop.
    */
   public double getMovementSpeed() {
@@ -254,6 +273,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Get the lipid cost to spawn this Troop.
+   *
    * @return The lipid cost to spawn this Troop.
    */
   public int getLipidCost() {
@@ -262,6 +282,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Get the protein cost to spawn this Troop.
+   *
    * @return The protein cost to spawn this Troop.
    */
   public int getProteinCost() {
@@ -270,6 +291,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Get the sugar cost to spawn this Troop.
+   *
    * @return The sugar cost to spawn this Troop.
    */
   public int getSugarCost() {
@@ -278,6 +300,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Get the attack range of this Troop.
+   *
    * @return The attack range of this Troop.
    */
   public int getRange() {
@@ -286,6 +309,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Get the damage dealt by this Troop's attack.
+   *
    * @return The damage dealt by this Troop's attack.
    */
   public int getDamage() {
@@ -294,6 +318,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Get the {@link Lane} this Troop has been assigned to.
+   *
    * @return The {@link Lane} this Troop has been assigned to.
    */
   public Lane getLane() {
@@ -302,6 +327,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Check whether this Troop can be attacked.
+   *
    * @return True if this Troop can be attacked.
    */
   public boolean isAttackable() {
@@ -310,21 +336,21 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Set the attacking state of this Troop.
+   *
    * @param b The attacking state of this Troop.
    */
   public void setAttacking(boolean b) {
     attacking = b;
   }
 
-  /**
-   * Sets the health of the Troop to that of a dead Troop. (Defaults to {@value NO_HEALTH})
-   */
-  public void setDead(){
+  /** Sets the health of the Troop to that of a dead Troop. (Defaults to {@value NO_HEALTH}) */
+  public void setDead() {
     setHealth(NO_HEALTH);
   }
 
   /**
    * Check if the Troop is dead (health = {@value NO_HEALTH}).
+   *
    * @return True if the troop is dead.
    */
   public boolean isDead() {
@@ -333,6 +359,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   /**
    * Gets a String representation of this Troop which only contains the class name of the Troop.
+   *
    * @return The String representation of the Troop.
    */
   @Override
@@ -340,8 +367,9 @@ public abstract class Troop extends MapObject implements Spawnable {
     return this.getClass().toString();
   }
 
-  public void setSlowed(long time) {
+  public void setSlowed(long time, int slowPercentage) {
     slowed = true;
+    this.slowPercentage = slowPercentage;
     slowTimeEnd = System.currentTimeMillis() + time;
   }
 }

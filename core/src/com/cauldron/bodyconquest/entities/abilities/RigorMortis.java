@@ -31,7 +31,7 @@ public class RigorMortis extends Ability {
 
   @Override
   public void cast(EncounterState game) {
-    CopyOnWriteArrayList<Troop> enemies = null;
+    CopyOnWriteArrayList<Troop> enemies;
     if (playerType == Assets.PlayerType.PLAYER_TOP) {
       enemies = game.getTroopsBottom();
     } else {
@@ -40,7 +40,8 @@ public class RigorMortis extends Ability {
 
     for(Troop enemy : enemies) {
       if(enemy.getLane() == lane) {
-        enemy.setSlowed(5000);
+        System.out.println("Setting slowed");
+        enemy.setSlowed(5000, 40);
       }
     }
   }
