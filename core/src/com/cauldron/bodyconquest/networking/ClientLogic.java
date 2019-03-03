@@ -13,6 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class ClientLogic extends Thread {
 
   private enum Logic {
+    BODY_LOGIC,
     RACE_SELECTION_LOGIC,
     ENCOUNTER_LOGIC
   }
@@ -29,6 +30,7 @@ public class ClientLogic extends Thread {
     this.run = true;
     currentLogic = null;
   }
+
   /** Deals with game logic tasks of the incoming messages */
   public void run() {
     while (run) {

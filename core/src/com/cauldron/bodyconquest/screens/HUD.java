@@ -57,14 +57,13 @@ public class HUD {
   private Disease disease;
 
 
-  public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType, Disease disease, Stage stage) {
+  public HUD(final EncounterScreen screen, final PlayerType playerType, Disease disease, Stage stage) {
     this.screen = screen;
     this.playerType = playerType;
     this.disease = disease;
 
     viewport =
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
-    //this.stage = new Stage(viewport, sb);
     this.stage = stage;
     Gdx.input.setInputProcessor(stage);
 
@@ -75,7 +74,6 @@ public class HUD {
     setupUnitBar();
     loadSkins();
     setupResourceBars();
-    //setUpDragAndDrop();
     setupNewUnitBar();
 
     setUpDragAndDrop();
@@ -146,9 +144,6 @@ public class HUD {
       addSpawnPoint(130, 370,Lane.BOTTOM);
     }
 
-//    addDragAndDropSource(0, "bacteria");
-//    addDragAndDropSource(1, "flu");
-//    addDragAndDropSource(2, "virus");
     addDragAndDropSource(0, disease.getSpawn1());
     addDragAndDropSource(1, disease.getSpawn2());
     addDragAndDropSource(2, disease.getSpawn3());
@@ -174,14 +169,6 @@ public class HUD {
 
           public void drop(Source source, Payload payload, float x, float y, int pointer) {
             System.out.println("SPAWN HERE");
-            //System.out.println(source.getActor().getName());
-//            if (source.getActor().getName().equals("flu")) {
-//              screen.spawnUnit(UnitType.FLU, lane, playerType);
-//            } else if (source.getActor().getName().equals("bacteria")) {
-//              screen.spawnUnit(UnitType.BACTERIA, lane, playerType);
-//            } else if (source.getActor().getName().equals("virus")) {
-//              screen.spawnUnit(UnitType.VIRUS, lane, playerType);
-//            }
             screen.spawnUnit((UnitType) payload.getObject(), lane, playerType);
           }
         });
@@ -194,19 +181,6 @@ public class HUD {
     final ImageButton spawnableButton;
     spawnableButton = new ImageButton(new Image(new Texture(spawnableClass.newInstance().getPortraitLocation())).getDrawable());
 
-//    if (name.equals("bacteria")) {
-//      //spawnableButton = new ImageButton(new Bacteria().sprite.getDrawable());
-//      spawnableButton = new ImageButton(new Image(new Texture("core/assets/bacteria_button.png")).getDrawable());
-//    } else if (name.equals("flu")) {
-//      //spawnableButton = new ImageButton(new Flu().sprite.getDrawable());
-//      spawnableButton = new ImageButton(new Image(new Texture("core/assets/flu_button.png")).getDrawable());
-//    } else if (name.equals("virus")) {
-//      //spawnableButton = new ImageButton(new Virus().sprite.getDrawable());
-//      spawnableButton = new ImageButton(new Image(new Texture("core/assets/virus_button.png")).getDrawable());
-//    } else { // default
-//      //spawnableButton = new ImageButton(new Flu().sprite.getDrawable());
-//      spawnableButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
-//    }
     spawnableButton.setBounds(
         unitBar.getWidth() / 4 + 25 * index,
         unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
@@ -240,7 +214,6 @@ public class HUD {
             return payload;
           }
         };
-    //s.getActor().setName(name);
 
     dragAndDrop.addSource(s);
     } catch (InstantiationException|IllegalAccessException e) {
@@ -282,6 +255,5 @@ public class HUD {
     stage.addActor(healthBar);
     return healthBar;
   }
-
 
 }
