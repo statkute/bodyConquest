@@ -1,5 +1,7 @@
 package com.cauldron.bodyconquest.game_logic;
 
+import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.gamestates.GameStateManager;
@@ -20,8 +22,8 @@ public class Game extends Thread {
   private final GameType gameType;
   private ServerLogic serverLogic;
 
-  private Player player1;
-  private Player player2;
+  private Player playerBottom;
+  private Player playerTop;
 
   /**
    * Constructor
@@ -33,8 +35,8 @@ public class Game extends Thread {
     this.gameType = gameType;
     server = new Server();
     server.startServer(gameType);
-    player1 = new Player();
-    player2 = new Player();
+    playerBottom = null;
+    playerTop = null;
   }
 
   private void init() {
@@ -83,12 +85,12 @@ public class Game extends Thread {
     return server;
   }
 
-  public Player getPlayer1() {
-    return player1;
+  public Player getPlayerBottom() {
+    return playerBottom;
   }
 
-  public Player getPlayer2() {
-    return player2;
+  public Player getPlayerTop() {
+    return playerTop;
   }
 
   public void startEncounterState() {
@@ -97,7 +99,12 @@ public class Game extends Thread {
   }
 
   public void startEncounterLogic(EncounterState encounterState) {
+    //server.getServerSender().sendMessage();
     server.startEncounterLogic(encounterState);
+  }
+
+  public void startRaceSelectionState() {
+    server.startRaceSelectionLogic(playerBottom, playerTop);
   }
 
   public GameType getGameType() {
@@ -106,5 +113,19 @@ public class Game extends Thread {
 
   public void closeEverything() {
     server.closeEverything();
+  }
+
+//  public void setPlayerBottom(Disease playerDisease) {
+//    playerBottom = new Player(Assets.PlayerType.PLAYER_BOTTOM, playerDisease);
+//  }
+//
+//  public void setPlayerTop(Disease playerDisease) {
+//    playerTop = new Player(Assets.PlayerType.PLAYER_TOP, playerDisease);
+//  }
+
+  public void setPlayer(Assets.PlayerType playerType, Disease playerDisease) {
+    if(playerType == Assets.PlayerType.PLAYER_TOP)    playerTop = new Player(playerType, playerDisease);
+    if(playerType == Assets.PlayerType.PLAYER_BOTTOM) playerBottom = new Player(playerType, playerDisease);
+    // Doesn't do anything for AI just yet
   }
 }

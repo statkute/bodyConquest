@@ -1,5 +1,6 @@
 package com.cauldron.bodyconquest.game_logic;
 
+import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.entities.BasicObject;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -18,8 +19,11 @@ public class Communicator {
   private int sugarsBottom;
   private int proteinsBottom;
 
+  private Disease playerDisease;
+
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();
+    playerDisease = null;
   }
 
   public CopyOnWriteArrayList<BasicObject> getAllObjects() {
@@ -92,5 +96,13 @@ public class Communicator {
 
   public int getProteinsBottom() {
     return proteinsBottom;
+  }
+
+  public void setPlayerDisease(Disease playerDisease) {
+    this.playerDisease = playerDisease;
+  }
+
+  public Disease getPlayerDisease() {
+    return playerDisease;
   }
 }

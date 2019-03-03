@@ -12,7 +12,7 @@ public class Player {
   private ArrayList<Organ> claimedOrgans;
   private Assets.PlayerType playerType;
 
-  public Player() {}
+  public Player(Assets.PlayerType playerType, Disease playerDisease) {}
 
   public Disease getDisease() {
     return disease;

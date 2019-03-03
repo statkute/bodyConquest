@@ -46,4 +46,8 @@ public class Virus extends Troop {
     //sprite = new Image(walkAnimation.getKeyFrame(0));
   }
 
+  @Override
+  public String getPortraitLocation() {
+    return "core/assets/virus_button.png";
+  }
 }

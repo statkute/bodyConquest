@@ -1,35 +1,30 @@
 package com.cauldron.bodyconquest.constants;
 
-import com.cauldron.bodyconquest.entities.Spawnable;
-
 public enum Disease {
-  @SuppressWarnings("unchecked")
   INFLUENZA("FLU",
-          (Class<Spawnable>) Assets.UnitType.FLU.getUnitClass(),
-          (Class<Spawnable>) Assets.UnitType.BACTERIA.getUnitClass(),
-          (Class<Spawnable>) Assets.UnitType.VIRUS.getUnitClass(),
-          (Class<Spawnable>) Assets.UnitType.BACTERIA.getUnitClass()),
-  @SuppressWarnings("unchecked")
+          Assets.UnitType.FLU,
+          Assets.UnitType.BACTERIA,
+          Assets.UnitType.VIRUS,
+          Assets.UnitType.BACTERIA),
   MEASLES("MES",
-          (Class<Spawnable>) Assets.UnitType.BACTERIA.getUnitClass(),
-          (Class<Spawnable>) Assets.UnitType.BACTERIA.getUnitClass(),
-          (Class<Spawnable>) Assets.UnitType.BACTERIA.getUnitClass(),
-          (Class<Spawnable>) Assets.UnitType.BACTERIA.getUnitClass()),
-  @SuppressWarnings("unchecked")
+          Assets.UnitType.BACTERIA,
+          Assets.UnitType.BACTERIA,
+          Assets.UnitType.BACTERIA,
+          Assets.UnitType.BACTERIA),
   ROTAVIRUS("RVI",
-          (Class<Spawnable>) Assets.UnitType.BACTERIA.getUnitClass(),
-          (Class<Spawnable>) Assets.UnitType.BACTERIA.getUnitClass(),
-          (Class<Spawnable>) Assets.UnitType.BACTERIA.getUnitClass(),
-          (Class<Spawnable>) Assets.UnitType.BACTERIA.getUnitClass());
+          Assets.UnitType.BACTERIA,
+          Assets.UnitType.BACTERIA,
+          Assets.UnitType.BACTERIA,
+          Assets.UnitType.BACTERIA);
 
   private static final int ENCODED_LENGTH = 3;
 
   private String encodedDisease;
-  private Class<Spawnable> spawn1, spawn2, spawn3, spawn4;
+  private ClassOwner spawn1, spawn2, spawn3, spawn4;
 
-  Disease(String encodedDisease, Class<Spawnable> spawn1, Class<Spawnable> spawn2, Class<Spawnable> spawn3, Class<Spawnable> spawn4) {
+  Disease(String encodedDisease, ClassOwner spawn1, ClassOwner spawn2, ClassOwner spawn3, ClassOwner spawn4) {
     if (encodedDisease.length() != ENCODED_LENGTH)
-      System.err.println("Length of encoded disease is incorrect.");
+      System.err.println("Length of getEncoded disease is incorrect.");
     this.encodedDisease = encodedDisease;
     this.spawn1 = spawn1;
     this.spawn2 = spawn2;
@@ -43,7 +38,7 @@ public enum Disease {
 
   public static Disease decode(String encodedDisease) {
     for(Disease d : values()) {
-      if(d.encodedDisease == encodedDisease) return d;
+      if(d.encodedDisease.equals(encodedDisease)) return d;
     }
     System.err.println("Invalid encodedDisease string");
     return null;
@@ -53,19 +48,19 @@ public enum Disease {
     return ENCODED_LENGTH;
   }
 
-  public Class<Spawnable> getSpawn1() {
+  public ClassOwner getSpawn1() {
     return spawn1;
   }
 
-  public Class<Spawnable> getSpawn2() {
+  public ClassOwner getSpawn2() {
     return spawn2;
   }
 
-  public Class<Spawnable> getSpawn3() {
+  public ClassOwner getSpawn3() {
     return spawn3;
   }
 
-  public Class<Spawnable> getSpawn4() {
+  public ClassOwner getSpawn4() {
     return spawn4;
   }
 }

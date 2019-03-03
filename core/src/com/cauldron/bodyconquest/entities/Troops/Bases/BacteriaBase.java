@@ -27,4 +27,9 @@ public class BacteriaBase extends Base {
     public void update() {
 
     }
+
+    @Override
+    public String getPortraitLocation() {
+        return null; // Shouldn't really be spawned
+    }
 }

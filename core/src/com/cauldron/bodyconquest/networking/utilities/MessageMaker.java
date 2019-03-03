@@ -1,25 +1,34 @@
 package com.cauldron.bodyconquest.networking.utilities;
 
 import com.cauldron.bodyconquest.constants.Assets.*;
+import com.cauldron.bodyconquest.constants.Disease;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 public class MessageMaker {
 
+  public static final String TROOP_SPAWN_HEADER = "ACTION_T_";
+  public static final String ABILITY_CAST_HEADER = "ACTION_A_";
+  public static final String HEALTH_HEADER = "HEALTH_";
+  public static final String RESOURCES_HEADER = "RESOURCES_";
+  public static final String PAUSE_MESSAGE = "PAUSE";
+  public static final String EXIT_MESSAGE = "EXIT";
+  public static final String RACE_HEADER = "RACE_";
+
   public static String spawnTroopsMessage(UnitType troopClass, Lane lane, PlayerType playerType) {
-    String message = "ACTION_T_";
+    String message = TROOP_SPAWN_HEADER;
 
     message += troopClass.encode();
     message += "_";
     message += playerType.encoded();
     message += "_";
-    message += lane.encoded();
+    message += lane.getEncoded();
     return (message);
   }
 
   public static String castAbilityMessage(String abilityName, int xAxis, int yAxis) {
-    String message = "ACTION_A_";
+    String message = ABILITY_CAST_HEADER;
 
     if (abilityName.equals("fireball")) {
       message += "F_";
@@ -43,7 +52,7 @@ public class MessageMaker {
 
 
   public static String healthUpdate(int health, String position) {
-    String message = "HEALTH_";
+    String message = HEALTH_HEADER;
     message += position.toUpperCase().charAt(0);
     message += "_";
     NumberFormat formatter = new DecimalFormat("000");
@@ -54,7 +63,7 @@ public class MessageMaker {
   }
 
   public static String resourceUpdate(int lipids, int sugars, int proteins, String player){
-    String message = "RESOURCES_";
+    String message = RESOURCES_HEADER;
     message += player.toUpperCase().charAt(0);
     message += "_";
 
@@ -74,17 +83,19 @@ public class MessageMaker {
 
   }
 
-  public static String raceMessage(String race) {
-    String message = "RACE_";
-    message += race;
+  public static String diseaseMessage(Disease disease, PlayerType playerType) {
+    String message = RACE_HEADER;
+    message += disease.getEncoded();
+    message += "_";
+    message += playerType.encoded();
     return message;
   }
 
   public static String pauseMessage() {
-    return ("PAUSE");
+    return PAUSE_MESSAGE;
   }
 
   public static String exitMessage() {
-    return ("EXIT");
+    return EXIT_MESSAGE;
   }
 }

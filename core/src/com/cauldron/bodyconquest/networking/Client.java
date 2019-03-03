@@ -57,6 +57,14 @@ public class Client {
     }
   }
 
+  public void setRaceSelectionLogic() {
+    clientLogic.setRaceSelectionLogic();
+  }
+
+  public void setEncounterLogic() {
+    clientLogic.setEncounterLogic();
+  }
+
   //  public static void main(String argv[]) throws Exception {
   //    ClientReceiver clientReceiver = new ClientReceiver();
   //    ClientSender clientSender = new ClientSender(clientReceiver);

@@ -26,7 +26,10 @@ import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
+import com.cauldron.bodyconquest.constants.ClassOwner;
+import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.entities.HealthBar;
+import com.cauldron.bodyconquest.entities.Spawnable;
 import com.cauldron.bodyconquest.entities.UnitBar;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.cauldron.bodyconquest.resourcebars.CarbsResourceBar;
@@ -51,11 +54,13 @@ public class HUD {
 
   private UnitBar newUnitBar;
 
+  private Disease disease;
 
-  public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType, Stage stage) {
+
+  public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType, Disease disease, Stage stage) {
     this.screen = screen;
     this.playerType = playerType;
-//    this.playerType = PlayerType.PLAYER_TOP;
+    this.disease = disease;
 
     viewport =
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
@@ -141,9 +146,13 @@ public class HUD {
       addSpawnPoint(130, 370,Lane.BOTTOM);
     }
 
-    addDragAndDropSource(0, "bacteria");
-    addDragAndDropSource(1, "flu");
-    addDragAndDropSource(2, "virus");
+//    addDragAndDropSource(0, "bacteria");
+//    addDragAndDropSource(1, "flu");
+//    addDragAndDropSource(2, "virus");
+    addDragAndDropSource(0, disease.getSpawn1());
+    addDragAndDropSource(1, disease.getSpawn2());
+    addDragAndDropSource(2, disease.getSpawn3());
+    addDragAndDropSource(3, disease.getSpawn4());
   }
 
   private void addSpawnPoint(int x, int y, final Lane lane) {
@@ -165,56 +174,62 @@ public class HUD {
 
           public void drop(Source source, Payload payload, float x, float y, int pointer) {
             System.out.println("SPAWN HERE");
-            System.out.println(source.getActor().getName());
-            if (source.getActor().getName().equals("flu")) {
-              screen.spawnUnit(UnitType.FLU, lane, playerType);
-            } else if (source.getActor().getName().equals("bacteria")) {
-              screen.spawnUnit(UnitType.BACTERIA, lane, playerType);
-            } else if (source.getActor().getName().equals("virus")) {
-              screen.spawnUnit(UnitType.VIRUS, lane, playerType);
-            }
+            //System.out.println(source.getActor().getName());
+//            if (source.getActor().getName().equals("flu")) {
+//              screen.spawnUnit(UnitType.FLU, lane, playerType);
+//            } else if (source.getActor().getName().equals("bacteria")) {
+//              screen.spawnUnit(UnitType.BACTERIA, lane, playerType);
+//            } else if (source.getActor().getName().equals("virus")) {
+//              screen.spawnUnit(UnitType.VIRUS, lane, playerType);
+//            }
+            screen.spawnUnit((UnitType) payload.getObject(), lane, playerType);
           }
         });
   }
 
-  private void addDragAndDropSource(int index, final String name) {
-    final ImageButton troopButton;
-    if (name.equals("bacteria")) {
-      //troopButton = new ImageButton(new Bacteria().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/bacteria_button.png")).getDrawable());
-    } else if (name.equals("flu")) {
-      //troopButton = new ImageButton(new Flu().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/flu_button.png")).getDrawable());
-    } else if (name.equals("virus")) {
-      //troopButton = new ImageButton(new Virus().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/virus_button.png")).getDrawable());
-    } else { // default
-      //troopButton = new ImageButton(new Flu().sprite.getDrawable());
-      troopButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
-    }
-    troopButton.setBounds(
+  @SuppressWarnings("unchecked")
+  private void addDragAndDropSource(int index, ClassOwner spawnableEnum) {
+    try {
+      Class<Spawnable> spawnableClass = (Class<Spawnable>) spawnableEnum.getAssociatedClass();
+    final ImageButton spawnableButton;
+    spawnableButton = new ImageButton(new Image(new Texture(spawnableClass.newInstance().getPortraitLocation())).getDrawable());
+
+//    if (name.equals("bacteria")) {
+//      //spawnableButton = new ImageButton(new Bacteria().sprite.getDrawable());
+//      spawnableButton = new ImageButton(new Image(new Texture("core/assets/bacteria_button.png")).getDrawable());
+//    } else if (name.equals("flu")) {
+//      //spawnableButton = new ImageButton(new Flu().sprite.getDrawable());
+//      spawnableButton = new ImageButton(new Image(new Texture("core/assets/flu_button.png")).getDrawable());
+//    } else if (name.equals("virus")) {
+//      //spawnableButton = new ImageButton(new Virus().sprite.getDrawable());
+//      spawnableButton = new ImageButton(new Image(new Texture("core/assets/virus_button.png")).getDrawable());
+//    } else { // default
+//      //spawnableButton = new ImageButton(new Flu().sprite.getDrawable());
+//      spawnableButton = new ImageButton(new Image(new Texture("core/assets/Default Sprite (Green).png")).getDrawable());
+//    }
+    spawnableButton.setBounds(
         unitBar.getWidth() / 4 + 25 * index,
         unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
         25,
         25);
-    troopButton.addListener(
+    spawnableButton.addListener(
         new ChangeListener() {
           @Override
           public void changed(ChangeEvent event, Actor actor) {
             screen.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType);
           }
         });
-    stage.addActor(troopButton);
+    stage.addActor(spawnableButton);
 
     Source s =
-        new Source(troopButton) {
+        new Source(spawnableButton) {
           public Payload dragStart(InputEvent event, float x, float y, int pointer) {
             Payload payload = new Payload();
-            payload.setObject(new Image(new Texture("core/assets/Default Sprite (Green).png")));
+            payload.setObject(spawnableEnum);
 
-            payload.setDragActor(new Image(troopButton.getImage().getDrawable()));
+            payload.setDragActor(new Image(spawnableButton.getImage().getDrawable()));
 
-            Label validLabel = new Label("Release to drop " + name + "!", skin);
+            Label validLabel = new Label("Release to drop " + spawnableClass.getSimpleName() + "!", skin);
             validLabel.setColor(0, 1, 0, 1);
             payload.setValidDragActor(validLabel);
 
@@ -225,9 +240,12 @@ public class HUD {
             return payload;
           }
         };
-    s.getActor().setName(name);
+    //s.getActor().setName(name);
 
     dragAndDrop.addSource(s);
+    } catch (InstantiationException|IllegalAccessException e) {
+      e.printStackTrace();
+    }
   }
 
 

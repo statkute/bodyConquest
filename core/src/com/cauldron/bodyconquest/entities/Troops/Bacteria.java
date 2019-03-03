@@ -1,5 +1,8 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.MapObjectType;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
@@ -46,5 +49,10 @@ public class Bacteria extends Troop {
     // Temporary implementation for images for the HUD
     //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");
     //sprite = new Image(walkAnimation.getKeyFrame(0));
+  }
+
+  @Override
+  public String getPortraitLocation() {
+    return "core/assets/bacteria_button.png";
   }
 }

@@ -54,7 +54,7 @@ public class BasicTestAI extends Thread {
     int unitIndex = rnd.nextInt(2);
     try {
       final UnitType unitType = units.get(unitIndex);
-      final Spawnable unit = (Spawnable) unitType.getUnitClass().newInstance();
+      final Spawnable unit = (Spawnable) unitType.getAssociatedClass().newInstance();
       while (!resources.canAfford(unit)) {
         Thread.sleep(1000);
       }

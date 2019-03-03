@@ -1,6 +1,8 @@
 package com.cauldron.bodyconquest.entities.Troops.Bases;
 
-import com.cauldron.bodyconquest.constants.Assets.*;
+import com.cauldron.bodyconquest.constants.Assets.Lane;
+import com.cauldron.bodyconquest.constants.Assets.MapObjectType;
+import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 
 public class MonsterBase extends Base {
 
@@ -16,4 +18,8 @@ public class MonsterBase extends Base {
         mapObjectType = MapObjectType.MONSTER_BASE;
     }
 
+    @Override
+    public String getPortraitLocation() {
+        return null; // Shouldn't really be spawned
+    }
 }
