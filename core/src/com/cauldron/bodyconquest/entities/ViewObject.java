@@ -22,6 +22,7 @@ public class ViewObject extends Actor {
   private TextureRegion currentFrame;
   private float elapsedTime;
 
+  // Constructor for spritesheet (default time between frames of 0.2f)
   public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows,float elapsedTime) {
     // Right now all textures are the default buckets
     //texture = new Texture("core/assets/bucket.png");
@@ -38,6 +39,24 @@ public class ViewObject extends Actor {
     stateTime = 0f;
   }
 
+  // Constructor for spritesheet with defined framerate
+  public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows,float elapsedTime, int frameRate) {
+    // Right now all textures are the default buckets
+    //texture = new Texture("core/assets/bucket.png");
+    //texture = new Texture(pathTexture);
+    this.elapsedTime = elapsedTime;
+    walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, frameRate, pathTexture);
+    if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
+      setRotation((float)bo.getRotation());
+    }
+    setX((float)bo.getX());
+    setY((float)bo.getY());
+    setWidth((float)bo.getWidth());
+    setHeight((float)bo.getHeight());
+    stateTime = 0f;
+  }
+
+  // Constructor for gif images
   public ViewObject(BasicObject bo, String pathTexture, float elapsedTime) {
     walkAnimation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(pathTexture).read());
     this.elapsedTime = elapsedTime;

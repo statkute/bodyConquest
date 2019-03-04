@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.cauldron.bodyconquest.constants.Organ;
+import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 import com.cauldron.bodyconquest.handlers.GifDecoder;
 
 public class Map extends Actor {
@@ -17,20 +18,36 @@ public class Map extends Actor {
   private Texture texture;
   private Animation<TextureRegion> animation;
   private float stateTime;
+  private int frameCols;
+  private int frameRows;
+  private float frameRate;
+  private Animation<TextureRegion> walkAnimation;
+  private float elapsed;
 
   // Should have some sort of resource manager and system
-  public Map(Organ organ) {
+  public Map(Organ organ, float elapsedseconds) {
     String texturePath = null;
-    if(organ == Organ.LUNGS)  texturePath = "core/assets/map_lungs.gif";
+    elapsed = elapsedseconds;
+    if(organ == Organ.LUNGS){
+      texturePath = "core/assets/map_lungs_ss.png";
+      frameCols = 4;
+      frameRows = 5;
+      frameRate = 15f;
+    }
     if(organ == Organ.EYES)   texturePath = "core/assets/map_eyes.gif";
-    animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(texturePath).read());
+    //animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(texturePath).read());
+    walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, frameRate, texturePath);
     stateTime = 0f;
   }
 
   @Override
   public void draw(Batch batch, float parentAlpha) {
-    stateTime += Gdx.graphics.getDeltaTime();
-    TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
+//    stateTime += Gdx.graphics.getDeltaTime();
+//    TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
+    stateTime += elapsed; // Accumulate elapsed animation time
+    // Get current frame of animation for the current stateTime
+    //System.out.println(System.currentTimeMillis());
+    TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
     batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
     super.draw(batch, parentAlpha);
   }
