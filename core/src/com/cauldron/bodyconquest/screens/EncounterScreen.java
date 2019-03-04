@@ -32,7 +32,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.cauldron.bodyconquest.constants.Assets.UnitType.*;
 import static com.cauldron.bodyconquest.constants.ProjectileType.FLU_PROJECTILE;
-import static com.cauldron.bodyconquest.gamestates.BaseType.INFLUENZA_BASE;
+import static com.cauldron.bodyconquest.constants.BaseType.INFLUENZA_BASE;
 
 public class EncounterScreen implements Screen {
 

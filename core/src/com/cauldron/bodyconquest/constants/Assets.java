@@ -3,7 +3,6 @@ package com.cauldron.bodyconquest.constants;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
-import com.cauldron.bodyconquest.gamestates.MapObjectType;
 
 public class Assets {
 

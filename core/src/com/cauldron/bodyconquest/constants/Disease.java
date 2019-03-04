@@ -1,7 +1,5 @@
 package com.cauldron.bodyconquest.constants;
 
-import com.cauldron.bodyconquest.gamestates.BaseType;
-
 public enum Disease {
   INFLUENZA(
       "FLU",

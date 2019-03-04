@@ -2,8 +2,7 @@ package com.cauldron.bodyconquest.entities.Troops.Bases;
 
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.constants.Assets.*;
-import com.cauldron.bodyconquest.gamestates.BaseType;
-import com.cauldron.bodyconquest.gamestates.MapObjectType;
+import com.cauldron.bodyconquest.constants.BaseType;
 
 public class InfluenzaBase extends Base {
 

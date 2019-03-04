@@ -1,7 +1,5 @@
 package com.cauldron.bodyconquest.constants;
 
-import com.cauldron.bodyconquest.gamestates.MapObjectType;
-
 public enum ProjectileType implements MapObjectType {
   FLU_PROJECTILE;
 

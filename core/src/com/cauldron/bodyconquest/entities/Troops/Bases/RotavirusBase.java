@@ -1,7 +1,7 @@
 package com.cauldron.bodyconquest.entities.Troops.Bases;
 
 import com.cauldron.bodyconquest.constants.Assets.*;
-import com.cauldron.bodyconquest.gamestates.BaseType;
+import com.cauldron.bodyconquest.constants.BaseType;
 
 public class RotavirusBase extends Base {
 

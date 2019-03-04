@@ -1,6 +1,5 @@
-package com.cauldron.bodyconquest.gamestates;
+package com.cauldron.bodyconquest.constants;
 
-import com.cauldron.bodyconquest.constants.ClassOwner;
 import com.cauldron.bodyconquest.entities.Troops.Bases.InfluenzaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.MeaslesBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.RotavirusBase;

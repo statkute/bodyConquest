@@ -6,7 +6,6 @@ import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.gamestates.GameStateManager;
 import com.cauldron.bodyconquest.networking.Server;
-import com.cauldron.bodyconquest.networking.ServerLogic;
 
 import java.net.SocketException;
 
@@ -15,10 +14,12 @@ public class Game extends Thread {
   private boolean running;
   /** The number of time the game will refresh each second. */
   private final int FPS = 60;
+  /** The target time to spend on each epoch of the game. */
+  private final long targetTime = 1000 / FPS;
 
-  private long targetTime = 1000 / FPS;
   private Server server;
   private GameStateManager gsm;
+
   private final GameType gameType;
 
   private Player playerBottom;
@@ -34,15 +35,11 @@ public class Game extends Thread {
     this.gameType = gameType;
     server = new Server();
     server.startServer(gameType);
-//    playerBottom = null;
-//    playerTop = null;
   }
 
   private void init() {
     running = true;
     gsm = new GameStateManager(this);
-    // Starting state
-    // gsm.setCurrentGameState(raceSelectState);
   }
 
   @Override
@@ -84,11 +81,11 @@ public class Game extends Thread {
     return server;
   }
 
-  public void setPlayerBottom(Disease disease){
+  public void setPlayerBottom(Disease disease) {
     playerBottom = new Player(Assets.PlayerType.PLAYER_BOTTOM, disease);
   }
 
-  public void setPlayerTop(Disease disease){
+  public void setPlayerTop(Disease disease) {
     playerTop = new Player(Assets.PlayerType.PLAYER_TOP, disease);
   }
 
@@ -102,7 +99,7 @@ public class Game extends Thread {
 
   public void startEncounterState() {
     // Right now the Single player AI disease is set to INFLUENZA
-    if(gameType == GameType.SINGLE_PLAYER) setPlayerTop(Disease.INFLUENZA);
+    if (gameType == GameType.SINGLE_PLAYER) setPlayerTop(Disease.INFLUENZA);
     EncounterState encounterState = new EncounterState(this);
     gsm.setCurrentGameState(encounterState);
   }
@@ -122,4 +119,5 @@ public class Game extends Thread {
   public void closeEverything() {
     server.closeEverything();
   }
+
 }

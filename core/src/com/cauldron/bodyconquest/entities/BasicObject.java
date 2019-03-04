@@ -1,6 +1,6 @@
 package com.cauldron.bodyconquest.entities;
 
-import com.cauldron.bodyconquest.gamestates.MapObjectType;
+import com.cauldron.bodyconquest.constants.MapObjectType;
 
 public class BasicObject {
 

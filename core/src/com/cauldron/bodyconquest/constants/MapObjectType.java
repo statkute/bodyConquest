@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.gamestates;
+package com.cauldron.bodyconquest.constants;
 
 public interface MapObjectType {
 

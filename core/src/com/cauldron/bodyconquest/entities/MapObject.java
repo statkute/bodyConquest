@@ -1,7 +1,6 @@
 package com.cauldron.bodyconquest.entities;
 
-import com.cauldron.bodyconquest.constants.Assets;
-import com.cauldron.bodyconquest.gamestates.MapObjectType;
+import com.cauldron.bodyconquest.constants.MapObjectType;
 
 import java.awt.*;
 
