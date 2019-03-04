@@ -1,6 +1,7 @@
 package com.cauldron.bodyconquest.entities.projectiles;
 
 import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.ProjectileType;
 
 public class FluProjectile extends Projectile {
 
@@ -23,7 +24,7 @@ public class FluProjectile extends Projectile {
   private void init() {
     maxSpeed = 1;
     maxTravelDistance = 200;
-    mapObjectType = Assets.MapObjectType.FLUPROJECTILE;
+    mapObjectType = ProjectileType.FLU_PROJECTILE;
     piercing = false;
     moveTowards(xDest, yDest);
 

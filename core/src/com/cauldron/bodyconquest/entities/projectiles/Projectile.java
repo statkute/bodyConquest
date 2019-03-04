@@ -32,7 +32,7 @@ public abstract class Projectile extends MapObject {
     // Maxed out because I don't want to do fine tuning right now
     stopSpeed = 100000;
     acceleration = 100000;
-    mapObjectType = Assets.MapObjectType.FLU;
+    //mapObjectType = Assets.UnitType.FLU;
     distanceTraveled = 0;
     moving = true;
     collidable = true;

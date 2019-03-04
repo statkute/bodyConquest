@@ -2,11 +2,13 @@ package com.cauldron.bodyconquest.entities.Troops.Bases;
 
 import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.constants.Assets.*;
+import com.cauldron.bodyconquest.gamestates.BaseType;
+import com.cauldron.bodyconquest.gamestates.MapObjectType;
 
-public class BacteriaBase extends Base {
+public class InfluenzaBase extends Base {
 
-    public BacteriaBase(Lane lane, PlayerType pt){
-        super(lane, pt);
+    public InfluenzaBase(PlayerType pt){
+        super(pt);
         init();
     }
 
@@ -15,7 +17,7 @@ public class BacteriaBase extends Base {
         this.damage = 3;
         this.range = 130;
         this.maxHealth = health;
-        mapObjectType = MapObjectType.BACTERTIA_BASE;
+        mapObjectType = BaseType.INFLUENZA_BASE;
     }
 
     @Override

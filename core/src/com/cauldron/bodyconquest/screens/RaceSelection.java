@@ -58,6 +58,8 @@ public class RaceSelection implements Screen {
   private Game g;
   private GameType gameType;
 
+  private Assets.PlayerType playerType;
+
   private Random random;
 
   public RaceSelection(
@@ -135,12 +137,14 @@ public class RaceSelection implements Screen {
     }
 
     game.getClient().startClient();
+
     if(gameType != GameType.MULTIPLAYER_JOIN) {
-      game.getClient().getCommunicator().setPlayerType(Assets.PlayerType.PLAYER_BOTTOM);
+      playerType = Assets.PlayerType.PLAYER_BOTTOM;
     } else {
-      game.getClient().getCommunicator().setPlayerType(Assets.PlayerType.PLAYER_TOP);
+      playerType = Assets.PlayerType.PLAYER_TOP;
     }
 
+    game.getClient().getCommunicator().setPlayerType(playerType);
     game.getClient().setRaceSelectionLogic();
   }
 
@@ -190,20 +194,16 @@ public class RaceSelection implements Screen {
       if (continueBounds.contains(tmp.x, tmp.y) && selection != 0) {
         playButtonSound();
         Disease playerDisease = null;
-        Assets.PlayerType playerType;
         if(selection == 1) playerDisease = Disease.INFLUENZA;
         if(selection == 2) playerDisease = Disease.MEASLES;
         if(selection == 3) playerDisease = Disease.ROTAVIRUS;
-        if (gameType != GameType.MULTIPLAYER_JOIN) {
-          // Should actually start the encounter state until all players have confirmed their Disease
-          g.startEncounterState();
-          playerType = Assets.PlayerType.PLAYER_BOTTOM;
-        } else {
-          playerType = Assets.PlayerType.PLAYER_TOP;
-        }
-        game.getClient().getCommunicator().setPlayerDisease(playerDisease);
-        String message = MessageMaker.diseaseMessage(playerDisease, playerType);
-        game.getClient().clientSender.sendMessage(message);
+
+        // Should actually start the encounter state once all players have confirmed their Disease
+        if (gameType != GameType.MULTIPLAYER_JOIN) g.startEncounterState();
+
+//        game.getClient().getCommunicator().setPlayerDisease(playerDisease);
+//        String message = MessageMaker.diseaseMessage(playerDisease, playerType);
+//        game.getClient().clientSender.sendMessage(message);
         game.setScreen(new EncounterScreen(game, gameType));
         dispose();
       }
@@ -216,6 +216,10 @@ public class RaceSelection implements Screen {
         if (selection != 1) {
           blueVirus = blueVirusSelected;
           selection = 1;
+          Disease playerDisease = Disease.INFLUENZA;
+          game.getClient().getCommunicator().setPlayerDisease(playerDisease);
+          String message = MessageMaker.diseaseMessage(playerDisease, playerType);
+          game.getClient().clientSender.sendMessage(message);
         } else {
           selection = 0;
         }
@@ -227,6 +231,10 @@ public class RaceSelection implements Screen {
           cleanSelections();
         }
         if (selection != 2) {
+          Disease playerDisease = Disease.MEASLES;
+          game.getClient().getCommunicator().setPlayerDisease(playerDisease);
+          String message = MessageMaker.diseaseMessage(playerDisease, playerType);
+          game.getClient().clientSender.sendMessage(message);
           greenVirus = greenVirusSelected;
           selection = 2;
         } else {
@@ -240,6 +248,10 @@ public class RaceSelection implements Screen {
           cleanSelections();
         }
         if (selection != 3) {
+          Disease playerDisease = Disease.ROTAVIRUS;
+          game.getClient().getCommunicator().setPlayerDisease(playerDisease);
+          String message = MessageMaker.diseaseMessage(playerDisease, playerType);
+          game.getClient().clientSender.sendMessage(message);
           yellowVirus = yellowVirusSelected;
           selection = 3;
         } else {

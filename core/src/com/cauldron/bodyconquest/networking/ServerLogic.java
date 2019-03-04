@@ -3,6 +3,7 @@ package com.cauldron.bodyconquest.networking;
 import com.cauldron.bodyconquest.constants.AbilityType;
 import com.cauldron.bodyconquest.constants.Assets.*;
 import com.cauldron.bodyconquest.constants.Disease;
+import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.game_logic.Player;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
@@ -28,8 +29,7 @@ public class ServerLogic extends Thread {
   private EncounterState encounterState;
 
   // Race Selection Variables
-  private Player playerBottom;
-  private Player playerTop;
+  private Game game;
 
   /**
    * Constructor.
@@ -45,8 +45,6 @@ public class ServerLogic extends Thread {
 
   private void init() {
     currentLogic = null;
-    playerBottom = null;
-    playerTop = null;
   }
 
   /** Deals with game logic tasks of the incoming messages */
@@ -88,14 +86,14 @@ public class ServerLogic extends Thread {
       String encodedPlayerType =
           message.substring(pointer, pointer + PlayerType.getEncodedLength());
       playerType = PlayerType.decode(encodedPlayerType);
-      pointer += PlayerType.getEncodedLength() + 1;
 
-      if (playerType == PlayerType.PLAYER_TOP) {
-        playerTop = new Player(playerType, disease);
-        String responseMessage = MessageMaker.diseaseMessage(disease, playerType);
-        serverSender.sendMessage(responseMessage);
-      }
-      if (playerType == PlayerType.PLAYER_BOTTOM) playerBottom = new Player(playerType, disease);
+      if (playerType == PlayerType.PLAYER_TOP) game.setPlayerTop(disease);
+      if (playerType == PlayerType.PLAYER_BOTTOM) game.setPlayerBottom(disease);
+
+      // Response message for the other player to receive so they can update the other player's selection on their screen
+      String responseMessage = MessageMaker.diseaseMessage(disease, playerType);
+      serverSender.sendMessage(responseMessage);
+
       // Does nothing for player type AI as of now
       // if(playerType == PlayerType.AI)          playerTop = new Player(playerType, disease);
     } else if (message.equals(MessageMaker.CONFIRMED_RACE)) {
@@ -144,7 +142,7 @@ public class ServerLogic extends Thread {
       pointer += MessageMaker.COORDINATE_PADDING + 1;
 
       String yString = message.substring(pointer, pointer + MessageMaker.COORDINATE_PADDING);
-      yDest = Integer.parseInt(xString);
+      yDest = Integer.parseInt(yString);
 
       encounterState.castAbility(abilityType, player, xDest, yDest);
 
@@ -181,9 +179,8 @@ public class ServerLogic extends Thread {
     currentLogic = Logic.ENCOUNTER_LOGIC;
   }
 
-  public void setRaceSelectionLogic(Player playerBottom, Player playerTop) {
-    this.playerBottom = playerBottom;
-    this.playerTop = playerTop;
+  public void setRaceSelectionLogic(Game game) {
+    this.game = game;
     currentLogic = Logic.RACE_SELECTION_LOGIC;
   }
 

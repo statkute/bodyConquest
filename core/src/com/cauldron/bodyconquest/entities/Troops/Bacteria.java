@@ -1,10 +1,7 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
-import com.cauldron.bodyconquest.constants.Assets.MapObjectType;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 
 public class Bacteria extends Troop {
@@ -40,7 +37,7 @@ public class Bacteria extends Troop {
     cooldown = 1000; // Milliseconds
     range = 50;
     damage = 30;
-    mapObjectType = MapObjectType.BACTERIA;
+    mapObjectType = Assets.UnitType.BACTERIA;
 
     lipidsCost = LIPIDS_COST;
     sugarsCost = SUGARS_COST;

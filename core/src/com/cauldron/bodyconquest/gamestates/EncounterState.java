@@ -11,7 +11,7 @@ import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
 import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
-import com.cauldron.bodyconquest.entities.Troops.Bases.BacteriaBase;
+import com.cauldron.bodyconquest.entities.Troops.Bases.InfluenzaBase;
 import com.cauldron.bodyconquest.entities.Troops.Bases.Base;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
@@ -22,6 +22,7 @@ import com.cauldron.bodyconquest.entities.resources.Resources;
 import com.cauldron.bodyconquest.game_logic.BasicTestAI;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.game_logic.MultiplayerTestAI;
+import com.cauldron.bodyconquest.game_logic.Player;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
@@ -71,6 +72,10 @@ public class EncounterState extends GameState {
   private Base topBase;
   private Base bottomBase;
 
+  private Player topPlayer;
+  private Player bottomPlayer;
+
+  // Move resources in side of player
   private Resources topResources;
   private Resources bottomResources;
 
@@ -85,17 +90,22 @@ public class EncounterState extends GameState {
 
     allMapObjects = new CopyOnWriteArrayList<MapObject>();
 
+    topPlayer = game.getPlayerTop();
+    bottomPlayer = game.getPlayerBottom();
+
     // Initialise unit arrays
     troopsBottom = new CopyOnWriteArrayList<Troop>();
     troopsTop = new CopyOnWriteArrayList<Troop>();
 
     // Create player bases
-    bottomBase = new BacteriaBase(Lane.ALL, PlayerType.PLAYER_BOTTOM);
+    //bottomBase = new InfluenzaBase(Lane.ALL, PlayerType.PLAYER_BOTTOM);
+    bottomBase = bottomPlayer.getNewBase();
     bottomBase.setPosition(Assets.baseBottomX, Assets.baseBottomY);
     troopsBottom.add(bottomBase);
     allMapObjects.add(bottomBase);
 
-    topBase = new BacteriaBase(Lane.ALL, PlayerType.PLAYER_TOP);
+    //topBase = new InfluenzaBase(Lane.ALL, PlayerType.PLAYER_TOP);
+    topBase = topPlayer.getNewBase();
     topBase.setPosition(Assets.baseTopX, Assets.baseTopY);
     troopsTop.add(topBase);
     allMapObjects.add(topBase);
@@ -338,7 +348,6 @@ public class EncounterState extends GameState {
                   .getDeclaredConstructor(PlayerType.class, Lane.class)
                   .newInstance(playerType, lane);
       ability.cast(this);
-      System.out.println("Casting ability");
     } catch (InstantiationException
         | IllegalAccessException
         | NoSuchMethodException

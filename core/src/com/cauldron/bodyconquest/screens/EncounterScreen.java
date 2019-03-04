@@ -5,11 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cauldron.bodyconquest.constants.AbilityType;
@@ -31,6 +29,10 @@ import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static com.cauldron.bodyconquest.constants.Assets.UnitType.*;
+import static com.cauldron.bodyconquest.constants.ProjectileType.FLU_PROJECTILE;
+import static com.cauldron.bodyconquest.gamestates.BaseType.INFLUENZA_BASE;
 
 public class EncounterScreen implements Screen {
 
@@ -125,54 +127,50 @@ public class EncounterScreen implements Screen {
       elapsedSeconds = tDelta / 1000.0f;
       for (BasicObject o : objects) {
 
-        switch (o.getMapObjectType()) {
-          case FLU:
-            viewObjects.add(
-                new ViewObject(
-                    o,
-                    Assets.pathFlu,
-                    Assets.frameColsFlu,
-                    Assets.frameRowsFlu,
-                    elapsedSeconds));
-            break;
-          case VIRUS:
-            viewObjects.add(
-                new ViewObject(
-                    o,
-                    Assets.pathVirus,
-                    Assets.frameColsVirus,
-                    Assets.frameRowsVirus,
-                    elapsedSeconds));
-            break;
-          case BACTERIA:
-            viewObjects.add(
-                new ViewObject(
-                    o,
-                    Assets.pathBacteria,
-                    Assets.frameColsBacteria,
-                    Assets.frameRowsBacteria,
-                    elapsedSeconds));
-            break;
-          case BACTERTIA_BASE:
-            viewObjects.add(new ViewObject(o, Assets.pathBaseImage, elapsedSeconds));
-            break;
-            //        case VIRUS_BASE:
-            //          ////TO DO add Virus base Texture
-            //          break;
-            //        case MONSTER_BASE:
-            //          ////TO DO add Monster base Texture
-            //          break;
-            //        case BUCKET:
-            //          viewObjects.add(new ViewObject(o,Assets.pathBucket,1,1));
-            //          break;
-          case FLUPROJECTILE:
-            viewObjects.add(
-                new ViewObject(
-                    o,
-                    Assets.pathProjectile,
-                    Assets.frameColsProjectile,
-                    Assets.frameRowsProjectile,
-                    elapsedSeconds));
+        Enum i = o.getMapObjectType();
+        if (FLU.equals(i)) {
+          viewObjects.add(
+                  new ViewObject(
+                          o,
+                          Assets.pathFlu,
+                          Assets.frameColsFlu,
+                          Assets.frameRowsFlu,
+                          elapsedSeconds));
+        } else if (VIRUS.equals(i)) {
+          viewObjects.add(
+                  new ViewObject(
+                          o,
+                          Assets.pathVirus,
+                          Assets.frameColsVirus,
+                          Assets.frameRowsVirus,
+                          elapsedSeconds));
+        } else if (BACTERIA.equals(i)) {
+          viewObjects.add(
+                  new ViewObject(
+                          o,
+                          Assets.pathBacteria,
+                          Assets.frameColsBacteria,
+                          Assets.frameRowsBacteria,
+                          elapsedSeconds));
+        } else if (INFLUENZA_BASE.equals(i)) {
+          viewObjects.add(new ViewObject(o, Assets.pathBaseImage, elapsedSeconds));
+          //        case ROTAVIRUS_BASE:
+          //          ////TO DO add Virus base Texture
+          //          break;
+          //        case MEASLES_BASE:
+          //          ////TO DO add Monster base Texture
+          //          break;
+          //        case BUCKET:
+          //          viewObjects.add(new ViewObject(o,Assets.pathBucket,1,1));
+          //          break;
+        } else if (FLU_PROJECTILE.equals(i)) {
+          viewObjects.add(
+                  new ViewObject(
+                          o,
+                          Assets.pathProjectile,
+                          Assets.frameColsProjectile,
+                          Assets.frameRowsProjectile,
+                          elapsedSeconds));
         }
       }
 

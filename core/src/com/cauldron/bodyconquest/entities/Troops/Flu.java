@@ -1,7 +1,7 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
-import com.cauldron.bodyconquest.constants.Assets.MapObjectType;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.entities.projectiles.FluProjectile;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
@@ -44,7 +44,7 @@ public class Flu extends Troop {
     range = 200;
     damage = 40;
 
-    mapObjectType = MapObjectType.FLU;
+    mapObjectType = Assets.UnitType.FLU;
 
     lipidsCost = LIPIDS_COST;
     sugarsCost = SUGARS_COST;

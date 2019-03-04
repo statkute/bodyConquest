@@ -3,6 +3,7 @@ package com.cauldron.bodyconquest.constants;
 import com.cauldron.bodyconquest.entities.Troops.Bacteria;
 import com.cauldron.bodyconquest.entities.Troops.Flu;
 import com.cauldron.bodyconquest.entities.Troops.Virus;
+import com.cauldron.bodyconquest.gamestates.MapObjectType;
 
 public class Assets {
 
@@ -68,9 +69,9 @@ public class Assets {
 
 
   // EVERYTHINGS
-  public static enum MapObjectType {BACTERIA, FLU, BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE}
+  //public static enum MapObjectType {BACTERIA, FLU, BASE, INFLUENZA_BASE, ROTAVIRUS_BASE, MEASLES_BASE, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE}
   // ALL units
-  public static enum UnitType implements ClassOwner, Encodable {
+  public static enum UnitType implements ClassOwner, Encodable, MapObjectType {
     BACTERIA("BAC", Bacteria.class), FLU("FLU", Flu.class), VIRUS("VIR", Virus.class);
 
     private static final int ENCODED_LENGTH = 3;
@@ -83,7 +84,7 @@ public class Assets {
     private String encodedUnit;
     private Class associatedClass;
 
-    private UnitType(String encodedForm, Class associatedClass) {
+    UnitType(String encodedForm, Class associatedClass) {
       if (encodedForm.length() != ENCODED_LENGTH) System.err.println("[ERROR] Encoded unit type length is incorrect");
       this.encodedUnit = encodedForm;
       this.associatedClass = associatedClass;
@@ -105,13 +106,16 @@ public class Assets {
 
     public static int getEncodedLength() { return ENCODED_LENGTH;}
 
-    @Override
     public Class getAssociatedClass() {
       return associatedClass;
     }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Enum & MapObjectType> T getMapObjectType() {
+      return (T) this;
+    }
   }
 
-  public enum BaseType {BASE, BACTERTIA_BASE, VIRUS_BASE, MONSTER_BASE};
   // Player types
   public enum PlayerType implements Encodable {
 

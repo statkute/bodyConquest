@@ -1,6 +1,7 @@
 package com.cauldron.bodyconquest.networking;
 
 import com.cauldron.bodyconquest.constants.GameType;
+import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.game_logic.Player;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 
@@ -70,7 +71,7 @@ public class Server {
     return gameEnded;
   }
 
-  public void startRaceSelectionLogic(Player playerBottom, Player playerTop) {
-    serverLogic.setRaceSelectionLogic(playerBottom, playerTop);
+  public void startRaceSelectionLogic(Game game) {
+    serverLogic.setRaceSelectionLogic(game);
   }
 }

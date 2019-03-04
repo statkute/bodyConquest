@@ -20,7 +20,6 @@ public class Game extends Thread {
   private Server server;
   private GameStateManager gsm;
   private final GameType gameType;
-  private ServerLogic serverLogic;
 
   private Player playerBottom;
   private Player playerTop;
@@ -35,8 +34,8 @@ public class Game extends Thread {
     this.gameType = gameType;
     server = new Server();
     server.startServer(gameType);
-    playerBottom = null;
-    playerTop = null;
+//    playerBottom = null;
+//    playerTop = null;
   }
 
   private void init() {
@@ -85,6 +84,14 @@ public class Game extends Thread {
     return server;
   }
 
+  public void setPlayerBottom(Disease disease){
+    playerBottom = new Player(Assets.PlayerType.PLAYER_BOTTOM, disease);
+  }
+
+  public void setPlayerTop(Disease disease){
+    playerTop = new Player(Assets.PlayerType.PLAYER_TOP, disease);
+  }
+
   public Player getPlayerBottom() {
     return playerBottom;
   }
@@ -94,6 +101,8 @@ public class Game extends Thread {
   }
 
   public void startEncounterState() {
+    // Right now the Single player AI disease is set to INFLUENZA
+    if(gameType == GameType.SINGLE_PLAYER) setPlayerTop(Disease.INFLUENZA);
     EncounterState encounterState = new EncounterState(this);
     gsm.setCurrentGameState(encounterState);
   }
@@ -103,7 +112,7 @@ public class Game extends Thread {
   }
 
   public void startRaceSelectionState() {
-    server.startRaceSelectionLogic(playerBottom, playerTop);
+    server.startRaceSelectionLogic(this);
   }
 
   public GameType getGameType() {
@@ -113,5 +122,4 @@ public class Game extends Thread {
   public void closeEverything() {
     server.closeEverything();
   }
-
 }

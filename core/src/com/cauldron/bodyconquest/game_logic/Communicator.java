@@ -118,7 +118,6 @@ public class Communicator {
     this.playerType = playerType;
   }
 
-
   public Disease getEnemyDisease() {
     return enemyDisease;
   }

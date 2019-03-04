@@ -1,6 +1,7 @@
 package com.cauldron.bodyconquest.entities;
 
 import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.gamestates.MapObjectType;
 
 import java.awt.*;
 
@@ -22,7 +23,7 @@ public abstract class MapObject {
   private final double RIGHT_DIRECTION = 360;//90;
 
   // Type of the object
-  protected Assets.MapObjectType mapObjectType;
+  protected MapObjectType mapObjectType;
 
   // Current x and y
   private double x;
@@ -107,7 +108,7 @@ public abstract class MapObject {
    * Get the type of MapObject which includes all possible types.
    * @return The type of the MapObject.
    */
-  public Assets.MapObjectType getMapObjectType() {
+  public MapObjectType getMapObjectType() {
     return mapObjectType;
   }
 
@@ -115,7 +116,7 @@ public abstract class MapObject {
    * Set the type of MapObject.
    * @param mapObjectType The type of the MapObject to be set.
    */
-  public void setMapObjectType(Assets.MapObjectType mapObjectType) {
+  public void setMapObjectType(MapObjectType mapObjectType) {
     this.mapObjectType = mapObjectType;
   }
 

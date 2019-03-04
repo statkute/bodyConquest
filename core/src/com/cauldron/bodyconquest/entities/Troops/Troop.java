@@ -202,9 +202,7 @@ public abstract class Troop extends MapObject implements Spawnable {
   public void move() {
     double normalMaxSpeed = maxSpeed;
     if (slowed) {
-      System.out.println("Before: " + maxSpeed);
       maxSpeed = maxSpeed * (1 - (slowPercentage / 100f));
-      System.out.println("After: " + maxSpeed);
     }
     super.move();
     maxSpeed = normalMaxSpeed;

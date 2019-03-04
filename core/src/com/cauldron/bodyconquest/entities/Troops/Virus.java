@@ -1,7 +1,7 @@
 package com.cauldron.bodyconquest.entities.Troops;
 
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
-import com.cauldron.bodyconquest.constants.Assets.MapObjectType;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 
 public class Virus extends Troop {
@@ -35,7 +35,7 @@ public class Virus extends Troop {
     lastAttack = 0;
     range = 50;
     damage = 45;
-    mapObjectType = MapObjectType.VIRUS;
+    mapObjectType = Assets.UnitType.VIRUS;
 
     lipidsCost = LIPIDS_COST;
     sugarsCost = SUGARS_COST;

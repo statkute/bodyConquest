@@ -1,6 +1,6 @@
 package com.cauldron.bodyconquest.entities;
 
-import com.cauldron.bodyconquest.constants.Assets.*;
+import com.cauldron.bodyconquest.gamestates.MapObjectType;
 
 public class BasicObject {
 
@@ -65,8 +65,9 @@ public class BasicObject {
     this.mapObjectType = ut;
   }
 
-  public MapObjectType getMapObjectType() {
-    return mapObjectType;
+  @SuppressWarnings("unchecked")
+  public <T extends Enum & MapObjectType> T getMapObjectType() {
+    return mapObjectType.getMapObjectType();
   }
 
   public double getRotation() {
