@@ -16,10 +16,10 @@
       <module name="Body_Conquest_I.core.test" target="1.6" />
       <module name="Body_Conquest_I.desktop.main" target="1.6" />
       <module name="Body_Conquest_I.desktop.test" target="1.6" />
-      <module name="cauldron.core.main" target="1.6" />
-      <module name="cauldron.core.test" target="1.6" />
-      <module name="cauldron.desktop.main" target="1.6" />
-      <module name="cauldron.desktop.test" target="1.6" />
+      <module name="cauldron.core.main" target="1.8" />
+      <module name="cauldron.core.test" target="1.8" />
+      <module name="cauldron.desktop.main" target="1.8" />
+      <module name="cauldron.desktop.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="CopyrightManager" default="" />
@@ -206,7 +206,7 @@
       <module fileurl="file://$PROJECT_DIR$/desktop/cauldron.desktop.test.iml" filepath="$PROJECT_DIR$/desktop/cauldron.desktop.test.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="SvnBranchConfigurationManager">
@@ -216,13 +216,13 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="libraryTable">
-    <library name="Gradle: com.badlogicgames.gdx:gdx-ai:1.8.0">
+    <library name="Gradle: com.badlogicgames.gdx:gdx-ai:1.8.1">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.8.0/ec30677d8ab1a8b8aa4b853c5f4e4b1361f50bf5/gdx-ai-1.8.0.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.8.1/a52367e373fe52f0d20f162cbf8711c38f002a25/gdx-ai-1.8.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.8.0/154b2fbb50894a944607cd74f7dba1073d31a967/gdx-ai-1.8.0-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.8.1/a0e7e1f3732190d68e376360d894175af72fabf2/gdx-ai-1.8.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx-backend-headless:1.9.10-SNAPSHOT">
