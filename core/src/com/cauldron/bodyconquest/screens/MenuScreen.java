@@ -45,6 +45,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
 
     super.render(delta);
     game.batch.begin();
+
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
     game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450);
     game.batch.draw(
@@ -99,8 +100,12 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         playButtonSound();
         System.out.println("Credits Is touched");
         dispose();
-        game.setScreen(new CreditsScreen(game));
-
+//        game.setScreen(new CreditsScreen(game));
+        try {
+          game.setScreen(new BodyScreen(game, GameType.SINGLE_PLAYER));
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
 
       if (exitBounds.contains(tmp.x, tmp.y)) {
@@ -169,6 +174,5 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
                     60,
                     exitButton.getWidth(),
                     exitButton.getHeight());
-
   }
 }
