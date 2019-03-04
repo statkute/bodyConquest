@@ -1,18 +1,12 @@
 package com.cauldron.bodyconquest.screens;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.cauldron.bodyconquest.constants.Assets;
-import com.cauldron.bodyconquest.constants.GameType;
-import com.cauldron.bodyconquest.game_logic.Communicator;
-import com.cauldron.bodyconquest.game_logic.Game;
-import com.cauldron.bodyconquest.networking.*;
-import com.cauldron.bodyconquest.rendering.BodyConquest;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
+import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.GameType;
+import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.io.IOException;
 
@@ -25,7 +19,6 @@ public class HostScreen extends AbstractGameScreen implements Screen {
   private Rectangle hostBounds;
   private Rectangle joinBounds;
   private Rectangle backBounds;
-  private Server server;
 
   public HostScreen(BodyConquest game) {
     super(game);
@@ -53,6 +46,7 @@ public class HostScreen extends AbstractGameScreen implements Screen {
 
   @Override
   public void checkPressed() {
+    super.checkPressed();
 
     if (Gdx.input.justTouched()) {
       if (hostBounds.contains(tmp.x, tmp.y)) {
@@ -109,7 +103,6 @@ public class HostScreen extends AbstractGameScreen implements Screen {
         hostButtton = manager.get(Assets.hostButton,Texture.class);
         joinButton = manager.get(Assets.joinButton,Texture.class);
         backButton = manager.get(Assets.hostBack,Texture.class);
-
     }
 
     @Override
