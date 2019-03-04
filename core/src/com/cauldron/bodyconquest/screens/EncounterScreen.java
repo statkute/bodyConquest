@@ -153,7 +153,7 @@ public class EncounterScreen implements Screen {
                           Assets.frameRowsBacteria,
                           elapsedSeconds));
         } else if (INFLUENZA_BASE.equals(i)) {
-          viewObjects.add(new ViewObject(o, Assets.pathBaseImage, elapsedSeconds));
+          viewObjects.add(new ViewObject(o, Assets.pathBaseImage, 3, 5, elapsedSeconds));
           //        case ROTAVIRUS_BASE:
           //          ////TO DO add Virus base Texture
           //          break;
