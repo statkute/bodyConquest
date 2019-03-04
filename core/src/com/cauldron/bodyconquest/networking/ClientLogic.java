@@ -120,7 +120,7 @@ public class ClientLogic extends Thread {
         communicator.setTopHealthPercentage(health);
       }
     } else if (message.startsWith(MessageMaker.RESOURCES_HEADER)) {
-      System.out.println("THE MESSAGE: " + message);
+      //System.out.println("THE MESSAGE: " + message);
 
       Assets.PlayerType player;
       int lipids;

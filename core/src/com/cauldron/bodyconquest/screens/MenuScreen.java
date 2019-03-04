@@ -72,6 +72,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
     if (Gdx.input.justTouched()) {
       if (multiplayerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
+        timeOfServer = System.currentTimeMillis();
         System.out.println("Multiplayer Is touched");
         dispose();
         game.setScreen(new HostScreen(game));
