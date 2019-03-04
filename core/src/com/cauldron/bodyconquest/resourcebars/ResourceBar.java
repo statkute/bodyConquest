@@ -17,7 +17,7 @@ public abstract class ResourceBar extends Actor {
     protected Animation<TextureRegion> walkAnimation;
     float stateTime;
     private float elapsedTime;
-    private int insideY;
+    private float insideY;
     private String insideTexturePath;
 
     public ResourceBar(){
@@ -55,11 +55,11 @@ public abstract class ResourceBar extends Actor {
 
     public void setInsideTexturePath(String path){this.insideTexturePath = path;}
 
-    public void setInsideY(int y){
+    public void setInsideY(float y){
         insideY = y;
     }
 
-    private int getInsideY(){
+    private float getInsideY(){
         return insideY;
     }
 

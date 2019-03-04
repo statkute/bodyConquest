@@ -24,8 +24,11 @@ public class BodyConquest extends Game {
 
   // private static final Logger log = Logger.getLogger(MyGdxGame.class);
 
-  public static final int V_WIDTH = 800;
-  public static final int V_HEIGHT = 600;
+  static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+  public static final float V_WIDTH = (float) screenSize.getWidth();
+  public static final float V_HEIGHT = (float) screenSize.getHeight();
+
 
   public final AudioPlayer audioPlayer = new AudioPlayer();
 
@@ -38,6 +41,10 @@ public class BodyConquest extends Game {
 
   // so that we could add text
   public BitmapFont font;
+
+  public static final float originalAspectRatio = 4 / 3;
+  public static float yourAspectRatio = V_WIDTH / V_HEIGHT;
+  public static float scaleRatio = yourAspectRatio / originalAspectRatio;
 
   private Server server;
   private Client client;
@@ -58,7 +65,7 @@ public class BodyConquest extends Game {
     super.render();
     if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
     if (Gdx.input.isKeyJustPressed(Input.Keys.M)
-            && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
+        && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
             || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
       audioPlayer.toggleMuted();
     }

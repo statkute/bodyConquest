@@ -48,10 +48,8 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
 
   private Random random;
 
-
-  public RaceSelection(
-      BodyConquest game, Communicator communicator, GameType gameType) {
-    super(game,communicator,gameType);
+  public RaceSelection(BodyConquest game, Communicator communicator, GameType gameType) {
+    super(game, communicator, gameType);
     loadAssets();
     getAssets();
     setRectangles();
@@ -61,26 +59,54 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   public void render(float delta) {
 
     super.render(delta);
-
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
-    game.batch.draw(blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), 220);
-    game.batch.draw(greenVirus, (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2), 220);
-    game.batch.draw(yellowVirus, (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2), 220);
     game.batch.draw(
-        blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), 160);
+        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
     game.batch.draw(
-        greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), 160);
+        blueVirus,
+        (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() * 1.7f / 2),
+        220 * BodyConquest.scaleRatio,
+        blueVirus.getWidth() * 1.7f,
+        blueVirus.getHeight() * 1.7f);
     game.batch.draw(
-        yellowDescription, (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2), 160);
-    game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
-    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
+        greenVirus,
+        (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() * 1.7f / 2),
+        220 * BodyConquest.scaleRatio,
+        greenVirus.getWidth() * 1.7f,
+        greenVirus.getHeight() * 1.7f);
+    game.batch.draw(
+        yellowVirus,
+        (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() * 1.7f / 2),
+        220 * BodyConquest.scaleRatio,
+        yellowVirus.getWidth() * 1.7f,
+        yellowVirus.getHeight() * 1.7f);
+    game.batch.draw(
+        blueDescription,
+        (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2),
+        160 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        greenDescription,
+        (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2),
+        160 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        yellowDescription,
+        (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2),
+        160 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        continueText,
+        BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2,
+        80 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        backButton,
+        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+        30 * BodyConquest.scaleRatio);
+
     checkPressed();
     game.batch.end();
   }
 
-  public void checkPressed()  {
+  public void checkPressed() {
 
     super.checkPressed();
 
@@ -110,9 +136,8 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
           server.startServerLogic(g.getEncounterState());
           System.out.println("Does it go here");
         }
-          //dispose();
-          game.setScreen(new EncounterScreen(game, communicator, gameType));
-
+        // dispose();
+        game.setScreen(new EncounterScreen(game, communicator, gameType));
       }
 
       checkSelection();
@@ -175,42 +200,42 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   public void setRectangles() {
     super.setRectangles();
     continueBounds =
-            new Rectangle(
-                    BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2,
-                    80,
-                    continueText.getWidth(),
-                    continueText.getHeight());
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2,
+            80 * BodyConquest.scaleRatio,
+            continueText.getWidth(),
+            continueText.getHeight());
 
     blueVirusBounds =
-            new Rectangle(
-                    BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2,
-                    220,
-                    blueVirus.getWidth(),
-                    blueVirus.getHeight());
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() * 1.7f / 2,
+            220 * BodyConquest.scaleRatio,
+            blueVirus.getWidth() * 1.7f,
+            blueVirus.getHeight() * 1.7f);
 
     greenVirusBounds =
-            new Rectangle(
-                    BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2,
-                    220,
-                    greenVirus.getWidth(),
-                    greenVirus.getHeight());
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() * 1.7f / 2,
+            220 * BodyConquest.scaleRatio,
+            greenVirus.getWidth() * 1.7f,
+            greenVirus.getHeight() * 1.7f);
 
     yellowVirusBounds =
-            new Rectangle(
-                    BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2,
-                    220,
-                    yellowVirus.getWidth(),
-                    yellowVirus.getHeight());
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() * 1.7f / 2,
+            220 * BodyConquest.scaleRatio,
+            yellowVirus.getWidth() * 1.7f,
+            yellowVirus.getHeight() * 1.7f);
 
     backBounds =
-            new Rectangle(
-                    BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-                    30,
-                    backButton.getWidth(),
-                    backButton.getHeight());
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+            30 * BodyConquest.scaleRatio,
+            backButton.getWidth(),
+            backButton.getHeight());
   }
 
-  public void checkSelection(){
+  public void checkSelection() {
 
     if (blueVirusBounds.contains(tmp.x, tmp.y)) {
       playButtonSound();
@@ -250,6 +275,5 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         selection = 0;
       }
     }
-
   }
 }

@@ -12,55 +12,55 @@ public class Assets {
     /* Menu Screen Assets */
 
     public static String menuBackground ="core/assets/background_new.png";
-    public static String menuTitle =  "core/assets/title_new.png";
-    public static String multiplayerButton =  "core/assets/multiplayer_new.png";
-    public static String singleplayerButton =  "core/assets/singleplayer_new.png";
-    public static String settingsButton =  "core/assets/settings_new.png";
-    public static String creditsButton =  "core/assets/credits_new.png";
-    public static String exitButton =  "core/assets/exit_new.png";
+    public static String menuTitle =  "core/assets/title_new_big.png";
+    public static String multiplayerButton =  "core/assets/multiplayer_new_big.png";
+    public static String singleplayerButton =  "core/assets/singleplayer_new_big.png";
+    public static String settingsButton =  "core/assets/settings_new_big.png";
+    public static String creditsButton =  "core/assets/credits_new_big.png";
+    public static String exitButton =  "core/assets/exit_new_big.png";
 
     /* Credit Screen Assets */
 
-    public static String alexandru =  "core/assets/alexandru_new.png";
-    public static String augustas =  "core/assets/augustas_new.png";
-    public static String brandon =  "core/assets/brandon_new.png";
-    public static String gintare =  "core/assets/gintare_new.png";
-    public static String paul =  "core/assets/paul_new.png";
-    public static String creditsHeader =  "core/assets/creditsheader_new.png";
-    public static String backButton =  "core/assets/back_new.png";
+    public static String alexandru =  "core/assets/alexandru_new_big.png";
+    public static String augustas =  "core/assets/augustas_new_big.png";
+    public static String brandon =  "core/assets/brandon_new_big.png";
+    public static String gintare =  "core/assets/gintare_new_big.png";
+    public static String paul =  "core/assets/paul_new_big.png";
+    public static String creditsHeader =  "core/assets/creditsheader_new_big.png";
+    public static String backButton =  "core/assets/back_new_big.png";
 
     /* Host Screen Assets */
 
-    public static String hostHeader = "core/assets/multiplayerheader_new.png";
-    public static String hostButton = "core/assets/host_new.png";
-    public static String joinButton = "core/assets/join_new.png";
-    public static String hostBack = "core/assets/back_new.png";
+    public static String hostHeader = "core/assets/multiplayerheader_new_big.png";
+    public static String hostButton = "core/assets/host_new_big.png";
+    public static String joinButton = "core/assets/join_new_big.png";
+    public static String hostBack = "core/assets/back_new_big.png";
 
     /* Settings Screen Assets */
 
-    public static String settingsHeader = "core/assets/settingsheader_new.png";
-    public static String settingsSoundHeader = "core/assets/sound.png";
-    public static String settingsSoundOff = "core/assets/off.png";
-    public static String settingsMusicHeader = "core/assets/music.png";
-    public static String settingsMusicOff = "core/assets/off.png";
-    public static String settingsMusicOn = "core/assets/on.png";
-    public static String settingsSoundOn = "core/assets/on.png";
+    public static String settingsHeader = "core/assets/settingsheader_new_big.png";
+    public static String settingsSoundHeader = "core/assets/sound_big.png";
+    public static String settingsSoundOff = "core/assets/off_big.png";
+    public static String settingsMusicHeader = "core/assets/music_big.png";
+    public static String settingsMusicOff = "core/assets/off_big.png";
+    public static String settingsMusicOn = "core/assets/on_big.png";
+    public static String settingsSoundOn = "core/assets/on_big.png";
 
 
     /* Race Selection Assets */
 
-    public static String raceHeader = "core/assets/selectvirusheader_new.png";
+    public static String raceHeader = "core/assets/selectvirusheader_new_big.png";
     public static String raceBlueVirus = "core/assets/bluevirus.png";
     public static String raceGreenVirus = "core/assets/greenvirus.png";
     public static String raceYellowVirus = "core/assets/yellowvirus.png";
     public static String raceBlueVirusSelected = "core/assets/bluevirusselected.png";
     public static String raceGreenVirusSelected = "core/assets/greenvirusselected.png";
     public static String raceYellowVirusSelected = "core/assets/yellowvirusselected.png";
-    public static String raceBlueDescription = "core/assets/bluevirus_characteristics.png";
-    public static String raceGreenDescription = "core/assets/greenvirus_characteristics.png";
-    public static String raceYellowDescription = "core/assets/yellowvirus_characteristics.png";
-    public static String raceContinueText = "core/assets/continue_new.png";
-    public static String raceBackButton = "core/assets/back_new.png";
+    public static String raceBlueDescription = "core/assets/bluevirus_characteristics_big.png";
+    public static String raceGreenDescription = "core/assets/greenvirus_characteristics_big.png";
+    public static String raceYellowDescription = "core/assets/yellowvirus_characteristics_big.png";
+    public static String raceContinueText = "core/assets/continue_new_big.png";
+    public static String raceBackButton = "core/assets/back_new_big.png";
 
     public static final int MINHEALTH = 0;
 

@@ -105,9 +105,9 @@ public class HUD {
   }
 
   public void updateResourceBars(int lipids, int proteins, int carbs, float s){
-    int mappedLipids = mapResource(lipids);
-    int mappedProteins = mapResource(proteins);
-    int mappedCarbs = mapResource(carbs);
+    float mappedLipids = mapResource(lipids);
+    float mappedProteins = mapResource(proteins);
+    float mappedCarbs = mapResource(carbs);
 
     lipidsResourceBar.setInsideY(mappedLipids);
     proteinResourceBar.setInsideY(mappedProteins);
@@ -121,9 +121,10 @@ public class HUD {
     proteinResourceBar.updateTime(s);
   }
 
-  private int mapResource(int resource){
-    int y = resource * (BodyConquest.V_HEIGHT/100);
-    return y - BodyConquest.V_HEIGHT;
+  private float mapResource(int resource){
+      float y = resource * (BodyConquest.V_HEIGHT/100);
+
+      return y - BodyConquest.V_HEIGHT;
   }
 
   private void setUpDragAndDrop() {

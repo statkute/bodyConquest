@@ -39,20 +39,21 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
   public void render(float delta) {
 
     super.render(delta);
+
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450);
+    game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450 * BodyConquest.scaleRatio);
     game.batch.draw(
         playButtonSinglePlayer,
         BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-        300);
+        300 * BodyConquest.scaleRatio);
     game.batch.draw(
         playButtonMultiplayer,
         BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-        240);
-    game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 180);
-    game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 120);
-    game.batch.draw(exitButton, BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2, 60);
+        240 * BodyConquest.scaleRatio);
+    game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 180 * BodyConquest.scaleRatio);
+    game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 120 * BodyConquest.scaleRatio);
+    game.batch.draw(exitButton, BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2, 60 * BodyConquest.scaleRatio);
 
     checkPressed();
 
@@ -144,33 +145,33 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
     singleplayerBounds =
             new Rectangle(
                     BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-                    300,
+                    300 * BodyConquest.scaleRatio,
                     playButtonSinglePlayer.getWidth(),
                     playButtonSinglePlayer.getHeight());
 
     multiplayerBounds =
             new Rectangle(
                     BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-                    240,
+                    240 * BodyConquest.scaleRatio,
                     playButtonMultiplayer.getWidth(),
                     playButtonMultiplayer.getHeight());
 
     settingsBounds =
             new Rectangle(
                     BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
-                    180,
+                    180 * BodyConquest.scaleRatio,
                     settingsButton.getWidth(),
                     settingsButton.getHeight());
     creditsBounds =
             new Rectangle(
                     BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
-                    120,
+                    120 * BodyConquest.scaleRatio,
                     creditsButton.getWidth(),
                     creditsButton.getHeight());
     exitBounds =
             new Rectangle(
                     BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,
-                    60,
+                    60 * BodyConquest.scaleRatio,
                     exitButton.getWidth(),
                     exitButton.getHeight());
 
