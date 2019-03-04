@@ -20,6 +20,9 @@ public abstract class ResourceBar extends Actor {
     private float insideY;
     private String insideTexturePath;
 
+    protected static int encounterScreenWidth = 800;
+    protected static int encounterScreenHeight = 600;
+
     public ResourceBar(){
 //        walkAnimation = AnimationWrapper.getSpriteSheet(4, 1, 0.2f, getInsideTexturePath());
     }
@@ -73,8 +76,8 @@ public abstract class ResourceBar extends Actor {
 
         // Get current frame of animation for the current stateTime
         //currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-        this.setWidth(BodyConquest.V_WIDTH / 20.0f);
-        this.setHeight(BodyConquest.V_HEIGHT - 50);currentFrame = getInside();
+        this.setWidth(encounterScreenWidth / 20.0f);
+        this.setHeight(encounterScreenHeight - 50);currentFrame = getInside();
         //stateTime += elapsedTime;
         //currentFrame = getInside();
         currentFrame = walkAnimation.getKeyFrame(elapsedTime, true);
