@@ -86,7 +86,12 @@ public class EncounterScreen implements Screen {
 
     // Set up map
     //map = new Image(new Texture("core/assets/brainmap.png"));
-    map = new Map(Organ.LUNGS);
+
+    long tEnd = System.currentTimeMillis();
+    long tDelta = tEnd - MenuScreen.timeOfServer;
+    elapsedSeconds = tDelta / 1000.0f;
+
+    map = new Map(Organ.LUNGS, elapsedSeconds);
     float topOfUnitBar = 27;
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
@@ -153,7 +158,7 @@ public class EncounterScreen implements Screen {
                           Assets.frameRowsBacteria,
                           elapsedSeconds));
         } else if (INFLUENZA_BASE.equals(i)) {
-          viewObjects.add(new ViewObject(o, Assets.pathBaseImage, elapsedSeconds));
+          viewObjects.add(new ViewObject(o, Assets.pathBaseImage, 3, 5, elapsedSeconds));
           //        case ROTAVIRUS_BASE:
           //          ////TO DO add Virus base Texture
           //          break;

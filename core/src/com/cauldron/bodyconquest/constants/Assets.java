@@ -69,7 +69,7 @@ public class Assets {
 
   private static String pathAssets = "core/assets/";
 
-    public static String pathBaseImage = pathAssets + "base_boi.gif";
+    public static String pathBaseImage = pathAssets + "base_boi_ss.png";
     public static String pathVirus = pathAssets + "virus.png";
     public static String pathBacteria = pathAssets + "bacteria.png";
     public static String pathFlu = pathAssets + "flu.png";
