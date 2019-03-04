@@ -26,7 +26,6 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
   private Rectangle settingsBounds;
   private Rectangle creditsBounds;
   private Rectangle exitBounds;
-
   public static long timeOfServer;
 
   public MenuScreen(BodyConquest game) {

@@ -24,8 +24,6 @@ public class BodyConquest extends com.badlogic.gdx.Game {
 
   // private static final Logger log = Logger.getLogger(MyGdxGame.class);
 
-  //static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
   public static final int V_WIDTH = 800;
   public static final int V_HEIGHT = 600;
 

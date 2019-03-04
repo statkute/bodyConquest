@@ -34,6 +34,31 @@ public class Assets {
   public static String joinButton = "core/assets/join_new.png";
   public static String hostBack = "core/assets/back_new.png";
 
+    /* Settings Screen Assets */
+
+    public static String settingsHeader = "core/assets/settingsheader_new.png";
+    public static String settingsSoundHeader = "core/assets/sound.png";
+    public static String settingsSoundOff = "core/assets/off.png";
+    public static String settingsMusicHeader = "core/assets/music.png";
+    public static String settingsMusicOff = "core/assets/off.png";
+    public static String settingsMusicOn = "core/assets/on.png";
+    public static String settingsSoundOn = "core/assets/on.png";
+
+
+    /* Race Selection Assets */
+
+    public static String raceHeader = "core/assets/selectvirusheader_new.png";
+    public static String raceBlueVirus = "core/assets/bluevirus.png";
+    public static String raceGreenVirus = "core/assets/greenvirus.png";
+    public static String raceYellowVirus = "core/assets/yellowvirus.png";
+    public static String raceBlueVirusSelected = "core/assets/bluevirusselected.png";
+    public static String raceGreenVirusSelected = "core/assets/greenvirusselected.png";
+    public static String raceYellowVirusSelected = "core/assets/yellowvirusselected.png";
+    public static String raceBlueDescription = "core/assets/bluevirus_characteristics.png";
+    public static String raceGreenDescription = "core/assets/greenvirus_characteristics.png";
+    public static String raceYellowDescription = "core/assets/yellowvirus_characteristics.png";
+    public static String raceContinueText = "core/assets/continue_new.png";
+    public static String raceBackButton = "core/assets/back_new.png";
 
   public static final int MINHEALTH = 0;
 
@@ -44,27 +69,21 @@ public class Assets {
 
   private static String pathAssets = "core/assets/";
 
-  public static String pathBaseImage = pathAssets + "castle1.gif";
-  public static String pathBucket = pathAssets + "bucket.png";
-  public static String pathVirus = pathAssets + "virus.png";
-  public static String pathBacteria = pathAssets + "bacteria.png";
-  public static String pathFlu = pathAssets + "flu.png";
-  public static String pathProjectile = pathAssets + "projectile_with_trail.png";
-  public static String pathHost = pathAssets + "host.png";
-  public static String pathHostBackground = pathAssets+ "hostScreen.png";
-  public static String pathJoin= pathAssets + "join.png";
+    public static String pathBaseImage = pathAssets + "castle1.gif";
+    public static String pathVirus = pathAssets + "virus.png";
+    public static String pathBacteria = pathAssets + "bacteria.png";
+    public static String pathFlu = pathAssets + "flu.png";
+    public static String pathProjectile = pathAssets + "projectile_with_trail.png";
 
 
-  public static int frameColsBacteria = 7;
-  public static int frameRowsBacteria = 1;
-  public static int frameColsFlu = 7;
-  public static int frameRowsFlu = 1;
-  public static int frameColsVirus = 7;
-  public static int frameRowsVirus = 1;
-  public static int frameColsProjectile = 5;//6;
-  public static int frameRowsProjectile = 1;
-  public static int frameColsBacteriaBase = 1;
-  public static int frameRowsBacteriaBase = 1;
+    public static int frameColsBacteria = 7;
+    public static int frameRowsBacteria = 1;
+    public static int frameColsFlu = 7;
+    public static int frameRowsFlu = 1;
+    public static int frameColsVirus = 7;
+    public static int frameRowsVirus = 1;
+    public static int frameColsProjectile = 5;//6;
+    public static int frameRowsProjectile = 1;
 
 
   // EVERYTHINGS
