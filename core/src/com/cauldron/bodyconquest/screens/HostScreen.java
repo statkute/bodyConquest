@@ -48,8 +48,6 @@ public class HostScreen extends AbstractGameScreen implements Screen {
   public void checkPressed() {
     super.checkPressed();
 
-    super.checkPressed();
-
     if (Gdx.input.justTouched()) {
       if (hostBounds.contains(tmp.x, tmp.y)) {
         System.out.println("host pressed");
