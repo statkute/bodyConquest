@@ -90,9 +90,9 @@ public class ClientReceiver extends Thread {
       try {
         byte[] buf = new byte[256];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
-        System.out.println("Hi");
+        //System.out.println("Hi");
         socket.receive(packet);
-        System.out.println("hi");
+        //System.out.println("hi");
         received = new String(packet.getData()).trim();
         System.out.println(received);
         if (id.toString().equals("0") && received.startsWith("ID: ")) {
