@@ -2,19 +2,21 @@ package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
-import javax.xml.soap.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -53,9 +55,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   private Texture t_intestines;
   private Image intestinespoints;
   private Texture t_intestinespoints;
-  private Image continueButton;
-  private Texture t_continueButton;
-
+  private Image continueImage;
+  private Texture t_continueImage;
+  
   private ArrayList<Image> allImages = new ArrayList<>();
 
   public BodyScreen(BodyConquest game, GameType gameType) throws IOException {
@@ -70,6 +72,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     loadAssets();
     getAssets();
     addActors();
+    addButtons();
   }
 
   @Override
@@ -108,14 +111,14 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     t_teethpoints = manager.get(Assets.teethpoints, Texture.class);
     t_intestines = manager.get(Assets.intestines, Texture.class);
     t_intestinespoints = manager.get(Assets.intestinespoints, Texture.class);
-    t_continueButton = manager.get(Assets.continueTextBig, Texture.class);
+    t_continueImage = manager.get(Assets.continueTextBig, Texture.class);
   }
 
   @Override
   public void render(float delta) {
     super.render(delta);
     game.batch.begin();
-//    Gdx.gl.glClearColor(0, 100, 0, 1);
+    //    Gdx.gl.glClearColor(0, 100, 0, 1);
     Gdx.gl.glClearColor(0, 0, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     gameCamera.update();
@@ -228,16 +231,112 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         t_intestinespoints.getHeight() / 3f);
     allImages.add(intestinespoints);
 
-    continueButton = new Image(t_continueButton);
-    continueButton.setBounds(
-        BodyConquest.V_WIDTH / 2 - t_continueButton.getWidth() / 2f / 2,
+    continueImage = new Image(t_continueImage);
+    continueImage.setBounds(
+        BodyConquest.V_WIDTH / 2 - t_continueImage.getWidth() / 2.2f / 2,
         30,
-        t_continueButton.getWidth() / 2f,
-        t_continueButton.getHeight() / 2f);
-    allImages.add(continueButton);
+        t_continueImage.getWidth() / 2.2f,
+        t_continueImage.getHeight() / 2.2f);
+    allImages.add(continueImage);
 
     for (Image i : allImages) {
       stage.addActor(i);
     }
+
+    heart.remove(); //THIS IS HOW TO REMOVE AN ACTOR
+    stage.addActor(heart);
+  }
+
+  public void addButtons() {
+    heart.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("HEART CLICKED");
+          }
+        });
+
+    heartpoints.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("HEART CLICKED");
+          }
+        });
+
+    eye.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("EYE CLICKED");
+          }
+        });
+
+    eyepoints.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("EYE CLICKED");
+          }
+        });
+
+    lungs.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("LUNGS CLICKED");
+          }
+        });
+
+    lungspoints.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("LUNGS CLICKED");
+          }
+        });
+
+    brain.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("BRAIN CLICKED");
+          }
+        });
+
+    brainpoints.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("BRAIN CLICKED");
+          }
+        });
+
+    teeth.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("TEETH CLICKED");
+          }
+        });
+
+    teethpoints.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("TEETH CLICKED");
+          }
+        });
+
+    intestines.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("INTESTINES CLICKED");
+          }
+        });
+
+    intestinespoints.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("INTESTINES CLICKED");
+          }
+        });
+
+    continueImage.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            System.out.println("CONTINUE CLICKED");
+          }
+        });
   }
 }
