@@ -42,16 +42,28 @@ public class HostScreen extends AbstractGameScreen implements Screen {
     super.render(delta);
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
-    game.batch.draw(hostButtton, BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2, 300);
-    game.batch.draw(joinButton, BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2, 240);
-    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
+    game.batch.draw(
+        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        hostButtton,
+        BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2,
+        300 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        joinButton,
+        BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2,
+        240 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        backButton,
+        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+        60 * BodyConquest.scaleRatio);
+
     checkPressed();
     game.batch.end();
   }
 
   @Override
   public void checkPressed() {
+    super.checkPressed();
 
     if (Gdx.input.justTouched()) {
       if (hostBounds.contains(tmp.x, tmp.y)) {
@@ -109,39 +121,37 @@ public class HostScreen extends AbstractGameScreen implements Screen {
     manager.finishLoading();
   }
 
-    @Override
-    public void getAssets() {
-        super.getAssets();
-        header = manager.get(Assets.hostHeader,Texture.class);
-        hostButtton = manager.get(Assets.hostButton,Texture.class);
-        joinButton = manager.get(Assets.joinButton,Texture.class);
-        backButton = manager.get(Assets.hostBack,Texture.class);
+  @Override
+  public void getAssets() {
+    super.getAssets();
+    header = manager.get(Assets.hostHeader, Texture.class);
+    hostButtton = manager.get(Assets.hostButton, Texture.class);
+    joinButton = manager.get(Assets.joinButton, Texture.class);
+    backButton = manager.get(Assets.hostBack, Texture.class);
+  }
 
-    }
+  @Override
+  public void setRectangles() {
+    super.setRectangles();
+    hostBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2,
+            300 * BodyConquest.scaleRatio,
+            hostButtton.getWidth(),
+            hostButtton.getHeight());
 
-    @Override
-    public void setRectangles() {
-        super.setRectangles();
-        hostBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2,
-                        300,
-                        hostButtton.getWidth(),
-                        hostButtton.getHeight());
+    joinBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2,
+            240 * BodyConquest.scaleRatio,
+            joinButton.getWidth(),
+            joinButton.getHeight());
 
-        joinBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2,
-                        240,
-                        joinButton.getWidth(),
-                        joinButton.getHeight());
-
-        backBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-                        60,
-                        backButton.getWidth(),
-                        backButton.getHeight());
-
-    }
+    backBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+            60 * BodyConquest.scaleRatio,
+            backButton.getWidth(),
+            backButton.getHeight());
+  }
 }

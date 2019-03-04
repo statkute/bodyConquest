@@ -28,7 +28,6 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
   private Rectangle musicToggleBounds;
   private Rectangle backBounds;
 
-
   public SettingsScreen(BodyConquest game) {
     super(game);
     loadAssets();
@@ -36,38 +35,55 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
     setRectangles();
   }
 
-
   @Override
   public void render(float delta) {
 
-   super.render(delta);
+    super.render(delta);
 
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
-    game.batch.draw(soundHeader, BodyConquest.V_WIDTH / 5, 300);
+    game.batch.draw(
+        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
+
+    game.batch.draw(soundHeader, BodyConquest.V_WIDTH / 5, 300 * BodyConquest.scaleRatio);
 
     if (game.audioPlayer.getMutedSFX()) {
-      game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), 300);
+      game.batch.draw(
+          soundOff,
+          BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
+          300 * BodyConquest.scaleRatio);
     } else {
-      game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), 300);
+      game.batch.draw(
+          soundOn,
+          BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(),
+          300 * BodyConquest.scaleRatio);
     }
 
-    game.batch.draw(musicHeader, BodyConquest.V_WIDTH / 5, 240);
+    game.batch.draw(musicHeader, BodyConquest.V_WIDTH / 5, 240 * BodyConquest.scaleRatio);
 
     if (game.audioPlayer.getMutedMusic()) {
-      game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), 240);
+      game.batch.draw(
+          musicOff,
+          BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
+          240 * BodyConquest.scaleRatio);
     } else {
-      game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), 240);
+      game.batch.draw(
+          musicOn,
+          BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(),
+          240 * BodyConquest.scaleRatio);
     }
 
-    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
+    game.batch.draw(
+        backButton,
+        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+        60 * BodyConquest.scaleRatio);
+
     checkPressed();
     game.batch.end();
   }
 
   @Override
-  public void checkPressed(){
+  public void checkPressed() {
 
     super.checkPressed();
 
@@ -75,27 +91,39 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
       if (backBounds.contains(tmp.x, tmp.y)) {
         System.out.println("back pressed");
         playButtonSound();
-        dispose();
         game.setScreen(new MenuScreen(game));
+        dispose();
       }
 
-      if(soundBounds.contains(tmp.x, tmp.y) || soundToggleBounds.contains(tmp.x, tmp.y)){
+      if (soundBounds.contains(tmp.x, tmp.y) || soundToggleBounds.contains(tmp.x, tmp.y)) {
         game.audioPlayer.toggleMutedSFX();
         playButtonSound();
         if (game.audioPlayer.getMutedSFX()) {
-          game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), 300);
+          game.batch.draw(
+              soundOff,
+              BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
+              300 * BodyConquest.scaleRatio);
         } else {
-          game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), 300);
+          game.batch.draw(
+              soundOn,
+              BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(),
+              300 * BodyConquest.scaleRatio);
         }
       }
 
-      if(musicBounds.contains(tmp.x, tmp.y) || musicToggleBounds.contains(tmp.x, tmp.y)){
+      if (musicBounds.contains(tmp.x, tmp.y) || musicToggleBounds.contains(tmp.x, tmp.y)) {
         game.audioPlayer.toggleMutedMusic();
         playButtonSound();
         if (game.audioPlayer.getMutedMusic()) {
-          game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), 240);
+          game.batch.draw(
+              musicOff,
+              BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
+              240 * BodyConquest.scaleRatio);
         } else {
-          game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), 240);
+          game.batch.draw(
+              musicOn,
+              BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(),
+              240 * BodyConquest.scaleRatio);
         }
       }
     }
@@ -125,57 +153,57 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
     soundOff = manager.get(Assets.settingsSoundOff, Texture.class);
     musicOn = manager.get(Assets.settingsMusicOn, Texture.class);
     backButton = manager.get(Assets.hostBack, Texture.class);
-    musicOff = manager.get(Assets.settingsMusicOff,Texture.class);
+    musicOff = manager.get(Assets.settingsMusicOff, Texture.class);
   }
 
   @Override
   public void setRectangles() {
     super.setRectangles();
     backBounds =
-            new Rectangle(
-                    BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-                    60,
-                    backButton.getWidth(),
-                    backButton.getHeight());
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+            60 * BodyConquest.scaleRatio,
+            backButton.getWidth(),
+            backButton.getHeight());
 
     soundBounds =
-            new Rectangle(
-                    BodyConquest.V_WIDTH / 5, 300, soundHeader.getWidth(), soundHeader.getHeight());
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5, 300 * BodyConquest.scaleRatio, soundHeader.getWidth(), soundHeader.getHeight());
 
     musicBounds =
-            new Rectangle(
-                    BodyConquest.V_WIDTH / 5, 240, musicHeader.getWidth(), musicHeader.getHeight());
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5, 240 * BodyConquest.scaleRatio, musicHeader.getWidth(), musicHeader.getHeight());
 
     if (game.audioPlayer.getMutedSFX()) {
       soundToggleBounds =
-              new Rectangle(
-                      BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
-                      300,
-                      soundOff.getWidth(),
-                      soundOff.getHeight());
+          new Rectangle(
+              BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
+              300 * BodyConquest.scaleRatio,
+              soundOff.getWidth(),
+              soundOff.getHeight());
     } else {
       soundToggleBounds =
-              new Rectangle(
-                      BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(),
-                      300,
-                      soundOn.getWidth(),
-                      soundOn.getHeight());
+          new Rectangle(
+              BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(),
+              300 * BodyConquest.scaleRatio,
+              soundOn.getWidth(),
+              soundOn.getHeight());
     }
 
     if (game.audioPlayer.getMutedMusic()) {
       musicToggleBounds =
-              new Rectangle(
-                      BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
-                      240,
-                      musicOff.getWidth(),
-                      musicOff.getHeight());
+          new Rectangle(
+              BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
+              240 * BodyConquest.scaleRatio,
+              musicOff.getWidth(),
+              musicOff.getHeight());
     } else {
       musicToggleBounds =
-              new Rectangle(
-                      BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(),
-                      240,
-                      musicOn.getWidth(),
-                      musicOn.getHeight());
+          new Rectangle(
+              BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(),
+              240 * BodyConquest.scaleRatio,
+              musicOn.getWidth(),
+              musicOn.getHeight());
     }
   }
 }
