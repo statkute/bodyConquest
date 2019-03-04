@@ -23,7 +23,6 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
   private Texture paul;
   private Rectangle backBounds;
 
-
   public CreditsScreen(BodyConquest game) {
     super(game);
     loadAssets();
@@ -32,8 +31,7 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
   }
 
   @Override
-  public void show() {
-  }
+  public void show() {}
 
   @Override
   public void render(float delta) {
@@ -42,15 +40,28 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
     game.batch.begin();
 
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
+    game.batch.draw(
+        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
 
-    game.batch.draw(alexandru, BodyConquest.V_WIDTH / 2 - alexandru.getWidth() / 2, 350);
-    game.batch.draw(augustas, BodyConquest.V_WIDTH / 2 - augustas.getWidth() / 2, 300);
-    game.batch.draw(brandon, BodyConquest.V_WIDTH / 2 - brandon.getWidth() / 2, 250);
-    game.batch.draw(gintare, BodyConquest.V_WIDTH / 2 - gintare.getWidth() / 2, 200);
-    game.batch.draw(paul, BodyConquest.V_WIDTH / 2 - paul.getWidth() / 2, 150);
+    game.batch.draw(
+        alexandru,
+        BodyConquest.V_WIDTH / 2 - alexandru.getWidth() / 2,
+        350 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        augustas,
+        BodyConquest.V_WIDTH / 2 - augustas.getWidth() / 2,
+        300 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        brandon, BodyConquest.V_WIDTH / 2 - brandon.getWidth() / 2, 250 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        gintare, BodyConquest.V_WIDTH / 2 - gintare.getWidth() / 2, 200 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        paul, BodyConquest.V_WIDTH / 2 - paul.getWidth() / 2, 150 * BodyConquest.scaleRatio);
 
-    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
+    game.batch.draw(
+        backButton,
+        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+        60 * BodyConquest.scaleRatio);
 
     checkPressed();
     game.batch.end();
@@ -71,7 +82,7 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
 
   @Override
   public void resize(int width, int height) {
-    super.resize(width,height);
+    super.resize(width, height);
   }
 
   @Override
@@ -95,20 +106,18 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
     augustas = manager.get(Assets.augustas, Texture.class);
     brandon = manager.get(Assets.brandon, Texture.class);
     gintare = manager.get(Assets.gintare, Texture.class);
-    paul = manager.get(Assets.paul,Texture.class);
+    paul = manager.get(Assets.paul, Texture.class);
     backButton = manager.get(Assets.backButton, Texture.class);
-
   }
 
   @Override
   public void setRectangles() {
     super.setRectangles();
     backBounds =
-            new Rectangle(
-                    BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-                    60,
-                    backButton.getWidth(),
-                    backButton.getHeight());
-
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+            60 * BodyConquest.scaleRatio,
+            backButton.getWidth(),
+            backButton.getHeight());
   }
 }

@@ -50,6 +50,8 @@ public class HUD {
   private ResourceBar carbsResourceBar;
 
   private UnitBar newUnitBar;
+  private static int encounterScreenWidth = 800;
+  private static int encounterScreenHeight = 600;
 
 
   public HUD(SpriteBatch sb, final EncounterScreen screen, final PlayerType playerType, Stage stage) {
@@ -58,7 +60,7 @@ public class HUD {
 //    this.playerType = PlayerType.PLAYER_TOP;
 
     viewport =
-        new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
+        new FitViewport(encounterScreenWidth, encounterScreenHeight, new OrthographicCamera());
     //this.stage = new Stage(viewport, sb);
     this.stage = stage;
     Gdx.input.setInputProcessor(stage);
@@ -86,7 +88,7 @@ public class HUD {
 
   private void setupUnitBar() {
     unitBar = new Image(new Texture("core/assets/Action Bar v1.png"));
-    unitBar.setBounds(0, 0, BodyConquest.V_WIDTH, 50);
+    unitBar.setBounds(0, 0, encounterScreenWidth, 50);
     stage.addActor(unitBar);
   }
 
@@ -122,9 +124,9 @@ public class HUD {
   }
 
   private float mapResource(int resource){
-      float y = resource * (BodyConquest.V_HEIGHT/100);
+      float y = resource * (encounterScreenHeight/100);
 
-      return y - BodyConquest.V_HEIGHT;
+      return y - encounterScreenHeight;
   }
 
   private void setUpDragAndDrop() {

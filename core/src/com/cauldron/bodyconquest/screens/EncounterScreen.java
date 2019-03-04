@@ -59,6 +59,9 @@ public class EncounterScreen implements Screen {
 
   float elapsedSeconds;
 
+  private static int encounterScreenWidth = 800;
+  private static int encounterScreenHeight = 600;
+
   public EncounterScreen(BodyConquest game, Communicator comms, GameType gameType) {
     this.comms = comms;
     this.game = game;
@@ -66,7 +69,7 @@ public class EncounterScreen implements Screen {
     clientSender = client.clientSender;
 
     gameCamera = new OrthographicCamera();
-    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
+    gamePort = new FitViewport(encounterScreenWidth, encounterScreenHeight, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
 
@@ -81,8 +84,8 @@ public class EncounterScreen implements Screen {
     // Set up map
     map = new Image(new Texture("core/assets/brainmap.png"));
     float topOfUnitBar = 27;
-    mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
-    map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
+    mapSize = encounterScreenHeight - topOfUnitBar;
+    map.setBounds((encounterScreenWidth / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
     menuScreen = new MenuScreen(game);
     hud = new HUD(game.batch, this, playerType, stage);
@@ -293,7 +296,7 @@ public class EncounterScreen implements Screen {
   {
     DrawShadowed(result,
             0,
-            BodyConquest.V_HEIGHT / 2 + 30,
+            encounterScreenHeight / 2 + 30,
             stage.getWidth(),
             Align.center,
             Color.RED);
