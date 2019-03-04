@@ -117,17 +117,9 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       if (continueBounds.contains(tmp.x, tmp.y) && selection != 0) {
         System.out.println("continue is pressed");
         playButtonSound();
-        Disease playerDisease = null;
-        if(selection == 1) playerDisease = Disease.INFLUENZA;
-        if(selection == 2) playerDisease = Disease.MEASLES;
-        if(selection == 3) playerDisease = Disease.ROTAVIRUS;
 
         // Should actually start the encounter state once all players have confirmed their Disease
         if (gameType != GameType.MULTIPLAYER_JOIN) g.startEncounterState();
-
-//        game.getClient().getCommunicator().setPlayerDisease(playerDisease);
-//        String message = MessageMaker.diseaseMessage(playerDisease, playerType);
-//        game.getClient().clientSender.sendMessage(message);
         game.setScreen(new EncounterScreen(game, gameType));
         //dispose();
       }
