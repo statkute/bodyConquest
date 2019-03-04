@@ -110,7 +110,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
 
     if (Gdx.input.justTouched()) {
       System.out.println(continueBounds == null);
-      if (game.getGame() == null) {
+      if (game.getGame() == null && gameType != GameType.MULTIPLAYER_JOIN) {
         System.err.println("Server not instantiated");
         return;
       }
