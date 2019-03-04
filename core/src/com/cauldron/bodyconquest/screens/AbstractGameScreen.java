@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.GameType;
+import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
@@ -21,8 +24,25 @@ public abstract class AbstractGameScreen implements Screen {
     protected AssetManager manager;
     protected Texture background;
     protected Vector3 tmp;
+    protected Server server;
+    protected Communicator communicator;
+    protected GameType gameType;
 
     public AbstractGameScreen(BodyConquest game) {
+
+        init(game);
+
+    }
+
+    public AbstractGameScreen(BodyConquest game, Communicator communicator, GameType gameType){
+        init(game);
+        this.communicator = communicator;
+        this.server = game.getServer();
+        this.gameType = gameType;
+    }
+
+    public void init(BodyConquest game){
+
         this.game = game;
         if (camera == null) {
             camera = new OrthographicCamera();
@@ -33,7 +53,9 @@ public abstract class AbstractGameScreen implements Screen {
         }
         viewport.apply();
         manager = new AssetManager();
+
     }
+
 
     @Override
     public void show() {

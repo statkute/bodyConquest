@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.game_logic.Game;
@@ -17,131 +18,49 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.Random;
 
-public class RaceSelection implements Screen {
+public class RaceSelection extends AbstractGameScreen implements Screen {
 
-  private BodyConquest game;
-  private Texture background;
   private Texture header;
   private Texture continueText;
   private Texture backButton;
-
   private Texture blueVirus;
   private Texture greenVirus;
   private Texture yellowVirus;
   private Texture blueVirusSelected;
   private Texture greenVirusSelected;
   private Texture yellowVirusSelected;
-
   private Texture blueDescription;
   private Texture greenDescription;
   private Texture yellowDescription;
-
-  OrthographicCamera camera;
 
   private int selection = 0;
 
   private Rectangle continueBounds;
   private Rectangle backBounds;
-
   private Rectangle blueVirusBounds;
   private Rectangle greenVirusBounds;
   private Rectangle yellowVirusBounds;
 
-  private Viewport gamePort;
-  private Stage stage;
-
   private Game g;
-  private GameType gameType;
 
   private Random random;
-  private Server server;
-  private Communicator communicator;
+
 
   public RaceSelection(
       BodyConquest game, Communicator communicator, GameType gameType) {
-    this.communicator = communicator;
-    this.server = game.getServer();
-    this.game = game;
-    this.gameType = gameType;
-    setup();
-  }
-
-  private void setup() {
-    camera = new OrthographicCamera();
-    camera.setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-
-    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, camera);
-    stage = new Stage();
-
-    background = new Texture("core/assets/background_new.png");
-    header = new Texture("core/assets/selectvirusheader_new.png");
-
-    blueVirus = new Texture("core/assets/bluevirus.png");
-    greenVirus = new Texture("core/assets/greenvirus.png");
-    yellowVirus = new Texture("core/assets/yellowvirus.png");
-
-    blueVirusSelected = new Texture("core/assets/bluevirusselected.png");
-    greenVirusSelected = new Texture("core/assets/greenvirusselected.png");
-    yellowVirusSelected = new Texture("core/assets/yellowvirusselected.png");
-
-    blueDescription = new Texture("core/assets/bluevirus_characteristics.png");
-    greenDescription = new Texture("core/assets/greenvirus_characteristics.png");
-    yellowDescription = new Texture("core/assets/yellowvirus_characteristics.png");
-
-    continueText = new Texture("core/assets/continue_new.png");
-    backButton = new Texture("core/assets/back_new.png");
-
-    continueBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2,
-            80,
-            continueText.getWidth(),
-            continueText.getHeight());
-
-    blueVirusBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2,
-            220,
-            blueVirus.getWidth(),
-            blueVirus.getHeight());
-
-    greenVirusBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2,
-            220,
-            greenVirus.getWidth(),
-            greenVirus.getHeight());
-
-    yellowVirusBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2,
-            220,
-            yellowVirus.getWidth(),
-            yellowVirus.getHeight());
-
-    backBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-            30,
-            backButton.getWidth(),
-            backButton.getHeight());
-  }
-
-  @Override
-  public void show() {
-    //    stage.getRoot().getColor().a = 0;
-    //    stage.getRoot().addAction(Actions.fadeIn(1.0f));
+    super(game,communicator,gameType);
+    loadAssets();
+    getAssets();
+    setRectangles();
   }
 
   @Override
   public void render(float delta) {
 
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-    camera.update();
-    game.batch.setProjectionMatrix(camera.combined);
+    super.render(delta);
 
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
@@ -157,77 +76,46 @@ public class RaceSelection implements Screen {
         yellowDescription, (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2), 160);
     game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
     game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
-
-    try {
-      checkPressed();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
+    checkPressed();
     game.batch.end();
   }
 
-  public void checkPressed() throws IOException {
-    if (Gdx.input.justTouched()) {
+  public void checkPressed()  {
 
-      Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-      camera.unproject(tmp);
+    super.checkPressed();
+
+    if (Gdx.input.justTouched()) {
+      System.out.println(continueBounds == null);
       if (server == null) {
         System.err.println("Server not instantiated");
         return;
       }
       if (continueBounds.contains(tmp.x, tmp.y)) {
+        System.out.println("continue is pressed");
         playButtonSound();
         if (gameType != GameType.MULTIPLAYER_JOIN) {
-          server.startServer(gameType);
+          try {
+            server.startServer(gameType);
+          } catch (SocketException e) {
+            e.printStackTrace();
+          }
           // This is strange, we could maybe call this in the RaceSelection constructor
-          game.getClient().startClient(communicator);
+          try {
+            game.getClient().startClient(communicator);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
           g = new Game(server, gameType);
           g.start();
           server.startServerLogic(g.getEncounterState());
+          System.out.println("Does it go here");
         }
+          //dispose();
           game.setScreen(new EncounterScreen(game, communicator, gameType));
-        dispose();
+
       }
 
-      if (blueVirusBounds.contains(tmp.x, tmp.y)) {
-        playButtonSound();
-        if (selection != 0) {
-          cleanSelections();
-        }
-        if (selection != 1) {
-          blueVirus = blueVirusSelected;
-          selection = 1;
-        } else {
-          selection = 0;
-        }
-      }
-
-      if (greenVirusBounds.contains(tmp.x, tmp.y)) {
-        playButtonSound();
-        if (selection != 0) {
-          cleanSelections();
-        }
-        if (selection != 2) {
-          greenVirus = greenVirusSelected;
-          selection = 2;
-        } else {
-          selection = 0;
-        }
-      }
-
-      if (yellowVirusBounds.contains(tmp.x, tmp.y)) {
-        playButtonSound();
-        if (selection != 0) {
-          cleanSelections();
-        }
-        if (selection != 3) {
-          yellowVirus = yellowVirusSelected;
-          selection = 3;
-        } else {
-          selection = 0;
-        }
-      }
+      checkSelection();
 
       if (backBounds.contains(tmp.x, tmp.y)) {
         System.out.println("back pressed");
@@ -243,41 +131,125 @@ public class RaceSelection implements Screen {
   }
 
   public void cleanSelections() {
-    blueVirus = new Texture("core/assets/bluevirus.png");
-    greenVirus = new Texture("core/assets/greenvirus.png");
-    yellowVirus = new Texture("core/assets/yellowvirus.png");
+    blueVirus = manager.get(Assets.raceBlueVirus, Texture.class);
+    greenVirus = manager.get(Assets.raceGreenVirus, Texture.class);
+    yellowVirus = manager.get(Assets.raceYellowVirus, Texture.class);
   }
 
   @Override
-  public void resize(int width, int height) {}
-
-  @Override
-  public void pause() {}
-
-  @Override
-  public void resume() {}
-
-  @Override
-  public void hide() {}
-
-  @Override
-  public void dispose() {
-
-    //    background.dispose();
-    //    disease1.dispose();
-    //    disease2.dispose();
-    //    disease3.dispose();
-    //    playButton.dispose();
-    //    confirmButton.dispose();
-    //    selectionFrame1.dispose();
-    //    selectionFrame2.dispose();
+  public void loadAssets() {
+    super.loadAssets();
+    manager.load(Assets.raceHeader, Texture.class);
+    manager.load(Assets.raceBlueVirus, Texture.class);
+    manager.load(Assets.raceGreenVirus, Texture.class);
+    manager.load(Assets.raceYellowVirus, Texture.class);
+    manager.load(Assets.raceBlueVirusSelected, Texture.class);
+    manager.load(Assets.raceGreenVirusSelected, Texture.class);
+    manager.load(Assets.raceYellowVirusSelected, Texture.class);
+    manager.load(Assets.raceBlueDescription, Texture.class);
+    manager.load(Assets.raceGreenDescription, Texture.class);
+    manager.load(Assets.raceYellowDescription, Texture.class);
+    manager.load(Assets.raceContinueText, Texture.class);
+    manager.load(Assets.raceBackButton, Texture.class);
+    manager.finishLoading();
   }
 
-  public Game getG() {
-    return g;
+  @Override
+  public void getAssets() {
+    super.getAssets();
+    header = manager.get(Assets.raceHeader, Texture.class);
+    continueText = manager.get(Assets.raceContinueText, Texture.class);
+    backButton = manager.get(Assets.raceBackButton, Texture.class);
+    blueVirus = manager.get(Assets.raceBlueVirus, Texture.class);
+    greenVirus = manager.get(Assets.raceGreenVirus, Texture.class);
+    yellowVirus = manager.get(Assets.raceYellowVirus, Texture.class);
+    blueVirusSelected = manager.get(Assets.raceBlueVirusSelected, Texture.class);
+    greenVirusSelected = manager.get(Assets.raceGreenVirusSelected, Texture.class);
+    yellowVirusSelected = manager.get(Assets.raceYellowVirusSelected, Texture.class);
+    blueDescription = manager.get(Assets.raceBlueDescription, Texture.class);
+    greenDescription = manager.get(Assets.raceGreenDescription, Texture.class);
+    yellowDescription = manager.get(Assets.raceYellowDescription, Texture.class);
   }
 
-  public void playButtonSound() {
-    game.audioPlayer.playSFX("button_click");
+  @Override
+  public void setRectangles() {
+    super.setRectangles();
+    continueBounds =
+            new Rectangle(
+                    BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2,
+                    80,
+                    continueText.getWidth(),
+                    continueText.getHeight());
+
+    blueVirusBounds =
+            new Rectangle(
+                    BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2,
+                    220,
+                    blueVirus.getWidth(),
+                    blueVirus.getHeight());
+
+    greenVirusBounds =
+            new Rectangle(
+                    BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2,
+                    220,
+                    greenVirus.getWidth(),
+                    greenVirus.getHeight());
+
+    yellowVirusBounds =
+            new Rectangle(
+                    BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2,
+                    220,
+                    yellowVirus.getWidth(),
+                    yellowVirus.getHeight());
+
+    backBounds =
+            new Rectangle(
+                    BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+                    30,
+                    backButton.getWidth(),
+                    backButton.getHeight());
+  }
+
+  public void checkSelection(){
+
+    if (blueVirusBounds.contains(tmp.x, tmp.y)) {
+      playButtonSound();
+      if (selection != 0) {
+        cleanSelections();
+      }
+      if (selection != 1) {
+        blueVirus = blueVirusSelected;
+        selection = 1;
+      } else {
+        selection = 0;
+      }
+    }
+
+    if (greenVirusBounds.contains(tmp.x, tmp.y)) {
+      playButtonSound();
+      if (selection != 0) {
+        cleanSelections();
+      }
+      if (selection != 2) {
+        greenVirus = greenVirusSelected;
+        selection = 2;
+      } else {
+        selection = 0;
+      }
+    }
+
+    if (yellowVirusBounds.contains(tmp.x, tmp.y)) {
+      playButtonSound();
+      if (selection != 0) {
+        cleanSelections();
+      }
+      if (selection != 3) {
+        yellowVirus = yellowVirusSelected;
+        selection = 3;
+      } else {
+        selection = 0;
+      }
+    }
+
   }
 }

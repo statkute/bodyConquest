@@ -24,9 +24,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
   private Rectangle settingsBounds;
   private Rectangle creditsBounds;
   private Rectangle exitBounds;
-
   public static long timeOfServer;
-
   private Server server;
   private Client client;
 
@@ -35,13 +33,6 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
     loadAssets();
     getAssets();
     setRectangles();
-
-
-  }
-
-  @Override
-  public void show() {
-
   }
 
   @Override
