@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.Client;
@@ -12,6 +13,7 @@ import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MenuScreen extends AbstractGameScreen implements Screen {
 
@@ -102,7 +104,14 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         dispose();
 //        game.setScreen(new CreditsScreen(game));
         try {
-          game.setScreen(new BodyScreen(game, GameType.SINGLE_PLAYER));
+          // This is just a test setup
+          ArrayList<Assets.OrganType> myOrgans = new ArrayList<>();
+          myOrgans.add(Assets.OrganType.HEART);
+          myOrgans.add(Assets.OrganType.TEETH);
+          ArrayList<Assets.OrganType> opponentOrgans = new ArrayList<>();
+          opponentOrgans.add(Assets.OrganType.LUNGS);
+
+          game.setScreen(new BodyScreen(game, GameType.SINGLE_PLAYER, Disease.INFLUENZA, Disease.ROTAVIRUS, myOrgans, opponentOrgans));
         } catch (IOException e) {
           e.printStackTrace();
         }

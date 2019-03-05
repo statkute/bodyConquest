@@ -302,7 +302,8 @@ public class Assets {
   // Resources
   public enum ResourceType {PROTEIN, LIPID, CARBS}
 
-
+  // Resources
+  public enum OrganType {HEART, EYE, LUNGS, BRAIN, TEETH, INTESTINES};
 }
 
 
