@@ -332,7 +332,7 @@ public class EncounterScreen implements Screen {
             new Runnable() {
               @Override
               public void run() {
-                //dispose();
+                dispose();
                 game.setScreen(newScreen);
               }
             }));
