@@ -457,7 +457,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     brainSelected = new Image(t_brainSelected);
     brainSelected.setBounds(
         BodyConquest.V_WIDTH / 5 - t_brainSelected.getWidth() * 1.5f / 2,
-        330,
+        150,
         t_brainSelected.getWidth() * 1.5f,
         t_brainSelected.getHeight() * 1.5f);
 
@@ -480,7 +480,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     teethSelected = new Image(t_teethSelected);
     teethSelected.setBounds(
         BodyConquest.V_WIDTH / 2 - t_teethSelected.getWidth() * 1.5f / 2,
-        330,
+        150,
         t_teethSelected.getWidth() * 1.5f,
         t_teethSelected.getHeight() * 1.5f);
 
@@ -503,7 +503,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     intestinesSelected = new Image(t_intestinesSelected);
     intestinesSelected.setBounds(
         BodyConquest.V_WIDTH / 5 * 4 - t_intestinesSelected.getWidth() * 1.5f / 2,
-        330,
+        150,
         t_intestinesSelected.getWidth() * 1.5f,
         t_intestinesSelected.getHeight() * 1.5f);
 
@@ -521,7 +521,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         30,
         t_continueImage.getWidth() / 2.2f,
         t_continueImage.getHeight() / 2.2f);
-    allImages.add(continueImage);
 
     for (Image i : allImages) {
       stage.addActor(i);
@@ -535,7 +534,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     heart.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
-            System.out.println("HEART CLICKED");
+            playButtonSound();
             if (selectedOrganType != null){
               selectedOrganImage.remove();
               selectedOrganType  = Assets.OrganType.HEART;
@@ -545,17 +544,16 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               selectedOrganImage = heartSelected;
               stage.addActor(heartSelected);
               selectedOrganType = Assets.OrganType.HEART;
+              stage.addActor(continueImage);
             }
           }
         });
-
     heartpoints.addListener(heart.getListeners().peek());
-
 
     eye.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
-            System.out.println("EYE CLICKED");
+            playButtonSound();
             if (selectedOrganType != null){
               selectedOrganImage.remove();
               selectedOrganImage = eyeSelected;
@@ -565,21 +563,16 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               selectedOrganImage = eyeSelected;
               stage.addActor(eyeSelected);
               selectedOrganType = Assets.OrganType.EYE;
+              stage.addActor(continueImage);
             }
           }
         });
-
-    eyepoints.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent event, float x, float y) {
-            System.out.println("EYE TEXT CLICKED");
-          }
-        });
+    eyepoints.addListener(eye.getListeners().peek());
 
     lungs.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
-            System.out.println("LUNGS CLICKED");
+            playButtonSound();
             if (selectedOrganType != null){
               selectedOrganImage.remove();
               selectedOrganImage = lungsSelected;
@@ -589,63 +582,75 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               selectedOrganImage = lungsSelected;
               stage.addActor(lungsSelected);
               selectedOrganType = Assets.OrganType.LUNGS;
+              stage.addActor(continueImage);
             }
           }
         });
-
-    lungspoints.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent event, float x, float y) {
-            System.out.println("LUNGS CLICKED");
-          }
-        });
+    lungspoints.addListener(lungs.getListeners().peek());
 
     brain.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
-            System.out.println("BRAIN CLICKED");
+            playButtonSound();
+            if (selectedOrganType != null){
+              selectedOrganImage.remove();
+              selectedOrganImage = brainSelected;
+              stage.addActor(brainSelected);
+              selectedOrganType = Assets.OrganType.BRAIN;
+            } else {
+              selectedOrganImage = brainSelected;
+              stage.addActor(brainSelected);
+              selectedOrganType = Assets.OrganType.BRAIN;
+              stage.addActor(continueImage);
+            }
           }
         });
-
-    brainpoints.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent event, float x, float y) {
-            System.out.println("BRAIN CLICKED");
-          }
-        });
+    brainpoints.addListener(brain.getListeners().peek());
 
     teeth.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
-            System.out.println("TEETH CLICKED");
+            playButtonSound();
+            if (selectedOrganType != null){
+              selectedOrganImage.remove();
+              selectedOrganImage = teethSelected;
+              stage.addActor(teethSelected);
+              selectedOrganType = Assets.OrganType.TEETH;
+            } else {
+              selectedOrganImage = teethSelected;
+              stage.addActor(teethSelected);
+              selectedOrganType = Assets.OrganType.TEETH;
+              stage.addActor(continueImage);
+            }
           }
         });
 
-    teethpoints.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent event, float x, float y) {
-            System.out.println("TEETH CLICKED");
-          }
-        });
+    teethpoints.addListener(teeth.getListeners().peek());
 
     intestines.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
-            System.out.println("INTESTINES CLICKED");
+            playButtonSound();
+            if (selectedOrganType != null){
+              selectedOrganImage.remove();
+              selectedOrganImage = intestinesSelected;
+              stage.addActor(intestinesSelected);
+              selectedOrganType = Assets.OrganType.INTESTINES;
+            } else {
+              selectedOrganImage = intestinesSelected;
+              stage.addActor(intestinesSelected);
+              selectedOrganType = Assets.OrganType.INTESTINES;
+              stage.addActor(continueImage);
+            }
           }
         });
 
-    intestinespoints.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent event, float x, float y) {
-            System.out.println("INTESTINES CLICKED");
-          }
-        });
+    intestinespoints.addListener(intestines.getListeners().peek());
 
     continueImage.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
-            System.out.println("CONTINUE CLICKED");
+            playButtonSound();
           }
         });
   }
