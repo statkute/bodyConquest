@@ -3,6 +3,7 @@ package com.cauldron.bodyconquest.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
@@ -43,6 +44,8 @@ public class EncounterScreen implements Screen {
   protected static float timeAlive;
   private static float timeOfDmgTakenBottom;
   private static float timeOfDmgTakenTop;
+
+  FPSLogger fps = new FPSLogger();
 
   private static final float SHAKE_TIME_ON_DMG = 0.3f;
   private static final float SHAKE_DIST = 4.0f;
@@ -159,6 +162,8 @@ public class EncounterScreen implements Screen {
 
     timeAlive += delta;
 
+    fps.log();
+
     if (accumulatorAfterBaseConquered < Assets.UPDATESCREENTILL) {
       objects = comms.getAllObjects();
 
@@ -254,6 +259,8 @@ public class EncounterScreen implements Screen {
       }
 
     }
+
+
 
     if (((healthTopBase == Assets.MINHEALTH) || (healthBottomBase == Assets.MINHEALTH))
         && accumulatorAfterBaseConquered < Assets.INCREASEACCUMULATORTILL) {
@@ -410,6 +417,8 @@ public class EncounterScreen implements Screen {
 
   public void shakeCamera(){
     stage.getCamera().position.set(stage.getWidth() / 2, stage.getHeight() / 2, 0);
+
+    //game.getClient().getCommunicator().getPlayerType();
     if (healthTopBase > 0 &&
             getTimeAlive() - getTimeOfDmgTakenTop() < SHAKE_TIME_ON_DMG){
 
