@@ -8,10 +8,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.BaseType;
+import com.cauldron.bodyconquest.constants.MapObjectType;
 import com.cauldron.bodyconquest.constants.ProjectileType;
 import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 import com.cauldron.bodyconquest.handlers.GifDecoder;
+import com.cauldron.bodyconquest.screens.EncounterScreen;
 
 public class ViewObject extends Actor {
 
@@ -21,12 +24,14 @@ public class ViewObject extends Actor {
   private TextureRegion[] walkFrames;
   private TextureRegion currentFrame;
   private float elapsedTime;
+  private BasicObject bo;
 
   // Constructor for spritesheet (default time between frames of 0.2f)
   public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows,float elapsedTime) {
     // Right now all textures are the default buckets
     //texture = new Texture("core/assets/bucket.png");
     //texture = new Texture(pathTexture);
+    this.bo = bo;
     this.elapsedTime = elapsedTime;
     walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, 0.2f, pathTexture);
     if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
@@ -44,6 +49,7 @@ public class ViewObject extends Actor {
     // Right now all textures are the default buckets
     //texture = new Texture("core/assets/bucket.png");
     //texture = new Texture(pathTexture);
+    this.bo = bo;
     this.elapsedTime = elapsedTime;
     walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, frameRate, pathTexture);
     if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
@@ -58,6 +64,7 @@ public class ViewObject extends Actor {
 
   // Constructor for gif images
   public ViewObject(BasicObject bo, String pathTexture, float elapsedTime) {
+    this.bo = bo;
     walkAnimation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(pathTexture).read());
     this.elapsedTime = elapsedTime;
     if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
@@ -77,17 +84,59 @@ public class ViewObject extends Actor {
 
   @Override
   public void draw(Batch batch, float parentAlpha) {
-    // TO DO will need to fix logic for this
-    stateTime += elapsedTime; // Accumulate elapsed animation time
-    // Get current frame of animation for the current stateTime
-    //System.out.println(System.currentTimeMillis());
-    currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 
-    Color color = getColor();
-    batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-    //batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
-    batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 
-    super.draw(batch, parentAlpha);
+    // to do add if top or bottom
+    if(this.bo.getMapObjectType() == BaseType.INFLUENZA_BASE){
+      preDraw();
+
+      // TO DO will need to fix logic for this
+      stateTime += elapsedTime; // Accumulate elapsed animation time
+      // Get current frame of animation for the current stateTime
+      //System.out.println(System.currentTimeMillis());
+      currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+
+      Color color = getColor();
+      batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+      //batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+      batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+
+      super.draw(batch, parentAlpha);
+      postDraw();
+    }
+
+    else{
+      // TO DO will need to fix logic for this
+      stateTime += elapsedTime; // Accumulate elapsed animation time
+      // Get current frame of animation for the current stateTime
+      //System.out.println(System.currentTimeMillis());
+      currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+
+      Color color = getColor();
+      batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+      //batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
+      batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+
+      super.draw(batch, parentAlpha);
+    }
+
+
+  }
+
+  public void postDraw()
+  {
+    setColor(1, 1, 1, 1);
+  }
+
+  public void preDraw()
+  {
+    if (EncounterScreen.getTimeAlive() < EncounterScreen.getTimeOfDmgTakenTop() + EncounterScreen.BLINK_TIME_AFTER_DMG)
+    {
+      float t = (EncounterScreen.getTimeAlive() - EncounterScreen.getTimeOfDmgTakenTop()) / EncounterScreen.BLINK_TIME_AFTER_DMG;
+      t = t * t;
+      setColor(1, 1, 1, t);
+    }
+
+
   }
 }

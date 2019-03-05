@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -39,6 +40,16 @@ public class EncounterScreen implements Screen {
   private final float mapSize;
   private final Map map;
 
+  protected static float timeAlive;
+  private static float timeOfDmgTakenBottom;
+  private static float timeOfDmgTakenTop;
+
+  private static final float SHAKE_TIME_ON_DMG = 0.3f;
+  private static final float SHAKE_DIST = 4.0f;
+
+
+  public static final float BLINK_TIME_AFTER_DMG = 0.07f;
+
   private final OrthographicCamera gameCamera;
   private final FitViewport gamePort;
   private final Stage stage;
@@ -60,6 +71,10 @@ public class EncounterScreen implements Screen {
 
   private int healthBottomBase;
   private int healthTopBase;
+
+  private int healthBottomBaseBefore;
+  private int healthTopBaseBefore;
+
   int accumulatorAfterBaseConquered = 0;
 
   float elapsedSeconds;
@@ -103,6 +118,13 @@ public class EncounterScreen implements Screen {
     hud = new HUD(this, playerType, comms.getPlayerDisease(), stage);
 
     accumulatorAfterBaseConquered = 0;
+    timeAlive = 0;
+    timeOfDmgTakenBottom = -1;
+    timeOfDmgTakenTop = -1;
+
+    healthTopBaseBefore = 100;
+    healthBottomBaseBefore =100;
+
 
   }
 
@@ -121,6 +143,21 @@ public class EncounterScreen implements Screen {
 
     healthBottomBase = comms.getBottomHealthPercentage();
     healthTopBase = comms.getTopHealthPercentage();
+
+    if(healthBottomBaseBefore != healthBottomBase){
+      //System.out.println();
+      timeOfDmgTakenBottom = timeAlive;
+    }
+
+    if(healthTopBaseBefore != healthTopBase){
+      //System.out.println("Health not equals");
+      timeOfDmgTakenTop = timeAlive;
+    }
+
+    healthBottomBaseBefore = healthBottomBase;
+    healthTopBaseBefore = healthTopBase;
+
+    timeAlive += delta;
 
     if (accumulatorAfterBaseConquered < Assets.UPDATESCREENTILL) {
       objects = comms.getAllObjects();
@@ -198,6 +235,8 @@ public class EncounterScreen implements Screen {
       // Draw Actors
       stage.draw();
 
+      shakeCamera();
+
       // Draw HUD
       //hud.getStage().draw();
 
@@ -222,6 +261,7 @@ public class EncounterScreen implements Screen {
       accumulatorAfterBaseConquered++;
 
     }
+    //System.out.println(healthTopBaseBefore + " " + healthTopBase);
   }
 
   private void updateResourceBars(){
@@ -231,6 +271,7 @@ public class EncounterScreen implements Screen {
 
     hud.updateResourceBars(l, p, c, elapsedSeconds);
   }
+
 
   @Override
   public void resize(int width, int height) {
@@ -354,4 +395,29 @@ public class EncounterScreen implements Screen {
     }
     game.batch.end();
   }
+
+  public static float getTimeOfDmgTakenBottom() {
+    return timeOfDmgTakenBottom;
+  }
+
+  public static float getTimeOfDmgTakenTop() {
+    return timeOfDmgTakenTop;
+  }
+
+  public static float getTimeAlive(){
+    return timeAlive;
+  }
+
+  public void shakeCamera(){
+    stage.getCamera().position.set(stage.getWidth() / 2, stage.getHeight() / 2, 0);
+    if (healthTopBase > 0 &&
+            getTimeAlive() - getTimeOfDmgTakenTop() < SHAKE_TIME_ON_DMG){
+
+      stage.getCamera().translate(-(SHAKE_DIST/2) + MathUtils.random(SHAKE_DIST),
+              -(SHAKE_DIST / 2) + MathUtils.random(SHAKE_DIST), 0);
+  }
+  stage.getCamera().update();
+  }
+
+
 }

@@ -190,6 +190,7 @@ public class EncounterState extends GameState {
     //
     //     System.out.println(comms.getBottomHealthPercentage());
 
+
     for (MapObject mo : allMapObjects) mo.update();
 
     // Update All Units
