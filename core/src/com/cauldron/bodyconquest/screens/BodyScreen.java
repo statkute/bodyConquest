@@ -75,6 +75,8 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   private ArrayList<Assets.OrganType> opponentOrgans;
 
   private ArrayList<Image> allImages = new ArrayList<>();
+  private Assets.OrganType selectedOrganType;
+  private Image selectedOrganImage;
 
   public BodyScreen(BodyConquest game, GameType gameType, Disease myDiseaseType, Disease opponentDiseaseType, ArrayList<Assets.OrganType> myOrgans, ArrayList<Assets.OrganType> opponentOrgans) throws IOException {
     super(game);
@@ -84,6 +86,8 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     this.opponentDiseaseType = opponentDiseaseType;
     this.myOrgans = myOrgans;
     this.opponentOrgans = opponentOrgans;
+
+    selectedOrganType = null;
 
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
@@ -406,7 +410,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     eyeSelected = new Image(t_eyeSelected);
     eyeSelected.setBounds(
-        BodyConquest.V_WIDTH / 5 - t_eyeSelected.getWidth() * 1.5f / 2,
+        BodyConquest.V_WIDTH / 2 - t_eyeSelected.getWidth() * 1.5f / 2,
         330,
         t_eyeSelected.getWidth() * 1.5f,
         t_eyeSelected.getHeight() * 1.5f);
@@ -429,7 +433,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     lungsSelected = new Image(t_lungsSelected);
     lungsSelected.setBounds(
-        BodyConquest.V_WIDTH / 5 - t_lungsSelected.getWidth() * 1.5f / 2,
+        BodyConquest.V_WIDTH / 5 * 4 - t_lungsSelected.getWidth() * 1.5f / 2,
         330,
         t_lungsSelected.getWidth() * 1.5f,
         t_lungsSelected.getHeight() * 1.5f);
@@ -475,7 +479,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     teethSelected = new Image(t_teethSelected);
     teethSelected.setBounds(
-        BodyConquest.V_WIDTH / 5 - t_teethSelected.getWidth() * 1.5f / 2,
+        BodyConquest.V_WIDTH / 2 - t_teethSelected.getWidth() * 1.5f / 2,
         330,
         t_teethSelected.getWidth() * 1.5f,
         t_teethSelected.getHeight() * 1.5f);
@@ -498,7 +502,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     intestinesSelected = new Image(t_intestinesSelected);
     intestinesSelected.setBounds(
-        BodyConquest.V_WIDTH / 5 - t_intestinesSelected.getWidth() * 1.5f / 2,
+        BodyConquest.V_WIDTH / 5 * 4 - t_intestinesSelected.getWidth() * 1.5f / 2,
         330,
         t_intestinesSelected.getWidth() * 1.5f,
         t_intestinesSelected.getHeight() * 1.5f);
@@ -532,27 +536,43 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
             System.out.println("HEART CLICKED");
+            if (selectedOrganType != null){
+              selectedOrganImage.remove();
+              selectedOrganType  = Assets.OrganType.HEART;
+              selectedOrganImage = heartSelected;
+              stage.addActor(heartSelected);
+            } else {
+              selectedOrganImage = heartSelected;
+              stage.addActor(heartSelected);
+              selectedOrganType = Assets.OrganType.HEART;
+            }
           }
         });
 
-    heartpoints.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent event, float x, float y) {
-            System.out.println("HEART CLICKED");
-          }
-        });
+    heartpoints.addListener(heart.getListeners().peek());
+
 
     eye.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
             System.out.println("EYE CLICKED");
+            if (selectedOrganType != null){
+              selectedOrganImage.remove();
+              selectedOrganImage = eyeSelected;
+              stage.addActor(eyeSelected);
+              selectedOrganType = Assets.OrganType.EYE;
+            } else {
+              selectedOrganImage = eyeSelected;
+              stage.addActor(eyeSelected);
+              selectedOrganType = Assets.OrganType.EYE;
+            }
           }
         });
 
     eyepoints.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
-            System.out.println("EYE CLICKED");
+            System.out.println("EYE TEXT CLICKED");
           }
         });
 
@@ -560,6 +580,16 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
             System.out.println("LUNGS CLICKED");
+            if (selectedOrganType != null){
+              selectedOrganImage.remove();
+              selectedOrganImage = lungsSelected;
+              stage.addActor(lungsSelected);
+              selectedOrganType = Assets.OrganType.LUNGS;
+            } else {
+              selectedOrganImage = lungsSelected;
+              stage.addActor(lungsSelected);
+              selectedOrganType = Assets.OrganType.LUNGS;
+            }
           }
         });
 
