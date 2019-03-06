@@ -50,6 +50,8 @@ public class EncounterScreen implements Screen {
   private static final float SHAKE_TIME_ON_DMG = 0.3f;
   private static final float SHAKE_DIST = 4.0f;
 
+  public static GameType gameType;
+
 
   public static final float BLINK_TIME_AFTER_DMG = 0.07f;
 
@@ -83,6 +85,7 @@ public class EncounterScreen implements Screen {
   float elapsedSeconds;
 
   public EncounterScreen(BodyConquest game, GameType gameType) {
+    this.gameType = gameType;
     this.game = game;
     client = game.getClient();
     client.setEncounterLogic();
@@ -127,8 +130,6 @@ public class EncounterScreen implements Screen {
 
     healthTopBaseBefore = 100;
     healthBottomBaseBefore =100;
-
-
   }
 
   private void testInit() {}
@@ -162,7 +163,7 @@ public class EncounterScreen implements Screen {
 
     timeAlive += delta;
 
-    fps.log();
+    //fps.log();
 
     if (accumulatorAfterBaseConquered < Assets.UPDATESCREENTILL) {
       objects = comms.getAllObjects();
@@ -182,7 +183,7 @@ public class EncounterScreen implements Screen {
                           Assets.pathFlu,
                           Assets.frameColsFlu,
                           Assets.frameRowsFlu,
-                          elapsedSeconds));
+                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
         } else if (VIRUS.equals(i)) {
           viewObjects.add(
                   new ViewObject(
@@ -190,7 +191,7 @@ public class EncounterScreen implements Screen {
                           Assets.pathVirus,
                           Assets.frameColsVirus,
                           Assets.frameRowsVirus,
-                          elapsedSeconds));
+                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
         } else if (BACTERIA.equals(i)) {
           viewObjects.add(
                   new ViewObject(
@@ -198,17 +199,14 @@ public class EncounterScreen implements Screen {
                           Assets.pathBacteria,
                           Assets.frameColsBacteria,
                           Assets.frameRowsBacteria,
-                          elapsedSeconds));
+                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
         } else if (INFLUENZA_BASE.equals(i)) {
-          viewObjects.add(new ViewObject(o, Assets.pathBaseImage, 3, 5, elapsedSeconds));
+          viewObjects.add(new ViewObject(o, Assets.pathBaseImage, 3, 5, elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
           //        case ROTAVIRUS_BASE:
           //          ////TO DO add Virus base Texture
           //          break;
           //        case MEASLES_BASE:
           //          ////TO DO add Monster base Texture
-          //          break;
-          //        case BUCKET:
-          //          viewObjects.add(new ViewObject(o,Assets.pathBucket,1,1));
           //          break;
         } else if (FLU_PROJECTILE.equals(i)) {
           viewObjects.add(
@@ -217,7 +215,7 @@ public class EncounterScreen implements Screen {
                           Assets.pathProjectile,
                           Assets.frameColsProjectile,
                           Assets.frameRowsProjectile,
-                          elapsedSeconds));
+                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
         }
       }
 
@@ -240,12 +238,7 @@ public class EncounterScreen implements Screen {
       // Draw Actors
       stage.draw();
 
-      shakeCamera();
-
-      // Draw HUD
-      //hud.getStage().draw();
-
-
+      //shakeCamera();
       // Start, draw and end spriteBatch
       game.batch.begin();
       game.batch.end();
@@ -264,9 +257,7 @@ public class EncounterScreen implements Screen {
 
     if (((healthTopBase == Assets.MINHEALTH) || (healthBottomBase == Assets.MINHEALTH))
         && accumulatorAfterBaseConquered < Assets.INCREASEACCUMULATORTILL) {
-
       accumulatorAfterBaseConquered++;
-
     }
     //System.out.println(healthTopBaseBefore + " " + healthTopBase);
   }
@@ -337,7 +328,6 @@ public class EncounterScreen implements Screen {
               }
             }));
     stage.getRoot().addAction(sequenceAction);
-    //dispose();
   }
 
   public void DrawShadowed(String str, float x, float y, float width, int align, Color color)
@@ -362,7 +352,7 @@ public class EncounterScreen implements Screen {
   {
     DrawShadowed(result,
             0,
-            BodyConquest.V_HEIGHT / 2 + 30,
+            BodyConquest.V_HEIGHT / 2.0f,
             stage.getWidth(),
             Align.center,
             Color.RED);

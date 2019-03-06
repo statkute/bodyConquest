@@ -46,8 +46,8 @@ public class ServerReceiver extends Thread {
             socket.receive(packet);
           }
           String receivedMessage = new String(packet.getData(), 0, packet.getLength());
-          System.out.println(
-              "Server received -> " + receivedMessage + "------- from: " + packet.getAddress());
+//          System.out.println(
+//              "Server received -> " + receivedMessage + "------- from: " + packet.getAddress());
           receivedMessages.put(receivedMessage.trim());
         } catch (SocketException e) {
           e.printStackTrace();

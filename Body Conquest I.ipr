@@ -209,9 +209,6 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
-  <component name="SvnBranchConfigurationManager">
-    <option name="mySupportsUserInfoFilter" value="true" />
-  </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
@@ -228,6 +225,7 @@
     <library name="Gradle: com.badlogicgames.gdx:gdx-backend-headless:1.9.10-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-headless/1.9.10-SNAPSHOT/f746ee697dee69bbb9e60ee1b83774d2d5d2e677/gdx-backend-headless-1.9.10-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-headless/1.9.10-SNAPSHOT/212f17dd7f2b2f21dd2a56c4932f64b6cf5da3f4/gdx-backend-headless-1.9.10-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
@@ -235,11 +233,13 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-headless/1.9.10-SNAPSHOT/1b8b933d8eb2496e3516e6ae5e176f56e65fa89f/gdx-backend-headless-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-headless/1.9.10-SNAPSHOT/8ddb99989c1a5db47795f0465ba181dc7d55a9fc/gdx-backend-headless-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-headless/1.9.10-SNAPSHOT/1ba4324dba2eaba13eaf8d2675836fe9cf5a08d0/gdx-backend-headless-1.9.10-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-headless/1.9.10-SNAPSHOT/d37dd12f406e713e2ccb297181e85aecba70034b/gdx-backend-headless-1.9.10-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.10-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.10-SNAPSHOT/abe829b445e26f93a057cad22e750ee4d7230c92/gdx-backend-lwjgl-1.9.10-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.10-SNAPSHOT/cd3e6497862c0b669a28101c4ef992535573b2ea/gdx-backend-lwjgl-1.9.10-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
@@ -247,11 +247,13 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.10-SNAPSHOT/3a12b947e5ed4dbd437759bf63020bce562904d2/gdx-backend-lwjgl-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.10-SNAPSHOT/1799419134cde3dbabedfe1421d87763409b200c/gdx-backend-lwjgl-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.10-SNAPSHOT/6202e589ff2dd1cbfae9e809578a174e8cea4722/gdx-backend-lwjgl-1.9.10-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.10-SNAPSHOT/7e98b41dbe1d937185234a1bc89b175053deb00e/gdx-backend-lwjgl-1.9.10-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx-controllers-desktop:1.9.10-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers-desktop/1.9.10-SNAPSHOT/205077c2ec79a6867bf94f7c96abd8e7d052d664/gdx-controllers-desktop-1.9.10-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers-desktop/1.9.10-SNAPSHOT/ae5a1d593d6ab269a5cf89f509983bad904c4f4/gdx-controllers-desktop-1.9.10-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
@@ -259,11 +261,13 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers-desktop/1.9.10-SNAPSHOT/871d856a3ead08f7fbe98d83abfbfb7527b45863/gdx-controllers-desktop-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers-desktop/1.9.10-SNAPSHOT/4bedf532f7b09ef5731c9a9ca986f6c8b931503/gdx-controllers-desktop-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers-desktop/1.9.10-SNAPSHOT/cef636bb9e40ee27c0f06bb11e654dabb8b83d3a/gdx-controllers-desktop-1.9.10-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers-desktop/1.9.10-SNAPSHOT/8e9acf69bc83db0ccea98d25c538ab2dc0274ce0/gdx-controllers-desktop-1.9.10-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx-controllers-platform:natives-desktop:1.9.10-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers-platform/1.9.10-SNAPSHOT/981ff5e6d20ae29cefdf50be1cee46ef7f16720f/gdx-controllers-platform-1.9.10-SNAPSHOT-natives-desktop.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers-platform/1.9.10-SNAPSHOT/7ef781573b44d0fd4520379bdd9c0e44cd3e45e6/gdx-controllers-platform-1.9.10-SNAPSHOT-natives-desktop.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
@@ -271,6 +275,7 @@
     <library name="Gradle: com.badlogicgames.gdx:gdx-controllers:1.9.10-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.9.10-SNAPSHOT/cd76212f5271c5079f433400ee1cfe0d526693fe/gdx-controllers-1.9.10-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.9.10-SNAPSHOT/555f83b0253b43fe4c2c223441b6ecdfca727f0a/gdx-controllers-1.9.10-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
@@ -278,11 +283,13 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.9.10-SNAPSHOT/1966854059c5fe41e039e2303996c7d0e4228465/gdx-controllers-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.9.10-SNAPSHOT/8bc08b8e3d2366dc27aeb181e98899ee0d91b82a/gdx-controllers-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.9.10-SNAPSHOT/4ac310db68b7299b9a6cc1db2ddeb3c762529a61/gdx-controllers-1.9.10-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.9.10-SNAPSHOT/d9bfb6fc3a9e93c6ea14ab9f0c0fbc9ef72e119c/gdx-controllers-1.9.10-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx-freetype:1.9.10-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.10-SNAPSHOT/2375bad4b6503724ccd4d134533437b3f212a721/gdx-freetype-1.9.10-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.10-SNAPSHOT/b9caa7600a66e0301cb182680d09ff32482a6077/gdx-freetype-1.9.10-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
@@ -290,11 +297,13 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.10-SNAPSHOT/c8e4976d9e16186d12bfec7ebe50a2ac3df3267e/gdx-freetype-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.10-SNAPSHOT/31844362b0da0dcbb23b0592061078a65910f8f6/gdx-freetype-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.10-SNAPSHOT/69d6bc418469bdf38735684c69478f68baa19a16/gdx-freetype-1.9.10-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.10-SNAPSHOT/1d3e5fe40ea19d7f774d4dbf563605032151939a/gdx-freetype-1.9.10-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx-platform:natives-desktop:1.9.10-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-platform/1.9.10-SNAPSHOT/f2bdabb09ab74dc8d565228b2b789fc242e83bb3/gdx-platform-1.9.10-SNAPSHOT-natives-desktop.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-platform/1.9.10-SNAPSHOT/40139142e5e1e601cc42bf5e58486c0cc6b57c25/gdx-platform-1.9.10-SNAPSHOT-natives-desktop.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
@@ -302,6 +311,7 @@
     <library name="Gradle: com.badlogicgames.gdx:gdx-tools:1.9.10-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-tools/1.9.10-SNAPSHOT/86ce39135f9f7a24b7933223123f3fa233df3e77/gdx-tools-1.9.10-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-tools/1.9.10-SNAPSHOT/1c894bba5268e4b9ec1ffec021fac2c9bf370ed9/gdx-tools-1.9.10-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
@@ -309,11 +319,13 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-tools/1.9.10-SNAPSHOT/3b032e24d8f99c5efcb5f8085f8cd4092ddeae04/gdx-tools-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-tools/1.9.10-SNAPSHOT/6683ffbd44e755e31a520f6d69ce940213a8d346/gdx-tools-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-tools/1.9.10-SNAPSHOT/1137f59380190d701cd1701eb6d0fce27f713524/gdx-tools-1.9.10-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-tools/1.9.10-SNAPSHOT/ed8bfb517bba0fccc11bceeb78b6cb4df28aec1e/gdx-tools-1.9.10-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx:1.9.10-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.10-SNAPSHOT/2b3146036cdca1453def95eb9dbcc578be39e1da/gdx-1.9.10-SNAPSHOT.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.10-SNAPSHOT/d3f9c71e58bf78231a1e502c9f98f9d5d31ccca/gdx-1.9.10-SNAPSHOT.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
@@ -321,6 +333,7 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.10-SNAPSHOT/2404edd2423d1362b1b6734db26305bdfca051/gdx-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.10-SNAPSHOT/d244948db04ff0e9abfc600ee905a38c942c917a/gdx-1.9.10-SNAPSHOT-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.10-SNAPSHOT/8d3b1aad0c10b97b3c3cf2a1413ea8c8c6c0ff06/gdx-1.9.10-SNAPSHOT-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.10-SNAPSHOT/e3833ac8f8f171a9fc547dc1e1091cb3b00c190d/gdx-1.9.10-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.badlogicgames.jlayer:jlayer:1.0.1-gdx">
@@ -380,6 +393,7 @@
     <library name="Gradle: junit:junit:3.8.2">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/3.8.2/7e4cde26b53a9a0e3fe5b00d1dbbc7cc1d46060/junit-3.8.2.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/3.8.2/junit-3.8.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
