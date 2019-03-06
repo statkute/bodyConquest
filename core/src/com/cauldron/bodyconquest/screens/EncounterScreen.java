@@ -47,8 +47,8 @@ public class EncounterScreen implements Screen {
 
   FPSLogger fps = new FPSLogger();
 
-  private static final float SHAKE_TIME_ON_DMG = 0.3f;
-  private static final float SHAKE_DIST = 4.0f;
+  private static final float SHAKE_TIME_ON_DMG = 0.5f;
+  private static final float SHAKE_DIST = 9.0f;
 
   public static GameType gameType;
 
@@ -238,7 +238,7 @@ public class EncounterScreen implements Screen {
       // Draw Actors
       stage.draw();
 
-      //shakeCamera();
+      shakeCamera();
       // Start, draw and end spriteBatch
       game.batch.begin();
       game.batch.end();
@@ -406,16 +406,36 @@ public class EncounterScreen implements Screen {
   }
 
   public void shakeCamera(){
-    stage.getCamera().position.set(stage.getWidth() / 2, stage.getHeight() / 2, 0);
 
-    //game.getClient().getCommunicator().getPlayerType();
-    if (healthTopBase > 0 &&
-            getTimeAlive() - getTimeOfDmgTakenTop() < SHAKE_TIME_ON_DMG){
+    if(playerType == PlayerType.PLAYER_TOP || playerType == PlayerType.AI){
 
-      stage.getCamera().translate(-(SHAKE_DIST/2) + MathUtils.random(SHAKE_DIST),
-              -(SHAKE_DIST / 2) + MathUtils.random(SHAKE_DIST), 0);
-  }
-  stage.getCamera().update();
+      stage.getCamera().position.set(stage.getWidth() / 2, stage.getHeight() / 2, 0);
+
+      //game.getClient().getCommunicator().getPlayerType();
+      if (healthTopBase > 0 &&
+              getTimeAlive() - getTimeOfDmgTakenTop() < SHAKE_TIME_ON_DMG){
+
+        stage.getCamera().translate(-(SHAKE_DIST/2) + MathUtils.random(SHAKE_DIST),
+                -(SHAKE_DIST / 2) + MathUtils.random(SHAKE_DIST), 0);
+      }
+      stage.getCamera().update();
+
+    }
+
+    if(playerType == PlayerType.PLAYER_BOTTOM){
+
+      stage.getCamera().position.set(stage.getWidth() / 2, stage.getHeight() / 2, 0);
+
+      //game.getClient().getCommunicator().getPlayerType();
+      if (healthBottomBase > 0 &&
+              getTimeAlive() - getTimeOfDmgTakenBottom() < SHAKE_TIME_ON_DMG){
+
+        stage.getCamera().translate(-(SHAKE_DIST/2) + MathUtils.random(SHAKE_DIST),
+                -(SHAKE_DIST / 2) + MathUtils.random(SHAKE_DIST), 0);
+      }
+      stage.getCamera().update();
+
+    }
   }
 
 

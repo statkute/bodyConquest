@@ -1,5 +1,4 @@
 package com.cauldron.bodyconquest.entities;
-
 import com.cauldron.bodyconquest.constants.MapObjectType;
 
 public class BasicObject {
@@ -12,6 +11,7 @@ public class BasicObject {
   private double currentSpeed;
   private double rotation;
   private MapObjectType mapObjectType;
+
 
   public void setX(double x) {
     this.x = x;
@@ -77,4 +77,5 @@ public class BasicObject {
   public void setRotation(double rotation) {
     this.rotation = rotation;
   }
+
 }
