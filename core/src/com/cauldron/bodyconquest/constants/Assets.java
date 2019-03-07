@@ -70,8 +70,8 @@ public class Assets {
 
   /* Register Screen Assets */
 
-  public static String registerUsername = "core/assets/PASSWORD_start.png";
-  public static String registerPassword = "core/assets/USERNAME_start.png";
+  public static String registerUsername = "core/assets/USERNAME_start.png";
+  public static String registerPassword = "core/assets/PASSWORD_start.png";
 
   public static final int MINHEALTH = 0;
 
