@@ -2,10 +2,12 @@ package com.cauldron.bodyconquest.networking;
 
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Disease;
+import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -53,7 +55,19 @@ public class ClientLogic extends Thread {
   }
 
   private void bodyLogic(String message) {
+    int pointer;
 
+    if (message.startsWith(MessageMaker.START_ENCOUNTER_HEADER)) {
+      Organ organ;
+
+      pointer = MessageMaker.START_ENCOUNTER_HEADER.length();
+
+      String encodedOrgan = message.substring(pointer, pointer + Organ.getEncodedLength());
+      organ = Organ.decode(encodedOrgan);
+
+      communicator.setCurrentOrgan(organ);
+      communicator.setStartEncounter(true);
+    }
   }
 
   private void raceSelectionLogic(String message) {
@@ -94,6 +108,8 @@ public class ClientLogic extends Thread {
       player = Assets.PlayerType.decode(encodedPlayerType);
 
       if (player == communicator.getPlayerType()) communicator.setPicker(true);
+    } else if (message.equals(MessageMaker.START_BODY)) {
+      communicator.setStartBodyScreen(true);
     }
   }
 

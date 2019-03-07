@@ -3,6 +3,7 @@ package com.cauldron.bodyconquest.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -15,6 +16,7 @@ import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.game_logic.Game;
+import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
@@ -102,9 +104,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     super(game);
     this.gameType = gameType;
 
-    game.getGame().startBodyState();
+    //game.getGame().startBodyState();
+    game.getClient().setBodyLogic();
 
     communicator = game.getClient().getCommunicator();
+    communicator.setStartBodyScreen(false);
     
     this.myDiseaseType = communicator.getPlayerDisease();
     this.opponentDiseaseType = communicator.getOpponentDisease();
@@ -134,6 +138,8 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     gameCamera.update();
     stage.draw();
     game.batch.end();
+
+    if(communicator.getStartEncounter()) game.setScreen(new EncounterScreen(game, gameType));
   }
 
   @Override
@@ -674,8 +680,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     continueImage.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
-            if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startEncounterState();
-            game.setScreen(new EncounterScreen(game, gameType));
+            game.getClient().clientSender.sendMessage(MessageMaker.confirmOrganMessage(selectedOrganType));
+            //if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startEncounterState();
+            // We should probably have some sort of loading screen? Or at least a loading symbol?
+            //game.setScreen(new EncounterScreen(game, gameType));
+
             playButtonSound();
           }
         });

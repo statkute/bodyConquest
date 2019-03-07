@@ -26,9 +26,14 @@ public class Communicator {
 
   private Disease playerDisease;
   private Disease opponentDisease;
-  
+
   private ArrayList<Organ> playerOrgans;
   private ArrayList<Organ> opponentOrgans;
+
+  private Organ currentOrgan;
+
+  private boolean startBodyScreen;
+  private boolean startEncounter;
 
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();
@@ -36,6 +41,8 @@ public class Communicator {
     opponentDisease = null;
     playerOrgans = new ArrayList<Organ>();
     opponentOrgans = new ArrayList<Organ>();
+    startBodyScreen = false;
+    startEncounter = false;
   }
 
   public CopyOnWriteArrayList<BasicObject> getAllObjects() {
@@ -156,5 +163,29 @@ public class Communicator {
 
   public void setOpponentOrgans(ArrayList<Organ> opponentOrgans) {
     this.opponentOrgans = opponentOrgans;
+  }
+
+  public void setStartBodyScreen(boolean start) {
+    startBodyScreen = start;
+  }
+
+  public boolean getStartBodyScreen() {
+    return startBodyScreen;
+  }
+
+  public boolean getStartEncounter() {
+    return startEncounter;
+  }
+
+  public void setStartEncounter(boolean start) {
+    this.startEncounter = start;
+  }
+
+  public Organ getCurrentOrgan() {
+    return currentOrgan;
+  }
+
+  public void setCurrentOrgan(Organ currentOrgan) {
+    this.currentOrgan = currentOrgan;
   }
 }

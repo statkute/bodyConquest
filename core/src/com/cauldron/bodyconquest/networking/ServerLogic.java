@@ -3,9 +3,12 @@ package com.cauldron.bodyconquest.networking;
 import com.cauldron.bodyconquest.constants.AbilityType;
 import com.cauldron.bodyconquest.constants.Assets.*;
 import com.cauldron.bodyconquest.constants.Disease;
+import com.cauldron.bodyconquest.constants.GameType;
+import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 /** Server Thread responsible for dealing with game logic based on incoming messages */
 public class ServerLogic extends Thread {
@@ -29,6 +32,8 @@ public class ServerLogic extends Thread {
 
   // Race Selection Variables
   private Game game;
+  private boolean topPlayerReady;
+  private boolean bottomPlayerReady;
 
   //private RaceSelectionLogic raceSelectionLogic;
 
@@ -41,6 +46,8 @@ public class ServerLogic extends Thread {
     this.serverReceiver = serverReceiver;
     this.serverSender = serverSender;
     this.run = true;
+    topPlayerReady = false;
+    bottomPlayerReady = false;
     init();
   }
 
@@ -72,15 +79,28 @@ public class ServerLogic extends Thread {
   }
 
   private void bodyLogic(String message) {
+    int pointer;
 
+    if(message.startsWith(MessageMaker.CONFIRM_ORGAN_HEADER)) {
+      Organ organ;
+
+      pointer = MessageMaker.CONFIRM_ORGAN_HEADER.length();
+
+      String encodedOrgan = message.substring(pointer, pointer + Organ.getEncodedLength());
+      organ = Organ.decode(encodedOrgan);
+
+      game.startEncounterState(organ);
+      serverSender.sendMessage(MessageMaker.startEncounterMessage(organ));
+    }
   }
 
   private void raceSelectionLogic(String message) {
+    int pointer;
     if (message.startsWith(MessageMaker.RACE_HEADER)) {
       Disease disease;
       PlayerType playerType;
 
-      int pointer = MessageMaker.RACE_HEADER.length();
+      pointer = MessageMaker.RACE_HEADER.length();
 
       String encodedDisease = message.substring(pointer, pointer + Disease.getEncodedLength());
       disease = Disease.decode(encodedDisease);
@@ -100,8 +120,24 @@ public class ServerLogic extends Thread {
 
       // Does nothing for player type AI as of now
       // if(playerType == PlayerType.AI)          playerTop = new Player(playerType, disease);
-    } else if (message.equals(MessageMaker.CONFIRMED_RACE)) {
+    } else if (message.startsWith(MessageMaker.CONFIRM_RACE_HEADER)) {
+      PlayerType player;
 
+      pointer = MessageMaker.CONFIRM_RACE_HEADER.length();
+
+      String encodedPlayerType = message.substring(pointer, pointer + PlayerType.getEncodedLength());
+      player = PlayerType.decode(encodedPlayerType);
+
+      if(player == PlayerType.PLAYER_BOTTOM) {
+        bottomPlayerReady = true;
+      } else {
+        topPlayerReady = true;
+      }
+
+      if(game.getGameType() == GameType.SINGLE_PLAYER || bottomPlayerReady && topPlayerReady) {
+        game.startBodyState();
+        serverSender.sendMessage(MessageMaker.START_BODY);
+      }
     } else {
       System.err.println("[ERROR] This message doesn't conform to the current logic.");
     }
@@ -237,7 +273,7 @@ public class ServerLogic extends Thread {
 //
 //        // Does nothing for player type AI as of now
 //        // if(playerType == PlayerType.AI)          playerTop = new Player(playerType, disease);
-//      } else if (message.equals(MessageMaker.CONFIRMED_RACE)) {
+//      } else if (message.equals(MessageMaker.CONFIRM_RACE)) {
 //
 //      } else {
 //        System.err.println("[ERROR] This message doesn't conform to the current logic.");

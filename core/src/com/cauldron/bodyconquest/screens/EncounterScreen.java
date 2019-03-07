@@ -70,6 +70,8 @@ public class EncounterScreen implements Screen {
     clientSender = client.clientSender;
     comms = client.getCommunicator();
 
+    comms.setStartEncounter(false);
+
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
@@ -84,7 +86,7 @@ public class EncounterScreen implements Screen {
 
     // Set up map
     // map = new Image(new Texture("core/assets/brainmap.png"));
-    map = new Map(Organ.LUNGS);
+    map = new Map(comms.getCurrentOrgan());
     float topOfUnitBar = 27;
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
