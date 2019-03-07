@@ -10,5 +10,5 @@ public abstract class GameState {
     this.game = game;
   }
 
-  public abstract void update();
+  public abstract void update() throws InterruptedException;
 }

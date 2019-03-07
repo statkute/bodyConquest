@@ -66,10 +66,12 @@ public class ClientReceiver extends Thread {
     while (run) {
       try {
         byte[] buf = new byte[1000000];
+        //byte[] buf = new byte[16000];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         if (run){
           socket.receive(packet);
         }
+        //System.out.println(packet.getData().length);
         String received = new String(packet.getData()).trim();
 //        System.out.println(
 //            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());

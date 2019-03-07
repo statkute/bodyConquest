@@ -68,6 +68,11 @@ public class Assets {
   public static String startRegister = "core/assets/REGISTER_start.png";
   public static String startLogin = "core/assets/LOGIN_start.png";
 
+  /* Register Screen Assets */
+
+  public static String registerUsername = "core/assets/PASSWORD_start.png";
+  public static String registerPassword = "core/assets/USERNAME_start.png";
+
   public static final int MINHEALTH = 0;
 
 

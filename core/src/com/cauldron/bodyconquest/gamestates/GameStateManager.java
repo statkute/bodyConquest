@@ -15,7 +15,11 @@ public class GameStateManager {
 
   public void update() {
     if(currentGameState == null) return;
-    currentGameState.update();
+    try {
+      currentGameState.update();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   // Should maybe accept enum

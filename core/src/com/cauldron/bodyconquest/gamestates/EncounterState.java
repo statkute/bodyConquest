@@ -181,6 +181,12 @@ public class EncounterState extends GameState {
   @Override
   public void update() {
 
+//    try {
+//      Thread.sleep(10);
+//    } catch (InterruptedException e) {
+//      e.printStackTrace();
+//    }
+
     // ! Important if you do not want to update encounter state, bases health should go to minus
     // because
     // Encounter state is instantiated before encounter screen and it starts getting health before

@@ -15,6 +15,9 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     private Rectangle registerBounds;
     private Rectangle loginBounds;
 
+    //MyTextInputListener listener = new MyTextInputListener();
+    //Gdx.input.getTextInput(listener, "Dialog Title", "Initial Textfield Value", "Hint Value");
+
     public StartScreen(BodyConquest game) {
         super(game);
         loadAssets();
@@ -26,6 +29,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     public void render(float delta) {
         super.render(delta);
         game.batch.begin();
+        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
         game.batch.draw(title,BodyConquest.V_WIDTH / 2.0f - title.getWidth() / 2.0f, 450);
         game.batch.draw(register,BodyConquest.V_WIDTH / 2.0f - register.getWidth() / 3.0f, 300,register.getWidth()/1.5f,register.getHeight()/1.50f);
         game.batch.draw(login,BodyConquest.V_WIDTH / 2.0f - login.getWidth() / 3.0f, 200,login.getWidth()/1.5f,login.getHeight()/1.50f);
@@ -49,8 +53,8 @@ public class StartScreen extends AbstractGameScreen implements Screen {
             if(registerBounds.contains(tmp.x,tmp.y)){
                 playButtonSound();
                 //System.out.println("register touched");
-                //dispose
-                //game.setScreen();
+                dispose();
+                game.setScreen(new RegisteringScreen(game));
             }
 
         }
