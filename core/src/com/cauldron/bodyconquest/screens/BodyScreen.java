@@ -13,16 +13,14 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
+import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class BodyScreen extends AbstractGameScreen implements Screen {
   private GameType gameType;
-  private Game g;
-  private Assets.PlayerType playerType;
 
   private final OrthographicCamera gameCamera;
   private final FitViewport gamePort;
@@ -71,21 +69,47 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
   private Disease myDiseaseType;
   private Disease opponentDiseaseType;
-  private ArrayList<Assets.OrganType> myOrgans;
-  private ArrayList<Assets.OrganType> opponentOrgans;
+  private ArrayList<Organ> myOrgans;
+  private ArrayList<Organ> opponentOrgans;
 
   private ArrayList<Image> allImages = new ArrayList<>();
-  private Assets.OrganType selectedOrganType;
+  private Organ selectedOrganType;
   private Image selectedOrganImage;
 
-  public BodyScreen(BodyConquest game, GameType gameType, Disease myDiseaseType, Disease opponentDiseaseType, ArrayList<Assets.OrganType> myOrgans, ArrayList<Assets.OrganType> opponentOrgans) throws IOException {
+//  public BodyScreen(BodyConquest game, GameType gameType, Disease myDiseaseType, Disease opponentDiseaseType, ArrayList<Organ> myOrgans, ArrayList<Organ> opponentOrgans) {
+//    super(game);
+//    this.gameType = gameType;
+//
+//    this.myDiseaseType = myDiseaseType;
+//    this.opponentDiseaseType = opponentDiseaseType;
+//    this.myOrgans = myOrgans;
+//    this.opponentOrgans = opponentOrgans;
+//
+//    selectedOrganType = null;
+//
+//    gameCamera = new OrthographicCamera();
+//    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
+//    stage = new Stage(gamePort);
+//    Gdx.input.setInputProcessor(stage);
+//
+//    loadAssets();
+//    getAssets();
+//    addActors();
+//    addButtons();
+//  }
+
+  public BodyScreen(BodyConquest game, GameType gameType) {
     super(game);
     this.gameType = gameType;
 
-    this.myDiseaseType = myDiseaseType;
-    this.opponentDiseaseType = opponentDiseaseType;
-    this.myOrgans = myOrgans;
-    this.opponentOrgans = opponentOrgans;
+    game.getGame().startBodyState();
+
+    communicator = game.getClient().getCommunicator();
+    
+    this.myDiseaseType = communicator.getPlayerDisease();
+    this.opponentDiseaseType = communicator.getOpponentDisease();
+    this.myOrgans = communicator.getPlayerOrgans();
+    this.opponentOrgans = communicator.getOpponentOrgans();
 
     selectedOrganType = null;
 
@@ -118,7 +142,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     manager.load(Assets.bodyHeader, Texture.class);
     manager.load(Assets.heart_selected, Texture.class);
     manager.load(Assets.heartpoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.HEART) || opponentOrgans.contains(Assets.OrganType.HEART)) {
+    if (myOrgans.contains(Organ.HEART) || opponentOrgans.contains(Organ.HEART)) {
       if (myDiseaseType == Disease.INFLUENZA || opponentDiseaseType == Disease.INFLUENZA) {
         manager.load(Assets.heart_blue, Texture.class);
       }
@@ -134,7 +158,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     manager.load(Assets.eyepoints, Texture.class);
     manager.load(Assets.eye_selected, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.EYE) || opponentOrgans.contains(Assets.OrganType.EYE)) {
+    if (myOrgans.contains(Organ.EYES) || opponentOrgans.contains(Organ.EYES)) {
       if (myDiseaseType == Disease.INFLUENZA || opponentDiseaseType == Disease.INFLUENZA) {
         manager.load(Assets.eye_blue, Texture.class);
       }
@@ -150,7 +174,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     manager.load(Assets.lungs_selected, Texture.class);
     manager.load(Assets.lungspoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.LUNGS) || opponentOrgans.contains(Assets.OrganType.LUNGS)) {
+    if (myOrgans.contains(Organ.LUNGS) || opponentOrgans.contains(Organ.LUNGS)) {
       if (myDiseaseType == Disease.INFLUENZA || opponentDiseaseType == Disease.INFLUENZA) {
         manager.load(Assets.lungs_blue, Texture.class);
       }
@@ -166,7 +190,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     manager.load(Assets.brain_selected, Texture.class);
     manager.load(Assets.brainpoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.BRAIN) || opponentOrgans.contains(Assets.OrganType.BRAIN)) {
+    if (myOrgans.contains(Organ.BRAIN) || opponentOrgans.contains(Organ.BRAIN)) {
       if (myDiseaseType == Disease.INFLUENZA || opponentDiseaseType == Disease.INFLUENZA) {
         manager.load(Assets.brain_blue, Texture.class);
       }
@@ -182,7 +206,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     manager.load(Assets.teeth_selected, Texture.class);
     manager.load(Assets.teethpoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.TEETH) || opponentOrgans.contains(Assets.OrganType.TEETH)) {
+    if (myOrgans.contains(Organ.TEETH) || opponentOrgans.contains(Organ.TEETH)) {
       if (myDiseaseType == Disease.INFLUENZA || opponentDiseaseType == Disease.INFLUENZA) {
         manager.load(Assets.teeth_blue, Texture.class);
       }
@@ -198,7 +222,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     manager.load(Assets.intestines_selected, Texture.class);
     manager.load(Assets.intestinespoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.INTESTINES) || opponentOrgans.contains(Assets.OrganType.INTESTINES)) {
+    if (myOrgans.contains(Organ.INTESTINES) || opponentOrgans.contains(Organ.INTESTINES)) {
       if (myDiseaseType == Disease.INFLUENZA || opponentDiseaseType == Disease.INFLUENZA) {
         manager.load(Assets.intestines_blue, Texture.class);
       }
@@ -223,9 +247,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     t_heartSelected = manager.get(Assets.heart_selected, Texture.class);
     t_heartpoints = manager.get(Assets.heartpoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.HEART)) {
+    if (myOrgans.contains(Organ.HEART)) {
       setHeart(myDiseaseType);
-    } else if (opponentOrgans.contains(Assets.OrganType.HEART)) {
+    } else if (opponentOrgans.contains(Organ.HEART)) {
       setHeart(opponentDiseaseType);
     } else {
       t_heart = manager.get(Assets.heart, Texture.class);
@@ -233,9 +257,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     t_eyeSelected = manager.get(Assets.eye_selected, Texture.class);
     t_eyepoints = manager.get(Assets.lungspoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.EYE)) {
+    if (myOrgans.contains(Organ.EYES)) {
       setEye(myDiseaseType);
-    } else if (opponentOrgans.contains(Assets.OrganType.EYE)) {
+    } else if (opponentOrgans.contains(Organ.EYES)) {
       setEye(opponentDiseaseType);
     } else {
       t_eye = manager.get(Assets.eye, Texture.class);
@@ -243,9 +267,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     t_lungsSelected = manager.get(Assets.lungs_selected, Texture.class);
     t_lungspoints = manager.get(Assets.lungspoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.LUNGS)) {
+    if (myOrgans.contains(Organ.LUNGS)) {
       setLungs(myDiseaseType);
-    } else if (opponentOrgans.contains(Assets.OrganType.LUNGS)) {
+    } else if (opponentOrgans.contains(Organ.LUNGS)) {
       setLungs(opponentDiseaseType);
     } else {
       t_lungs = manager.get(Assets.lungs, Texture.class);
@@ -253,9 +277,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     t_brainSelected = manager.get(Assets.brain_selected, Texture.class);
     t_brainpoints = manager.get(Assets.brainpoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.BRAIN)) {
+    if (myOrgans.contains(Organ.BRAIN)) {
       setBrain(myDiseaseType);
-    } else if (opponentOrgans.contains(Assets.OrganType.BRAIN)) {
+    } else if (opponentOrgans.contains(Organ.BRAIN)) {
       setBrain(opponentDiseaseType);
     } else {
       t_brain = manager.get(Assets.brain, Texture.class);
@@ -263,9 +287,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     t_teethSelected = manager.get(Assets.teeth_selected, Texture.class);
     t_teethpoints = manager.get(Assets.teethpoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.TEETH)) {
+    if (myOrgans.contains(Organ.TEETH)) {
       setTeeth(myDiseaseType);
-    } else if (opponentOrgans.contains(Assets.OrganType.TEETH)) {
+    } else if (opponentOrgans.contains(Organ.TEETH)) {
       setTeeth(opponentDiseaseType);
     } else {
       t_teeth = manager.get(Assets.teeth, Texture.class);
@@ -273,9 +297,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     t_intestinesSelected = manager.get(Assets.intestines_selected, Texture.class);
     t_intestinespoints = manager.get(Assets.intestinespoints, Texture.class);
-    if (myOrgans.contains(Assets.OrganType.INTESTINES)) {
+    if (myOrgans.contains(Organ.INTESTINES)) {
       setIntestines(myDiseaseType);
-    } else if (opponentOrgans.contains(Assets.OrganType.INTESTINES)) {
+    } else if (opponentOrgans.contains(Organ.INTESTINES)) {
       setIntestines(opponentDiseaseType);
     } else {
       t_intestines = manager.get(Assets.intestines, Texture.class);
@@ -537,13 +561,13 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
             playButtonSound();
             if (selectedOrganType != null){
               selectedOrganImage.remove();
-              selectedOrganType  = Assets.OrganType.HEART;
+              selectedOrganType  = Organ.HEART;
               selectedOrganImage = heartSelected;
               stage.addActor(heartSelected);
             } else {
               selectedOrganImage = heartSelected;
               stage.addActor(heartSelected);
-              selectedOrganType = Assets.OrganType.HEART;
+              selectedOrganType = Organ.HEART;
               stage.addActor(continueImage);
             }
           }
@@ -558,11 +582,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               selectedOrganImage.remove();
               selectedOrganImage = eyeSelected;
               stage.addActor(eyeSelected);
-              selectedOrganType = Assets.OrganType.EYE;
+              selectedOrganType = Organ.EYES;
             } else {
               selectedOrganImage = eyeSelected;
               stage.addActor(eyeSelected);
-              selectedOrganType = Assets.OrganType.EYE;
+              selectedOrganType = Organ.EYES;
               stage.addActor(continueImage);
             }
           }
@@ -577,11 +601,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               selectedOrganImage.remove();
               selectedOrganImage = lungsSelected;
               stage.addActor(lungsSelected);
-              selectedOrganType = Assets.OrganType.LUNGS;
+              selectedOrganType = Organ.LUNGS;
             } else {
               selectedOrganImage = lungsSelected;
               stage.addActor(lungsSelected);
-              selectedOrganType = Assets.OrganType.LUNGS;
+              selectedOrganType = Organ.LUNGS;
               stage.addActor(continueImage);
             }
           }
@@ -596,11 +620,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               selectedOrganImage.remove();
               selectedOrganImage = brainSelected;
               stage.addActor(brainSelected);
-              selectedOrganType = Assets.OrganType.BRAIN;
+              selectedOrganType = Organ.BRAIN;
             } else {
               selectedOrganImage = brainSelected;
               stage.addActor(brainSelected);
-              selectedOrganType = Assets.OrganType.BRAIN;
+              selectedOrganType = Organ.BRAIN;
               stage.addActor(continueImage);
             }
           }
@@ -615,11 +639,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               selectedOrganImage.remove();
               selectedOrganImage = teethSelected;
               stage.addActor(teethSelected);
-              selectedOrganType = Assets.OrganType.TEETH;
+              selectedOrganType = Organ.TEETH;
             } else {
               selectedOrganImage = teethSelected;
               stage.addActor(teethSelected);
-              selectedOrganType = Assets.OrganType.TEETH;
+              selectedOrganType = Organ.TEETH;
               stage.addActor(continueImage);
             }
           }
@@ -635,11 +659,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               selectedOrganImage.remove();
               selectedOrganImage = intestinesSelected;
               stage.addActor(intestinesSelected);
-              selectedOrganType = Assets.OrganType.INTESTINES;
+              selectedOrganType = Organ.INTESTINES;
             } else {
               selectedOrganImage = intestinesSelected;
               stage.addActor(intestinesSelected);
-              selectedOrganType = Assets.OrganType.INTESTINES;
+              selectedOrganType = Organ.INTESTINES;
               stage.addActor(continueImage);
             }
           }
@@ -650,6 +674,8 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     continueImage.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
+            if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startEncounterState();
+            game.setScreen(new EncounterScreen(game, gameType));
             playButtonSound();
           }
         });

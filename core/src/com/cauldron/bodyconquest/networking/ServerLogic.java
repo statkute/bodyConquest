@@ -4,7 +4,6 @@ import com.cauldron.bodyconquest.constants.AbilityType;
 import com.cauldron.bodyconquest.constants.Assets.*;
 import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.game_logic.Game;
-import com.cauldron.bodyconquest.game_logic.Player;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 
@@ -12,24 +11,26 @@ import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 public class ServerLogic extends Thread {
 
   /** Possible Server Logics. */
-  public enum Logic {
+  public enum LogicType {
     RACE_SELECTION_LOGIC,
     BODY_LOGIC,
     ENCOUNTER_LOGIC
   }
 
-  private Logic currentLogic;
+  private LogicType currentLogicType;
 
   private ServerReceiver serverReceiver;
   private ServerSender serverSender;
 
   private boolean run;
 
-  // Encounter Logic Variables
+  // Encounter LogicType Variables
   private EncounterState encounterState;
 
   // Race Selection Variables
   private Game game;
+
+  //private RaceSelectionLogic raceSelectionLogic;
 
   /**
    * Constructor.
@@ -44,7 +45,7 @@ public class ServerLogic extends Thread {
   }
 
   private void init() {
-    currentLogic = null;
+    currentLogicType = null;
   }
 
   /** Deals with game logic tasks of the incoming messages */
@@ -53,16 +54,16 @@ public class ServerLogic extends Thread {
       try {
         String message = serverReceiver.receivedMessages.take();
 
-        if (currentLogic == null) {
+        if (currentLogicType == null) {
           System.err.println("[ERROR] No server logic has been set.");
           // Right now we throw away messages we don't interpret
           // In future we may want to add them back to the received messages list
           continue;
         }
 
-        if (currentLogic == Logic.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
-        if (currentLogic == Logic.ENCOUNTER_LOGIC) encounterLogic(message);
-        if (currentLogic == Logic.BODY_LOGIC) bodyLogic(message);
+        if (currentLogicType == LogicType.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
+        if (currentLogicType == LogicType.ENCOUNTER_LOGIC) encounterLogic(message);
+        if (currentLogicType == LogicType.BODY_LOGIC) bodyLogic(message);
 
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -70,7 +71,9 @@ public class ServerLogic extends Thread {
     }
   }
 
-  private void bodyLogic(String message) {}
+  private void bodyLogic(String message) {
+
+  }
 
   private void raceSelectionLogic(String message) {
     if (message.startsWith(MessageMaker.RACE_HEADER)) {
@@ -84,19 +87,22 @@ public class ServerLogic extends Thread {
       pointer += Disease.getEncodedLength() + 1;
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+              message.substring(pointer, pointer + PlayerType.getEncodedLength());
       playerType = PlayerType.decode(encodedPlayerType);
 
       if (playerType == PlayerType.PLAYER_TOP) game.setPlayerTop(disease);
       if (playerType == PlayerType.PLAYER_BOTTOM) game.setPlayerBottom(disease);
 
-      // Response message for the other player to receive so they can update the other player's selection on their screen
+      // Response message for the other player to receive so they can update the other player's
+      // selection on their screen
       String responseMessage = MessageMaker.diseaseMessage(disease, playerType);
       serverSender.sendMessage(responseMessage);
 
       // Does nothing for player type AI as of now
       // if(playerType == PlayerType.AI)          playerTop = new Player(playerType, disease);
     } else if (message.equals(MessageMaker.CONFIRMED_RACE)) {
+
+    } else {
       System.err.println("[ERROR] This message doesn't conform to the current logic.");
     }
   }
@@ -133,7 +139,8 @@ public class ServerLogic extends Thread {
       abilityType = AbilityType.decode(encodedAbility);
       pointer += AbilityType.getEncodedLength() + 1;
 
-      String encodedPlayerType = message.substring(pointer, pointer + PlayerType.getEncodedLength());
+      String encodedPlayerType =
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
       pointer += PlayerType.getEncodedLength() + 1;
 
@@ -158,7 +165,8 @@ public class ServerLogic extends Thread {
       abilityType = AbilityType.decode(encodedAbility);
       pointer += AbilityType.getEncodedLength() + 1;
 
-      String encodedPlayerType = message.substring(pointer, pointer + PlayerType.getEncodedLength());
+      String encodedPlayerType =
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
       pointer += PlayerType.getEncodedLength() + 1;
 
@@ -176,15 +184,64 @@ public class ServerLogic extends Thread {
 
   public void setEncounterLogic(EncounterState encounterState) {
     this.encounterState = encounterState;
-    currentLogic = Logic.ENCOUNTER_LOGIC;
+    currentLogicType = LogicType.ENCOUNTER_LOGIC;
   }
 
   public void setRaceSelectionLogic(Game game) {
     this.game = game;
-    currentLogic = Logic.RACE_SELECTION_LOGIC;
+    currentLogicType = LogicType.RACE_SELECTION_LOGIC;
   }
+
+  public void setBodyLogic() {
+    currentLogicType = LogicType.BODY_LOGIC;
+  }
+
 
   public void stopRunning() {
     run = false;
   }
+
+//  private class RaceSelectionLogic implements Logic{
+//
+//    private boolean topPlayerConfirmed;
+//    private boolean bottomPlayerConfirmed;
+//
+//    RaceSelectionLogic(){
+//      topPlayerConfirmed = false;
+//      bottomPlayerConfirmed = false;
+//    }
+//
+//    @Override
+//    public void interpret(String message) {
+//      if (message.startsWith(MessageMaker.RACE_HEADER)) {
+//        Disease disease;
+//        PlayerType playerType;
+//
+//        int pointer = MessageMaker.RACE_HEADER.length();
+//
+//        String encodedDisease = message.substring(pointer, pointer + Disease.getEncodedLength());
+//        disease = Disease.decode(encodedDisease);
+//        pointer += Disease.getEncodedLength() + 1;
+//
+//        String encodedPlayerType =
+//                message.substring(pointer, pointer + PlayerType.getEncodedLength());
+//        playerType = PlayerType.decode(encodedPlayerType);
+//
+//        if (playerType == PlayerType.PLAYER_TOP) game.setPlayerTop(disease);
+//        if (playerType == PlayerType.PLAYER_BOTTOM) game.setPlayerBottom(disease);
+//
+//        // Response message for the other player to receive so they can update the other player's
+//        // selection on their screen
+//        String responseMessage = MessageMaker.diseaseMessage(disease, playerType);
+//        serverSender.sendMessage(responseMessage);
+//
+//        // Does nothing for player type AI as of now
+//        // if(playerType == PlayerType.AI)          playerTop = new Player(playerType, disease);
+//      } else if (message.equals(MessageMaker.CONFIRMED_RACE)) {
+//
+//      } else {
+//        System.err.println("[ERROR] This message doesn't conform to the current logic.");
+//      }
+//    }
+//  }
 }

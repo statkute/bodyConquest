@@ -42,13 +42,18 @@ public class ClientLogic extends Thread {
           continue;
         }
 
-        if (currentLogic == Logic.ENCOUNTER_LOGIC) encounterLogic(message);
         if (currentLogic == Logic.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
+        if (currentLogic == Logic.ENCOUNTER_LOGIC)      encounterLogic(message);
+        if (currentLogic == Logic.BODY_LOGIC)           bodyLogic(message);
 
       } catch (IOException | InterruptedException e) {
         e.printStackTrace();
       }
     }
+  }
+
+  private void bodyLogic(String message) {
+
   }
 
   private void raceSelectionLogic(String message) {
@@ -67,7 +72,7 @@ public class ClientLogic extends Thread {
           message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
       player = Assets.PlayerType.decode(encodedPlayerType);
 
-      if (communicator.getPlayerType() != player) communicator.setEnemyDisease(disease);
+      if (communicator.getPlayerType() != player) communicator.setOpponentDisease(disease);
     } else if (message.startsWith(MessageMaker.FIRST_PICKER_HEADER)) {
       Assets.PlayerType firstPicker;
 
@@ -163,6 +168,8 @@ public class ClientLogic extends Thread {
   public void setRaceSelectionLogic() {
     currentLogic = Logic.RACE_SELECTION_LOGIC;
   }
+
+  public void setBodyLogic() { currentLogic = Logic.BODY_LOGIC; }
 
   public void setEncounterLogic() {
     currentLogic = Logic.ENCOUNTER_LOGIC;

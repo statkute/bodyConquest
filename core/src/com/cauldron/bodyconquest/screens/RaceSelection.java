@@ -119,8 +119,8 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         playButtonSound();
 
         // Should actually start the encounter state once all players have confirmed their Disease
-        if (gameType != GameType.MULTIPLAYER_JOIN) g.startEncounterState();
-        game.setScreen(new EncounterScreen(game, gameType));
+        if (gameType != GameType.MULTIPLAYER_JOIN) g.startBodyState();
+        game.setScreen(new BodyScreen(game, gameType));
         //dispose();
       }
 

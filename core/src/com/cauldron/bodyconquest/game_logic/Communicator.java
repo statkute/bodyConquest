@@ -2,8 +2,10 @@ package com.cauldron.bodyconquest.game_logic;
 
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Disease;
+import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.entities.BasicObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Communicator {
@@ -23,11 +25,17 @@ public class Communicator {
   private Assets.PlayerType playerType;
 
   private Disease playerDisease;
-  private Disease enemyDisease;
+  private Disease opponentDisease;
+  
+  private ArrayList<Organ> playerOrgans;
+  private ArrayList<Organ> opponentOrgans;
 
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();
     playerDisease = null;
+    opponentDisease = null;
+    playerOrgans = new ArrayList<Organ>();
+    opponentOrgans = new ArrayList<Organ>();
   }
 
   public CopyOnWriteArrayList<BasicObject> getAllObjects() {
@@ -118,12 +126,12 @@ public class Communicator {
     this.playerType = playerType;
   }
 
-  public Disease getEnemyDisease() {
-    return enemyDisease;
+  public Disease getOpponentDisease() {
+    return opponentDisease;
   }
 
-  public void setEnemyDisease(Disease enemyDisease) {
-    this.enemyDisease = enemyDisease;
+  public void setOpponentDisease(Disease opponentDisease) {
+    this.opponentDisease = opponentDisease;
   }
 
   public boolean isPicker() {
@@ -132,5 +140,21 @@ public class Communicator {
 
   public void setPicker(boolean picker) {
     this.picker = picker;
+  }
+
+  public ArrayList<Organ> getPlayerOrgans() {
+    return playerOrgans;
+  }
+
+  public void setPlayerOrgans(ArrayList<Organ> playerOrgans) {
+    this.playerOrgans = playerOrgans;
+  }
+
+  public ArrayList<Organ> getOpponentOrgans() {
+    return opponentOrgans;
+  }
+
+  public void setOpponentOrgans(ArrayList<Organ> opponentOrgans) {
+    this.opponentOrgans = opponentOrgans;
   }
 }
