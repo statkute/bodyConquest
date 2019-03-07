@@ -3,6 +3,7 @@ package com.cauldron.bodyconquest.screens;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.cauldron.bodyconquest.constants.Assets;
@@ -10,9 +11,19 @@ import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 public class RegisteringScreen extends DatabasesScreen implements Screen{
 
+    private Texture register;
+    private TextButton registerBtn;
+    private Image registerImage;
+
+
     public RegisteringScreen(BodyConquest game) {
         super(game);
+        registerImage = new Image(register);
+        registerBtn = new TextButton("Register",skin);
         listenButton(registerBtn);
+        settingSizes();
+        settingPositions();
+        adding();
     }
 
     @Override
@@ -42,19 +53,15 @@ public class RegisteringScreen extends DatabasesScreen implements Screen{
                 textPassword = txfPassword.getText();
                 textUsername = txfUsername.getText();
                 System.out.println(textUsername + " " + textPassword);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 processRegistration();
             }
         });
     }
 
-    private void processRegistration() {
-        dispose();
-        //game.setScreen(New LoginScreen(game));
+    @Override
+    public void processRegistration() {
+        super.processRegistration();
+        game.setScreen(new  LoginScreen(game));
     }
 
     @Override
