@@ -12,6 +12,7 @@ import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.screens.MenuScreen;
+import com.cauldron.bodyconquest.screens.StartScreen;
 
 import java.awt.*;
 
@@ -49,7 +50,8 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     audioPlayer.loadSFX("button_click", Assets.buttonSoundPath);
     audioPlayer.loadMusic("music", Assets.music);
     audioPlayer.playMusicLoop("music");
-    setScreen(new MenuScreen(this));
+    //setScreen(new MenuScreen(this));
+    setScreen(new StartScreen(this));
     client = new Client();
   }
 

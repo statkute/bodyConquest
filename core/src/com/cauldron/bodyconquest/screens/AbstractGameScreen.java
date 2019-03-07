@@ -25,7 +25,6 @@ public abstract class AbstractGameScreen implements Screen {
     protected Texture background;
     protected Vector3 tmp;
     protected Server server;
-    protected Communicator communicator;
 
     public AbstractGameScreen(BodyConquest game) {
         init(game);

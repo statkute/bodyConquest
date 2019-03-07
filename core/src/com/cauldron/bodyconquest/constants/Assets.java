@@ -60,6 +60,14 @@ public class Assets {
     public static String raceContinueText = "core/assets/continue_new.png";
     public static String raceBackButton = "core/assets/back_new.png";
 
+
+    /* Starting Screen Assets */
+
+
+  public static String startTitle = "core/assets/title_new.png";
+  public static String startRegister = "core/assets/REGISTER_start.png";
+  public static String startLogin = "core/assets/LOGIN_start.png";
+
   public static final int MINHEALTH = 0;
 
 
