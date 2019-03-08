@@ -23,6 +23,7 @@ import com.cauldron.bodyconquest.game_logic.BasicTestAI;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.game_logic.MultiplayerTestAI;
 import com.cauldron.bodyconquest.game_logic.Player;
+import com.cauldron.bodyconquest.game_logic.utils.Timer;
 import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.ServerSender;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
@@ -74,6 +75,8 @@ public class EncounterState extends GameState {
 
   private Player topPlayer;
   private Player bottomPlayer;
+
+  int counter = 0;
 
   // Move resources in side of player
   private Resources topResources;
@@ -180,9 +183,11 @@ public class EncounterState extends GameState {
   /** {@inheritDoc} */
   @Override
   public void update() {
+    counter ++;
+   // Timer.startTimer(20);
 
 //    try {
-//      Thread.sleep(10);
+//      Thread.sleep(20);
 //    } catch (InterruptedException e) {
 //      e.printStackTrace();
 //    }
@@ -209,31 +214,36 @@ public class EncounterState extends GameState {
     CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
     for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
 
-    // TO DO: send this to the client
-    String json = "";
-    try {
-      json = Serialization.serialize(sentObjects);
-      serverSender.sendObjectUpdates(json);
+    if (counter == 2){
+      String json = "";
+      try {
+        json = Serialization.serialize(sentObjects);
 
-      double healthBottom = bottomBase.getHealth();
-      double healthBottomMax = bottomBase.getMaxHealth();
-      double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
-      int healthB = (int) healthPercentage;
-      String messageb = MessageMaker.healthUpdate(healthB, PlayerType.PLAYER_BOTTOM);
+        serverSender.sendObjectUpdates(json);
 
-      double healthTop = topBase.getHealth();
-      double healthTopMax = topBase.getMaxHealth();
-      double healthPercentageT = (healthTop / healthTopMax) * 100.0;
-      int healthT = (int) healthPercentageT;
+        double healthBottom = bottomBase.getHealth();
+        double healthBottomMax = bottomBase.getMaxHealth();
+        double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
+        int healthB = (int) healthPercentage;
+        String messageb = MessageMaker.healthUpdate(healthB, PlayerType.PLAYER_BOTTOM);
 
-      String messaget = MessageMaker.healthUpdate(healthT, PlayerType.PLAYER_TOP);
+        double healthTop = topBase.getHealth();
+        double healthTopMax = topBase.getMaxHealth();
+        double healthPercentageT = (healthTop / healthTopMax) * 100.0;
+        int healthT = (int) healthPercentageT;
 
-      serverSender.sendMessage(messageb);
-      serverSender.sendMessage(messaget);
+        String messaget = MessageMaker.healthUpdate(healthT, PlayerType.PLAYER_TOP);
 
-    } catch (IOException e) {
-      e.printStackTrace();
+        serverSender.sendMessage(messageb);
+        serverSender.sendMessage(messaget);
+        counter = 0;
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
+    // TO DO: send this to the client
+
     // }
 
   }
