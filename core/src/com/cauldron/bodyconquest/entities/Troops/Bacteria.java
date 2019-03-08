@@ -12,9 +12,9 @@ public class Bacteria extends Troop {
   public static final int RANGE = 50;
   public static final int DAMAGE = 30;
 
-  public static final int SUGARS_COST = 0;
-  public static final int PROTEINS_COST = 15;
-  public static final int LIPIDS_COST = 5;
+  public static final int SUGARS_COST = 10;
+  public static final int PROTEINS_COST = 30;
+  public static final int LIPIDS_COST = 20;
 
   public Bacteria() {
     super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);

@@ -245,18 +245,31 @@ public class EncounterState extends GameState {
     // Initialise troop type
     if (unitType.equals(UnitType.BACTERIA)) {
       if(playerType == PlayerType.PLAYER_BOTTOM){
-        if(bottomResources.canAfford(20,20,20)){
-          bottomResources.buy(20,20,20);
+        if(bottomResources.canAfford(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST)){
+          bottomResources.buy(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST);
           troop = new Bacteria(playerType, lane);
         } else{
 
         }
       }
-
     } else if (unitType.equals(UnitType.FLU)) {
-      troop = new Flu(this, playerType, lane);
+      if(playerType == PlayerType.PLAYER_BOTTOM){
+        if(bottomResources.canAfford(Flu.LIPIDS_COST, Flu.SUGARS_COST, Flu.PROTEINS_COST)){
+          bottomResources.buy(Flu.LIPIDS_COST, Flu.SUGARS_COST, Flu.PROTEINS_COST);
+          troop = new Flu(this, playerType, lane);
+        }else{
+
+        }
+      }
     } else if (unitType.equals(UnitType.VIRUS)) {
-      troop = new Virus(playerType, lane);
+      if(playerType == PlayerType.PLAYER_BOTTOM){
+        if(bottomResources.canAfford(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST)){
+          bottomResources.buy(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST);
+          troop = new Virus(playerType, lane);
+        }else{
+
+        }
+      }
     }
 
     // Return if invalid troop, lane or player type is used

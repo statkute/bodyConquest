@@ -8,7 +8,7 @@ public class Virus extends Troop {
 
   public static final int SUGARS_COST = 20;
   public static final int PROTEINS_COST = 20;
-  public static final int LIPIDS_COST = 40;
+  public static final int LIPIDS_COST = 50;
 
   public Virus() {
     super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
