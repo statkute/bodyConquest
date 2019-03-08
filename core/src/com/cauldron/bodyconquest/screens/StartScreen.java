@@ -46,8 +46,8 @@ public class StartScreen extends AbstractGameScreen implements Screen {
             if(loginBounds.contains(tmp.x,tmp.y)){
                 playButtonSound();
                 //System.out.println("Login touched");
-                //dispose();
-                //game.setScreen();
+                dispose();
+                game.setScreen(new LoginScreen(game));
             }
 
             if(registerBounds.contains(tmp.x,tmp.y)){
