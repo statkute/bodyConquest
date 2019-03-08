@@ -7,7 +7,6 @@ import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.networking.utilities.Serialization;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
