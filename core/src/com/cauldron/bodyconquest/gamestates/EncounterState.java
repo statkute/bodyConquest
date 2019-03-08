@@ -214,7 +214,7 @@ public class EncounterState extends GameState {
     CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
     for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
 
-    if (counter == 2){
+    if (counter == 3){
       String json = "";
       try {
         json = Serialization.serialize(sentObjects);
