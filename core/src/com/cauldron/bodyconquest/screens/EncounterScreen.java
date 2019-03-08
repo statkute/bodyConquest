@@ -238,9 +238,15 @@ public class EncounterScreen implements Screen {
       // Draw Actors
       stage.draw();
 
+      // draw a font with numbers
+
+
       shakeCamera();
       // Start, draw and end spriteBatch
       game.batch.begin();
+
+      drawNumbersOnResourceBars();
+
       game.batch.end();
       for (ViewObject vo : viewObjects) vo.remove();
 
@@ -436,6 +442,13 @@ public class EncounterScreen implements Screen {
       stage.getCamera().update();
 
     }
+  }
+
+  private void drawNumbersOnResourceBars(){
+    game.font.draw(game.batch, Integer.toString(comms.getSugarsBottom()), hud.getCarbsResourceBar().getX()+15, hud.getCarbsResourceBar().getY()+30, 10, 1, false);
+    game.font.draw(game.batch, Integer.toString(comms.getLipidsBottom()), hud.getLipidsResourceBar().getX()+15, hud.getLipidsResourceBar().getY()+30, 10, 1, false);
+    game.font.draw(game.batch, Integer.toString(comms.getProteinsBottom()), hud.getProteinResourceBar().getX()+15, hud.getProteinResourceBar().getY()+30, 10, 1, false);
+
   }
 
 

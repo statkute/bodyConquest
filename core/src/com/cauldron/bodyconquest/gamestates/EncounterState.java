@@ -244,7 +244,15 @@ public class EncounterState extends GameState {
 
     // Initialise troop type
     if (unitType.equals(UnitType.BACTERIA)) {
-      troop = new Bacteria(playerType, lane);
+      if(playerType == PlayerType.PLAYER_BOTTOM){
+        if(bottomResources.canAfford(20,20,20)){
+          bottomResources.buy(20,20,20);
+          troop = new Bacteria(playerType, lane);
+        } else{
+
+        }
+      }
+
     } else if (unitType.equals(UnitType.FLU)) {
       troop = new Flu(this, playerType, lane);
     } else if (unitType.equals(UnitType.VIRUS)) {

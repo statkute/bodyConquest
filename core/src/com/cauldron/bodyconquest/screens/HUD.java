@@ -277,4 +277,29 @@ public class HUD {
     return healthBar;
   }
 
+  public ResourceBar getProteinResourceBar() {
+    return proteinResourceBar;
+  }
+
+  public void setProteinResourceBar(ResourceBar proteinResourceBar) {
+    this.proteinResourceBar = proteinResourceBar;
+  }
+
+  public ResourceBar getLipidsResourceBar() {
+    return lipidsResourceBar;
+  }
+
+  public void setLipidsResourceBar(ResourceBar lipidsResourceBar) {
+    this.lipidsResourceBar = lipidsResourceBar;
+  }
+
+  public ResourceBar getCarbsResourceBar() {
+    return carbsResourceBar;
+  }
+
+  public void setCarbsResourceBar(ResourceBar carbsResourceBar) {
+    this.carbsResourceBar = carbsResourceBar;
+  }
+
+
 }
