@@ -262,7 +262,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     }
 
     t_eyeSelected = manager.get(Assets.eye_selected, Texture.class);
-    t_eyepoints = manager.get(Assets.lungspoints, Texture.class);
+    t_eyepoints = manager.get(Assets.eyepoints, Texture.class);
     if (myOrgans.contains(Organ.EYES)) {
       setEye(myDiseaseType);
     } else if (opponentOrgans.contains(Organ.EYES)) {
