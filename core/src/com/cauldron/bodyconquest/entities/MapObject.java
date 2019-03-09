@@ -94,7 +94,7 @@ public abstract class MapObject {
    *
    * @return The width of the collision box of this MapObject.
    */
-  public double getCwidth() {
+  protected double getCwidth() {
     return cwidth;
   }
 
@@ -103,7 +103,7 @@ public abstract class MapObject {
    *
    * @return The height of the collision box of this MapObject.
    */
-  public double getCheight() {
+  protected double getCheight() {
     return cheight;
   }
 
@@ -132,7 +132,7 @@ public abstract class MapObject {
    * @param mapObject The MapObject to find the distance to.
    * @return The euclidean distance between this MapObject and the given MapObject.
    */
-  public double distFrom(MapObject mapObject) {
+  protected double distFrom(MapObject mapObject) {
     return distFrom(mapObject.getCentreX(), mapObject.getCentreY());
   }
 
@@ -143,7 +143,7 @@ public abstract class MapObject {
    * @param y The y value of the co-ordinate.
    * @return The euclidean distance between this MapObject and the given co-ordinate.
    */
-  public double distFrom(double x, double y) {
+  protected double distFrom(double x, double y) {
     double xDif = this.getCentreX() - x;
     double yDif = this.getCentreY() - y;
     return Math.sqrt(Math.pow(xDif, 2) + Math.pow(yDif, 2));
@@ -155,7 +155,7 @@ public abstract class MapObject {
    * @return The x co-ordinate at the centre of this MapObject.
    */
   public double getCentreX() {
-    return getX() + (getWidth() / 2);
+    return getX() + (getWidth() / 2.0f);
   }
 
   /**
@@ -164,7 +164,7 @@ public abstract class MapObject {
    * @return The y co-ordinate at the centre of this MapObject.
    */
   public double getCentreY() {
-    return getY() + (getHeight() / 2);
+    return getY() + (getHeight() / 2.0f);
   }
 
   /**
@@ -192,29 +192,29 @@ public abstract class MapObject {
    * @param mapObject The mapObject that is being checked against.
    * @return True if this MapObject and the given MapObject are colliding.
    */
-  public boolean checkCollision(MapObject mapObject) {
+  protected boolean checkCollision(MapObject mapObject) {
     Area areaA = new Area(this.getBounds());
     areaA.intersect(new Area(mapObject.getBounds()));
     return !areaA.isEmpty();
   }
 
   /** Set the movement direction of this MapObject to be upwards (+Y direction). */
-  public void setDirectionUp() {
+  protected void setDirectionUp() {
     direction = Math.toRadians(UP_DIRECTION);
   }
 
   /** Set the movement direction of this MapObject to be downwards (-Y direction). */
-  public void setDirectionDown() {
+  protected void setDirectionDown() {
     direction = Math.toRadians(DOWN_DIRECTION);
   }
 
   /** Set the movement direction of this MapObject to the left (-X direction). */
-  public void setDirectionLeft() {
+  protected void setDirectionLeft() {
     direction = Math.toRadians(LEFT_DIRECTION);
   }
 
   /** Set the movement direction of this MapObject to the right (+X direction). */
-  public void setDirectionRight() {
+  protected void setDirectionRight() {
     direction = Math.toRadians(RIGHT_DIRECTION);
   }
 
@@ -222,7 +222,7 @@ public abstract class MapObject {
    * Set the movement direction of this MapObject to be upwards and to the left (+Y and -X
    * direction).
    */
-  public void setDirectionUpLeft() {
+  protected void setDirectionUpLeft() {
     direction = Math.toRadians((UP_DIRECTION + LEFT_DIRECTION) / 2);
   }
 
@@ -246,7 +246,7 @@ public abstract class MapObject {
    * Set the movement direction of this MapObject to be downwards and to the right (-Y and +X
    * direction).
    */
-  public void setDirectionDownRight() {
+  protected void setDirectionDownRight() {
     direction = Math.toRadians((DOWN_DIRECTION + RIGHT_DIRECTION) / 2);
   }
 
@@ -264,7 +264,7 @@ public abstract class MapObject {
    *
    * @return The movement direction of this MapObject.
    */
-  public double getDirection() {
+  protected double getDirection() {
     return direction;
   }
 
@@ -309,7 +309,7 @@ public abstract class MapObject {
    *
    * @param cwidth The width of the collision boundary.
    */
-  public void setCWidth(int cwidth) {
+  private void setCWidth(int cwidth) {
     this.cwidth = cwidth;
   }
 
@@ -318,7 +318,7 @@ public abstract class MapObject {
    *
    * @param cheight The height of the collision boundary.
    */
-  public void setCHeight(int cheight) {
+  private void setCHeight(int cheight) {
     this.cheight = cheight;
   }
 
@@ -345,7 +345,7 @@ public abstract class MapObject {
    *
    * @return The maximum speed of this MapObject.
    */
-  public double getMaxSpeed() {
+  protected double getMaxSpeed() {
     return maxSpeed;
   }
 
@@ -366,7 +366,7 @@ public abstract class MapObject {
    * @param width The width of this MapObject.
    * @param height The height of this MapObject.
    */
-  public void setSize(int width, int height) {
+  protected void setSize(int width, int height) {
     setWidth(width);
     setHeight(height);
   }
@@ -377,7 +377,7 @@ public abstract class MapObject {
    * @param cwidth The width of the collision boundary of this MapObject.
    * @param cheight The height of the collision boundary of this Mapobject.
    */
-  public void setCSize(int cwidth, int cheight) {
+  protected void setCSize(int cwidth, int cheight) {
     setCWidth(cwidth);
     setCHeight(cheight);
   }
@@ -387,7 +387,7 @@ public abstract class MapObject {
    *
    * @param b The movement state of this MapObject.
    */
-  public void setMoving(boolean b) {
+  protected void setMoving(boolean b) {
     moving = b;
   }
 
@@ -406,7 +406,7 @@ public abstract class MapObject {
    * @param x The x co-ordinate to set the movement direction towards.
    * @param y The y co-ordinate to set the movement direction towards.
    */
-  public void moveTowards(double x, double y) {
+  protected void moveTowards(double x, double y) {
     double relX = x - this.getCentreX();
     double relY = y - this.getCentreY();
     double angle = Math.atan((y - this.getCentreY()) / (x - this.getCentreX()));
@@ -417,8 +417,6 @@ public abstract class MapObject {
     } else if (relY < 0 && relX >= 0) {
       angle = (2 * Math.PI) - angle;
     }
-    // double angle = Math.atan(y/x);
-    // angle += Math.PI;
     setDirection(angle);
   }
 
@@ -463,7 +461,7 @@ public abstract class MapObject {
    * Check if the MapObject will collide if it makes its next movement, if there are no collisions
    * the MapObject finalises the movement. (Currently no collisions are checked)
    */
-  public void checkCollisions() {
+  private void checkCollisions() {
     x = dx;
     y = dy;
   }

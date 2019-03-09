@@ -163,9 +163,6 @@ public class EncounterScreen implements Screen {
     }
   }
 
-
-  private void testInit() {}
-
   @Override
   public void show() {
     stage.getRoot().getColor().a = 0;
@@ -208,47 +205,6 @@ public class EncounterScreen implements Screen {
       for (BasicObject o : objects) {
 
         Enum i = o.getMapObjectType();
-//        if (FLU.equals(i)) {
-//          viewObjects.add(
-//                  new ViewObject(
-//                          o,
-//                          Assets.pathFlu,
-//                          Assets.frameColsFlu,
-//                          Assets.frameRowsFlu,
-//                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
-//        } else if (VIRUS.equals(i)) {
-//          viewObjects.add(
-//                  new ViewObject(
-//                          o,
-//                          Assets.pathVirus,
-//                          Assets.frameColsVirus,
-//                          Assets.frameRowsVirus,
-//                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
-//        } else if (BACTERIA.equals(i)) {
-//          viewObjects.add(
-//                  new ViewObject(
-//                          o,
-//                          Assets.pathBacteria,
-//                          Assets.frameColsBacteria,
-//                          Assets.frameRowsBacteria,
-//                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
-//        } else if (INFLUENZA_BASE.equals(i)) {
-//          viewObjects.add(new ViewObject(o, Assets.pathBaseImage, 3, 5, elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
-//          //        case ROTAVIRUS_BASE:
-//          //          ////TO DO add Virus base Texture
-//          //          break;
-//          //        case MEASLES_BASE:
-//          //          ////TO DO add Monster base Texture
-//          //          break;
-//        } else if (FLU_PROJECTILE.equals(i)) {
-//          viewObjects.add(
-//                  new ViewObject(
-//                          o,
-//                          Assets.pathProjectile,
-//                          Assets.frameColsProjectile,
-//                          Assets.frameRowsProjectile,
-//                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
-//        }
 
         if(!poolHashMap.containsKey(i)) poolHashMap.put(o.getMapObjectType(), poolSetup(i));
 
@@ -281,9 +237,15 @@ public class EncounterScreen implements Screen {
       // Draw Actors
       stage.draw();
 
+      // draw a font with numbers
+
+
       shakeCamera();
       // Start, draw and end spriteBatch
       game.batch.begin();
+
+      drawNumbersOnResourceBars();
+
       game.batch.end();
       for (ViewObject vo : viewObjects) {
         poolHashMap.get(vo.getMapObjectType()).free(vo.getWalkAnimation());
@@ -305,7 +267,6 @@ public class EncounterScreen implements Screen {
         && accumulatorAfterBaseConquered < Assets.INCREASEACCUMULATORTILL) {
       accumulatorAfterBaseConquered++;
     }
-    //System.out.println(healthTopBaseBefore + " " + healthTopBase);
   }
 
   private void updateResourceBars(){
@@ -451,7 +412,7 @@ public class EncounterScreen implements Screen {
     return timeAlive;
   }
 
-  public void shakeCamera(){
+  private void shakeCamera(){
 
     if(playerType == PlayerType.PLAYER_TOP || playerType == PlayerType.AI){
 
@@ -484,10 +445,17 @@ public class EncounterScreen implements Screen {
     }
   }
 
+  private void drawNumbersOnResourceBars(){
+    game.font.draw(game.batch, Integer.toString(comms.getSugarsBottom()), hud.getCarbsResourceBar().getX()+15, hud.getCarbsResourceBar().getY()+30, 10, 1, false);
+    game.font.draw(game.batch, Integer.toString(comms.getLipidsBottom()), hud.getLipidsResourceBar().getX()+15, hud.getLipidsResourceBar().getY()+30, 10, 1, false);
+    game.font.draw(game.batch, Integer.toString(comms.getProteinsBottom()), hud.getProteinResourceBar().getX()+15, hud.getProteinResourceBar().getY()+30, 10, 1, false);
+
+  }
+
   private TexturePool poolSetup(Enum i) {
 
     float frameRate = 0.2f;
-    
+
       //Enum i = o.getMapObjectType();
       if (FLU.equals(i)) {
         return new TexturePool(
@@ -523,6 +491,6 @@ public class EncounterScreen implements Screen {
               frameRate);
     }return null;
   }
-  
-  
+
+
 }
