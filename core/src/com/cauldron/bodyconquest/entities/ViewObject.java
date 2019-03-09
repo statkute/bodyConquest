@@ -43,6 +43,25 @@ public class ViewObject extends Actor {
     this.playerType = playerType;
   }
 
+  public ViewObject(BasicObject bo, float elapsedTime, Assets.PlayerType playerType, Animation<TextureRegion> walkAnimation) {
+
+    // Right now all textures are the default buckets
+    this.bo = bo;
+    this.elapsedTime = elapsedTime;
+    this.walkAnimation = walkAnimation;
+
+    if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
+      setRotation((float)bo.getRotation());
+    }
+    
+    setX((float)bo.getX());
+    setY((float)bo.getY());
+    setWidth((float)bo.getWidth());
+    setHeight((float)bo.getHeight());
+    stateTime = 0f;
+    this.playerType = playerType;
+  }
+
   // Constructor for spritesheet with defined framerate
   public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows,float elapsedTime, int frameRate,Assets.PlayerType playerType) {
     // Right now all textures are the default buckets
@@ -141,4 +160,8 @@ public class ViewObject extends Actor {
 
     super.draw(batch, parentAlpha);
   }
+
+  public MapObjectType getMapObjectType() { return bo.getMapObjectType(); }
+
+  public Animation<TextureRegion> getWalkAnimation() { return walkAnimation; }
 }
