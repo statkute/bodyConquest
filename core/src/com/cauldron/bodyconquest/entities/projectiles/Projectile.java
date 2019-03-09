@@ -3,7 +3,10 @@ package com.cauldron.bodyconquest.entities.projectiles;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.entities.MapObject;
 import com.cauldron.bodyconquest.entities.Troops.Troop;
+import org.w3c.dom.css.Rect;
 
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Projectile extends MapObject {
@@ -72,10 +75,16 @@ public abstract class Projectile extends MapObject {
 
   public void checkHit(CopyOnWriteArrayList<Troop> enemies) {
     for(Troop enemy : enemies) {
-      if(getBounds().intersects(enemy.getBounds())) {
+      if(checkCollision(enemy)/*getBounds().intersects(enemy.getBounds())*/) {
         hit(enemy);
       }
     }
   }
 
+  @Override
+  public Shape getBounds() {
+    Shape originalRect = super.getBounds();
+    AffineTransform trans = AffineTransform.getRotateInstance(getDirection() + Math.PI, getX() + ((getWidth() - getCwidth()) / 2), getY() + ((getHeight() - getCheight()) / 2));
+    return trans.createTransformedShape(originalRect);
+  }
 }

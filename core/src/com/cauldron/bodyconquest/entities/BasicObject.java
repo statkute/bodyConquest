@@ -7,6 +7,8 @@ public class BasicObject {
   private double y;
   private int width;
   private int height;
+  private int cwidth;
+  private int cheight;
   private double direction;
   private double currentSpeed;
   private double rotation;
@@ -78,4 +80,19 @@ public class BasicObject {
     this.rotation = rotation;
   }
 
+  public int getCwidth() {
+    return cwidth;
+  }
+
+  public void setCwidth(int cwidth) {
+    this.cwidth = cwidth;
+  }
+
+  public int getCheight() {
+    return cheight;
+  }
+
+  public void setCheight(int cheight) {
+    this.cheight = cheight;
+  }
 }

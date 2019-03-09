@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.cauldron.bodyconquest.constants.*;
-import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 import com.cauldron.bodyconquest.handlers.GifDecoder;
 import com.cauldron.bodyconquest.screens.EncounterScreen;
+
+import java.awt.geom.AffineTransform;
 
 public class ViewObject extends Actor {
 
@@ -23,21 +25,21 @@ public class ViewObject extends Actor {
   private BasicObject bo;
   private Assets.PlayerType playerType;
 
-  // Constructor for spritesheet (default time between frames of 0.2f)
-  public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows, float elapsedTime, Assets.PlayerType playerType) {
-    this.bo = bo;
-    this.elapsedTime = elapsedTime;
-    walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, 0.2f, pathTexture);
-    if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
-      setRotation((float)bo.getRotation());
-    }
-    setX((float)bo.getX());
-    setY((float)bo.getY());
-    setWidth((float)bo.getWidth());
-    setHeight((float)bo.getHeight());
-    stateTime = 0f;
-    this.playerType = playerType;
-  }
+//  // Constructor for spritesheet (default time between frames of 0.2f)
+//  public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows, float elapsedTime, Assets.PlayerType playerType) {
+//    this.bo = bo;
+//    this.elapsedTime = elapsedTime;
+//    walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, 0.2f, pathTexture);
+//    if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
+//      setRotation((float)bo.getRotation());
+//    }
+//    setX((float)bo.getX());
+//    setY((float)bo.getY());
+//    setWidth((float)bo.getWidth());
+//    setHeight((float)bo.getHeight());
+//    stateTime = 0f;
+//    this.playerType = playerType;
+//  }
 
   public ViewObject(BasicObject bo, float elapsedTime, Assets.PlayerType playerType, Animation<TextureRegion> walkAnimation) {
 
@@ -46,7 +48,7 @@ public class ViewObject extends Actor {
     this.elapsedTime = elapsedTime;
     this.walkAnimation = walkAnimation;
 
-    if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
+    if(ProjectileType.isProjectileType(bo.getMapObjectType())){
       setRotation((float)bo.getRotation());
     }
 
@@ -54,35 +56,37 @@ public class ViewObject extends Actor {
     setY((float)bo.getY());
     setWidth((float)bo.getWidth());
     setHeight((float)bo.getHeight());
+    setOrigin(getWidth()/2, getHeight()/2);
     stateTime = 0f;
     this.playerType = playerType;
   }
 
-  // Constructor for spritesheet with defined framerate
-  public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows,float elapsedTime, int frameRate,Assets.PlayerType playerType) {
-    // Right now all textures are the default buckets
-    //texture = new Texture("core/assets/bucket.png");
-    //texture = new Texture(pathTexture);
-    this.bo = bo;
-    this.elapsedTime = elapsedTime;
-    walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, frameRate, pathTexture);
-    if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
-      setRotation((float)bo.getRotation());
-    }
-    setX((float)bo.getX());
-    setY((float)bo.getY());
-    setWidth((float)bo.getWidth());
-    setHeight((float)bo.getHeight());
-    stateTime = 0f;
-    this.playerType = playerType;
-  }
+//  // Constructor for spritesheet with defined framerate
+//  public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows,float elapsedTime, int frameRate,Assets.PlayerType playerType) {
+//    // Right now all textures are the default buckets
+//    //texture = new Texture("core/assets/bucket.png");
+//    //texture = new Texture(pathTexture);
+//    this.bo = bo;
+//    this.elapsedTime = elapsedTime;
+//    walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, frameRate, pathTexture);
+//    if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
+//      setRotation((float)bo.getRotation());
+//    }
+//    setX((float)bo.getX());
+//    setY((float)bo.getY());
+//    setOrigin(getWidth()/2, getHeight()/2);
+//    setWidth((float)bo.getWidth());
+//    setHeight((float)bo.getHeight());
+//    stateTime = 0f;
+//    this.playerType = playerType;
+//  }
 
   // Constructor for gif images
   public ViewObject(BasicObject bo, String pathTexture, float elapsedTime,Assets.PlayerType playerType) {
     this.bo = bo;
     walkAnimation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(pathTexture).read());
     this.elapsedTime = elapsedTime;
-    if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
+    if(ProjectileType.isProjectileType(bo.getMapObjectType())){
       setRotation((float)bo.getRotation());
     }
     stateTime = 0f;
@@ -151,6 +155,17 @@ public class ViewObject extends Actor {
     batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
     //batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
     batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+
+    //AffineTransform trans = AffineTransform.getRotateInstance(getDirection() + Math.PI, getX() + ((getWidth() - getCwidth()) / 2), getY() + ((getHeight() - getCheight()) / 2)
+
+//    ShapeRenderer shapeRenderer = new ShapeRenderer();
+//
+//      shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+//
+//    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+//    shapeRenderer.setColor(Color.GREEN);
+//    shapeRenderer.rect((float)bo.getX() + ((bo.getWidth() - bo.getCwidth()) / 2), (float)bo.getY() + ((bo.getHeight() - bo.getCheight()) / 2), bo.getCwidth(), bo.getCheight());
+//    shapeRenderer.end();
 
     super.draw(batch, parentAlpha);
   }

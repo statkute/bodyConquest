@@ -7,4 +7,11 @@ public enum ProjectileType implements MapObjectType {
   public <T extends Enum & MapObjectType> T getMapObjectType() {
     return (T) this;
   }
+
+  public static boolean isProjectileType(MapObjectType mot) {
+    for(ProjectileType pt : values()) {
+      if(pt == mot) return true;
+    }
+    return false;
+  }
 }
