@@ -37,8 +37,6 @@ public abstract class MapObject {
   private int cwidth;
   private int cheight;
 
-
-
   // Movement attributes
   /** The rate at which the current speed increases per tick until the MapObject's movement reaches maxSpeed. */
   protected double acceleration;
@@ -370,11 +368,18 @@ public abstract class MapObject {
    * @param y The y co-ordinate to set the movement direction towards.
    */
   public void moveTowards(double x, double y) {
-    //
+    double relX = x - this.getCentreX();
+    double relY = y - this.getCentreY();
     double angle = Math.atan((y - this.getCentreY()) / (x - this.getCentreX()));
-
+    if(relX < 0 && relY >= 0) {
+      angle = angle - Math.PI;
+    } else if (relY <= 0 && relX <= 0) {
+      angle += Math.PI;
+    } else if (relY < 0 && relX >= 0) {
+      angle = (2 * Math.PI) - angle;
+    }
     //double angle = Math.atan(y/x);
-    angle += Math.PI;
+    //angle += Math.PI;
     setDirection(angle);
     System.out.println("Proj Dest Rel To SHooter | X: " + (x - getCentreX()) + " Y: " + (y - getCentreY()));
     System.out.println("x: " + x  + "\ty: " + y);
@@ -425,11 +430,8 @@ public abstract class MapObject {
     y = dy;
   }
 
-  // The simplified object that is sent to the client
-  // This could probably be done better but if it works, it's fine as it is
-  // If it does work we could probably make a more efficient implementation
-
   /**
+   * The simplified object that is sent to the client.
    * Creates a {@link BasicObject} representation of this MapObject for the View/Renderer/Client to process.
    * @return A {@link BasicObject} representation of this MapObject.
    */

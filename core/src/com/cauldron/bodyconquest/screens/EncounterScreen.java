@@ -486,27 +486,29 @@ public class EncounterScreen implements Screen {
 
   private TexturePool poolSetup(Enum i) {
 
+    float frameRate = 0.2f;
+    
       //Enum i = o.getMapObjectType();
       if (FLU.equals(i)) {
         return new TexturePool(
                         Assets.pathFlu,
                         Assets.frameColsFlu,
                         Assets.frameRowsFlu,
-                        elapsedSeconds);
+                        frameRate);
       } else if (VIRUS.equals(i)) {
         return new TexturePool(
                         Assets.pathVirus,
                         Assets.frameColsVirus,
                         Assets.frameRowsVirus,
-                        elapsedSeconds);
+                        frameRate);
       } else if (BACTERIA.equals(i)) {
         return new TexturePool(
                         Assets.pathBacteria,
                         Assets.frameColsBacteria,
                         Assets.frameRowsBacteria,
-                        elapsedSeconds);
+                        frameRate);
       } else if (INFLUENZA_BASE.equals(i)) {
-        return new TexturePool(Assets.pathBaseImage, 3, 5, elapsedSeconds);
+        return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
       //        case ROTAVIRUS_BASE:
       //          ////TO DO add Virus base Texture
       //          break;
@@ -518,7 +520,7 @@ public class EncounterScreen implements Screen {
               Assets.pathProjectile,
               Assets.frameColsProjectile,
               Assets.frameRowsProjectile,
-              elapsedSeconds);
+              frameRate);
     }return null;
   }
   

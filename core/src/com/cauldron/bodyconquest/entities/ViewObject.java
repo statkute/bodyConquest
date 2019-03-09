@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.cauldron.bodyconquest.constants.*;
-import com.cauldron.bodyconquest.entities.projectiles.Projectile;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 import com.cauldron.bodyconquest.handlers.GifDecoder;
 import com.cauldron.bodyconquest.screens.EncounterScreen;
@@ -26,9 +25,6 @@ public class ViewObject extends Actor {
 
   // Constructor for spritesheet (default time between frames of 0.2f)
   public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows, float elapsedTime, Assets.PlayerType playerType) {
-    // Right now all textures are the default buckets
-    //texture = new Texture("core/assets/bucket.png");
-    //texture = new Texture(pathTexture);
     this.bo = bo;
     this.elapsedTime = elapsedTime;
     walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, 0.2f, pathTexture);
@@ -53,7 +49,7 @@ public class ViewObject extends Actor {
     if(bo.getMapObjectType().getClass().getSuperclass() == ProjectileType.class){
       setRotation((float)bo.getRotation());
     }
-    
+
     setX((float)bo.getX());
     setY((float)bo.getY());
     setWidth((float)bo.getWidth());
@@ -108,9 +104,7 @@ public class ViewObject extends Actor {
       preDraw();
       commonDraw(batch, parentAlpha);
       postDraw();
-    }
-
-    else{
+    } else{
       commonDraw(batch,parentAlpha);
     }
   }
