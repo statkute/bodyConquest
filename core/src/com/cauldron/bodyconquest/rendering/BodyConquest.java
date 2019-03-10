@@ -40,6 +40,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   // so that we could add text
   public BitmapFont font;
   public BitmapFont timerFont;
+  public BitmapFont usernameFont;
 
   private Game game;
   private Client client;
@@ -49,6 +50,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     batch = new SpriteBatch();
     font = new BitmapFont();
     timerFont = new BitmapFont(Gdx.files.internal(Assets.timerFont));
+    usernameFont = new BitmapFont(Gdx.files.internal(Assets.usernameFont));
     audioPlayer.loadSFX("button_click", Assets.buttonSoundPath);
     audioPlayer.loadMusic("music", Assets.music);
     audioPlayer.playMusicLoop("music");

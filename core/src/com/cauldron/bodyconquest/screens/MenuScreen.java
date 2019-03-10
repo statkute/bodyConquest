@@ -27,12 +27,14 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
   private Rectangle creditsBounds;
   private Rectangle exitBounds;
   public static long timeOfServer;
+  private String username;
 
-  public MenuScreen(BodyConquest game) {
+  public MenuScreen(BodyConquest game, String username) {
     super(game);
     loadAssets();
     getAssets();
     setRectangles();
+    this.username = username;
   }
 
   @Override
@@ -75,7 +77,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         timeOfServer = System.currentTimeMillis();
         System.out.println("Multiplayer Is touched");
         dispose();
-        game.setScreen(new HostScreen(game));
+        game.setScreen(new HostScreen(game,username));
       }
 
       if (singleplayerBounds.contains(tmp.x, tmp.y)) {
@@ -83,7 +85,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         System.out.println("Singleplayer Is touched");
         try {
         timeOfServer = System.currentTimeMillis();
-        game.setScreen(new RaceSelection(game, GameType.SINGLE_PLAYER));
+        game.setScreen(new RaceSelection(game, GameType.SINGLE_PLAYER,username));
         dispose();
         } catch (IOException e) {
           e.printStackTrace();
@@ -93,14 +95,14 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         playButtonSound();
         System.out.println("Settings Is touched");
         dispose();
-        game.setScreen(new SettingsScreen(game));
+        game.setScreen(new SettingsScreen(game,username));
 
       }
       if (creditsBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         System.out.println("Credits Is touched");
         dispose();
-        game.setScreen(new CreditsScreen(game));
+        game.setScreen(new CreditsScreen(game,username));
 
       }
 

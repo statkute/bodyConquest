@@ -94,9 +94,11 @@ public class EncounterScreen implements Screen {
 
   float time = 120;
 
+  private String username;
+
   private ConcurrentHashMap<MapObjectType, TexturePool> poolHashMap;
 
-  public EncounterScreen(BodyConquest game, GameType gameType) {
+  public EncounterScreen(BodyConquest game, GameType gameType,String username) {
     this.gameType = gameType;
     this.game = game;
     client = game.getClient();
@@ -108,6 +110,7 @@ public class EncounterScreen implements Screen {
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
+    this.username = username;
 
 
     if(gameType != GameType.MULTIPLAYER_JOIN) {
@@ -129,7 +132,7 @@ public class EncounterScreen implements Screen {
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
-    menuScreen = new MenuScreen(game);
+    menuScreen = new MenuScreen(game,username);
 //    while (comms.getPlayerDisease() == null) {
 //      try { Gdx.app.wait(); } catch (InterruptedException e) {e.printStackTrace();}
 //    }
@@ -255,9 +258,19 @@ public class EncounterScreen implements Screen {
 
 
       time -= Gdx.graphics.getDeltaTime();
-      //System.out.println();
+
+
+
+      game.usernameFont.getData().setScale(0.70f,0.70f);
+      if(username.length() > 9){
+        game.usernameFont.draw(game.batch,username.toLowerCase().substring(0,9),BodyConquest.V_WIDTH - 110.0f,200.0f);
+      }
+      else{
+        game.usernameFont.draw(game.batch,username.toLowerCase(),BodyConquest.V_WIDTH - 110.0f,200.0f);
+      }
+
       game.timerFont.getData().setScale(0.75f,0.75f);
-      game.timerFont.draw(game.batch,"Time Left",BodyConquest.V_WIDTH - 115.0f,550.0f);
+      game.timerFont.draw(game.batch,"Time Left",BodyConquest.V_WIDTH - 110.0f,550.0f);
       game.timerFont.getData().setScale(1.25f,1.25f);
       game.timerFont.draw(game.batch,Double.toString(Double.valueOf(value.format(time))),BodyConquest.V_WIDTH - 110.0f,510.0f);
 

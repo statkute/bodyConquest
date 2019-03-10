@@ -60,7 +60,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     @Override
     public void processRegistration() {
         super.processRegistration();
-        game.setScreen( new MenuScreen(game));
+        game.setScreen( new MenuScreen(game, textUsername));
     }
 
     @Override

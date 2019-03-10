@@ -22,13 +22,16 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
   private Texture gintare;
   private Texture paul;
   private Rectangle backBounds;
+  private String username;
 
 
-  public CreditsScreen(BodyConquest game) {
+  public CreditsScreen(BodyConquest game, String username) {
     super(game);
+    this.username = username;
     loadAssets();
     getAssets();
     setRectangles();
+
   }
 
   @Override
@@ -64,7 +67,7 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
       if (backBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         dispose();
-        game.setScreen(new MenuScreen(game));
+        game.setScreen(new MenuScreen(game,username));
       }
     }
   }

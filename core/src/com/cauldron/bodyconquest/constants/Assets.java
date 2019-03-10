@@ -76,6 +76,7 @@ public class Assets {
   /* Fonts */
 
   public static String timerFont = "core/assets/fontTime.fnt";
+  public static String usernameFont = "core/assets/usernameFont.fnt";
 
 
   public static final int MINHEALTH = 0;

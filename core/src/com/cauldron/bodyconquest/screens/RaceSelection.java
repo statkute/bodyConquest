@@ -52,10 +52,13 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   private Assets.PlayerType playerType;
   private GameType gameType;
 
+  private String username;
+
   public RaceSelection(
-      BodyConquest game, GameType gameType) throws IOException {
+      BodyConquest game, GameType gameType, String username) throws IOException {
     super(game);
     this.gameType = gameType;
+    this.username = username;
     loadAssets();
     getAssets();
     setRectangles();
@@ -120,7 +123,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
 
         // Should actually start the encounter state once all players have confirmed their Disease
         if (gameType != GameType.MULTIPLAYER_JOIN) g.startEncounterState();
-        game.setScreen(new EncounterScreen(game, gameType));
+        game.setScreen(new EncounterScreen(game, gameType,username));
         //dispose();
       }
 
@@ -133,7 +136,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
           server.closeEverything();
         }
         game.getClient().closeEverything();
-        game.setScreen(new MenuScreen(game));
+        game.setScreen(new MenuScreen(game,username));
         dispose();
       }
     }

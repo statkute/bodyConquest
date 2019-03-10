@@ -28,12 +28,15 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
   private Rectangle musicToggleBounds;
   private Rectangle backBounds;
 
+  private String username;
 
-  public SettingsScreen(BodyConquest game) {
+
+  public SettingsScreen(BodyConquest game, String username) {
     super(game);
     loadAssets();
     getAssets();
     setRectangles();
+    this.username = username;
   }
 
 
@@ -76,7 +79,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         System.out.println("back pressed");
         playButtonSound();
         dispose();
-        game.setScreen(new MenuScreen(game));
+        game.setScreen(new MenuScreen(game,username));
       }
 
       if(soundBounds.contains(tmp.x, tmp.y) || soundToggleBounds.contains(tmp.x, tmp.y)){

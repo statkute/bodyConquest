@@ -19,8 +19,9 @@ public class HostScreen extends AbstractGameScreen implements Screen {
   private Rectangle hostBounds;
   private Rectangle joinBounds;
   private Rectangle backBounds;
+  private String username;
 
-  public HostScreen(BodyConquest game) {
+  public HostScreen(BodyConquest game, String username) {
     super(game);
     loadAssets();
     getAssets();
@@ -70,7 +71,7 @@ public class HostScreen extends AbstractGameScreen implements Screen {
         System.out.println("back pressed");
         playButtonSound();
         dispose();
-        game.setScreen(new MenuScreen(game));
+        game.setScreen(new MenuScreen(game,username));
       }
     }
   }
@@ -83,7 +84,7 @@ public class HostScreen extends AbstractGameScreen implements Screen {
     playButtonSound();
 
     dispose();
-    game.setScreen(new RaceSelection(game, gameType));
+    game.setScreen(new RaceSelection(game, gameType,username));
   }
 
   @Override
