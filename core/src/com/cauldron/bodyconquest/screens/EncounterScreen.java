@@ -270,7 +270,7 @@ public class EncounterScreen implements Screen {
       }
 
 
-      if(accumulatorAfterBaseConquered > 5 && !destroyed){
+      if((accumulatorAfterBaseConquered > 5 && !destroyed) || time == 0.0f){
         boolean destroyed = true;
         determineWinner();
         switchScreen(game,menuScreen);
@@ -300,6 +300,9 @@ public class EncounterScreen implements Screen {
 
   private void drawTime() {
     time -= Gdx.graphics.getDeltaTime();
+    if(time < 0){
+      time = 0.0f;
+    }
     game.timerFont.getData().setScale(0.75f,0.75f);
     game.timerFont.draw(game.batch,"Time Left",BodyConquest.V_WIDTH - 110.0f,550.0f);
     game.timerFont.getData().setScale(1.25f,1.25f);
@@ -405,29 +408,45 @@ public class EncounterScreen implements Screen {
   private void determineWinner(){
     game.batch.begin();
 
+
     if (playerType == PlayerType.PLAYER_BOTTOM){
-      if (healthBottomBase <= 0){
+      if ((healthBottomBase <= 0)||(time == 0.0f && healthBottomBase < healthTopBase)){
         ShowGameResult("DEFEAT!");
         client.closeEverything();
         if (server != null){
           server.closeEverything();
         }
-      } else if (healthTopBase <= 0){
+      } else if ((healthTopBase <= 0) || (time == 0.0f && healthBottomBase > healthTopBase)){
         ShowGameResult("VICTORY!");
         client.closeEverything();
         if (server != null){
           server.closeEverything();
         }
       }
+      else if(time == 0.0f && healthTopBase == healthBottomBase){
+        ShowGameResult("DRAW!");
+        client.closeEverything();
+        if (server != null){
+          server.closeEverything();
+        }
+
+      }
     } else {
-      if (healthTopBase <= 0){
+      if (healthTopBase <= 0 || (time == 0.0f && healthBottomBase > healthTopBase)){
         ShowGameResult("DEFEAT!");
         client.closeEverything();
         if (server != null){
           server.closeEverything();
         }
-      } else if (healthBottomBase <= 0){
+      } else if (healthBottomBase <= 0 || (time == 0.0f && healthBottomBase < healthTopBase)){
         ShowGameResult("VICTORY!");
+        client.closeEverything();
+        if (server != null){
+          server.closeEverything();
+        }
+      }
+      else if(time == 0.0f && healthTopBase == healthBottomBase){
+        ShowGameResult("DRAW!");
         client.closeEverything();
         if (server != null){
           server.closeEverything();
