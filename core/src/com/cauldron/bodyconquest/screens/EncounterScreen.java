@@ -32,7 +32,9 @@ import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -69,6 +71,8 @@ public class EncounterScreen implements Screen {
   private Client client;
   private Server server;
   private PlayerType playerType;
+  //private Timer timer;
+  private DecimalFormat value;
 
   private MenuScreen menuScreen;
 
@@ -87,6 +91,8 @@ public class EncounterScreen implements Screen {
   int accumulatorAfterBaseConquered = 0;
 
   float elapsedSeconds;
+
+  float time = 120;
 
   private ConcurrentHashMap<MapObjectType, TexturePool> poolHashMap;
 
@@ -139,6 +145,8 @@ public class EncounterScreen implements Screen {
 
     poolHashMap = new ConcurrentHashMap<MapObjectType, TexturePool>();
 
+    value = new DecimalFormat("#");
+    //timer = new Timer()
   }
 
   private class TexturePool extends Pool<Animation<TextureRegion>> {
@@ -191,6 +199,9 @@ public class EncounterScreen implements Screen {
     healthTopBaseBefore = healthTopBase;
 
     timeAlive += delta;
+
+    time -= Gdx.graphics.getDeltaTime();
+    System.out.println(value.format(time));
 
     //fps.log();
 
