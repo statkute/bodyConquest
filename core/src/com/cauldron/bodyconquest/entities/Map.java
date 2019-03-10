@@ -13,7 +13,7 @@ import com.cauldron.bodyconquest.handlers.GifDecoder;
 public class Map extends Actor {
 
   private final double MAP_HEIGHT = 516.0;
-  private final double MAP_WIDTH = 516;
+  private final double MAP_WIDTH = 516.0;
 
   private Texture texture;
   private Animation<TextureRegion> animation;
@@ -52,7 +52,7 @@ public class Map extends Actor {
     super.draw(batch, parentAlpha);
   }
 
-  //  public double getMaxX() {
+//    public double getMaxX() {
 //    return MAP_WIDTH;
 //  }
 //
@@ -72,9 +72,9 @@ public class Map extends Actor {
 //    return 0;
 //  }
 //
-//  public float getRight() {
-//    return (float) MAP_WIDTH;
-//  }
+  public float getRight() {
+    return (float) MAP_WIDTH;
+  }
 
   /*
   Here should be a function to set which map image this should have and

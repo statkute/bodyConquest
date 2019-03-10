@@ -73,6 +73,11 @@ public class Assets {
   public static String registerUsername = "core/assets/USERNAME_start.png";
   public static String registerPassword = "core/assets/PASSWORD_start.png";
 
+  /* Fonts */
+
+  public static String timerFont = "core/assets/fontTime.fnt";
+
+
   public static final int MINHEALTH = 0;
 
 

@@ -145,7 +145,7 @@ public class EncounterScreen implements Screen {
 
     poolHashMap = new ConcurrentHashMap<MapObjectType, TexturePool>();
 
-    value = new DecimalFormat("#");
+    value = new DecimalFormat("0");
     //timer = new Timer()
   }
 
@@ -251,6 +251,15 @@ public class EncounterScreen implements Screen {
       shakeCamera();
       // Start, draw and end spriteBatch
       game.batch.begin();
+
+
+
+      time -= Gdx.graphics.getDeltaTime();
+      //System.out.println();
+      game.timerFont.getData().setScale(0.75f,0.75f);
+      game.timerFont.draw(game.batch,"Time Left",BodyConquest.V_WIDTH - 115.0f,550.0f);
+      game.timerFont.getData().setScale(1.25f,1.25f);
+      game.timerFont.draw(game.batch,Double.toString(Double.valueOf(value.format(time))),BodyConquest.V_WIDTH - 110.0f,510.0f);
 
       drawNumbersOnResourceBars();
 
