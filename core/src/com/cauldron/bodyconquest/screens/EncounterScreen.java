@@ -198,10 +198,7 @@ public class EncounterScreen implements Screen {
     healthBottomBaseBefore = healthBottomBase;
     healthTopBaseBefore = healthTopBase;
 
-    timeAlive += delta;
 
-    time -= Gdx.graphics.getDeltaTime();
-    System.out.println(value.format(time));
 
     //fps.log();
 

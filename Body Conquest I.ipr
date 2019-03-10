@@ -316,6 +316,13 @@
         <root url="jar://C:/2019 university/Team Project/cauldron/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.9.10-SNAPSHOT/8bc08b8e3d2366dc27aeb181e98899ee0d91b82a/gdx-controllers-1.9.10-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Gradle: com.badlogicgames.gdx:gdx-freetype-platform:natives-desktop:1.9.10-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype-platform/1.9.10-SNAPSHOT/fc24b6be89afa9485603f545521ac1692100a3b8/gdx-freetype-platform-1.9.10-SNAPSHOT-natives-desktop.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx-freetype:1.9.10-SNAPSHOT">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.10-SNAPSHOT/2375bad4b6503724ccd4d134533437b3f212a721/gdx-freetype-1.9.10-SNAPSHOT.jar!/" />
