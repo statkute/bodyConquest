@@ -44,6 +44,8 @@ public class RegisteringScreen extends DatabasesScreen implements Screen{
         register = manager.get(Assets.startRegister, Texture.class);
     }
 
+
+    // try to replace with image button
     public void listenButton(TextButton registerBtn){
         registerBtn.addListener(new ClickListener(){
             @Override
