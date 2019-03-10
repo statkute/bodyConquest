@@ -259,25 +259,8 @@ public class EncounterScreen implements Screen {
       // Start, draw and end spriteBatch
       game.batch.begin();
 
-
-
-      time -= Gdx.graphics.getDeltaTime();
-
-
-
-      game.usernameFont.getData().setScale(0.70f,0.70f);
-      if(username.length() > 9){
-        game.usernameFont.draw(game.batch,username.toLowerCase().substring(0,9),BodyConquest.V_WIDTH - 105.0f,hud.getUnitBar().getImageHeight() + 24.0f);
-      }
-      else{
-        game.usernameFont.draw(game.batch,username.toLowerCase(),BodyConquest.V_WIDTH - 105.0f,hud.getUnitBar().getImageHeight() + 24.0f);
-      }
-
-      game.timerFont.getData().setScale(0.75f,0.75f);
-      game.timerFont.draw(game.batch,"Time Left",BodyConquest.V_WIDTH - 110.0f,550.0f);
-      game.timerFont.getData().setScale(1.25f,1.25f);
-      game.timerFont.draw(game.batch,Double.toString(Double.valueOf(value.format(time))),BodyConquest.V_WIDTH - 110.0f,510.0f);
-
+      drawTime();
+      drawUsername();
       drawNumbersOnResourceBars();
 
       game.batch.end();
@@ -301,6 +284,26 @@ public class EncounterScreen implements Screen {
         && accumulatorAfterBaseConquered < Assets.INCREASEACCUMULATORTILL) {
       accumulatorAfterBaseConquered++;
     }
+  }
+
+  private void drawUsername() {
+    game.usernameFont.getData().setScale(0.70f,0.70f);
+
+    if(username.length() > 9){
+      game.usernameFont.draw(game.batch,username.toLowerCase().substring(0,9),BodyConquest.V_WIDTH - 105.0f,hud.getUnitBar().getImageHeight() + 24.0f);
+    }
+    else{
+      game.usernameFont.draw(game.batch,username.toLowerCase(),BodyConquest.V_WIDTH - 105.0f,hud.getUnitBar().getImageHeight() + 24.0f);
+    }
+
+  }
+
+  private void drawTime() {
+    time -= Gdx.graphics.getDeltaTime();
+    game.timerFont.getData().setScale(0.75f,0.75f);
+    game.timerFont.draw(game.batch,"Time Left",BodyConquest.V_WIDTH - 110.0f,550.0f);
+    game.timerFont.getData().setScale(1.25f,1.25f);
+    game.timerFont.draw(game.batch,Double.toString(Double.valueOf(value.format(time))),BodyConquest.V_WIDTH - 110.0f,510.0f);
   }
 
   private void updateResourceBars(){
