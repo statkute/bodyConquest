@@ -74,7 +74,11 @@ public class EncounterScreen implements Screen {
   //private Timer timer;
   private DecimalFormat value;
 
+
+  // To get back to menu screen change this to another encounter screen
   private MenuScreen menuScreen;
+
+  private Disease playerDisease;
 
   private boolean destroyed = false;
 
@@ -263,10 +267,10 @@ public class EncounterScreen implements Screen {
 
       game.usernameFont.getData().setScale(0.70f,0.70f);
       if(username.length() > 9){
-        game.usernameFont.draw(game.batch,username.toLowerCase().substring(0,9),BodyConquest.V_WIDTH - 110.0f,200.0f);
+        game.usernameFont.draw(game.batch,username.toLowerCase().substring(0,9),BodyConquest.V_WIDTH - 105.0f,hud.getUnitBar().getImageHeight() + 24.0f);
       }
       else{
-        game.usernameFont.draw(game.batch,username.toLowerCase(),BodyConquest.V_WIDTH - 110.0f,200.0f);
+        game.usernameFont.draw(game.batch,username.toLowerCase(),BodyConquest.V_WIDTH - 105.0f,hud.getUnitBar().getImageHeight() + 24.0f);
       }
 
       game.timerFont.getData().setScale(0.75f,0.75f);

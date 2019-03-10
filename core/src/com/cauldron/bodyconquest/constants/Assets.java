@@ -59,6 +59,9 @@ public class Assets {
     public static String raceYellowDescription = "core/assets/yellowvirus_characteristics.png";
     public static String raceContinueText = "core/assets/continue_new.png";
     public static String raceBackButton = "core/assets/back_new.png";
+    public static String raceBlueVirusNoBorder = "core/assets/bluevirus_noborder.png";
+    public static String raceGreenVirusNoBorder = "core/assets/greenvirus_noborder.png";
+    public static String raceYellowVirusNoBorder = "core/assets/yellowvirus_noborder.png";
 
 
     /* Starting Screen Assets */

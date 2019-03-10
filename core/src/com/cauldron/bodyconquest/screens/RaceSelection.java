@@ -51,6 +51,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
 
   private Assets.PlayerType playerType;
   private GameType gameType;
+  private Disease playerDisease;
 
   private String username;
 
@@ -230,7 +231,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         cleanSelections();
       }
       if (selection != 1) {
-        Disease playerDisease = Disease.INFLUENZA;
+        this.playerDisease = Disease.INFLUENZA;
         game.getClient().getCommunicator().setPlayerDisease(playerDisease);
         String message = MessageMaker.diseaseMessage(playerDisease, playerType);
         game.getClient().clientSender.sendMessage(message);
@@ -247,7 +248,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         cleanSelections();
       }
       if (selection != 2) {
-        Disease playerDisease = Disease.MEASLES;
+        this.playerDisease = Disease.MEASLES;
         game.getClient().getCommunicator().setPlayerDisease(playerDisease);
         String message = MessageMaker.diseaseMessage(playerDisease, playerType);
         game.getClient().clientSender.sendMessage(message);
@@ -265,7 +266,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         cleanSelections();
       }
       if (selection != 3) {
-        Disease playerDisease = Disease.ROTAVIRUS;
+        this.playerDisease = Disease.ROTAVIRUS;
         game.getClient().getCommunicator().setPlayerDisease(playerDisease);
         String message = MessageMaker.diseaseMessage(playerDisease, playerType);
         game.getClient().clientSender.sendMessage(message);

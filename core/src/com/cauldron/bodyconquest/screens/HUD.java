@@ -2,6 +2,7 @@ package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -42,6 +43,9 @@ import com.cauldron.bodyconquest.resourcebars.ResourceBar;
 
 public class HUD {
 
+  private Texture blueVirus;
+  private Texture greenVirus;
+  private Texture yellowVirus;
   private final EncounterScreen screen;
   private final PlayerType playerType;
   private Skin skin;
@@ -54,6 +58,8 @@ public class HUD {
   private ResourceBar proteinResourceBar;
   private ResourceBar lipidsResourceBar;
   private ResourceBar carbsResourceBar;
+  private Image imageDisease;
+  private AssetManager manager;
 
   private UnitBar newUnitBar;
 
@@ -64,6 +70,7 @@ public class HUD {
     this.screen = screen;
     this.playerType = playerType;
     this.disease = disease;
+    manager = new AssetManager();
 
     viewport =
         new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
@@ -72,6 +79,8 @@ public class HUD {
 
     healthBarBottom = setUpHealthBar(healthBarBottom, PlayerType.PLAYER_BOTTOM);
     healthBarTop = setUpHealthBar(healthBarTop, PlayerType.PLAYER_TOP);
+    loadAssets();
+    getAssets();
 
     // Load bar, skins and dragAndDrop mechanics
     setupUnitBar();
@@ -80,6 +89,7 @@ public class HUD {
     setupNewUnitBar();
 
     setUpDragAndDrop();
+    setUpDisease(disease);
   }
 
   private void loadSkins() {
@@ -299,6 +309,38 @@ public class HUD {
 
   public void setCarbsResourceBar(ResourceBar carbsResourceBar) {
     this.carbsResourceBar = carbsResourceBar;
+  }
+
+  public void setUpDisease(Disease disease){
+
+    switch (disease){
+      case INFLUENZA:
+        imageDisease = new Image(blueVirus);
+        break;
+      case MEASLES:
+        imageDisease = new Image(greenVirus);
+        break;
+      case ROTAVIRUS:
+        imageDisease = new Image(yellowVirus);
+        break;
+    }
+    imageDisease.setSize(100,100);
+    imageDisease.setPosition(BodyConquest.V_WIDTH -120,70);
+    stage.addActor(imageDisease);
+
+  }
+
+  public void loadAssets(){
+    manager.load(Assets.raceBlueVirusNoBorder, Texture.class);
+    manager.load(Assets.raceGreenVirusNoBorder, Texture.class);
+    manager.load(Assets.raceYellowVirusNoBorder, Texture.class);
+    manager.finishLoading();
+  }
+
+  public void getAssets(){
+    blueVirus = manager.get(Assets.raceBlueVirusNoBorder, Texture.class);
+    greenVirus = manager.get(Assets.raceGreenVirusNoBorder, Texture.class);
+    yellowVirus = manager.get(Assets.raceYellowVirusNoBorder, Texture.class);
   }
 
 
