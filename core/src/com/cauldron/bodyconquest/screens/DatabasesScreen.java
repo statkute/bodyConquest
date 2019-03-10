@@ -36,6 +36,8 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         txfUsername = new TextField("",skin);
         txfPassword = new TextField("",skin);
+        txfPassword.setPasswordMode(true);
+        txfPassword.setPasswordCharacter('*');
         textUsername = "";
         textPassword = "";
         stage = new Stage(viewport);
