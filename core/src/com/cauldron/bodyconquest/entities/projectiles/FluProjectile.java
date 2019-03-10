@@ -1,6 +1,5 @@
 package com.cauldron.bodyconquest.entities.projectiles;
 
-import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.ProjectileType;
 
 public class FluProjectile extends Projectile {
@@ -17,7 +16,7 @@ public class FluProjectile extends Projectile {
     setPosition(x - (getWidth() / 2), y - (getHeight() / 2));
     this.xDest = xDest;
     this.yDest = yDest;
-    setCSize(60, 60);
+    setCSize(45, 15);
     init();
   }
 

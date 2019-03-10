@@ -78,7 +78,7 @@ public abstract class ResourceBar extends Actor {
         //stateTime += elapsedTime;
         //currentFrame = getInside();
         currentFrame = walkAnimation.getKeyFrame(elapsedTime, true);
-        this.setY(getInsideY());
+        this.setY(getInsideY()+50);
         batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 
         currentFrame = getOutline();

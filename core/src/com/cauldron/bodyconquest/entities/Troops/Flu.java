@@ -8,9 +8,9 @@ import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 public class Flu extends Troop {
 
-  public static final int SUGARS_COST = 30;
-  public static final int PROTEINS_COST = 10;
-  public static final int LIPIDS_COST = 10;
+  public static final int SUGARS_COST = 80;
+  public static final int PROTEINS_COST = 30;
+  public static final int LIPIDS_COST = 20;
 
   private EncounterState map;
 

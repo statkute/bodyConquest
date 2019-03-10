@@ -6,23 +6,26 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.FlushablePool;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.cauldron.bodyconquest.constants.AbilityType;
-import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.*;
 import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
-import com.cauldron.bodyconquest.constants.GameType;
-import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
+import com.cauldron.bodyconquest.handlers.AnimationWrapper;
 import com.cauldron.bodyconquest.networking.Client;
 import com.cauldron.bodyconquest.networking.ClientSender;
 import com.cauldron.bodyconquest.networking.Server;
@@ -30,6 +33,7 @@ import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.cauldron.bodyconquest.constants.Assets.UnitType.*;
@@ -84,6 +88,8 @@ public class EncounterScreen implements Screen {
 
   float elapsedSeconds;
 
+  private ConcurrentHashMap<MapObjectType, TexturePool> poolHashMap;
+
   public EncounterScreen(BodyConquest game, GameType gameType) {
     this.gameType = gameType;
     this.game = game;
@@ -130,9 +136,32 @@ public class EncounterScreen implements Screen {
 
     healthTopBaseBefore = 100;
     healthBottomBaseBefore =100;
+
+    poolHashMap = new ConcurrentHashMap<MapObjectType, TexturePool>();
+
   }
 
-  private void testInit() {}
+  private class TexturePool extends Pool<Animation<TextureRegion>> {
+
+    private int frameCols, frameRows;
+    private float frameRate;
+    private String pathTexture;
+
+    public TexturePool(String pathTexture, int frameCols, int frameRows, float frameRate){
+      super();
+
+      this.frameCols = frameCols;
+      this.frameRows = frameRows;
+      this.frameRate = frameRate;
+
+      this.pathTexture = pathTexture;
+    }
+
+    @Override
+    protected Animation<TextureRegion> newObject() {
+      return AnimationWrapper.getSpriteSheet(frameCols, frameRows, frameRate, pathTexture);
+    }
+  }
 
   @Override
   public void show() {
@@ -176,47 +205,17 @@ public class EncounterScreen implements Screen {
       for (BasicObject o : objects) {
 
         Enum i = o.getMapObjectType();
-        if (FLU.equals(i)) {
+
+        if(!poolHashMap.containsKey(i)) poolHashMap.put(o.getMapObjectType(), poolSetup(i));
+
           viewObjects.add(
                   new ViewObject(
                           o,
-                          Assets.pathFlu,
-                          Assets.frameColsFlu,
-                          Assets.frameRowsFlu,
-                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
-        } else if (VIRUS.equals(i)) {
-          viewObjects.add(
-                  new ViewObject(
-                          o,
-                          Assets.pathVirus,
-                          Assets.frameColsVirus,
-                          Assets.frameRowsVirus,
-                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
-        } else if (BACTERIA.equals(i)) {
-          viewObjects.add(
-                  new ViewObject(
-                          o,
-                          Assets.pathBacteria,
-                          Assets.frameColsBacteria,
-                          Assets.frameRowsBacteria,
-                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
-        } else if (INFLUENZA_BASE.equals(i)) {
-          viewObjects.add(new ViewObject(o, Assets.pathBaseImage, 3, 5, elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
-          //        case ROTAVIRUS_BASE:
-          //          ////TO DO add Virus base Texture
-          //          break;
-          //        case MEASLES_BASE:
-          //          ////TO DO add Monster base Texture
-          //          break;
-        } else if (FLU_PROJECTILE.equals(i)) {
-          viewObjects.add(
-                  new ViewObject(
-                          o,
-                          Assets.pathProjectile,
-                          Assets.frameColsProjectile,
-                          Assets.frameRowsProjectile,
-                          elapsedSeconds,game.getClient().getCommunicator().getPlayerType()));
-        }
+                          elapsedSeconds,
+                          game.getClient().getCommunicator().getPlayerType(),
+                          poolHashMap.get(i).obtain()));
+
+
       }
 
       for (ViewObject vo : viewObjects) {
@@ -238,11 +237,20 @@ public class EncounterScreen implements Screen {
       // Draw Actors
       stage.draw();
 
+      // draw a font with numbers
+
+
       shakeCamera();
       // Start, draw and end spriteBatch
       game.batch.begin();
+
+      drawNumbersOnResourceBars();
+
       game.batch.end();
-      for (ViewObject vo : viewObjects) vo.remove();
+      for (ViewObject vo : viewObjects) {
+        poolHashMap.get(vo.getMapObjectType()).free(vo.getWalkAnimation());
+        vo.remove();
+      }
 
 
       if(accumulatorAfterBaseConquered > 5 && !destroyed){
@@ -259,7 +267,6 @@ public class EncounterScreen implements Screen {
         && accumulatorAfterBaseConquered < Assets.INCREASEACCUMULATORTILL) {
       accumulatorAfterBaseConquered++;
     }
-    //System.out.println(healthTopBaseBefore + " " + healthTopBase);
   }
 
   private void updateResourceBars(){
@@ -405,7 +412,7 @@ public class EncounterScreen implements Screen {
     return timeAlive;
   }
 
-  public void shakeCamera(){
+  private void shakeCamera(){
 
     if(playerType == PlayerType.PLAYER_TOP || playerType == PlayerType.AI){
 
@@ -436,6 +443,53 @@ public class EncounterScreen implements Screen {
       stage.getCamera().update();
 
     }
+  }
+
+  private void drawNumbersOnResourceBars(){
+    game.font.draw(game.batch, Integer.toString(comms.getSugarsBottom()), hud.getCarbsResourceBar().getX()+15, hud.getCarbsResourceBar().getY()+30, 10, 1, false);
+    game.font.draw(game.batch, Integer.toString(comms.getLipidsBottom()), hud.getLipidsResourceBar().getX()+15, hud.getLipidsResourceBar().getY()+30, 10, 1, false);
+    game.font.draw(game.batch, Integer.toString(comms.getProteinsBottom()), hud.getProteinResourceBar().getX()+15, hud.getProteinResourceBar().getY()+30, 10, 1, false);
+
+  }
+
+  private TexturePool poolSetup(Enum i) {
+
+    float frameRate = 0.2f;
+
+      //Enum i = o.getMapObjectType();
+      if (FLU.equals(i)) {
+        return new TexturePool(
+                        Assets.pathFlu,
+                        Assets.frameColsFlu,
+                        Assets.frameRowsFlu,
+                        frameRate);
+      } else if (VIRUS.equals(i)) {
+        return new TexturePool(
+                        Assets.pathVirus,
+                        Assets.frameColsVirus,
+                        Assets.frameRowsVirus,
+                        frameRate);
+      } else if (BACTERIA.equals(i)) {
+        return new TexturePool(
+                        Assets.pathBacteria,
+                        Assets.frameColsBacteria,
+                        Assets.frameRowsBacteria,
+                        frameRate);
+      } else if (INFLUENZA_BASE.equals(i)) {
+        return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
+      //        case ROTAVIRUS_BASE:
+      //          ////TO DO add Virus base Texture
+      //          break;
+      //        case MEASLES_BASE:
+      //          ////TO DO add Monster base Texture
+      //          break;
+    } else if (FLU_PROJECTILE.equals(i)) {
+      return new TexturePool(
+              Assets.pathProjectile,
+              Assets.frameColsProjectile,
+              Assets.frameRowsProjectile,
+              frameRate);
+    }return null;
   }
 
 
