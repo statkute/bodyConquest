@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -325,12 +326,19 @@ public class EncounterScreen implements Screen {
     Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
     gameCamera.unproject(tmp);
 
-    Rectangle r = new Rectangle(stage.getRoot().findActor("bucket").getX(),stage.getRoot().findActor("bucket").getY(),stage.getRoot().findActor("bucket").getWidth(),stage.getRoot().findActor("bucket").getHeight());
-    if(r.contains(tmp.x, tmp.y)){
-      hud.makeBucketVisible();
-      game.font.draw(game.batch,"whateverrrr",300,300);
-    } else {
-      hud.setBucketInvisible();
+    Actor b0 = stage.getRoot().findActor("bucket0");
+    Actor b1 = stage.getRoot().findActor("bucket1");
+    Actor b2 = stage.getRoot().findActor("bucket2");
+    Rectangle r0 = new Rectangle(b0.getX(),b0.getY(),b0.getWidth(),b0.getHeight());
+    Rectangle r1 = new Rectangle(b1.getX(),b1.getY(),b1.getWidth(),b1.getHeight());
+    Rectangle r2 = new Rectangle(b2.getX(),b2.getY(),b2.getWidth(),b2.getHeight());
+    if(r0.contains(tmp.x, tmp.y)){
+      //hud.makeBucketVisible();
+      game.font.draw(game.batch,"whateverrrr0000",300,300);
+    } else if(r1.contains(tmp.x, tmp.y)){
+      game.font.draw(game.batch,"whateverrrr1111",300,300);
+    } else if(r2.contains(tmp.x, tmp.y)){
+      game.font.draw(game.batch,"whateverrrr2222",300,300);
     }
 
 

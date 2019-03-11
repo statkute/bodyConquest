@@ -214,6 +214,14 @@ public class HUD {
         });
     stage.addActor(spawnableButton);
 
+    Image mouseover = new Image();
+    mouseover.setBounds(unitBar.getWidth() / 4 + 23 * (index+2),
+            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
+            20,
+            25);
+    mouseover.setName("bucket" + index);
+    stage.addActor(mouseover);
+
     Source s =
         new Source(spawnableButton) {
           public Payload dragStart(InputEvent event, float x, float y, int pointer) {
@@ -345,33 +353,33 @@ public class HUD {
     yellowVirus = manager.get(Assets.raceYellowVirusNoBorder, Texture.class);
   }
 
-  private Image bucket;
+  //private Image bucket;
   private Image bucketDown;
 
   private void setupBucket(){
-    bucket = new Image(new Texture(Assets.pathBacteria));
-    bucket.setPosition(unitBar.getWidth() / 6 + 25 * 0,
-            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2) + 50);
-    bucketDown = new Image(new Texture(Assets.pathFlu));
-    bucketDown.setColor(1,1,1,0);
-    bucketDown.setBounds(
-            unitBar.getWidth() / 4 + 25 * 2,
-            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
-            25,
-            25);
-    bucketDown.setName("bucket");
-    stage.addActor(bucket);
-    stage.addActor(bucketDown);
+//    bucket = new Image(new Texture(Assets.pathBacteria));
+//    bucket.setPosition(unitBar.getWidth() / 6 + 25 * 0,
+//            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2) + 50);
+//    bucketDown = new Image(new Texture(Assets.pathFlu));
+//    bucketDown.setColor(1,1,1,0);
+//    bucketDown.setBounds(
+//            unitBar.getWidth() / 4 + 25 * 2,
+//            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
+//            25,
+//            25);
+//    bucketDown.setName("bucket");
+//    //stage.addActor(bucket);
+//    stage.addActor(bucketDown);
 
 
   }
 
-  public void setBucketInvisible(){
-    bucket.setColor(1,1,1,0);
-  }
-
-  public void makeBucketVisible(){
-    bucket.setColor(1,1,1,1);
-  }
+//  public void setBucketInvisible(){
+//    bucket.setColor(1,1,1,0);
+//  }
+//
+//  public void makeBucketVisible(){
+//    bucket.setColor(1,1,1,1);
+//  }
 
 }
