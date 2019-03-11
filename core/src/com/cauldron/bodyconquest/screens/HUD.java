@@ -171,7 +171,7 @@ public class HUD {
           }
 
           public void drop(Source source, Payload payload, float x, float y, int pointer) {
-            System.out.println("SPAWN HERE");
+            //System.out.println("SPAWN HERE");
             if (payload.getObject().getClass().equals(UnitType.class)) {
               screen.spawnUnit((UnitType) payload.getObject(), lane, playerType);
             } else {

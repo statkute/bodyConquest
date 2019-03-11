@@ -3,6 +3,7 @@ package com.cauldron.bodyconquest.game_logic;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
+import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.gamestates.GameStateManager;
 import com.cauldron.bodyconquest.networking.Server;
@@ -97,10 +98,10 @@ public class Game extends Thread {
     return playerTop;
   }
 
-  public void startEncounterState() {
+  public void startEncounterState(Organ organ) {
     // Right now the Single player AI disease is set to INFLUENZA
     if (gameType == GameType.SINGLE_PLAYER) setPlayerTop(Disease.INFLUENZA);
-    EncounterState encounterState = new EncounterState(this);
+    EncounterState encounterState = new EncounterState(this, organ);
     gsm.setCurrentGameState(encounterState);
   }
 
@@ -119,5 +120,7 @@ public class Game extends Thread {
   public void closeEverything() {
     server.closeEverything();
   }
+
+  public void startBodyState() { server.startBodyLogic(); }
 
 }

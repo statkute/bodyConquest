@@ -60,6 +60,47 @@ public class Assets {
     public static String raceContinueText = "core/assets/continue_new.png";
     public static String raceBackButton = "core/assets/back_new.png";
 
+
+  /* Credit Screen Assets */
+  public static String bodyHeader = "core/assets/selectorganheader.png";
+  public static String heart = "core/assets/heart.png";
+  public static String heart_blue = "core/assets/heart_blue.png";
+  public static String heart_green = "core/assets/heart_green.png";
+  public static String heart_yellow = "core/assets/heart_yellow.png";
+  public static String heart_selected = "core/assets/heart_selected.png";
+  public static String heartpoints = "core/assets/heartpoints.png";
+  public static String eye = "core/assets/eye.png";
+  public static String eye_blue = "core/assets/eye_blue.png";
+  public static String eye_green = "core/assets/eye_green.png";
+  public static String eye_yellow = "core/assets/eye_yellow.png";
+  public static String eye_selected = "core/assets/eye_selected.png";
+  public static String eyepoints = "core/assets/eyepoints.png";
+  public static String lungs = "core/assets/lungs.png";
+  public static String lungs_blue = "core/assets/lungs_blue.png";
+  public static String lungs_green = "core/assets/lungs_green.png";
+  public static String lungs_yellow = "core/assets/lungs_yellow.png";
+  public static String lungs_selected = "core/assets/lungs_selected.png";
+  public static String lungspoints = "core/assets/lungspoints.png";
+  public static String brain = "core/assets/brain.png";
+  public static String brain_blue = "core/assets/brain_blue.png";
+  public static String brain_green = "core/assets/brain_green.png";
+  public static String brain_yellow = "core/assets/brain_yellow.png";
+  public static String brain_selected = "core/assets/brain_selected.png";
+  public static String brainpoints = "core/assets/brainpoints.png";
+  public static String teeth = "core/assets/teeth.png";
+  public static String teeth_blue = "core/assets/teeth_blue.png";
+  public static String teeth_green = "core/assets/teeth_green.png";
+  public static String teeth_yellow = "core/assets/teeth_yellow.png";
+  public static String teeth_selected = "core/assets/teeth_selected.png";
+  public static String teethpoints = "core/assets/teethpoints.png";
+  public static String intestines = "core/assets/intestines.png";
+  public static String intestines_blue = "core/assets/intestines_blue.png";
+  public static String intestines_green = "core/assets/intestines_green.png";
+  public static String intestines_yellow = "core/assets/intestines_yellow.png";
+  public static String intestines_selected = "core/assets/intestines_selected.png";
+  public static String intestinespoints = "core/assets/intestinespoints.png";
+  public static String continueTextBig = "core/assets/continue_new_big.png";
+
   public static final int MINHEALTH = 0;
 
 
@@ -261,7 +302,8 @@ public class Assets {
   // Resources
   public enum ResourceType {PROTEIN, LIPID, CARBS}
 
-
+  // Resources
+  public enum OrganType {HEART, EYE, LUNGS, BRAIN, TEETH, INTESTINES};
 }
 
 
