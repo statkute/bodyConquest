@@ -2,6 +2,7 @@ package com.cauldron.bodyconquest.networking;
 
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Disease;
+import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
@@ -42,12 +43,29 @@ public class ClientLogic extends Thread {
           continue;
         }
 
-        if (currentLogic == Logic.ENCOUNTER_LOGIC) encounterLogic(message);
         if (currentLogic == Logic.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
+        if (currentLogic == Logic.ENCOUNTER_LOGIC)      encounterLogic(message);
+        if (currentLogic == Logic.BODY_LOGIC)           bodyLogic(message);
 
       } catch (IOException | InterruptedException e) {
         e.printStackTrace();
       }
+    }
+  }
+
+  private void bodyLogic(String message) {
+    int pointer;
+
+    if (message.startsWith(MessageMaker.START_ENCOUNTER_HEADER)) {
+      Organ organ;
+
+      pointer = MessageMaker.START_ENCOUNTER_HEADER.length();
+
+      String encodedOrgan = message.substring(pointer, pointer + Organ.getEncodedLength());
+      organ = Organ.decode(encodedOrgan);
+
+      communicator.setCurrentOrgan(organ);
+      communicator.setStartEncounter(true);
     }
   }
 
@@ -67,7 +85,7 @@ public class ClientLogic extends Thread {
           message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
       player = Assets.PlayerType.decode(encodedPlayerType);
 
-      if (communicator.getPlayerType() != player) communicator.setEnemyDisease(disease);
+      if (communicator.getPlayerType() != player) communicator.setOpponentDisease(disease);
     } else if (message.startsWith(MessageMaker.FIRST_PICKER_HEADER)) {
       Assets.PlayerType firstPicker;
 
@@ -89,6 +107,8 @@ public class ClientLogic extends Thread {
       player = Assets.PlayerType.decode(encodedPlayerType);
 
       if (player == communicator.getPlayerType()) communicator.setPicker(true);
+    } else if (message.equals(MessageMaker.START_BODY)) {
+      communicator.setStartBodyScreen(true);
     }
   }
 
@@ -163,6 +183,8 @@ public class ClientLogic extends Thread {
   public void setRaceSelectionLogic() {
     currentLogic = Logic.RACE_SELECTION_LOGIC;
   }
+
+  public void setBodyLogic() { currentLogic = Logic.BODY_LOGIC; }
 
   public void setEncounterLogic() {
     currentLogic = Logic.ENCOUNTER_LOGIC;

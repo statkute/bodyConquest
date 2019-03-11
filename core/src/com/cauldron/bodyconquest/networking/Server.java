@@ -74,4 +74,7 @@ public class Server {
   public void startRaceSelectionLogic(Game game) {
     serverLogic.setRaceSelectionLogic(game);
   }
+
+  public void startBodyLogic() { serverLogic.setBodyLogic(); }
+
 }
