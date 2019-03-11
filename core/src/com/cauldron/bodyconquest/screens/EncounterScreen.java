@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -23,6 +26,9 @@ import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
+import com.cauldron.bodyconquest.entities.Troops.Bacteria;
+import com.cauldron.bodyconquest.entities.Troops.Flu;
+import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
@@ -105,7 +111,7 @@ public class EncounterScreen implements Screen {
 
   private ConcurrentHashMap<MapObjectType, TexturePool> poolHashMap;
 
-  public EncounterScreen(BodyConquest game, GameType gameType,String username) {
+  public EncounterScreen(BodyConquest game, GameType gameType) {
     this.gameType = gameType;
     this.game = game;
     client = game.getClient();
@@ -113,14 +119,15 @@ public class EncounterScreen implements Screen {
     clientSender = client.clientSender;
     comms = client.getCommunicator();
 
+    comms.setStartEncounter(false);
+
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    this.username = username;
+    this.username = game.getUsername();
 
-
-    if(gameType != GameType.MULTIPLAYER_JOIN) {
+    if (gameType != GameType.MULTIPLAYER_JOIN) {
       server = game.getServer();
       playerType = PlayerType.PLAYER_BOTTOM;
     } else {
@@ -134,7 +141,7 @@ public class EncounterScreen implements Screen {
     long tDelta = tEnd - MenuScreen.timeOfServer;
     elapsedSeconds = tDelta / 1000.0f;
 
-    map = new Map(Organ.LUNGS, elapsedSeconds);
+    map = new Map(comms.getCurrentOrgan(), elapsedSeconds);
     float topOfUnitBar = 27;
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
@@ -269,6 +276,9 @@ public class EncounterScreen implements Screen {
       drawUsername();
       drawNumbersOnResourceBars();
 
+
+      updateUnitButtons();
+
       game.batch.end();
       for (ViewObject vo : viewObjects) {
         poolHashMap.get(vo.getMapObjectType()).free(vo.getWalkAnimation());
@@ -279,9 +289,8 @@ public class EncounterScreen implements Screen {
       if((accumulatorAfterBaseConquered > 5 && !destroyed) || time == 0.0f){
         boolean destroyed = true;
         determineWinner();
-        switchScreen(game,menuScreen);
+        switchScreen(game, menuScreen);
       }
-
     }
 
 
@@ -323,6 +332,29 @@ public class EncounterScreen implements Screen {
     hud.updateResourceBars(l, p, c, elapsedSeconds);
   }
 
+  private void updateUnitButtons(){
+    Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+    gameCamera.unproject(tmp);
+
+    Actor b0 = stage.getRoot().findActor("bucket0");
+    Actor b1 = stage.getRoot().findActor("bucket1");
+    Actor b2 = stage.getRoot().findActor("bucket2");
+    Rectangle r0 = new Rectangle(b0.getX(),b0.getY(),b0.getWidth(),b0.getHeight());
+    Rectangle r1 = new Rectangle(b1.getX(),b1.getY(),b1.getWidth(),b1.getHeight());
+    Rectangle r2 = new Rectangle(b2.getX(),b2.getY(),b2.getWidth(),b2.getHeight());
+    if(r0.contains(tmp.x, tmp.y)){
+      //hud.makeBucketVisible();
+      game.font.draw(game.batch,"P:" + Flu.PROTEINS_COST + " | C: " + Flu.SUGARS_COST + " | L: " + Flu.LIPIDS_COST,300,300);
+    } else if(r1.contains(tmp.x, tmp.y)){
+      game.font.draw(game.batch,"P:" + Bacteria.PROTEINS_COST + " | C: " + Bacteria.SUGARS_COST + " | L: " + Bacteria.LIPIDS_COST,300,300);
+    } else if(r2.contains(tmp.x, tmp.y)){
+      game.font.draw(game.batch,"P:" + Virus.PROTEINS_COST + " | C: " + Virus.SUGARS_COST + " | L: " + Virus.LIPIDS_COST,300,300);
+    }
+
+
+
+  }
+
 
   @Override
   public void resize(int width, int height) {
@@ -357,6 +389,7 @@ public class EncounterScreen implements Screen {
     String message = MessageMaker.castAbilityMessage(abilityType, xAxis, yAxis, playerType);
     clientSender.sendMessage(message);
   }
+
   public int getHealthBottomBase() {
     return healthBottomBase;
   }
@@ -365,14 +398,13 @@ public class EncounterScreen implements Screen {
     return healthTopBase;
   }
 
-  public void switchScreen(final BodyConquest game,final Screen newScreen){
-    //System.out.println("Why it does not change the screen");
+  public void switchScreen(final BodyConquest game, final Screen newScreen) {
+    // System.out.println("Why it does not change the screen");
     stage.getRoot().getColor().a = 1;
     SequenceAction sequenceAction = new SequenceAction();
     sequenceAction.addAction(Actions.fadeOut(1.0f));
     sequenceAction.addAction(
         Actions.run(
-
             new Runnable() {
               @Override
               public void run() {
@@ -381,17 +413,15 @@ public class EncounterScreen implements Screen {
               }
             }));
     stage.getRoot().addAction(sequenceAction);
+    //dispose();
   }
 
-  public void DrawShadowed(String str, float x, float y, float width, int align, Color color)
-  {
-    game.font.getData().setScale(4,4);
+  public void DrawShadowed(String str, float x, float y, float width, int align, Color color) {
+    game.font.getData().setScale(4, 4);
     game.font.setColor(Color.BLACK);
 
-    for (int i = -1; i < 2; i++)
-    {
-      for (int j = -1; j < 2; j++)
-      {
+    for (int i = -1; i < 2; i++) {
+      for (int j = -1; j < 2; j++) {
         game.font.draw(game.batch, str, x + i, y + j, width, align, false);
       }
     }
@@ -405,13 +435,13 @@ public class EncounterScreen implements Screen {
   {
     DrawShadowed(result,
             0,
-            BodyConquest.V_HEIGHT / 2.0f,
+            BodyConquest.V_HEIGHT / 2 + 30,
             stage.getWidth(),
             Align.center,
             Color.RED);
   }
 
-  private void determineWinner(){
+  private void determineWinner() {
     game.batch.begin();
 
 
@@ -419,13 +449,13 @@ public class EncounterScreen implements Screen {
       if ((healthBottomBase <= 0)||(time == 0.0f && healthBottomBase < healthTopBase)){
         ShowGameResult("DEFEAT!");
         client.closeEverything();
-        if (server != null){
+        if (server != null) {
           server.closeEverything();
         }
       } else if ((healthTopBase <= 0) || (time == 0.0f && healthBottomBase > healthTopBase)){
         ShowGameResult("VICTORY!");
         client.closeEverything();
-        if (server != null){
+        if (server != null) {
           server.closeEverything();
         }
       }
@@ -441,13 +471,13 @@ public class EncounterScreen implements Screen {
       if (healthTopBase <= 0 || (time == 0.0f && healthBottomBase > healthTopBase)){
         ShowGameResult("DEFEAT!");
         client.closeEverything();
-        if (server != null){
+        if (server != null) {
           server.closeEverything();
         }
       } else if (healthBottomBase <= 0 || (time == 0.0f && healthBottomBase < healthTopBase)){
         ShowGameResult("VICTORY!");
         client.closeEverything();
-        if (server != null){
+        if (server != null) {
           server.closeEverything();
         }
       }

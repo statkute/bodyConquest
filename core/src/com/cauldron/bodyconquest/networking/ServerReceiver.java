@@ -49,11 +49,7 @@ public class ServerReceiver extends Thread {
 //          System.out.println(
 //              "Server received -> " + receivedMessage + "------- from: " + packet.getAddress());
           receivedMessages.put(receivedMessage.trim());
-        } catch (SocketException e) {
-          e.printStackTrace();
-        } catch (IOException e) {
-          e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
           e.printStackTrace();
         }
       }

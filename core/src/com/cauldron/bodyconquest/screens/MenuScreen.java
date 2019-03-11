@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.networking.Client;
@@ -12,6 +13,7 @@ import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MenuScreen extends AbstractGameScreen implements Screen {
 
@@ -47,6 +49,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
 
     super.render(delta);
     game.batch.begin();
+
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
     game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450);
     game.batch.draw(
@@ -172,6 +175,5 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
                     60,
                     exitButton.getWidth(),
                     exitButton.getHeight());
-
   }
 }

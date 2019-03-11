@@ -2,8 +2,10 @@ package com.cauldron.bodyconquest.game_logic;
 
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Disease;
+import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.entities.BasicObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Communicator {
@@ -26,11 +28,24 @@ public class Communicator {
   private Assets.PlayerType playerType;
 
   private Disease playerDisease;
-  private Disease enemyDisease;
+  private Disease opponentDisease;
+
+  private ArrayList<Organ> playerOrgans;
+  private ArrayList<Organ> opponentOrgans;
+
+  private Organ currentOrgan;
+
+  private boolean startBodyScreen;
+  private boolean startEncounter;
 
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();
     playerDisease = null;
+    opponentDisease = null;
+    playerOrgans = new ArrayList<Organ>();
+    opponentOrgans = new ArrayList<Organ>();
+    startBodyScreen = false;
+    startEncounter = false;
   }
 
   public CopyOnWriteArrayList<BasicObject> getAllObjects() {
@@ -121,12 +136,12 @@ public class Communicator {
     this.playerType = playerType;
   }
 
-  public Disease getEnemyDisease() {
-    return enemyDisease;
+  public Disease getOpponentDisease() {
+    return opponentDisease;
   }
 
-  public void setEnemyDisease(Disease enemyDisease) {
-    this.enemyDisease = enemyDisease;
+  public void setOpponentDisease(Disease opponentDisease) {
+    this.opponentDisease = opponentDisease;
   }
 
   public boolean isPicker() {
@@ -151,5 +166,45 @@ public class Communicator {
 
   public void setScoreTop(int scoreTop) {
     this.scoreTop = scoreTop;
+  }
+
+  public ArrayList<Organ> getPlayerOrgans() {
+    return playerOrgans;
+  }
+
+  public void setPlayerOrgans(ArrayList<Organ> playerOrgans) {
+    this.playerOrgans = playerOrgans;
+  }
+
+  public ArrayList<Organ> getOpponentOrgans() {
+    return opponentOrgans;
+  }
+
+  public void setOpponentOrgans(ArrayList<Organ> opponentOrgans) {
+    this.opponentOrgans = opponentOrgans;
+  }
+
+  public void setStartBodyScreen(boolean start) {
+    startBodyScreen = start;
+  }
+
+  public boolean getStartBodyScreen() {
+    return startBodyScreen;
+  }
+
+  public boolean getStartEncounter() {
+    return startEncounter;
+  }
+
+  public void setStartEncounter(boolean start) {
+    this.startEncounter = start;
+  }
+
+  public Organ getCurrentOrgan() {
+    return currentOrgan;
+  }
+
+  public void setCurrentOrgan(Organ currentOrgan) {
+    this.currentOrgan = currentOrgan;
   }
 }

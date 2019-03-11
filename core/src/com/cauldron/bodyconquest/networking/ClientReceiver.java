@@ -29,7 +29,6 @@ public class ClientReceiver extends Thread {
     id = new AtomicInteger(0);
     receivedMessages = new LinkedBlockingQueue<String>();
     run = true;
-    System.out.println("End of client rec constructor");
   }
 
   /**
@@ -45,9 +44,9 @@ public class ClientReceiver extends Thread {
       joinGroup(mSocket, group);
       byte[] buf = new byte[256];
       DatagramPacket packet = new DatagramPacket(buf, buf.length);
-      System.out.println("before rec packet");
+      //System.out.println("before rec packet");
       mSocket.receive(packet);
-      System.out.println("after rec packet");
+      //System.out.println("after rec packet");
       address = packet.getAddress();
       mSocket.close();
       return address;
@@ -87,14 +86,11 @@ public class ClientReceiver extends Thread {
   /** Receives and assigns this client an ID from the server and waits for the game to start */
   public void gameSetup() {
     String received = "";
-    System.out.println("hi2");
     while (!received.equals("start game")) {
       try {
         byte[] buf = new byte[256];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
-        //System.out.println("Hi");
         socket.receive(packet);
-        //System.out.println("hi");
         received = new String(packet.getData()).trim();
         System.out.println(received);
         if (id.toString().equals("0") && received.startsWith("ID: ")) {

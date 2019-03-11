@@ -65,6 +65,10 @@ public class Client {
     clientLogic.setEncounterLogic();
   }
 
+  public void setBodyLogic() {
+    clientLogic.setBodyLogic();
+  }
+
   //  public static void main(String argv[]) throws Exception {
   //    ClientReceiver clientReceiver = new ClientReceiver();
   //    ClientSender clientSender = new ClientSender(clientReceiver);
