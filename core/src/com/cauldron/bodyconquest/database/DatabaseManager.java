@@ -61,11 +61,11 @@ public class DatabaseManager {
             System.out.println("Database connection established.");
             //System.out.println(this.dbConn);
 
-            try {
-                Thread.sleep(100000);
-            } catch (InterruptedException e) {
-                System.out.println("Thread couldn't sleep.");
-            }
+//            try {
+//                //Thread.sleep(100000);
+//            } catch (InterruptedException e) {
+//                System.out.println("Thread couldn't sleep.");
+//            }
         } catch (SQLException e) {
             System.out.println("Could not establish connection to database");
             //if (dbConn == null) attemptReconnection();

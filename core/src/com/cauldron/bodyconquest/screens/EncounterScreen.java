@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -263,6 +265,9 @@ public class EncounterScreen implements Screen {
       drawUsername();
       drawNumbersOnResourceBars();
 
+
+      updateUnitButtons();
+
       game.batch.end();
       for (ViewObject vo : viewObjects) {
         poolHashMap.get(vo.getMapObjectType()).free(vo.getWalkAnimation());
@@ -314,6 +319,22 @@ public class EncounterScreen implements Screen {
     int c = comms.getSugarsBottom();
 
     hud.updateResourceBars(l, p, c, elapsedSeconds);
+  }
+
+  private void updateUnitButtons(){
+    Vector3 tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+    gameCamera.unproject(tmp);
+
+    Rectangle r = new Rectangle(stage.getRoot().findActor("bucket").getX(),stage.getRoot().findActor("bucket").getY(),stage.getRoot().findActor("bucket").getWidth(),stage.getRoot().findActor("bucket").getHeight());
+    if(r.contains(tmp.x, tmp.y)){
+      hud.makeBucketVisible();
+      game.font.draw(game.batch,"whateverrrr",300,300);
+    } else {
+      hud.setBucketInvisible();
+    }
+
+
+
   }
 
 
