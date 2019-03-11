@@ -502,6 +502,7 @@ public class EncounterScreen implements Screen {
   }
 
   private void drawNumbersOnResourceBars(){
+    game.font.getData().setScale(1.0f, 1.0f);
     game.font.draw(game.batch, Integer.toString(comms.getSugarsBottom()), hud.getCarbsResourceBar().getX()+15, hud.getCarbsResourceBar().getY()+30, 10, 1, false);
     game.font.draw(game.batch, Integer.toString(comms.getLipidsBottom()), hud.getLipidsResourceBar().getX()+15, hud.getLipidsResourceBar().getY()+30, 10, 1, false);
     game.font.draw(game.batch, Integer.toString(comms.getProteinsBottom()), hud.getProteinResourceBar().getX()+15, hud.getProteinResourceBar().getY()+30, 10, 1, false);
