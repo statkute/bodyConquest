@@ -23,9 +23,9 @@ public class Resources extends Thread {
     this.serverSender = server.getServerSender();
     this.server = server;
     this.player = player;
-    lipids = 0;
-    sugars = 0;
-    proteins = 0;
+    lipids = 100;
+    sugars = 100;
+    proteins = 100;
     regenerationLipids = 7;
     regenerationSugars = 5;
     regenerationProteins = 6;
