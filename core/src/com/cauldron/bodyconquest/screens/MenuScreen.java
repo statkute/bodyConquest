@@ -105,20 +105,8 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         playButtonSound();
         System.out.println("Credits Is touched");
         dispose();
-<<<<<<< HEAD
         game.setScreen(new CreditsScreen(game,username));
 
-=======
-//        game.setScreen(new CreditsScreen(game));
-          // This is just a test setup
-//          ArrayList<Assets.OrganType> myOrgans = new ArrayList<>();
-//          myOrgans.add(Assets.OrganType.HEART);
-//          myOrgans.add(Assets.OrganType.TEETH);
-//          ArrayList<Assets.OrganType> opponentOrgans = new ArrayList<>();
-//          opponentOrgans.add(Assets.OrganType.LUNGS);
-
-          game.setScreen(new CreditsScreen(game));
->>>>>>> abilities
       }
 
       if (exitBounds.contains(tmp.x, tmp.y)) {
