@@ -26,6 +26,9 @@ import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
+import com.cauldron.bodyconquest.entities.Troops.Bacteria;
+import com.cauldron.bodyconquest.entities.Troops.Flu;
+import com.cauldron.bodyconquest.entities.Troops.Virus;
 import com.cauldron.bodyconquest.entities.ViewObject;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.handlers.AnimationWrapper;
@@ -334,11 +337,11 @@ public class EncounterScreen implements Screen {
     Rectangle r2 = new Rectangle(b2.getX(),b2.getY(),b2.getWidth(),b2.getHeight());
     if(r0.contains(tmp.x, tmp.y)){
       //hud.makeBucketVisible();
-      game.font.draw(game.batch,"whateverrrr0000",300,300);
+      game.font.draw(game.batch,"P:" + Flu.PROTEINS_COST + " | C: " + Flu.SUGARS_COST + " | L: " + Flu.LIPIDS_COST,300,300);
     } else if(r1.contains(tmp.x, tmp.y)){
-      game.font.draw(game.batch,"whateverrrr1111",300,300);
+      game.font.draw(game.batch,"P:" + Bacteria.PROTEINS_COST + " | C: " + Bacteria.SUGARS_COST + " | L: " + Bacteria.LIPIDS_COST,300,300);
     } else if(r2.contains(tmp.x, tmp.y)){
-      game.font.draw(game.batch,"whateverrrr2222",300,300);
+      game.font.draw(game.batch,"P:" + Virus.PROTEINS_COST + " | C: " + Virus.SUGARS_COST + " | L: " + Virus.LIPIDS_COST,300,300);
     }
 
 
