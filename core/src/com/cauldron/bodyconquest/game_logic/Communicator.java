@@ -18,6 +18,9 @@ public class Communicator {
   private int sugarsBottom;
   private int proteinsBottom;
 
+  private int scoreBottom;
+  private int scoreTop;
+
   private boolean picker;
 
   private Assets.PlayerType playerType;
@@ -132,5 +135,21 @@ public class Communicator {
 
   public void setPicker(boolean picker) {
     this.picker = picker;
+  }
+
+  public int getScoreBottom() {
+    return scoreBottom;
+  }
+
+  public void setScoreBottom(int scoreBottom) {
+    this.scoreBottom = scoreBottom;
+  }
+
+  public int getScoreTop() {
+    return scoreTop;
+  }
+
+  public void setScoreTop(int scoreTop) {
+    this.scoreTop = scoreTop;
   }
 }

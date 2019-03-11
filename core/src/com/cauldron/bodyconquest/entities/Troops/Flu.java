@@ -17,6 +17,7 @@ public class Flu extends Troop {
   public Flu() {
     super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
     init();
+    killingPoints = 7;
   }
 
   /*

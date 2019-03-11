@@ -210,6 +210,7 @@ public class HUD {
             screen.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType);
           }
         });
+    
     stage.addActor(spawnableButton);
 
     Source s =

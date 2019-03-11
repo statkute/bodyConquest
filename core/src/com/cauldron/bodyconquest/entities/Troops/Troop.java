@@ -50,6 +50,9 @@ public abstract class Troop extends MapObject implements Spawnable {
   /** The protien cost for a player to spawn this Troop. */
   protected int proteinCost;
 
+  /** The points the user gets for killing this unit. */
+  protected int killingPoints;
+
   // States
   /**
    * The state that represents if the unit is currently attacking. (Unused as all attacks are
@@ -94,6 +97,7 @@ public abstract class Troop extends MapObject implements Spawnable {
     moving = true;
     attacking = false;
     collidable = true;
+    killingPoints = 0;
   }
 
   /**
@@ -259,6 +263,10 @@ public abstract class Troop extends MapObject implements Spawnable {
     return health;
   }
 
+  public int getKillingPoints() {
+    return killingPoints;
+  }
+
   /**
    * Get the maximum movement speed of this Troop (Note: Not the current movement speed). (Calls
    * {@link MapObject#getMaxSpeed()})
@@ -321,6 +329,10 @@ public abstract class Troop extends MapObject implements Spawnable {
    */
   public Lane getLane() {
     return lane;
+  }
+
+  public PlayerType getPlayerType(){
+    return playerType;
   }
 
   /**

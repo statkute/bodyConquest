@@ -13,6 +13,7 @@ public class Virus extends Troop {
   public Virus() {
     super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
     init();
+    killingPoints = 10;
   }
 
   /*

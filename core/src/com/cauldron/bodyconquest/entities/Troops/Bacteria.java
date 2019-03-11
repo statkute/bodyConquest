@@ -19,6 +19,7 @@ public class Bacteria extends Troop {
   public Bacteria() {
     super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
     init();
+    killingPoints = 5;
   }
 
   public Bacteria(PlayerType playerType, Lane lane) {

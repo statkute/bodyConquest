@@ -76,6 +76,9 @@ public class EncounterState extends GameState {
   private Player topPlayer;
   private Player bottomPlayer;
 
+  private int totalScoreTop;
+  private int totalScoreBottom;
+
   int counter = 0;
 
   // Move resources in side of player
@@ -146,6 +149,14 @@ public class EncounterState extends GameState {
 
     for (Troop troop : troopsP1) {
       if (troop.isDead()) {
+        if(troop.getPlayerType() == PlayerType.PLAYER_TOP){
+          totalScoreBottom += troop.getKillingPoints();
+          //serverSender.sendMessage();
+        }
+        else if(troop.getPlayerType() == PlayerType.PLAYER_BOTTOM){
+          totalScoreTop += troop.getKillingPoints();
+          //serverSender.sendMessage();
+        }
         deadTroops.add(troop);
         continue;
       }

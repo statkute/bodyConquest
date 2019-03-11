@@ -82,6 +82,9 @@ public class EncounterScreen implements Screen {
 
   private boolean destroyed = false;
 
+  private int scoreTop;
+  private int scoreBottom;
+
 
   private ArrayList<ViewObject> viewObjects;
   private CopyOnWriteArrayList<BasicObject> objects;
@@ -188,6 +191,9 @@ public class EncounterScreen implements Screen {
   public void render(float delta) {
 
     updateResourceBars();
+
+//    scoreBottom = comms.getScoreBottom();
+//    scoreTop = comms.getScoreTop();
 
     healthBottomBase = comms.getBottomHealthPercentage();
     healthTopBase = comms.getTopHealthPercentage();
