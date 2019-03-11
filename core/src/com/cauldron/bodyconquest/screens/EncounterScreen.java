@@ -205,7 +205,7 @@ public class EncounterScreen implements Screen {
     healthBottomBaseBefore = healthBottomBase;
     healthTopBaseBefore = healthTopBase;
 
-
+    timeAlive += delta;
 
     //fps.log();
 
