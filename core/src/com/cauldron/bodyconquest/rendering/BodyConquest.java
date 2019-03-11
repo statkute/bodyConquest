@@ -49,8 +49,8 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   public void create() {
     batch = new SpriteBatch();
     font = new BitmapFont();
-    timerFont = new BitmapFont(Gdx.files.internal(Assets.timerFont));
-    usernameFont = new BitmapFont(Gdx.files.internal(Assets.usernameFont));
+    //timerFont = new BitmapFont(Gdx.files.internal(Assets.timerFont));
+    //usernameFont = new BitmapFont(Gdx.files.internal(Assets.usernameFont));
     audioPlayer.loadSFX("button_click", Assets.buttonSoundPath);
     audioPlayer.loadMusic("music", Assets.music);
     audioPlayer.playMusicLoop("music");

@@ -9,14 +9,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
 public class DatabaseManager {
 
-    private String url;
-    private String user;
-    private String password;
+    private String url = "jdbc:postgresql://achievementsdb.c1dv9wmfmc0j.us-east-2.rds.amazonaws.com:5432/cauldronDB";
+    private String user = "cauldron_admin";
+    private String password = "Cauldr()n";
+    private String driver = "org.postgresql.Driver";
     private Connection dbConn;
     private BufferedReader lineReader;
 
@@ -25,13 +28,15 @@ public class DatabaseManager {
     }
 
     public void connect() {
+
+        /*
         Properties props = new Properties();
         this.url = "";
         this.user = "";
         this.password = "";
         String driver = "";
 
-        try (FileInputStream propsReader = new FileInputStream("Database.Properties");) { // load database properties
+        try (FileInputStream propsReader = new FileInputStream("Database.Properties")) { // load database properties
             props.load(propsReader); // connect to the database
             this.url = props.getProperty("database.url");
             this.user = props.getProperty("username");
@@ -42,6 +47,7 @@ public class DatabaseManager {
         } catch (IOException e2) {
             System.out.println("Error while reading Properties file");
         }
+        */
 
         try {
             Class.forName(driver);
@@ -53,6 +59,7 @@ public class DatabaseManager {
         try {
             this.dbConn = DriverManager.getConnection(url, user, password);
             System.out.println("Database connection established.");
+            //System.out.println(this.dbConn);
 
             try {
                 Thread.sleep(100000);
@@ -61,27 +68,45 @@ public class DatabaseManager {
             }
         } catch (SQLException e) {
             System.out.println("Could not establish connection to database");
-            if (dbConn == null) attemptReconnection();
+            //if (dbConn == null) attemptReconnection();
         }
     }
 
-    public void manage() {
-        //flush DB
-        resetDB();
+    public boolean addUser(String username, String password) {
+        boolean successful = false;
 
-        //create tables and populate them
-        setupDB();
+        //query
+        successful = true;
 
-        //read queries and resolve them
-        //resolveQueries();
+        return successful;
+    }
 
-        System.out.println("Program finished executing");
+    public boolean checkUser(String username, String password) {
+        boolean successful = false;
+
+        //query
+        successful = true;
+
+        return successful;
+    }
+
+    public LinkedList<String> getUserAchievements(String username) {
+        LinkedList<String> resultList = new LinkedList<String>();
+
+        //query
+
+        return resultList;
     }
 
     private void attemptReconnection() {
         if (!url.equals(""))
             try {
                 System.out.println("You have been disconnected from the DB; Attempting to reconnect...");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("Thread couldn't sleep.");
+                }
                 dbConn = DriverManager.getConnection(url, user, password);
                 System.out.println("Database connection established.");
             } catch (SQLException e) {
@@ -103,58 +128,6 @@ public class DatabaseManager {
             System.out.println("Problems while clearing DB");
             attemptReconnection();
         }
-    }
-
-    private void setupDB() {
-        if (createTables()) {
-            System.out.println("Tables created succesfully");
-        } else {
-            System.out.println("Problems while creating tables");
-        }
-    }
-
-    private boolean createTables() {
-        return createUsers() && createAchievements();
-    }
-
-    //to finish query
-    private boolean createUsers() {
-        boolean created = true;
-        try {
-            Statement statement = dbConn.createStatement();
-            String createUsersTable = "CREATE TABLE Users (\n" +
-                    "	uid					INTEGER			," +
-                    "	username			VARCHAR(50)		NOT NULL," +
-                    "	password			NUMERIC(10, 2)	NOT NULL CHECK(venuecost > 0)," +
-                    "	PRIMARY KEY (uid)" +
-                    ");";
-            statement.execute(createUsersTable);
-        } catch (SQLException e) {
-            System.out.println("Users table was not created successfully");
-            created = false;
-            if (dbConn == null) attemptReconnection();
-        }
-        return created;
-    }
-
-    //to finish query
-    private boolean createAchievements() {
-        boolean created = true;
-        try {
-            Statement statement = dbConn.createStatement();
-            String createAchievementsTable = "CREATE TABLE Achievements (\n" +
-                    "	vid					INTEGER			," +
-                    "	name				VARCHAR(50)		NOT NULL," +
-                    "	venuecost			NUMERIC(10, 2)	NOT NULL CHECK(venuecost > 0)," +
-                    "	PRIMARY KEY (vid)" +
-                    ");";
-            statement.execute(createAchievementsTable);
-        } catch (SQLException e) {
-            System.out.println("Achievements table was not created successfully");
-            created = false;
-            if (dbConn == null) attemptReconnection();
-        }
-        return created;
     }
 
 }

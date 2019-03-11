@@ -80,6 +80,7 @@ project(":core") {
         compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
         compile "org.mini2Dx:universal-tween-engine:6.3.3"
         compile group: 'com.cedarsoftware', name: 'json-io', version: '2.2.29'
+        compile 'org.postgresql:postgresql:42.0.1-SNAPSHOT'
 
     }
 }
