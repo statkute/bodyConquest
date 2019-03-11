@@ -7,6 +7,7 @@ import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
 import com.cauldron.bodyconquest.constants.GameType;
+import com.cauldron.bodyconquest.constants.Organ;
 import com.cauldron.bodyconquest.entities.BasicObject;
 import com.cauldron.bodyconquest.entities.Map;
 import com.cauldron.bodyconquest.entities.MapObject;
@@ -82,9 +83,12 @@ public class EncounterState extends GameState {
   private Resources topResources;
   private Resources bottomResources;
 
+  private Organ organ;
+
   /** Constructor. */
-  public EncounterState(Game game) {
+  public EncounterState(Game game, Organ organ) {
     super(game);
+    this.organ = organ;
     Server server = game.getServer();
     serverSender = server.getServerSender();
     // map = new Map();

@@ -2,27 +2,17 @@ package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.game_logic.Game;
-import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 
 import java.io.IOException;
-import java.net.SocketException;
-import java.util.Random;
 
 public class RaceSelection extends AbstractGameScreen implements Screen {
 
@@ -51,9 +41,13 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
 
   private Assets.PlayerType playerType;
   private GameType gameType;
+<<<<<<< HEAD
   private Disease playerDisease;
 
   private String username;
+=======
+  private Communicator communicator;
+>>>>>>> abilities
 
   public RaceSelection(
       BodyConquest game, GameType gameType, String username) throws IOException {
@@ -79,7 +73,9 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       playerType = Assets.PlayerType.PLAYER_TOP;
     }
 
-    game.getClient().getCommunicator().setPlayerType(playerType);
+    communicator = game.getClient().getCommunicator();
+
+    communicator.setPlayerType(playerType);
     game.getClient().setRaceSelectionLogic();
   }
 
@@ -103,6 +99,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     if(selection != 0) game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
     game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
 
+    if(communicator.getStartBodyScreen()) game.setScreen(new BodyScreen(game, gameType));
 
     checkPressed();
     game.batch.end();
@@ -123,8 +120,14 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         playButtonSound();
 
         // Should actually start the encounter state once all players have confirmed their Disease
+<<<<<<< HEAD
         if (gameType != GameType.MULTIPLAYER_JOIN) g.startEncounterState();
         game.setScreen(new EncounterScreen(game, gameType,username));
+=======
+        game.getClient().clientSender.sendMessage(MessageMaker.confirmRaceMessage(playerType));
+        //if (gameType != GameType.MULTIPLAYER_JOIN) g.startBodyState();
+        //game.setScreen(new BodyScreen(game, gameType));
+>>>>>>> abilities
         //dispose();
       }
 

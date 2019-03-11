@@ -5,6 +5,7 @@ import com.cauldron.bodyconquest.constants.Assets.Lane;
 import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
 import com.cauldron.bodyconquest.constants.Disease;
+import com.cauldron.bodyconquest.constants.Organ;
 
 public class MessageMaker {
 
@@ -17,15 +18,17 @@ public class MessageMaker {
   public static final String RACE_HEADER = "RACE_";
   public static final String CHOOSE_RACE_HEADER = "CHOOSE_RACE_";
   public static final String FIRST_PICKER_HEADER = "FIRST_PICKER_";
+  public static final String CONFIRM_RACE_HEADER = "CONFIRM_RACE_";
+  public static final String CONFIRM_ORGAN_HEADER = "CONFIRM_ORGAN_";
+  public static final String START_ENCOUNTER_HEADER = "START_ENCOUNTER_";
 
   public static final int RESOURCE_PADDING = 3;
   public static final int HEALTH_PADDING = 3;
   public static final int COORDINATE_PADDING = 4;
 
-  public static final String CONFIRMED_RACE = "CONFIRMED_RACE";
   public static final String PAUSE_MESSAGE = "PAUSE";
   public static final String EXIT_MESSAGE = "EXIT";
-
+  public static final String START_BODY = "START_BODY";
 
   public static String spawnTroopsMessage(UnitType troopClass, Lane lane, PlayerType playerType) {
     String message = TROOP_SPAWN_HEADER;
@@ -38,7 +41,8 @@ public class MessageMaker {
     return (message);
   }
 
-  public static String castAbilityMessage(AbilityType abilityType, int xAxis, int yAxis, PlayerType playerType) {
+  public static String castAbilityMessage(
+      AbilityType abilityType, int xAxis, int yAxis, PlayerType playerType) {
     String message = ABILITY_CAST_HEADER;
 
     String xPadded = String.format("%0" + COORDINATE_PADDING + "d", xAxis);
@@ -55,7 +59,8 @@ public class MessageMaker {
     return (message);
   }
 
-  public static String castAbilityMessage(AbilityType abilityType, Lane lane, PlayerType playerType) {
+  public static String castAbilityMessage(
+      AbilityType abilityType, Lane lane, PlayerType playerType) {
     String message = LANE_ABILITY_CAST_HEADER;
 
     message += abilityType.getEncoded();
@@ -75,7 +80,7 @@ public class MessageMaker {
     return message;
   }
 
-  public static String resourceUpdate(int lipids, int sugars, int proteins, PlayerType player){
+  public static String resourceUpdate(int lipids, int sugars, int proteins, PlayerType player) {
     String message = RESOURCES_HEADER;
     message += player.getEncoded();
     message += "_";
@@ -111,6 +116,12 @@ public class MessageMaker {
     return message;
   }
 
+  public static String confirmRaceMessage(PlayerType playerType) {
+    String message = CONFIRM_RACE_HEADER;
+    message += playerType.getEncoded();
+    return message;
+  }
+
   public static String pauseMessage() {
     return PAUSE_MESSAGE;
   }
@@ -118,4 +129,17 @@ public class MessageMaker {
   public static String exitMessage() {
     return EXIT_MESSAGE;
   }
+
+  public static String confirmOrganMessage(Organ organ) {
+    String message = CONFIRM_ORGAN_HEADER;
+    message += organ.getEncoded();
+    return message;
+  }
+
+  public static String startEncounterMessage(Organ organ) {
+    String message = START_ENCOUNTER_HEADER;
+    message += organ.getEncoded();
+    return message;
+  }
+
 }

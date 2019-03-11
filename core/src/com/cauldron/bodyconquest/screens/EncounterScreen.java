@@ -82,7 +82,6 @@ public class EncounterScreen implements Screen {
 
   private boolean destroyed = false;
 
-
   private ArrayList<ViewObject> viewObjects;
   private CopyOnWriteArrayList<BasicObject> objects;
 
@@ -110,14 +109,15 @@ public class EncounterScreen implements Screen {
     clientSender = client.clientSender;
     comms = client.getCommunicator();
 
+    comms.setStartEncounter(false);
+
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
     this.username = username;
 
-
-    if(gameType != GameType.MULTIPLAYER_JOIN) {
+    if (gameType != GameType.MULTIPLAYER_JOIN) {
       server = game.getServer();
       playerType = PlayerType.PLAYER_BOTTOM;
     } else {
@@ -131,7 +131,7 @@ public class EncounterScreen implements Screen {
     long tDelta = tEnd - MenuScreen.timeOfServer;
     elapsedSeconds = tDelta / 1000.0f;
 
-    map = new Map(Organ.LUNGS, elapsedSeconds);
+    map = new Map(comms.getCurrentOrgan(), elapsedSeconds);
     float topOfUnitBar = 27;
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
@@ -273,9 +273,8 @@ public class EncounterScreen implements Screen {
       if((accumulatorAfterBaseConquered > 5 && !destroyed) || time == 0.0f){
         boolean destroyed = true;
         determineWinner();
-        switchScreen(game,menuScreen);
+        switchScreen(game, menuScreen);
       }
-
     }
 
 
@@ -351,6 +350,7 @@ public class EncounterScreen implements Screen {
     String message = MessageMaker.castAbilityMessage(abilityType, xAxis, yAxis, playerType);
     clientSender.sendMessage(message);
   }
+
   public int getHealthBottomBase() {
     return healthBottomBase;
   }
@@ -359,14 +359,13 @@ public class EncounterScreen implements Screen {
     return healthTopBase;
   }
 
-  public void switchScreen(final BodyConquest game,final Screen newScreen){
-    //System.out.println("Why it does not change the screen");
+  public void switchScreen(final BodyConquest game, final Screen newScreen) {
+    // System.out.println("Why it does not change the screen");
     stage.getRoot().getColor().a = 1;
     SequenceAction sequenceAction = new SequenceAction();
     sequenceAction.addAction(Actions.fadeOut(1.0f));
     sequenceAction.addAction(
         Actions.run(
-
             new Runnable() {
               @Override
               public void run() {
@@ -375,17 +374,15 @@ public class EncounterScreen implements Screen {
               }
             }));
     stage.getRoot().addAction(sequenceAction);
+    //dispose();
   }
 
-  public void DrawShadowed(String str, float x, float y, float width, int align, Color color)
-  {
-    game.font.getData().setScale(4,4);
+  public void DrawShadowed(String str, float x, float y, float width, int align, Color color) {
+    game.font.getData().setScale(4, 4);
     game.font.setColor(Color.BLACK);
 
-    for (int i = -1; i < 2; i++)
-    {
-      for (int j = -1; j < 2; j++)
-      {
+    for (int i = -1; i < 2; i++) {
+      for (int j = -1; j < 2; j++) {
         game.font.draw(game.batch, str, x + i, y + j, width, align, false);
       }
     }
@@ -399,13 +396,13 @@ public class EncounterScreen implements Screen {
   {
     DrawShadowed(result,
             0,
-            BodyConquest.V_HEIGHT / 2.0f,
+            BodyConquest.V_HEIGHT / 2 + 30,
             stage.getWidth(),
             Align.center,
             Color.RED);
   }
 
-  private void determineWinner(){
+  private void determineWinner() {
     game.batch.begin();
 
 
@@ -413,13 +410,13 @@ public class EncounterScreen implements Screen {
       if ((healthBottomBase <= 0)||(time == 0.0f && healthBottomBase < healthTopBase)){
         ShowGameResult("DEFEAT!");
         client.closeEverything();
-        if (server != null){
+        if (server != null) {
           server.closeEverything();
         }
       } else if ((healthTopBase <= 0) || (time == 0.0f && healthBottomBase > healthTopBase)){
         ShowGameResult("VICTORY!");
         client.closeEverything();
-        if (server != null){
+        if (server != null) {
           server.closeEverything();
         }
       }
@@ -435,13 +432,13 @@ public class EncounterScreen implements Screen {
       if (healthTopBase <= 0 || (time == 0.0f && healthBottomBase > healthTopBase)){
         ShowGameResult("DEFEAT!");
         client.closeEverything();
-        if (server != null){
+        if (server != null) {
           server.closeEverything();
         }
       } else if (healthBottomBase <= 0 || (time == 0.0f && healthBottomBase < healthTopBase)){
         ShowGameResult("VICTORY!");
         client.closeEverything();
-        if (server != null){
+        if (server != null) {
           server.closeEverything();
         }
       }

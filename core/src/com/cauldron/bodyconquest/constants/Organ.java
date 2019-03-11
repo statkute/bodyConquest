@@ -1,15 +1,43 @@
 package com.cauldron.bodyconquest.constants;
 
-public enum Organ {
-  BRAIN(40), HEART(30), LUNGS(30), EYES(20), INTESTINES(20), TEETH(10);
+public enum Organ implements Encodable {
+  BRAIN("BRA", 40),
+  HEART("HRT", 30),
+  LUNGS("LNG", 30),
+  EYES("EYE", 20),
+  INTESTINES("INT", 20),
+  TEETH("TEE", 10);
 
-  private int organScore;
+  private static final int ENCODED_LENGTH = 3;
 
-  private Organ(int organScore) {
+  private final String encodedOrgan;
+  private final int organScore;
+
+  Organ(String encodedOrgan, int organScore) {
+    if (encodedOrgan.length() != ENCODED_LENGTH)
+      System.err.println("[ERROR] Invalid encoded organ length");
+    this.encodedOrgan = encodedOrgan;
     this.organScore = organScore;
+  }
+
+  public static Organ decode(String encodedOrgan) {
+    for(Organ o : values()) {
+      if(o.getEncoded().equals(encodedOrgan)) return o;
+    }
+    System.err.println("[ERROR] Invalid organ code, cannot decode.");
+    return null;
   }
 
   public int getOrganScore() {
     return organScore;
+  }
+
+  @Override
+  public String getEncoded() {
+    return encodedOrgan;
+  }
+
+  public static int getEncodedLength() {
+    return ENCODED_LENGTH;
   }
 }
