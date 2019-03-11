@@ -15,6 +15,7 @@ import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
 import com.cauldron.bodyconquest.constants.Organ;
+import com.cauldron.bodyconquest.game_logic.Communicator;
 import com.cauldron.bodyconquest.game_logic.Game;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
@@ -77,6 +78,8 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   private ArrayList<Image> allImages = new ArrayList<>();
   private Organ selectedOrganType;
   private Image selectedOrganImage;
+
+  private Communicator communicator;
 
 //  public BodyScreen(BodyConquest game, GameType gameType, Disease myDiseaseType, Disease opponentDiseaseType, ArrayList<Organ> myOrgans, ArrayList<Organ> opponentOrgans) {
 //    super(game);

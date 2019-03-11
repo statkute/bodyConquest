@@ -44,6 +44,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
 
   private Game game;
   private Client client;
+  private String username;
 
   @Override
   public void create() {
@@ -92,5 +93,13 @@ public class BodyConquest extends com.badlogic.gdx.Game {
 
   public void setClient(Client client) {
     this.client = client;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public String getUsername() {
+    return username;
   }
 }

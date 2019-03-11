@@ -101,7 +101,7 @@ public class EncounterScreen implements Screen {
 
   private ConcurrentHashMap<MapObjectType, TexturePool> poolHashMap;
 
-  public EncounterScreen(BodyConquest game, GameType gameType,String username) {
+  public EncounterScreen(BodyConquest game, GameType gameType) {
     this.gameType = gameType;
     this.game = game;
     client = game.getClient();
@@ -115,7 +115,7 @@ public class EncounterScreen implements Screen {
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    this.username = username;
+    this.username = game.getUsername();
 
     if (gameType != GameType.MULTIPLAYER_JOIN) {
       server = game.getServer();
