@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.cauldron.bodyconquest.constants.Assets;
+import com.cauldron.bodyconquest.database.DatabaseManager;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 public class RegisteringScreen extends DatabasesScreen implements Screen{
@@ -15,6 +16,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen{
     private TextButton registerBtn;
     private Image registerImage;
 
+    DatabaseManager dbManager;
 
     public RegisteringScreen(BodyConquest game) {
         super(game);
@@ -24,6 +26,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen{
         settingSizes();
         settingPositions();
         adding();
+        this.dbManager = new DatabaseManager();
     }
 
     @Override
