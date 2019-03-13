@@ -28,12 +28,12 @@ public class Map extends Actor {
   public Map(Organ organ, float elapsedseconds) {
     String texturePath = null;
     elapsed = elapsedseconds;
-//    if(organ == Organ.LUNGS){
-//      texturePath = "core/assets/map_lungs_ss.png";
-//      frameCols = 4;
-//      frameRows = 5;
-//      frameRate = 15f;
-//    }
+    if(organ == Organ.LUNGS){
+      texturePath = "core/assets/map_lungs_ss.png";
+      frameCols = 4;
+      frameRows = 5;
+      frameRate = 15f;
+    }
     if(organ == Organ.EYES)  {
       texturePath = "core/assets/map_eyes_ss.png";
       frameCols = 2;
@@ -52,7 +52,7 @@ public class Map extends Actor {
       frameRows = 5;
       frameRate = 47f;
     }
-    if(organ == Organ.LUNGS)  {
+    if(organ == Organ.BRAIN)  {
       texturePath = "core/assets/map_brain_ss.png";
       frameCols = 4;
       frameRows = 5;
