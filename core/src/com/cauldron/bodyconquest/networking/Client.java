@@ -4,7 +4,9 @@ import com.cauldron.bodyconquest.game_logic.Communicator;
 
 import java.io.IOException;
 
-/** The Client thread */
+/**
+ * The Client thread
+ */
 public class Client {
   public ClientReceiver clientReceiver;
   public ClientSender clientSender;
@@ -31,20 +33,18 @@ public class Client {
     clientSender.sendMessage("connected");
   }
 
-  public static void main(String args[]) throws IOException {
-    ClientReceiver clientReceiver = new ClientReceiver();
-    ClientSender clientSender = new ClientSender(clientReceiver);
-
-    clientReceiver.start();
-    clientSender.start();
-
-    clientSender.sendMessage("connected");
-  }
-
+  /**
+   * A method that returns the communicator used by the client
+   *
+   * @return communicator
+   */
   public Communicator getCommunicator() {
     return communicator;
   }
 
+  /**
+   * This method closes all threads started by this client: ClientSender, ClientReceiver and ClientLogic
+   */
   public void closeEverything() {
     if (clientSender != null) {
       clientSender.stopRunning();
@@ -57,40 +57,27 @@ public class Client {
     }
   }
 
+  /**
+   * This method sets the race selection screen logic to the clientLogic thread of this client
+   */
   public void setRaceSelectionLogic() {
     clientLogic.setRaceSelectionLogic();
   }
 
+  /**
+   * This method sets the encounter screen logic to the clientLogic thread of this client
+   */
   public void setEncounterLogic() {
     clientLogic.setEncounterLogic();
   }
 
-  //  public static void main(String argv[]) throws Exception {
-  //    ClientReceiver clientReceiver = new ClientReceiver();
-  //    ClientSender clientSender = new ClientSender(clientReceiver);
-  //
-  //    clientReceiver.start();
-  //    clientSender.start();
-  //
-  //    //    Thread.sleep(5000);
-  //
-  //    clientSender.sendMessage("connected");
-  //    Thread.sleep(500);
-  //    clientSender.sendMessage("This is a message sent just after the game has started");
-  // String sentence;
-  // String modifiedSentence;
-
-  // BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-  // Socket clientSocket = new Socket(packet.getAddress(), 4446);
-  // DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-  // DataInputStream inFromServer = new DataInputStream(clientSocket.getInputStream());
-
-  // sentence = "hello server\n";
-  // outToServer.writeUTF(sentence);
-  // outToServer.flush();
-  // System.out.println("Sent hello to server.");
-  // modifiedSentence = inFromServer.readUTF();
-  // System.out.println("FROM SERVER: " + modifiedSentence);
-  // clientSocket.close();
-  //  }
+  //  public static void main(String args[]) throws IOException {
+//    ClientReceiver clientReceiver = new ClientReceiver();
+//    ClientSender clientSender = new ClientSender(clientReceiver);
+//
+//    clientReceiver.start();
+//    clientSender.start();
+//
+//    clientSender.sendMessage("connected");
+//  }
 }

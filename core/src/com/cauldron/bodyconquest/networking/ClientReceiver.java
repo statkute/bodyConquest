@@ -8,14 +8,16 @@ import java.util.Enumeration;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Client thread responsible for receiving messages from the server */
+/**
+ * Client thread responsible for receiving messages from the server
+ */
 public class ClientReceiver extends Thread {
 
-  public InetAddress address;
-  public DatagramSocket socket;
-  public InetAddress group;
-  public AtomicInteger id;
-  public LinkedBlockingQueue<String> receivedMessages;
+  InetAddress address;
+  DatagramSocket socket;
+  InetAddress group;
+  AtomicInteger id;
+  LinkedBlockingQueue<String> receivedMessages;
   private boolean run;
 
   /**
@@ -67,12 +69,10 @@ public class ClientReceiver extends Thread {
       try {
         byte[] buf = new byte[1000000];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
-        if (run){
+        if (run) {
           socket.receive(packet);
         }
         String received = new String(packet.getData()).trim();
-//        System.out.println(
-//            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
         receivedMessages.put(received.trim());
       } catch (IOException e) {
         e.printStackTrace();
@@ -82,7 +82,9 @@ public class ClientReceiver extends Thread {
     }
   }
 
-  /** Receives and assigns this client an ID from the server and waits for the game to start */
+  /**
+   * Receives and assigns this client an ID received from the server and waits for the game to start
+   */
   public void gameSetup() {
     String received = "";
     System.out.println("hi2");
@@ -90,9 +92,7 @@ public class ClientReceiver extends Thread {
       try {
         byte[] buf = new byte[256];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
-        //System.out.println("Hi");
         socket.receive(packet);
-        //System.out.println("hi");
         received = new String(packet.getData()).trim();
         System.out.println(received);
         if (id.toString().equals("0") && received.startsWith("ID: ")) {
@@ -111,10 +111,10 @@ public class ClientReceiver extends Thread {
   }
 
   /**
-   * Joins a multicast group
+   * Joins a multicast group to receive a message from the server 'Ping'
    *
-   * @param socket
-   * @param group
+   * @param socket MutliCast socket to join
+   * @param group  InetAddress of the group to be joined
    * @throws IOException
    */
   private static void joinGroup(MulticastSocket socket, InetAddress group) throws IOException {
@@ -132,7 +132,10 @@ public class ClientReceiver extends Thread {
     }
   }
 
-  public void stopRunning(){
+  /**
+   * Stops this thread from running
+   */
+  public void stopRunning() {
     run = false;
     socket.close();
   }

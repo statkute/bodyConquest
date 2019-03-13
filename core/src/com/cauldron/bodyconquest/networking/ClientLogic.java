@@ -24,6 +24,12 @@ public class ClientLogic extends Thread {
   private Communicator communicator;
   private boolean run;
 
+  /**
+   * ClientLogic initialization: sets the clientReceiver and communicator objects for this thread
+   *
+   * @param clientReceiver clientReceiver thread of this client
+   * @param communicator communicator of this client
+   */
   public ClientLogic(ClientReceiver clientReceiver, Communicator communicator) {
     this.clientReceiver = clientReceiver;
     this.communicator = communicator;
@@ -31,7 +37,9 @@ public class ClientLogic extends Thread {
     currentLogic = null;
   }
 
-  /** Deals with game logic tasks of the incoming messages */
+  /**
+   * Directs how to deal with the incoming message
+   */
   public void run() {
     while (run) {
       try {
@@ -51,6 +59,11 @@ public class ClientLogic extends Thread {
     }
   }
 
+  /**
+   * Executes messages related to the Race Selection screen logic
+   *
+   * @param message received message
+   */
   private void raceSelectionLogic(String message) {
     int pointer;
     if (message.startsWith(MessageMaker.RACE_HEADER)) {
@@ -92,6 +105,12 @@ public class ClientLogic extends Thread {
     }
   }
 
+  /**
+   * Executes messages related to the Encounter screen logic
+   *
+   * @param message received message
+   * @throws IOException
+   */
   private void encounterLogic(String message) throws IOException {
     int pointer;
     if (message.startsWith(MessageMaker.OBJECT_UPDATE_HEADER)) {
@@ -160,14 +179,23 @@ public class ClientLogic extends Thread {
     }
   }
 
+  /**
+   * Sets the type of logic used by this object to be race selection screen logic
+   */
   public void setRaceSelectionLogic() {
     currentLogic = Logic.RACE_SELECTION_LOGIC;
   }
 
+  /**
+   * Sets the type of logic used by this object to be encounter screen logic
+   */
   public void setEncounterLogic() {
     currentLogic = Logic.ENCOUNTER_LOGIC;
   }
 
+  /**
+   * stops this thread
+   */
   public void stopRunning() {
     run = false;
   }
