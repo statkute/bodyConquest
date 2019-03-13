@@ -147,7 +147,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     public void render(float delta) {
         super.render(delta);
         game.batch.begin();
-        //    Gdx.gl.glClearColor(0, 100, 0, 1);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gameCamera.update();
@@ -335,6 +334,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         t_continueImage = manager.get(Assets.continueTextBig, Texture.class);
     }
 
+    /**
+     * sets Colour of heart if it is selected.
+     *
+     * @param diseaseType the game type
+     */
     private void setHeart(Disease diseaseType) {
         switch (diseaseType) {
             case INFLUENZA:
@@ -349,6 +353,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         }
     }
 
+    /**
+     * sets Colour of eye if it is selected.
+     *
+     * @param diseaseType the game type
+     */
     private void setEye(Disease diseaseType) {
         switch (diseaseType) {
             case INFLUENZA:
@@ -363,6 +372,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         }
     }
 
+    /**
+     * sets Colour of lungs if it is selected.
+     *
+     * @param diseaseType the game type
+     */
     private void setLungs(Disease diseaseType) {
         switch (diseaseType) {
             case INFLUENZA:
@@ -377,6 +391,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         }
     }
 
+    /**
+     * sets Colour of brain if it is selected.
+     *
+     * @param diseaseType the game type
+     */
     private void setBrain(Disease diseaseType) {
         switch (diseaseType) {
             case INFLUENZA:
@@ -391,6 +410,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         }
     }
 
+    /**
+     * sets Colour of teeth if it is selected.
+     *
+     * @param diseaseType the game type
+     */
     private void setTeeth(Disease diseaseType) {
         switch (diseaseType) {
             case INFLUENZA:
@@ -405,6 +429,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         }
     }
 
+    /**
+     * sets Colour of intestines if it is selected.
+     *
+     * @param diseaseType the game type
+     */
     private void setIntestines(Disease diseaseType) {
         switch (diseaseType) {
             case INFLUENZA:

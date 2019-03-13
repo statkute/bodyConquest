@@ -2,38 +2,71 @@ package com.cauldron.bodyconquest.constants;
 
 import com.cauldron.bodyconquest.entities.abilities.RigorMortis;
 
+/**
+ * The enum Ability type.
+ */
 public enum AbilityType implements ClassOwner, Encodable {
-  RIGOR_MORTIS("RGM", RigorMortis.class);
 
-  private static final int ENCODED_LENGTH = 3;
-  private final String encodedAbility;
-  private final Class associatedClass;
+    /**
+     * Rigor mortis ability type.
+     */
+    RIGOR_MORTIS("RGM", RigorMortis.class);
 
-  AbilityType(String encodedAbility, Class associatedClass) {
-    if (encodedAbility.length() != ENCODED_LENGTH)
-      System.err.println("[ERROR] AbilityType encoding has incorrect length");
-    this.encodedAbility = encodedAbility;
-    this.associatedClass = associatedClass;
-  }
+    private static final int ENCODED_LENGTH = 3;
+    private final String encodedAbility;
+    private final Class associatedClass;
 
-  public static int getEncodedLength() {
-    return ENCODED_LENGTH;
-  }
-
-  public static AbilityType decode(String encodedAbility) {
-    for (AbilityType a : values()) {
-      if (a.getEncoded().equals(encodedAbility)) return a;
+    /**
+     * Constructor.
+     */
+    AbilityType(String encodedAbility, Class associatedClass) {
+        if (encodedAbility.length() != ENCODED_LENGTH)
+            System.err.println("[ERROR] AbilityType encoding has incorrect length");
+        this.encodedAbility = encodedAbility;
+        this.associatedClass = associatedClass;
     }
-    System.err.println("[ERROR] Invalid encoded ability.");
-    return null;
-  }
 
-  public String getEncoded() {
-    return encodedAbility;
-  }
+    /**
+     * Gets encoded length.
+     *
+     * @return the encoded length
+     */
+    public static int getEncodedLength() {
+        return ENCODED_LENGTH;
+    }
 
-  @Override
-  public Class getAssociatedClass() {
-    return associatedClass;
-  }
+    /**
+     * Decode ability type.
+     *
+     * @param encodedAbility the encoded ability
+     * @return the ability type
+     */
+    public static AbilityType decode(String encodedAbility) {
+        for (AbilityType a : values()) {
+            if (a.getEncoded().equals(encodedAbility)) return a;
+        }
+        System.err.println("[ERROR] Invalid encoded ability.");
+        return null;
+    }
+
+
+    /**
+     * Returns the encoded ability.
+     *
+     * @return the encoded ability String
+     */
+    public String getEncoded() {
+        return encodedAbility;
+    }
+
+
+    /**
+     * Returns the associated ability class with this ability.
+     *
+     * @return associatedClass
+     */
+    @Override
+    public Class getAssociatedClass() {
+        return associatedClass;
+    }
 }
