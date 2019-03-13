@@ -122,9 +122,6 @@ public class ServerReceiver extends Thread {
    */
   public void stopRunning() {
     run = false;
-//    Timer.startTimer(100);
-//    if (socket != null){
     socket.close();
-//    }
   }
 }

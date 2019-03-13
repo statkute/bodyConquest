@@ -9,7 +9,7 @@ import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 
 /**
- * Server Thread responsible for dealing with game logic based on incoming messages
+ * Server class responsible for dealing with game logic based on incoming messages
  */
 public class ServerLogic extends Thread {
 

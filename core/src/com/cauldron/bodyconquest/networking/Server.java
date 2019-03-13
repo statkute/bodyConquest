@@ -7,7 +7,9 @@ import com.cauldron.bodyconquest.gamestates.EncounterState;
 
 import java.net.SocketException;
 
-/** Server class */
+/**
+ * Server class
+ */
 public class Server {
   private ServerSender serverSender;
   private ServerReceiver serverReceiver;
@@ -38,6 +40,7 @@ public class Server {
 
   /**
    * get the ServerSender thread stored in this object
+   *
    * @return ServerSender
    */
   public ServerSender getServerSender() {
@@ -46,6 +49,7 @@ public class Server {
 
   /**
    * Sets the EncounterState object for the serverLogic object of this class
+   *
    * @param encounterState An encounter state class of a new game
    */
   public void startEncounterLogic(EncounterState encounterState) {
@@ -66,6 +70,7 @@ public class Server {
 
   /**
    * Checks if the game has ended
+   *
    * @return gameEnded
    */
   public boolean isGameEnded() {
@@ -74,6 +79,7 @@ public class Server {
 
   /**
    * Starts race selection screen logic
+   *
    * @param game game that needs to be started on this server
    */
   public void startRaceSelectionLogic(Game game) {

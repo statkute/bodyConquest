@@ -5,7 +5,7 @@ import com.cauldron.bodyconquest.game_logic.Communicator;
 import java.io.IOException;
 
 /**
- * The Client thread
+ * The Client class
  */
 public class Client {
   public ClientReceiver clientReceiver;
