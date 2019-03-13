@@ -10,18 +10,29 @@ import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.database.DatabaseManager;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
+/**
+ * The type Login screen.
+ */
 public class LoginScreen extends DatabasesScreen implements Screen {
 
     private Texture login;
     private TextButton loginBtn;
     private Image loginImage;
 
+    /**
+     * The Database manager.
+     */
     DatabaseManager dbManager;
 
+    /**
+     * Instantiates a new Login screen.
+     *
+     * @param game the game
+     */
     public LoginScreen(BodyConquest game) {
         super(game);
         loginImage = new Image(login);
-        loginBtn = new TextButton("Login",skin);
+        loginBtn = new TextButton("Login", skin);
         listenButton(loginBtn);
         settingSizes();
         settingPositions();
@@ -29,11 +40,17 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         this.dbManager = new DatabaseManager();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void render(float delta) {
         super.render(delta);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadAssets() {
         super.loadAssets();
@@ -41,14 +58,22 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         manager.finishLoading();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getAssets() {
         super.getAssets();
         login = manager.get(Assets.startLogin, Texture.class);
     }
 
-    public void listenButton(TextButton loginBtn){
-        loginBtn.addListener(new ClickListener(){
+    /**
+     * Listen button for login click.
+     *
+     * @param loginBtn the login btn
+     */
+    public void listenButton(TextButton loginBtn) {
+        loginBtn.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
@@ -61,30 +86,42 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void processRegistration() {
         super.processRegistration();
-        game.setScreen( new MenuScreen(game, textUsername));
+        game.setScreen(new MenuScreen(game, textUsername));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void settingPositions(){
+    public void settingPositions() {
         super.settingPositions();
-        loginImage.setPosition(BodyConquest.V_WIDTH / 2.0f - loginImage.getWidth() / 2.0f,450.0f);
-        loginBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - loginBtn.getWidth() / 2.0f,50.0f);
+        loginImage.setPosition(BodyConquest.V_WIDTH / 2.0f - loginImage.getWidth() / 2.0f, 450.0f);
+        loginBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - loginBtn.getWidth() / 2.0f, 50.0f);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void adding(){
+    public void adding() {
         super.adding();
         stage.addActor(loginImage);
         stage.addActor(loginBtn);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void settingSizes(){
+    public void settingSizes() {
         super.settingSizes();
-        loginBtn.setSize(250,50);
-        loginImage.setSize(login.getWidth(),login.getHeight());
+        loginBtn.setSize(250, 50);
+        loginImage.setSize(login.getWidth(), login.getHeight());
     }
 }

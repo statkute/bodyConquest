@@ -10,18 +10,29 @@ import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.database.DatabaseManager;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
-public class RegisteringScreen extends DatabasesScreen implements Screen{
+/**
+ * The type Registering screen.
+ */
+public class RegisteringScreen extends DatabasesScreen implements Screen {
 
     private Texture register;
     private TextButton registerBtn;
     private Image registerImage;
 
+    /**
+     * The Database manager.
+     */
     DatabaseManager dbManager;
 
+    /**
+     * Instantiates a new Registering screen.
+     *
+     * @param game the game
+     */
     public RegisteringScreen(BodyConquest game) {
         super(game);
         registerImage = new Image(register);
-        registerBtn = new TextButton("Register",skin);
+        registerBtn = new TextButton("Register", skin);
         listenButton(registerBtn);
         settingSizes();
         settingPositions();
@@ -29,11 +40,17 @@ public class RegisteringScreen extends DatabasesScreen implements Screen{
         this.dbManager = new DatabaseManager();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void render(float delta) {
         super.render(delta);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadAssets() {
         super.loadAssets();
@@ -41,6 +58,9 @@ public class RegisteringScreen extends DatabasesScreen implements Screen{
         manager.finishLoading();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getAssets() {
         super.getAssets();
@@ -48,9 +68,14 @@ public class RegisteringScreen extends DatabasesScreen implements Screen{
     }
 
 
-    // try to replace with image button
-    public void listenButton(TextButton registerBtn){
-        registerBtn.addListener(new ClickListener(){
+    /**
+     * Listen button for a click.
+     *
+     * @param registerBtn the register btn
+     */
+
+    public void listenButton(TextButton registerBtn) {
+        registerBtn.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
@@ -63,29 +88,42 @@ public class RegisteringScreen extends DatabasesScreen implements Screen{
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void processRegistration() {
         super.processRegistration();
-        game.setScreen(new  LoginScreen(game));
+        game.setScreen(new LoginScreen(game));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void settingPositions(){
+    public void settingPositions() {
         super.settingPositions();
-        registerImage.setPosition(BodyConquest.V_WIDTH / 2.0f - registerImage.getWidth() / 2.0f,450.0f);
-        registerBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - registerBtn.getWidth() / 2.0f,50.0f);
+        registerImage.setPosition(BodyConquest.V_WIDTH / 2.0f - registerImage.getWidth() / 2.0f, 450.0f);
+        registerBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - registerBtn.getWidth() / 2.0f, 50.0f);
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void adding(){
+    public void adding() {
         super.adding();
         stage.addActor(registerImage);
         stage.addActor(registerBtn);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void settingSizes(){
+    public void settingSizes() {
         super.settingSizes();
-        registerBtn.setSize(250,50);
-        registerImage.setSize(register.getWidth(),register.getHeight());
+        registerBtn.setSize(250, 50);
+        registerImage.setSize(register.getWidth(), register.getHeight());
     }
 }

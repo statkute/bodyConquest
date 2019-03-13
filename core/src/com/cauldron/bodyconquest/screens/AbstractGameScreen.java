@@ -16,22 +16,56 @@ import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
+/**
+ * The type Abstract game screen.
+ */
 public abstract class AbstractGameScreen implements Screen {
 
+    /**
+     * The Game.
+     */
     protected BodyConquest game;
+    /**
+     * The Viewport.
+     */
     protected Viewport viewport;
+    /**
+     * The Camera.
+     */
     protected Camera camera;
+    /**
+     * The Manager.
+     */
     protected AssetManager manager;
+    /**
+     * The Background.
+     */
     protected Texture background;
+    /**
+     * The vector
+     */
     protected Vector3 tmp;
+    /**
+     * The Server.
+     */
     protected Server server;
 
+    /**
+     * Instantiates a new Abstract game screen.
+     *
+     * @param game the game
+     */
     public AbstractGameScreen(BodyConquest game) {
         init(game);
     }
 
 
-    public void init(BodyConquest game){
+    /**
+     * Init.
+     *
+     * @param game the game
+     */
+    public void init(BodyConquest game) {
 
         this.game = game;
         if (camera == null) {
@@ -39,7 +73,7 @@ public abstract class AbstractGameScreen implements Screen {
             ((OrthographicCamera) camera).setToOrtho(false, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
         }
         if (viewport == null) {
-            viewport = new FitViewport(BodyConquest.V_WIDTH,BodyConquest.V_HEIGHT,camera);
+            viewport = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, camera);
         }
         viewport.apply();
         manager = new AssetManager();
@@ -47,11 +81,13 @@ public abstract class AbstractGameScreen implements Screen {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public void show() {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void render(float delta) {
 
@@ -62,7 +98,7 @@ public abstract class AbstractGameScreen implements Screen {
         viewport.apply();
 
     }
-
+    /** {@inheritDoc} */
     @Override
     public void resize(int width, int height) {
 
@@ -70,45 +106,63 @@ public abstract class AbstractGameScreen implements Screen {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void pause() {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void resume() {
 
     }
 
+    /** {@inheritDoc} */
     @Override
     public void hide() {
 
     }
-
+    /** {@inheritDoc} */
     @Override
     public void dispose() {
         manager.dispose();
 
     }
 
-    public void checkPressed(){
+    /**
+     * Check if any button or texture was pressed.
+     */
+    public void checkPressed() {
         tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(tmp);
     }
 
+    /**
+     * Play button sound.
+     */
     public void playButtonSound() {
         game.audioPlayer.playSFX("button_click");
     }
 
-    public void loadAssets(){
+    /**
+     * Load assets through asset manager.
+     */
+    public void loadAssets() {
         manager.load(Assets.menuBackground, Texture.class);
     }
 
-    public void getAssets(){
+    /**
+     * Gets assets so that asset manager could use them.
+     */
+    public void getAssets() {
         background = manager.get(Assets.menuBackground, Texture.class);
     }
 
-    public void setRectangles(){
+    /**
+     * Sets rectangles to get the bounds of the textures or images.
+     */
+    public void setRectangles() {
 
     }
 

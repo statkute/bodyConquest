@@ -12,6 +12,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * The type Credits screen.
+ */
 public class CreditsScreen extends AbstractGameScreen implements Screen {
 
   private Texture backButton;
@@ -25,6 +28,12 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
   private String username;
 
 
+  /**
+   * Instantiates a new Credits screen.
+   *
+   * @param game     the game
+   * @param username the username
+   */
   public CreditsScreen(BodyConquest game, String username) {
     super(game);
     this.username = username;
@@ -34,10 +43,12 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
 
   }
 
+  /** {@inheritDoc} */
   @Override
   public void show() {
   }
 
+  /** {@inheritDoc} */
   @Override
   public void render(float delta) {
 
@@ -59,6 +70,8 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
     game.batch.end();
   }
 
+  /** {@inheritDoc} */
+  @Override
   public void checkPressed() {
 
     super.checkPressed();
@@ -72,11 +85,13 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void resize(int width, int height) {
     super.resize(width,height);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void loadAssets() {
     super.loadAssets();
@@ -90,6 +105,7 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
     manager.finishLoading();
   }
 
+  /** {@inheritDoc} */
   @Override
   public void getAssets() {
     super.getAssets();
@@ -103,6 +119,7 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
 
   }
 
+  /** {@inheritDoc} */
   @Override
   public void setRectangles() {
     super.setRectangles();

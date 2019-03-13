@@ -7,19 +7,30 @@ import com.badlogic.gdx.math.Rectangle;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
+/**
+ * The type Start screen.
+ */
 public class StartScreen extends AbstractGameScreen implements Screen {
 
   private Texture title;
+
   private Texture register;
+
   private Texture login;
+
   private Texture exitButton;
+
   private Rectangle registerBounds;
+
   private Rectangle loginBounds;
+
   private Rectangle exitBounds;
 
-  // MyTextInputListener listener = new MyTextInputListener();
-  // Gdx.input.getTextInput(listener, "Dialog Title", "Initial Textfield Value", "Hint Value");
-
+  /**
+   * Instantiates a new Start screen.
+   *
+   * @param game the game
+   */
   public StartScreen(BodyConquest game) {
     super(game);
     loadAssets();
@@ -27,6 +38,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     setRectangles();
   }
 
+  /** {@inheritDoc} */
   @Override
   public void render(float delta) {
     super.render(delta);
@@ -50,6 +62,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     game.batch.end();
   }
 
+  /** {@inheritDoc} */
   @Override
   public void checkPressed() {
     super.checkPressed();
@@ -79,6 +92,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void loadAssets() {
     super.loadAssets();
@@ -89,6 +103,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     manager.finishLoading();
   }
 
+  /** {@inheritDoc} */
   @Override
   public void getAssets() {
     super.getAssets();
@@ -98,6 +113,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     exitButton = manager.get(Assets.exitButton, Texture.class);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void setRectangles() {
     super.setRectangles();

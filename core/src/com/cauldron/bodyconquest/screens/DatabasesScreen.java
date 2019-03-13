@@ -9,24 +9,65 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.cauldron.bodyconquest.constants.Assets;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
+/**
+ * The type Databases screen.
+ */
 public abstract class DatabasesScreen extends AbstractGameScreen {
 
-    /* Variables */
-
+    /**
+     * The username.
+     */
     protected String textUsername;
+
+    /**
+     * The  password.
+     */
     protected String textPassword;
 
+    /**
+     * The Texture for password.
+     */
     protected Texture password;
+
+    /**
+     * The Texture for Username.
+     */
     protected Texture username;
+    /**
+     * The Skin.
+     */
     protected Skin skin;
+
+    /**
+     * The Textfield for username.
+     */
     protected TextField txfUsername;
+
+    /**
+     * The Textfield for password.
+     */
     protected TextField txfPassword;
 
+    /**
+     * The Password image.
+     */
     protected Image passwordImage;
+
+    /**
+     * The Username image.
+     */
     protected Image usernameImage;
 
+    /**
+     * The Stage.
+     */
     protected Stage stage;
 
+    /**
+     * Instantiates a new Database screen.
+     *
+     * @param game the game
+     */
     public DatabasesScreen(BodyConquest game) {
         super(game);
         loadAssets();
@@ -34,8 +75,8 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
         passwordImage = new Image(password);
         usernameImage = new Image(username);
         skin = new Skin(Gdx.files.internal("uiskin.json"));
-        txfUsername = new TextField("",skin);
-        txfPassword = new TextField("",skin);
+        txfUsername = new TextField("", skin);
+        txfPassword = new TextField("", skin);
         txfPassword.setPasswordMode(true);
         txfPassword.setPasswordCharacter('*');
         textUsername = "";
@@ -45,6 +86,9 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -54,6 +98,9 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
         game.batch.end();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadAssets() {
         super.loadAssets();
@@ -61,6 +108,9 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
         manager.load(Assets.registerPassword, Texture.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getAssets() {
         super.getAssets();
@@ -68,34 +118,49 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
         password = manager.get(Assets.registerPassword, Texture.class);
     }
 
+    /**
+     * Process registration.
+     */
     public void processRegistration() {
         dispose();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         super.dispose();
         stage.dispose();
     }
 
-    public void settingPositions(){
+    /**
+     * Setting positions in the batch and stage.
+     */
+    public void settingPositions() {
         passwordImage.setPosition(BodyConquest.V_WIDTH / 2.0f - passwordImage.getWidth() / 2.0f, 220.0f);
         usernameImage.setPosition(BodyConquest.V_WIDTH / 2.0f - usernameImage.getWidth() / 2.0f, 360.0f);
-        txfUsername.setPosition(BodyConquest.V_WIDTH / 2.0f - txfUsername.getWidth() / 2.0f,280.0f);
-        txfPassword.setPosition(BodyConquest.V_WIDTH / 2.0f - txfPassword.getWidth() / 2.0f,140.0f);
+        txfUsername.setPosition(BodyConquest.V_WIDTH / 2.0f - txfUsername.getWidth() / 2.0f, 280.0f);
+        txfPassword.setPosition(BodyConquest.V_WIDTH / 2.0f - txfPassword.getWidth() / 2.0f, 140.0f);
     }
 
-    public void adding(){
+    /**
+     * Adding actors to Stage.
+     */
+    public void adding() {
         stage.addActor(passwordImage);
         stage.addActor(usernameImage);
         stage.addActor(txfUsername);
         stage.addActor(txfPassword);
     }
 
-    public void settingSizes(){
-        txfUsername.setSize(350,50);
-        txfPassword.setSize(350,50);
-        passwordImage.setSize(passwordImage.getWidth()/2.0f,passwordImage.getHeight()/2.0f);
-        usernameImage.setSize(usernameImage.getWidth()/2.0f,usernameImage.getHeight()/2.0f);
+    /**
+     * Setting sizes in the batch and stage.
+     */
+    public void settingSizes() {
+        txfUsername.setSize(350, 50);
+        txfPassword.setSize(350, 50);
+        passwordImage.setSize(passwordImage.getWidth() / 2.0f, passwordImage.getHeight() / 2.0f);
+        usernameImage.setSize(usernameImage.getWidth() / 2.0f, usernameImage.getHeight() / 2.0f);
     }
 }
