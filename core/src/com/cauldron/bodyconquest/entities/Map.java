@@ -32,7 +32,7 @@ public class Map extends Actor {
       texturePath = "core/assets/map_lungs_ss.png";
       frameCols = 4;
       frameRows = 5;
-      frameRate = 15f;
+      frameRate = 30f;
     }
     if(organ == Organ.EYES)  {
       texturePath = "core/assets/map_eyes_ss.png";
