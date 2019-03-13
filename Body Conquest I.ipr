@@ -207,7 +207,6 @@
       <module fileurl="file://$PROJECT_DIR$/desktop/cauldron.desktop.iml" filepath="$PROJECT_DIR$/desktop/cauldron.desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/desktop/cauldron.desktop.main.iml" filepath="$PROJECT_DIR$/desktop/cauldron.desktop.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/desktop/cauldron.desktop.test.iml" filepath="$PROJECT_DIR$/desktop/cauldron.desktop.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/core/tests.iml" filepath="$PROJECT_DIR$/core/tests.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
