@@ -29,7 +29,7 @@ public class Bacteria extends Troop {
 
   private void init() {
     // Dimensions
-    setSize(50, 50);
+    setSize(100, 100);
     setCSize(50, 50);
 
     // Troop Stats

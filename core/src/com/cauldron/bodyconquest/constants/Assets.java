@@ -134,13 +134,13 @@ public class Assets {
 
     public static String pathBaseImage = pathAssets + "base_boi_ss.png";
     public static String pathVirus = pathAssets + "virus_new.png";
-    public static String pathBacteria = pathAssets + "bacteria.png";
+    public static String pathBacteria = pathAssets + "bacteria_new.png";
     public static String pathFlu = pathAssets + "flu_new.png";
     public static String pathProjectile = pathAssets + "projectile_with_trail.png";
 
 
-    public static int frameColsBacteria = 7;
-    public static int frameRowsBacteria = 1;
+    public static int frameColsBacteria = 2;//7;
+    public static int frameRowsBacteria = 11;//1;
     public static int frameColsFlu = 4;//7;
     public static int frameRowsFlu = 4;//1;
     public static int frameColsVirus = 4;//7;
