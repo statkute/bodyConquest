@@ -277,6 +277,7 @@ public class EncounterScreen implements Screen {
       drawNumbersOnResourceBars();
 
 
+      if(!destroyed)
       updateUnitButtons();
 
       game.batch.end();
