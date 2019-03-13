@@ -34,11 +34,17 @@ public class Map extends Actor {
 //      frameRows = 5;
 //      frameRate = 15f;
 //    }
-    if(organ == Organ.LUNGS)  {
+    if(organ == Organ.EYES)  {
       texturePath = "core/assets/map_eyes_ss.png";
       frameCols = 2;
       frameRows = 11;
       frameRate = 60f;
+    }
+    if(organ == Organ.LUNGS)  {
+      texturePath = "core/assets/map_heart_ss.png";
+      frameCols = 11;
+      frameRows = 1;
+      frameRate = 40f;
     }
     //animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(texturePath).read());
     walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, frameRate, texturePath);
