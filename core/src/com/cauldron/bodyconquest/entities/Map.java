@@ -28,13 +28,18 @@ public class Map extends Actor {
   public Map(Organ organ, float elapsedseconds) {
     String texturePath = null;
     elapsed = elapsedseconds;
-    if(organ == Organ.LUNGS){
-      texturePath = "core/assets/map_lungs_ss.png";
-      frameCols = 4;
-      frameRows = 5;
-      frameRate = 15f;
+//    if(organ == Organ.LUNGS){
+//      texturePath = "core/assets/map_lungs_ss.png";
+//      frameCols = 4;
+//      frameRows = 5;
+//      frameRate = 15f;
+//    }
+    if(organ == Organ.LUNGS)  {
+      texturePath = "core/assets/map_eyes_ss.png";
+      frameCols = 2;
+      frameRows = 11;
+      frameRate = 60f;
     }
-    if(organ == Organ.EYES)   texturePath = "core/assets/map_eyes.gif";
     //animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(texturePath).read());
     walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, frameRate, texturePath);
     stateTime = 0f;
