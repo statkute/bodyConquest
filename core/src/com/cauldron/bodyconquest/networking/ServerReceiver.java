@@ -9,40 +9,47 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.concurrent.LinkedBlockingQueue;
 
-/** Server thread that is responsible for receiving messages from all connected clients */
+/**
+ * Server thread that is responsible for receiving messages from all connected clients
+ */
 public class ServerReceiver extends Thread {
-  public DatagramSocket socket;
-  public ServerSender serverSender;
+  private DatagramSocket socket;
+  private ServerSender serverSender;
   public LinkedBlockingQueue<String> receivedMessages;
   public GameType type;
-  public int numberOfClients;
+  private int numberOfClients;
   private boolean run;
+  private Ping ping;
 
   /**
    * ServerReceiver initialization
    *
    * @param serverSender the ServerSender thread of the same Server
-   * @param type the type of the game: either "singleplayer" or "multiplayer"
-   * @throws SocketException
+   * @param type         the type of the game: either "singleplayer" or "multiplayer"
+   * @param ping         the ping object of this server
+   * @throws SocketException throws SocketException
    */
-  public ServerReceiver(ServerSender serverSender, GameType type) throws SocketException {
+  public ServerReceiver(ServerSender serverSender, GameType type, Ping ping) throws SocketException {
     socket = new DatagramSocket(3000);
     this.serverSender = serverSender;
+    this.ping = ping;
     receivedMessages = new LinkedBlockingQueue<String>();
     this.type = type;
     numberOfClients = 0;
     run = true;
   }
 
-  /** A method that continuously checks for incoming messages */
+  /**
+   * A method that continuously checks for incoming messages
+   */
   public void run() {
     gameSetup();
-    try{
+    try {
       while (run) {
         try {
           byte[] buf = new byte[1024];
           DatagramPacket packet = new DatagramPacket(buf, 1024);
-          if (run){
+          if (run) {
             socket.receive(packet);
           }
           String receivedMessage = new String(packet.getData(), 0, packet.getLength());
@@ -57,12 +64,14 @@ public class ServerReceiver extends Thread {
           e.printStackTrace();
         }
       }
-    } finally{
+    } finally {
 //      socket.close();
     }
   }
 
-  /** A method that deals with receiving and storing client ID and waiting for the game to start */
+  /**
+   * A method that deals with receiving and storing client ID and waiting for the game to start
+   */
   public void gameSetup() {
     while (run) {
       try {
@@ -103,12 +112,19 @@ public class ServerReceiver extends Thread {
         e.printStackTrace();
       }
     }
+    if (ping != null) {
+      ping.stopRunning();
+    }
   }
-  public void stopRunning(){
+
+  /**
+   * Stops this thread from running
+   */
+  public void stopRunning() {
     run = false;
 //    Timer.startTimer(100);
 //    if (socket != null){
-      socket.close();
+    socket.close();
 //    }
   }
 }

@@ -5,17 +5,19 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-/** Client thread responsible for sending messages to the server */
+/**
+ * Client thread responsible for sending messages to the server
+ */
 public class ClientSender extends Thread {
-  public DatagramSocket socket;
-  public ClientReceiver clientReceiver;
+  private DatagramSocket socket;
+  private ClientReceiver clientReceiver;
   private boolean run;
 
   /**
-   * ClientSender initialization
+   * ClientSender constructor
    *
    * @param clientReceiver ClientReceiver thread of the same client
-   * @throws SocketException
+   * @throws SocketException throws SocketException
    */
   public ClientSender(ClientReceiver clientReceiver) throws SocketException {
     socket = new DatagramSocket();
@@ -26,7 +28,7 @@ public class ClientSender extends Thread {
   /**
    * Sends the specified message to the server with an added client ID at the front
    *
-   * @param message
+   * @param message message that needs to be sent
    */
   public void sendMessage(String message) {
     try {
@@ -37,7 +39,11 @@ public class ClientSender extends Thread {
       e.printStackTrace();
     }
   }
-  public void stopRunning(){
+
+  /**
+   * Stops this thread from running
+   */
+  public void stopRunning() {
     run = false;
     socket.close();
   }

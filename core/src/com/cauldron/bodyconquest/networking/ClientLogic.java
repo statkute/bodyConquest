@@ -10,6 +10,9 @@ import com.cauldron.bodyconquest.networking.utilities.Serialization;
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Class used to execute tasks based on the received messages from the server
+ */
 public class ClientLogic extends Thread {
 
   private enum Logic {
@@ -19,16 +22,15 @@ public class ClientLogic extends Thread {
   }
 
   private Logic currentLogic;
-
   private ClientReceiver clientReceiver;
   private Communicator communicator;
   private boolean run;
 
   /**
-   * ClientLogic initialization: sets the clientReceiver and communicator objects for this thread
+   * ClientLogic constructor: sets the clientReceiver and communicator objects for this thread
    *
    * @param clientReceiver clientReceiver thread of this client
-   * @param communicator communicator of this client
+   * @param communicator   communicator of this client
    */
   public ClientLogic(ClientReceiver clientReceiver, Communicator communicator) {
     this.clientReceiver = clientReceiver;
@@ -62,7 +64,7 @@ public class ClientLogic extends Thread {
   /**
    * Executes messages related to the Race Selection screen logic
    *
-   * @param message received message
+   * @param message the received message
    */
   private void raceSelectionLogic(String message) {
     int pointer;
@@ -109,7 +111,7 @@ public class ClientLogic extends Thread {
    * Executes messages related to the Encounter screen logic
    *
    * @param message received message
-   * @throws IOException
+   * @throws IOException throws IO exception
    */
   private void encounterLogic(String message) throws IOException {
     int pointer;

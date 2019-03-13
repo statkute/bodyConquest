@@ -17,7 +17,7 @@ public class Client {
   /**
    * Starts the receiver and sender threads
    *
-   * @throws IOException
+   * @throws IOException throws IO exception
    */
   public void startClient() throws IOException {
     communicator = new Communicator();
@@ -36,7 +36,7 @@ public class Client {
   /**
    * A method that returns the communicator used by the client
    *
-   * @return communicator
+   * @return communicator stored inside this object
    */
   public Communicator getCommunicator() {
     return communicator;

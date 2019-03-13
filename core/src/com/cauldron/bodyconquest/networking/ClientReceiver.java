@@ -14,16 +14,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ClientReceiver extends Thread {
 
   InetAddress address;
-  DatagramSocket socket;
-  InetAddress group;
-  AtomicInteger id;
+  private DatagramSocket socket;
+  private InetAddress group;
+  private AtomicInteger id;
   LinkedBlockingQueue<String> receivedMessages;
   private boolean run;
 
   /**
-   * ClientReceiver initialization
+   * ClientReceiver constructor
    *
-   * @throws IOException
+   * @throws IOException throws IO exception
    */
   public ClientReceiver() throws IOException {
     address = getIpAddress();
@@ -115,7 +115,7 @@ public class ClientReceiver extends Thread {
    *
    * @param socket MutliCast socket to join
    * @param group  InetAddress of the group to be joined
-   * @throws IOException
+   * @throws IOException throws IO exception
    */
   private static void joinGroup(MulticastSocket socket, InetAddress group) throws IOException {
     Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();

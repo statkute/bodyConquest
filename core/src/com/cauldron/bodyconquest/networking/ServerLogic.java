@@ -8,10 +8,11 @@ import com.cauldron.bodyconquest.game_logic.Player;
 import com.cauldron.bodyconquest.gamestates.EncounterState;
 import com.cauldron.bodyconquest.networking.utilities.MessageMaker;
 
-/** Server Thread responsible for dealing with game logic based on incoming messages */
+/**
+ * Server Thread responsible for dealing with game logic based on incoming messages
+ */
 public class ServerLogic extends Thread {
 
-  /** Possible Server Logics. */
   public enum Logic {
     RACE_SELECTION_LOGIC,
     BODY_LOGIC,
@@ -19,20 +20,16 @@ public class ServerLogic extends Thread {
   }
 
   private Logic currentLogic;
-
   private ServerReceiver serverReceiver;
   private ServerSender serverSender;
-
   private boolean run;
-
   // Encounter Logic Variables
   private EncounterState encounterState;
-
   // Race Selection Variables
   private Game game;
 
   /**
-   * Constructor.
+   * ServerLogic constructor
    *
    * @param serverReceiver The ServerReceiver thread of the same Server.
    */
@@ -47,7 +44,9 @@ public class ServerLogic extends Thread {
     currentLogic = null;
   }
 
-  /** Deals with game logic tasks of the incoming messages */
+  /**
+   * Deals with game logic tasks of the incoming messages
+   */
   public void run() {
     while (run) {
       try {
@@ -60,9 +59,13 @@ public class ServerLogic extends Thread {
           continue;
         }
 
-        if (currentLogic == Logic.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
-        if (currentLogic == Logic.ENCOUNTER_LOGIC) encounterLogic(message);
-        if (currentLogic == Logic.BODY_LOGIC) bodyLogic(message);
+        if (currentLogic == Logic.RACE_SELECTION_LOGIC) {
+          raceSelectionLogic(message);
+        } else if (currentLogic == Logic.ENCOUNTER_LOGIC) {
+          encounterLogic(message);
+        } else if (currentLogic == Logic.BODY_LOGIC) {
+          bodyLogic(message);
+        }
 
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -70,8 +73,19 @@ public class ServerLogic extends Thread {
     }
   }
 
-  private void bodyLogic(String message) {}
+  /**
+   * Executes tasks concerned with body screen logic that were sent with the message
+   *
+   * @param message the message instruction to be executed
+   */
+  private void bodyLogic(String message) {
+  }
 
+  /**
+   * Executes tasks concerned with race selection screen logic that were sent with the message
+   *
+   * @param message the message instruction to be executed
+   */
   private void raceSelectionLogic(String message) {
     if (message.startsWith(MessageMaker.RACE_HEADER)) {
       Disease disease;
@@ -87,8 +101,11 @@ public class ServerLogic extends Thread {
           message.substring(pointer, pointer + PlayerType.getEncodedLength());
       playerType = PlayerType.decode(encodedPlayerType);
 
-      if (playerType == PlayerType.PLAYER_TOP) game.setPlayerTop(disease);
-      if (playerType == PlayerType.PLAYER_BOTTOM) game.setPlayerBottom(disease);
+      if (playerType == PlayerType.PLAYER_TOP) {
+        game.setPlayerTop(disease);
+      } else if (playerType == PlayerType.PLAYER_BOTTOM) {
+        game.setPlayerBottom(disease);
+      }
 
       // Response message for the other player to receive so they can update the other player's selection on their screen
       String responseMessage = MessageMaker.diseaseMessage(disease, playerType);
@@ -101,6 +118,11 @@ public class ServerLogic extends Thread {
     }
   }
 
+  /**
+   * Executes tasks concerned with encounter screen logic that were sent with the message
+   *
+   * @param message the message instruction to be executed
+   */
   private void encounterLogic(String message) {
     int pointer;
     if (message.startsWith(MessageMaker.TROOP_SPAWN_HEADER)) {
@@ -174,16 +196,29 @@ public class ServerLogic extends Thread {
     }
   }
 
+  /**
+   * Sets the logic type to be dealt with in this object to be encounter state logic and sets the EncounterState object
+   *
+   * @param encounterState currently played encounterState
+   */
   public void setEncounterLogic(EncounterState encounterState) {
     this.encounterState = encounterState;
     currentLogic = Logic.ENCOUNTER_LOGIC;
   }
 
+  /**
+   * Sets the logic type to be dealt with in this object to be race selection logic and sets the Game object
+   *
+   * @param game currently played Game
+   */
   public void setRaceSelectionLogic(Game game) {
     this.game = game;
     currentLogic = Logic.RACE_SELECTION_LOGIC;
   }
 
+  /**
+   * Stops this thread from running
+   */
   public void stopRunning() {
     run = false;
   }
