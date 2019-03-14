@@ -5,15 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.cauldron.bodyconquest.constants.Assets;
-import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.GameType;
-import com.cauldron.bodyconquest.game_logic.Communicator;
-import com.cauldron.bodyconquest.networking.Client;
-import com.cauldron.bodyconquest.networking.Server;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * The type Menu screen.
@@ -31,6 +26,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
     private Rectangle settingsBounds;
     private Rectangle creditsBounds;
     private Rectangle exitBounds;
+
     /**
      * The constant timeOfServer which shows how long the server is running.
      */
