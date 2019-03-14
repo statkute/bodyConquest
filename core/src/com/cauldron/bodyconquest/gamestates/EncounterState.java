@@ -286,6 +286,8 @@ public class EncounterState extends GameState {
         } else{
 
         }
+      } else if(playerType == PlayerType.PLAYER_TOP){
+        troop = new Bacteria(playerType, lane);
       }
     } else if (unitType.equals(UnitType.FLU)) {
       if(playerType == PlayerType.PLAYER_BOTTOM){
@@ -295,6 +297,8 @@ public class EncounterState extends GameState {
         }else{
 
         }
+      }else if(playerType == PlayerType.PLAYER_TOP){
+        troop = new Flu(this, playerType, lane);
       }
     } else if (unitType.equals(UnitType.VIRUS)) {
       if(playerType == PlayerType.PLAYER_BOTTOM){
@@ -304,6 +308,8 @@ public class EncounterState extends GameState {
         }else{
 
         }
+      }else if(playerType == PlayerType.PLAYER_TOP){
+        troop = new Virus(playerType, lane);
       }
     }
 
