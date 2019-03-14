@@ -125,10 +125,8 @@ public class ViewObject extends Actor {
 
       if (EncounterScreen.getTimeAlive() < EncounterScreen.getTimeOfDmgTakenTop() + EncounterScreen.BLINK_TIME_AFTER_DMG)
       {
-        System.out.println("Does it go here");
         float t = (EncounterScreen.getTimeAlive() - EncounterScreen.getTimeOfDmgTakenTop()) / EncounterScreen.BLINK_TIME_AFTER_DMG;
         t = t * t;
-        System.out.println(t);
         setColor(1, 1, 1, t);
       }
 
