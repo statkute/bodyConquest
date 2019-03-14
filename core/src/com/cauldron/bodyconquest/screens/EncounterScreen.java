@@ -331,6 +331,7 @@ public class EncounterScreen implements Screen {
             game.batch.begin();
 
             drawTime();
+            drawScore();
             drawUsername();
             drawNumbersOnResourceBars();
 
@@ -386,6 +387,23 @@ public class EncounterScreen implements Screen {
         game.timerFont.draw(game.batch, "Time Left", BodyConquest.V_WIDTH - 110.0f, 550.0f);
         game.timerFont.getData().setScale(1.25f, 1.25f);
         game.timerFont.draw(game.batch, Double.toString(Double.valueOf(value.format(time))), BodyConquest.V_WIDTH - 110.0f, 510.0f);
+    }
+
+
+    /**
+     * Draws score on the batch
+     */
+    private void drawScore(){
+        game.timerFont.getData().setScale(1.25f, 1.25f);
+        game.timerFont.draw(game.batch, "Score", BodyConquest.V_WIDTH - 110.0f, 400.0f);
+        game.timerFont.getData().setScale(1.25f, 1.25f);
+        if(playerType == PlayerType.PLAYER_TOP){
+            game.timerFont.draw(game.batch, Integer.toString(comms.getScoreTop()), BodyConquest.V_WIDTH - 110.0f, 350.0f);
+        }
+        else{
+            game.timerFont.draw(game.batch,Integer.toString(comms.getScoreBottom()) , BodyConquest.V_WIDTH - 110.0f, 350.0f);
+
+        }
     }
 
 
