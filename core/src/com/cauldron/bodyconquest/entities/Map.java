@@ -23,6 +23,7 @@ public class Map extends Actor {
   private float frameRate;
   private Animation<TextureRegion> walkAnimation;
   private float elapsed;
+  private int points;
 
   // Should have some sort of resource manager and system
   public Map(Organ organ, float elapsedseconds) {
@@ -33,30 +34,35 @@ public class Map extends Actor {
       frameCols = 4;
       frameRows = 5;
       frameRate = 30f;
+      points =30;
     }
     if(organ == Organ.EYES)  {
       texturePath = "core/assets/map_eyes_ss.png";
       frameCols = 2;
       frameRows = 11;
       frameRate = 60f;
+      points =20;
     }
     if(organ == Organ.HEART)  {
       texturePath = "core/assets/map_heart_ss.png";
       frameCols = 11;
       frameRows = 1;
       frameRate = 40f;
+      points = 30;
     }
     if(organ == Organ.TEETH)  {
       texturePath = "core/assets/map_teeth_ss.png";
       frameCols = 5;
       frameRows = 5;
       frameRate = 47f;
+      points = 10;
     }
     if(organ == Organ.BRAIN)  {
       texturePath = "core/assets/map_brain_ss.png";
       frameCols = 4;
       frameRows = 5;
       frameRate = 60f;
+      points = 40;
     }
     //animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(texturePath).read());
     walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, frameRate, texturePath);
@@ -97,6 +103,10 @@ public class Map extends Actor {
 //
   public float getRight() {
     return (float) MAP_WIDTH;
+  }
+
+  public int getPoints(){
+    return points;
   }
 
   /*

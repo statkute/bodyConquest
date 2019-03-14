@@ -169,6 +169,7 @@ public class HUD {
     dragAndDrop.addTarget(
         new Target(bottomSpawnPoint) {
           public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+            //if()
             getActor().setColor(0, 255, 0, 0.5f);
             return true;
           }

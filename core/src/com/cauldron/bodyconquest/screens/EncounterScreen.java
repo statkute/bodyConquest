@@ -259,8 +259,8 @@ public class EncounterScreen implements Screen {
 
         updateResourceBars();
 
-//    scoreBottom = comms.getScoreBottom();
-//    scoreTop = comms.getScoreTop();
+        scoreBottom = comms.getScoreBottom();
+        scoreTop = comms.getScoreTop();
 
         healthBottomBase = comms.getBottomHealthPercentage();
         healthTopBase = comms.getTopHealthPercentage();
@@ -336,8 +336,8 @@ public class EncounterScreen implements Screen {
             drawNumbersOnResourceBars();
 
 
-            if (!destroyed)
-                updateUnitButtons();
+            if (!destroyed || accumulatorAfterBaseConquered >0)
+                //updateUnitButtons();
 
             game.batch.end();
             for (ViewObject vo : viewObjects) {
@@ -402,7 +402,6 @@ public class EncounterScreen implements Screen {
         }
         else{
             game.timerFont.draw(game.batch,Integer.toString(comms.getScoreBottom()) , BodyConquest.V_WIDTH - 110.0f, 350.0f);
-
         }
     }
 
@@ -544,14 +543,14 @@ public class EncounterScreen implements Screen {
     public void switchScreen(final BodyConquest game, final Screen newScreen) {
         stage.getRoot().getColor().a = 1;
         SequenceAction sequenceAction = new SequenceAction();
-        sequenceAction.addAction(Actions.fadeOut(1.0f));
+        sequenceAction.addAction(Actions.fadeOut(2.5f));
         sequenceAction.addAction(
                 Actions.run(
                         new Runnable() {
                             @Override
                             public void run() {
                                 dispose();
-                                game.setScreen(newScreen);
+                                game.setScreen(new MenuScreen(game,""));
                             }
                         }));
         stage.getRoot().addAction(sequenceAction);
@@ -589,7 +588,7 @@ public class EncounterScreen implements Screen {
     private void ShowGameResult(String result) {
         DrawShadowed(result,
                 0,
-                BodyConquest.V_HEIGHT / 2 + 30,
+                BodyConquest.V_HEIGHT / 2.0f + 30,
                 stage.getWidth(),
                 Align.center,
                 Color.RED);
@@ -611,7 +610,8 @@ public class EncounterScreen implements Screen {
                     server.closeEverything();
                 }
             } else if ((healthTopBase <= 0) || (time == 0.0f && healthBottomBase > healthTopBase)) {
-                ShowGameResult("VICTORY!");
+                scoreBottom += map.getPoints();
+                ShowGameResult("VICTORY!\nYou get: " + map.getPoints() + "points");
                 client.closeEverything();
                 if (server != null) {
                     server.closeEverything();
@@ -632,7 +632,8 @@ public class EncounterScreen implements Screen {
                     server.closeEverything();
                 }
             } else if (healthBottomBase <= 0 || (time == 0.0f && healthBottomBase < healthTopBase)) {
-                ShowGameResult("VICTORY!");
+                scoreTop += map.getPoints();
+                ShowGameResult("VICTORY!\nYou get: " + map.getPoints() + "points");
                 client.closeEverything();
                 if (server != null) {
                     server.closeEverything();

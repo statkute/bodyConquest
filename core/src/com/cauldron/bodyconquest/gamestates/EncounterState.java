@@ -132,8 +132,8 @@ public class EncounterState extends GameState {
     topResources.start();
 
     if (game.getGameType() == GameType.SINGLE_PLAYER) {
-      BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
-      ai.start();
+      //BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
+      //ai.start();
     } else {
       MultiplayerTestAI ai = new MultiplayerTestAI(this);
       ai.start();

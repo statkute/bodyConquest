@@ -392,11 +392,11 @@ public class Assets {
     /**
      * The constant UPDATESCREENTILL.
      */
-    public static final int UPDATESCREENTILL = 200;
+    public static final int UPDATESCREENTILL = 400;
     /**
      * The constant INCREASEACCUMULATORTILL.
      */
-    public static final int INCREASEACCUMULATORTILL = 280;
+    public static final int INCREASEACCUMULATORTILL = 300;
 
 
     private static String pathAssets = "core/assets/";
