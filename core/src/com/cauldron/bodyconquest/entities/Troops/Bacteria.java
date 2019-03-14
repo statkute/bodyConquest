@@ -19,10 +19,9 @@ public class Bacteria extends Troop {
   public Bacteria() {
     super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
     init();
-    killingPoints = 5;
   }
 
-  public Bacteria(PlayerType playerType, Lane lane) {
+  public Bacteria(Lane lane, PlayerType playerType) {
     super(lane, playerType);
     init();
   }
@@ -43,6 +42,8 @@ public class Bacteria extends Troop {
     lipidsCost = LIPIDS_COST;
     sugarsCost = SUGARS_COST;
     proteinCost = PROTEINS_COST;
+
+    killingPoints = 5;
 
     // Temporary implementation for images for the HUD
     //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");

@@ -205,8 +205,10 @@ public class EncounterScreen implements Screen {
         value = new DecimalFormat("0");
     }
 
+  public Communicator getCommunicator() { return comms; }
 
-    /**
+
+  /**
      * The type Texture Pool.
      */
     private class TexturePool extends Pool<Animation<TextureRegion>> {

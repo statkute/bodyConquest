@@ -13,14 +13,13 @@ public class Virus extends Troop {
   public Virus() {
     super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
     init();
-    killingPoints = 10;
   }
 
   /*
   Each moving unit could be given a queue of checkpoints to reach
   and then one left at the enemy base it would be within range and attack
   */
-  public Virus(PlayerType playerType, Lane lane) {
+  public Virus(Lane lane, PlayerType playerType) {
     super(lane, playerType);
     init();
   }
@@ -41,6 +40,8 @@ public class Virus extends Troop {
     lipidsCost = LIPIDS_COST;
     sugarsCost = SUGARS_COST;
     proteinCost = PROTEINS_COST;
+
+    killingPoints = 10;
 
     // Temporary implementation for images for the HUD
     //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/virus.png");

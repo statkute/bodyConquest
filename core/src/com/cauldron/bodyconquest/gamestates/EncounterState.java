@@ -87,6 +87,7 @@ public class EncounterState extends GameState {
   private Resources bottomResources;
 
   private Organ organ;
+  private boolean end;
 
   /** Constructor. */
   public EncounterState(Game game, Organ organ) {
@@ -123,6 +124,9 @@ public class EncounterState extends GameState {
     projectilesBottom = new CopyOnWriteArrayList<Projectile>();
     projectilesTop = new CopyOnWriteArrayList<Projectile>();
 
+    totalScoreBottom = bottomPlayer.getScore();
+    totalScoreTop = topPlayer.getScore();
+
     // Maybe make constructors for these in the Player class so they can be modified for each player
     // And the modifications can be kept consistent across Encounters
     bottomResources = new Resources(server, PlayerType.PLAYER_BOTTOM);
@@ -130,6 +134,8 @@ public class EncounterState extends GameState {
 
     bottomResources.start();
     topResources.start();
+
+    end = false;
 
     if (game.getGameType() == GameType.SINGLE_PLAYER) {
       BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
@@ -153,23 +159,22 @@ public class EncounterState extends GameState {
 
     for (Troop troop : troopsP1) {
       if (troop.isDead()) {
-        if(troop.getPlayerType() == PlayerType.PLAYER_TOP){
-          totalScoreBottom += troop.getKillingPoints();
-          //serverSender.sendMessage();
-        }
-        else if(troop.getPlayerType() == PlayerType.PLAYER_BOTTOM){
-          totalScoreTop += troop.getKillingPoints();
-          //serverSender.sendMessage();
-        }
         deadTroops.add(troop);
         continue;
       }
       troop.checkAttack(troopsP2);
     }
 
-    for (Troop u : deadTroops) {
-      troopsP1.remove(u);
-      allMapObjects.remove(u);
+    for (Troop troop : deadTroops) {
+      if(troop.getPlayerType() == PlayerType.PLAYER_TOP){
+        //System.out.println("Kill Points BP: " + troop.getKillingPoints());
+        totalScoreBottom += troop.getKillingPoints();
+      }
+      else if(troop.getPlayerType() == PlayerType.PLAYER_BOTTOM){
+        totalScoreTop += troop.getKillingPoints();
+      }
+      troopsP1.remove(troop);
+      allMapObjects.remove(troop);
     }
   }
 
@@ -282,12 +287,12 @@ public class EncounterState extends GameState {
       if(playerType == PlayerType.PLAYER_BOTTOM){
         if(bottomResources.canAfford(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST)){
           bottomResources.buy(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST);
-          troop = new Bacteria(playerType, lane);
+          troop = new Bacteria(lane, playerType);
         } else{
 
         }
       } else if(playerType == PlayerType.PLAYER_TOP){
-        troop = new Bacteria(playerType, lane);
+        troop = new Bacteria(lane, playerType);
       }
     } else if (unitType.equals(UnitType.FLU)) {
       if(playerType == PlayerType.PLAYER_BOTTOM){
@@ -304,12 +309,12 @@ public class EncounterState extends GameState {
       if(playerType == PlayerType.PLAYER_BOTTOM){
         if(bottomResources.canAfford(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST)){
           bottomResources.buy(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST);
-          troop = new Virus(playerType, lane);
+          troop = new Virus(lane, playerType);
         }else{
 
         }
       }else if(playerType == PlayerType.PLAYER_TOP){
-        troop = new Virus(playerType, lane);
+        troop = new Virus(lane, playerType);
       }
     }
 
@@ -379,6 +384,21 @@ public class EncounterState extends GameState {
       // activate1();
 
     }
+  }
+
+  private void endGame(PlayerType player) {
+    if(player == PlayerType.PLAYER_BOTTOM) {
+      totalScoreBottom += organ.getOrganScore();
+    } else {
+      totalScoreTop += organ.getOrganScore();
+    }
+
+    bottomPlayer.setScore(totalScoreBottom);
+    topPlayer.setScore(totalScoreTop);
+
+    end = true;
+
+    //game.
   }
 
   public CopyOnWriteArrayList<Troop> getTroopsTop() {

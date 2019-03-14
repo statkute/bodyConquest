@@ -73,6 +73,7 @@ public abstract class Troop extends MapObject implements Spawnable {
   // Temporary implementation to get images for the HUD
   public Image sprite;
 
+
   /**
    * The constructor.
    *

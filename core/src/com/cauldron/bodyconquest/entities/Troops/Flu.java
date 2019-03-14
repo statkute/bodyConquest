@@ -17,7 +17,11 @@ public class Flu extends Troop {
   public Flu() {
     super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
     init();
-    killingPoints = 7;
+  }
+
+  public Flu(Lane lane, PlayerType playerType) {
+    super(lane, playerType);
+    init();
   }
 
   /*
@@ -50,6 +54,8 @@ public class Flu extends Troop {
     lipidsCost = LIPIDS_COST;
     sugarsCost = SUGARS_COST;
     proteinCost = PROTEINS_COST;
+
+    killingPoints = 7;
 
     // Temporary implementation for images for the HUD
     //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/flu.png");

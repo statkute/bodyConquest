@@ -13,10 +13,12 @@ public class Player {
   private Disease disease;
   private ArrayList<Organ> claimedOrgans;
   private final Assets.PlayerType playerType;
+  private int score;
 
   public Player(Assets.PlayerType playerType, Disease playerDisease) {
     this.playerType = playerType;
     this.disease = playerDisease;
+    score = 0;
   }
 
   public Disease getDisease() {
@@ -40,5 +42,13 @@ public class Player {
       e.printStackTrace();
       return null;
     }
+  }
+
+  public int getScore() {
+    return score;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
   }
 }
