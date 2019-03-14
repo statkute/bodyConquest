@@ -251,6 +251,8 @@ public class EncounterState extends GameState {
 
         serverSender.sendMessage(messageb);
         serverSender.sendMessage(messaget);
+        String pointsMessage = MessageMaker.pointsMessage(totalScoreTop, totalScoreBottom);
+        serverSender.sendMessage(pointsMessage);
         counter = 0;
 
       } catch (IOException e) {

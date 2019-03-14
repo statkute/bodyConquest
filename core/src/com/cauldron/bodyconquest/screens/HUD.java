@@ -1,17 +1,14 @@
 package com.cauldron.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -32,9 +29,7 @@ import com.cauldron.bodyconquest.constants.ClassOwner;
 import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.entities.HealthBar;
 import com.cauldron.bodyconquest.entities.Spawnable;
-import com.cauldron.bodyconquest.entities.Troops.Troop;
 import com.cauldron.bodyconquest.entities.UnitBar;
-import com.cauldron.bodyconquest.entities.abilities.Ability;
 import com.cauldron.bodyconquest.rendering.BodyConquest;
 import com.cauldron.bodyconquest.resourcebars.CarbsResourceBar;
 import com.cauldron.bodyconquest.resourcebars.LipidsResourceBar;

@@ -177,6 +177,21 @@ public class ClientLogic extends Thread {
         communicator.setSugarsTop(sugars);
         communicator.setProteinsTop(proteins);
       }
+    } else if (message.startsWith(MessageMaker.POINTS_HEADER)) {
+      int topPlayerPoints;
+      int bottomPlayerPoints;
+      pointer = MessageMaker.POINTS_HEADER.length();
+
+      String topPointsString = message.substring(pointer, pointer + MessageMaker.POINTS_PADDING);
+      topPlayerPoints = Integer.parseInt(topPointsString);
+      pointer += MessageMaker.POINTS_PADDING + 1;
+
+      String bottomPointsString = message.substring(pointer, pointer + MessageMaker.POINTS_PADDING);
+      bottomPlayerPoints = Integer.parseInt(bottomPointsString);
+
+      communicator.setScoreTop(topPlayerPoints);
+      communicator.setScoreBottom(bottomPlayerPoints);
+
     }
   }
 

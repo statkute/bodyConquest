@@ -6,6 +6,7 @@ import com.cauldron.bodyconquest.constants.Assets.PlayerType;
 import com.cauldron.bodyconquest.constants.Assets.UnitType;
 import com.cauldron.bodyconquest.constants.Disease;
 import com.cauldron.bodyconquest.constants.Organ;
+import com.cauldron.bodyconquest.game_logic.Player;
 
 public class MessageMaker {
 
@@ -21,10 +22,12 @@ public class MessageMaker {
   public static final String CONFIRM_RACE_HEADER = "CONFIRM_RACE_";
   public static final String CONFIRM_ORGAN_HEADER = "CONFIRM_ORGAN_";
   public static final String START_ENCOUNTER_HEADER = "START_ENCOUNTER_";
+  public static final String POINTS_HEADER = "POINTS_HEADER_";
 
   public static final int RESOURCE_PADDING = 3;
   public static final int HEALTH_PADDING = 3;
   public static final int COORDINATE_PADDING = 4;
+  public static final int POINTS_PADDING = 4;
 
   public static final String PAUSE_MESSAGE = "PAUSE";
   public static final String EXIT_MESSAGE = "EXIT";
@@ -142,4 +145,14 @@ public class MessageMaker {
     return message;
   }
 
+  public static String pointsMessage(int topPlayerPoints, int bottomPlayerPoints) {
+    String message = POINTS_HEADER;
+
+    message += String.format("%0" + POINTS_PADDING + "d", topPlayerPoints);
+    message += "_";
+
+    message += String.format("%0" + POINTS_PADDING + "d", bottomPlayerPoints);
+
+    return message;
+  }
 }
