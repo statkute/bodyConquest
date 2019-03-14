@@ -255,6 +255,8 @@ public class EncounterState extends GameState {
         serverSender.sendMessage(pointsMessage);
         counter = 0;
 
+
+
       } catch (IOException e) {
         e.printStackTrace();
       }
