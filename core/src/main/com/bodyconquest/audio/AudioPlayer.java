@@ -163,7 +163,7 @@ public class AudioPlayer {
   public void changeMusicVolume(float volume) {
     if (volume > 1.0f || volume < 0.0f) return;
     MUSIC_VOLUME = volume;
-    if (!muted) currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME * 0.3f);
+//    if (!muted) currentMusic.setVolume(MUSIC_VOLUME * MASTER_VOLUME * 0.3f);
   }
 
   public boolean getMutedSFX() {
