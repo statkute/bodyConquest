@@ -11,6 +11,7 @@ import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.networking.Client;
 import main.com.bodyconquest.networking.Server;
+import main.com.bodyconquest.screens.LeaderboardScreen;
 import main.com.bodyconquest.screens.StartScreen;
 
 /*
@@ -54,6 +55,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     audioPlayer.playMusicLoop("music");
     //setScreen(new MenuScreen(this));
     setScreen(new StartScreen(this));
+    //setScreen(new LeaderboardScreen(this));
     client = new Client();
   }
 

@@ -114,6 +114,10 @@ public class Assets {
   /** The constant registerPassword. */
   public static String registerPassword = "core/assets/PASSWORD_start.png";
 
+  /** Leaderboard Screen Assets */
+  public static String headerLeaderboard = "core/assets/topscores.png";
+
+
   /** Fonts */
 
   /** The constant timerFont. */
