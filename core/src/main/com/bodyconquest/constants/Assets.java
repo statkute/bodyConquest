@@ -300,9 +300,9 @@ public class Assets {
   public static final String music = "core/assets/music_underclocked.wav";
 
   /** The constant baseTopX. */
-  public static final int baseTopX = 130;
+  public static final int baseTopX = 140;
   /** The constant baseTopY. */
-  public static final int baseTopY = 450;
+  public static final int baseTopY = 475;
   /** The constant baseBottomX. */
   public static final int baseBottomX = 545;
   /** The constant baseBottomY. */

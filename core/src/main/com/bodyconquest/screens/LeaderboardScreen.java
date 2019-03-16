@@ -1,7 +1,8 @@
-package com.cauldron.bodyconquest.screens;
+package main.com.bodyconquest.screens;
 
 import com.badlogic.gdx.Screen;
-import com.cauldron.bodyconquest.rendering.BodyConquest;
+import main.com.bodyconquest.rendering.BodyConquest;
+import main.com.bodyconquest.screens.AbstractGameScreen;
 
 import java.util.HashMap;
 
