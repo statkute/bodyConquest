@@ -316,7 +316,7 @@ public class HUD {
       healthBar =
           new HealthBar(
               Assets.healthBarWidth, Assets.healthBarHeight, screen, PlayerType.PLAYER_TOP);
-      healthBar.setPosition(Assets.baseTopX, Assets.baseTopY + Assets.healthYAdjustmentTop);
+      healthBar.setPosition(Assets.baseTopX -5, Assets.baseTopY + Assets.healthYAdjustmentTop -18);
     }
 
     stage.addActor(healthBar);

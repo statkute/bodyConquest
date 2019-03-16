@@ -35,8 +35,8 @@ public class HealthBar extends ProgressBar {
     if (playerType == Assets.PlayerType.PLAYER_TOP) {
       batch.draw(
           healthBorder,
-          Assets.baseTopX - 4,
-          Assets.baseTopY + Assets.healthYAdjustmentTop - 3);
+          Assets.baseTopX - 10,
+          Assets.baseTopY + Assets.healthYAdjustmentTop - 22);
       updateTop();
     } else {
       batch.draw(
