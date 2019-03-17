@@ -6,7 +6,10 @@ import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.rendering.BodyConquest;
 import main.com.bodyconquest.screens.AbstractGameScreen;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static java.util.Map.Entry.comparingByValue;
 import static java.util.stream.Collectors.toMap;
@@ -15,7 +18,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
 
 
     private HashMap<String,Integer> leaderboard;
-    private HashMap<String,Integer> sorted;
+    private LinkedHashMap sorted;
     private Texture header;
     private int place;
 
@@ -50,7 +53,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
         game.batch.begin();
         game.batch.draw(header,BodyConquest.V_WIDTH / 2.0f - header.getWidth() / 2.0f, 450);
         game.usernameFont.getData().setScale(1.0f, 1.0f);
-        for(String s: sorted.keySet()){
+        for(Object s: sorted.keySet()){
             place++;
             switch (place){
                 case 1:
@@ -122,12 +125,12 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     }
 
     public void sortLeaderboard(){
-        sorted = leaderboard
+        this.sorted = leaderboard
                 .entrySet()
                 .stream()
-                .sorted(comparingByValue())
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
                 .collect(
-                        toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
-                                HashMap::new));
+                        toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
+                                LinkedHashMap::new));
     }
 }

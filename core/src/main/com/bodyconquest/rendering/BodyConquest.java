@@ -54,8 +54,8 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     audioPlayer.loadMusic("music", Assets.music);
     audioPlayer.playMusicLoop("music");
     //setScreen(new MenuScreen(this));
-    setScreen(new StartScreen(this));
-    //setScreen(new LeaderboardScreen(this));
+    //setScreen(new StartScreen(this));
+    setScreen(new LeaderboardScreen(this));
     client = new Client();
   }
 
