@@ -2,6 +2,7 @@ package main.com.bodyconquest.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.rendering.BodyConquest;
 import main.com.bodyconquest.screens.AbstractGameScreen;
@@ -21,6 +22,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     private LinkedHashMap sorted;
     private Texture header;
     private int place;
+    private Table table;
 
 
 
@@ -57,42 +59,33 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
             place++;
             switch (place){
                 case 1:
-                    game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,400.0f );
+                    game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,400.0f);
                     break;
                 case 2:
-                   // game.batch.begin();
-                    game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,360.0f );
+                    game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,360.0f);
                     break;
                 case 3:
-                    //game.batch.begin();
                     game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,320.0f );
                     break;
                 case 4:
-                       // game.batch.begin();
-                        game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,280.0f );
-                        break;
+                    game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,280.0f );
+                    break;
                 case 5:
-                    //game.batch.begin();
                     game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,240.0f );
                     break;
                 case 6:
-                    //game.batch.begin();
                     game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,200.0f );
                     break;
                 case 7:
-                    //game.batch.begin();
                     game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,160.0f );
                     break;
                 case 8:
-                    //game.batch.begin();
                     game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,120.0f );
                     break;
                 case 9:
-                    //game.batch.begin();
                     game.usernameFont.draw(game.batch, Integer.toString(place) + ".  \t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,80.0f );
                     break;
                 case 10:
-                    //game.batch.begin();
                     game.usernameFont.draw(game.batch, Integer.toString(place) + ".\t " + s + "  " + Integer.toString(leaderboard.get(s)),BodyConquest.V_WIDTH / 2.0f - 60.0f,40.0f );
                     break;
             }
