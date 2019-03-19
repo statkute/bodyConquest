@@ -19,6 +19,7 @@ public class Player {
   public Player(PlayerType playerType, Disease playerDisease) {
     this.playerType = playerType;
     this.disease = playerDisease;
+    claimedOrgans = new ArrayList<Organ>();
     score = 0;
   }
 
@@ -51,5 +52,9 @@ public class Player {
 
   public void setScore(int score) {
     this.score = score;
+  }
+
+  public void increaseScore(int score) {
+    this.score += score;
   }
 }

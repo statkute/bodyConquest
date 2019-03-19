@@ -2,7 +2,6 @@ package main.com.bodyconquest.game_logic;
 
 import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.gamestates.EncounterState;
-import main.com.bodyconquest.gamestates.GameStateManager;
 import main.com.bodyconquest.networking.Server;
 
 import java.net.SocketException;
@@ -16,12 +15,13 @@ public class Game extends Thread {
   private final long targetTime = 1000 / FPS;
 
   private Server server;
-  private GameStateManager gsm;
+  private EncounterState encounterState;
 
   private final GameType gameType;
 
   private Player playerBottom;
   private Player playerTop;
+  private boolean encounter;
 
   /**
    * Constructor
@@ -37,7 +37,6 @@ public class Game extends Thread {
 
   private void init() {
     running = true;
-    gsm = new GameStateManager(this);
   }
 
   @Override
@@ -72,7 +71,9 @@ public class Game extends Thread {
   }
 
   private void update() {
-    gsm.update();
+    if (encounter && encounterState != null){
+      encounterState.update();
+    }
   }
 
   public Server getServer() {
@@ -98,8 +99,9 @@ public class Game extends Thread {
   public void startEncounterState(Organ organ) {
     // Right now the Single player AI disease is set to INFLUENZA
     if (gameType == GameType.SINGLE_PLAYER) setPlayerTop(Disease.INFLUENZA);
-    EncounterState encounterState = new EncounterState(this, organ);
-    gsm.setCurrentGameState(encounterState);
+    encounterState = new EncounterState(this, organ);
+    encounter = true;
+    // gsm.setCurrentGameState(encounterState);
   }
 
   public void startEncounterLogic(EncounterState encounterState) {
@@ -119,5 +121,11 @@ public class Game extends Thread {
   }
 
   public void startBodyState() { server.startBodyLogic(); }
+
+  public void endEncounter() {
+    encounter = false;
+    encounterState = null;
+    startBodyState();
+  }
 
 }

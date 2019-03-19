@@ -1,9 +1,11 @@
 package main.com.bodyconquest.constants;
 
+import main.com.bodyconquest.entities.Troops.Troop;
+
 /**
- * The enum Lane.
+ * An enumeration for the different lanes {@link Troop}s can be assigned to, to determine how
+ * those Troops move.
  */
-// All lanes
 public enum Lane implements Encodable {
 
   /**
