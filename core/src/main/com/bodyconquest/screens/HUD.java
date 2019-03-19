@@ -170,26 +170,27 @@ public class HUD {
             // If you cannot afford the payload, then the colour should be set to red instead of
             // green
             ClassOwner co = (ClassOwner) payload.getObject();
-            boolean canAfford = false;
-            try {
-              Communicator comms = screen.getCommunicator();
-              Spawnable instance =
-                  (Spawnable)
-                      co.getAssociatedClass()
-                          .getDeclaredConstructor(Lane.class, PlayerType.class)
-                          .newInstance(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
-              canAfford =
-                  comms.getResource(Resource.LIPID, playerType) >= instance.getLipidCost()
-                      && comms.getResource(Resource.PROTEIN, playerType)
-                          >= instance.getProteinCost()
-                      && comms.getResource(Resource.SUGAR, playerType) >= instance.getSugarCost();
-            } catch (NoSuchMethodException
-                | InstantiationException
-                | InvocationTargetException
-                | IllegalAccessException e) {
-              e.printStackTrace();
+            boolean canAfford = true;
+            if (payload.getObject().getClass().equals(UnitType.class)) {
+              try {
+                Communicator comms = screen.getCommunicator();
+                Spawnable instance =
+                    (Spawnable)
+                        co.getAssociatedClass()
+                            .getDeclaredConstructor(Lane.class, PlayerType.class)
+                            .newInstance(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
+                canAfford =
+                    comms.getResource(Resource.LIPID, playerType) >= instance.getLipidCost()
+                        && comms.getResource(Resource.PROTEIN, playerType)
+                            >= instance.getProteinCost()
+                        && comms.getResource(Resource.SUGAR, playerType) >= instance.getSugarCost();
+              } catch (NoSuchMethodException
+                  | InstantiationException
+                  | InvocationTargetException
+                  | IllegalAccessException e) {
+                e.printStackTrace();
+              }
             }
-
             if (canAfford) {
               getActor().setColor(0, 255, 0, 0.5f);
             } else {

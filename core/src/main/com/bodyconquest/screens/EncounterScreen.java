@@ -156,7 +156,7 @@ public class EncounterScreen implements Screen {
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
-    menuScreen = new MenuScreen(game, username);
+   // menuScreen = new MenuScreen(game, username);
     //    while (comms.getPlayerDisease() == null) {
     //      try { Gdx.app.wait(); } catch (InterruptedException e) {e.printStackTrace();}
     //    }
@@ -319,7 +319,7 @@ public class EncounterScreen implements Screen {
 
     if(destroyed) {
       determineWinner();
-      switchScreen(game, menuScreen);
+      switchScreen(game, new BodyScreen(game, gameType));
     }
 
   }
@@ -511,16 +511,13 @@ public class EncounterScreen implements Screen {
   public void switchScreen(final BodyConquest game, final Screen newScreen) {
     stage.getRoot().getColor().a = 1;
     SequenceAction sequenceAction = new SequenceAction();
-    sequenceAction.addAction(Actions.fadeOut(2.5f));
+    sequenceAction.addAction(Actions.fadeOut(1.0f));
     sequenceAction.addAction(
         Actions.run(
-            new Runnable() {
-              @Override
-              public void run() {
-                dispose();
-                game.setScreen(new MenuScreen(game, ""));
-              }
-            }));
+                () -> {
+                  dispose();
+                  game.setScreen(newScreen);
+                }));
     stage.getRoot().addAction(sequenceAction);
   }
 
@@ -562,44 +559,44 @@ public class EncounterScreen implements Screen {
     if (playerType == PlayerType.PLAYER_BOTTOM) {
       if ((healthBottomBase <= 0) || (time == 0.0f && healthBottomBase < healthTopBase)) {
         ShowGameResult("DEFEAT!");
-        client.closeEverything();
-        if (server != null) {
-          server.closeEverything();
-        }
+//        client.closeEverything();
+//        if (server != null) {
+//          server.closeEverything();
+//        }
       } else if ((healthTopBase <= 0) || (time == 0.0f && healthBottomBase > healthTopBase)) {
         scoreBottom += map.getPoints();
         ShowGameResult("VICTORY!\nYou get: " + map.getPoints() + "points");
-        client.closeEverything();
-        if (server != null) {
-          server.closeEverything();
-        }
+//        client.closeEverything();
+//        if (server != null) {
+//          server.closeEverything();
+//        }
       } else if (time == 0.0f && healthTopBase == healthBottomBase) {
         ShowGameResult("DRAW!");
-        client.closeEverything();
-        if (server != null) {
-          server.closeEverything();
-        }
+//        client.closeEverything();
+//        if (server != null) {
+//          server.closeEverything();
+//        }
       }
     } else {
       if (healthTopBase <= 0 || (time == 0.0f && healthBottomBase > healthTopBase)) {
         ShowGameResult("DEFEAT!");
-        client.closeEverything();
-        if (server != null) {
-          server.closeEverything();
-        }
+//        client.closeEverything();
+//        if (server != null) {
+//          server.closeEverything();
+//        }
       } else if (healthBottomBase <= 0 || (time == 0.0f && healthBottomBase < healthTopBase)) {
         scoreTop += map.getPoints();
         ShowGameResult("VICTORY!\nYou get: " + map.getPoints() + "points");
-        client.closeEverything();
-        if (server != null) {
-          server.closeEverything();
-        }
+//        client.closeEverything();
+//        if (server != null) {
+//          server.closeEverything();
+//        }
       } else if (time == 0.0f && healthTopBase == healthBottomBase) {
         ShowGameResult("DRAW!");
-        client.closeEverything();
-        if (server != null) {
-          server.closeEverything();
-        }
+//        client.closeEverything();
+//        if (server != null) {
+//          server.closeEverything();
+//        }
       }
     }
     game.batch.end();

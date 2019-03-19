@@ -1,6 +1,5 @@
 package main.com.bodyconquest.gamestates;
 
-import com.badlogic.gdx.Gdx;
 import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.entities.BasicObject;
 import main.com.bodyconquest.entities.Map;
@@ -17,7 +16,6 @@ import main.com.bodyconquest.game_logic.BasicTestAI;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.game_logic.MultiplayerTestAI;
 import main.com.bodyconquest.game_logic.Player;
-import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.networking.ServerSender;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.networking.utilities.Serialization;
@@ -26,18 +24,10 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/** The {@link GameState} where all of the encounter logic takes place. */
-public class EncounterState extends GameState {
+/** The game state where all of the encounter logic takes place. */
+public class EncounterState {
 
-  /**
-   * An enumeration for the different assignments {@link Troop}s can have to determine how Troops
-   * move and who/what they attack.
-   */
-
-  /**
-   * An enumeration for the different lanes {@link Troop}s can be assigned to, to determine how
-   * those Troops move.
-   */
+  private Game game;
 
   /** The map object that holds all information that needs to be known about the map. */
   private Map map;
@@ -79,15 +69,13 @@ public class EncounterState extends GameState {
   private Resources bottomResources;
 
   private Organ organ;
-  private boolean end;
 
   /** Constructor. */
   public EncounterState(Game game, Organ organ) {
-    super(game);
+    this.game = game;
     this.organ = organ;
-    Server server = game.getServer();
-    serverSender = server.getServerSender();
-    // map = new Map();
+
+    serverSender = game.getServer().getServerSender();
 
     game.startEncounterLogic(this);
 
@@ -101,7 +89,6 @@ public class EncounterState extends GameState {
     troopsTop = new CopyOnWriteArrayList<>();
 
     // Create player bases
-    //bottomBase = new InfluenzaBase(Lane.ALL, PlayerType.PLAYER_BOTTOM);
     bottomBase = bottomPlayer.getNewBase();
     bottomBase.setPosition(Assets.baseBottomX, Assets.baseBottomY);
     troopsBottom.add(bottomBase);
@@ -118,15 +105,11 @@ public class EncounterState extends GameState {
     totalScoreBottom = bottomPlayer.getScore();
     totalScoreTop = topPlayer.getScore();
 
-    // Maybe make constructors for these in the Player class so they can be modified for each player
-    // And the modifications can be kept consistent across Encounters
-    bottomResources = new Resources(server, PlayerType.PLAYER_BOTTOM);
-    topResources = new Resources(server, PlayerType.PLAYER_TOP);
+    bottomResources = new Resources(PlayerType.PLAYER_BOTTOM);
+    topResources = new Resources(PlayerType.PLAYER_TOP);
 
     bottomResources.start();
     topResources.start();
-
-    end = false;
 
     if (game.getGameType() == GameType.SINGLE_PLAYER) {
       BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
@@ -158,7 +141,6 @@ public class EncounterState extends GameState {
 
     for (Troop troop : deadTroops) {
       if(troop.getPlayerType() == PlayerType.PLAYER_TOP){
-        //System.out.println("Kill Points BP: " + troop.getKillingPoints());
         totalScoreBottom += troop.getKillingPoints();
       }
       else if(troop.getPlayerType() == PlayerType.PLAYER_BOTTOM){
@@ -192,26 +174,8 @@ public class EncounterState extends GameState {
   }
 
   /** {@inheritDoc} */
-  @Override
   public void update() {
     counter ++;
-   // Timer.startTimer(20);
-
-//    try {
-//      Thread.sleep(20);
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-//    }
-
-    // ! Important if you do not want to update encounter state, bases health should go to minus
-    // because
-    // Encounter state is instantiated before encounter screen and it starts getting health before
-    // game is started of the base
-
-    //    if(comms.getBottomHealthPercentage() >= 0 && comms.getTopHealthPercentage() >= 0){
-    //
-    //     System.out.println(comms.getBottomHealthPercentage());
-
 
     for (MapObject mo : allMapObjects) mo.update();
 
@@ -224,45 +188,27 @@ public class EncounterState extends GameState {
     checkProjectiles(projectilesTop, troopsBottom);
     checkProjectiles(projectilesBottom, troopsTop);
 
-    // Change this so it only add new objects
-    CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
-    for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
 
-    if (counter == 3){
-      String json = "";
-      try {
-        json = Serialization.serialize(sentObjects);
+    if (counter == 3) {
 
-        serverSender.sendObjectUpdates(json);
+      sendMapObjectUpdates();
 
-        double healthBottom = bottomBase.getHealth();
-        double healthBottomMax = bottomBase.getMaxHealth();
-        double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
-        int healthB = (int) healthPercentage;
-        String messageb = MessageMaker.healthUpdate(healthB, PlayerType.PLAYER_BOTTOM);
+      sendPlayerHealthUpdates();
 
-        double healthTop = topBase.getHealth();
-        double healthTopMax = topBase.getMaxHealth();
-        double healthPercentageT = (healthTop / healthTopMax) * 100.0;
-        int healthT = (int) healthPercentageT;
+      sendResourceUpdates();
 
-        String messaget = MessageMaker.healthUpdate(healthT, PlayerType.PLAYER_TOP);
+      sendPlayerScoreUpdates();
 
-        serverSender.sendMessage(messageb);
-        serverSender.sendMessage(messaget);
-        String pointsMessage = MessageMaker.pointsMessage(totalScoreTop, totalScoreBottom);
-        serverSender.sendMessage(pointsMessage);
-        counter = 0;
+      counter = 0;
 
-
-
-      } catch (IOException e) {
-        e.printStackTrace();
+      if(topBase.getHealth() <= 0) {
+        endGame(PlayerType.PLAYER_BOTTOM);
       }
-    }
-    // TO DO: send this to the client
+      if(bottomBase.getHealth() <= 0) {
+        endGame(PlayerType.PLAYER_TOP);
+      }
 
-    // }
+    }
 
   }
 
@@ -379,26 +325,60 @@ public class EncounterState extends GameState {
     allMapObjects.add(projectile);
   }
 
-  private void checkPressed() {
-    if (Gdx.input.isKeyJustPressed(1)) {
-      // activate1();
-
+  private void sendMapObjectUpdates() {
+    CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
+    for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
+    try {
+      String json = Serialization.serialize(sentObjects);
+      serverSender.sendObjectUpdates(json);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
   private void endGame(PlayerType player) {
     if(player == PlayerType.PLAYER_BOTTOM) {
       totalScoreBottom += organ.getOrganScore();
+      bottomPlayer.claimOrgan(organ);
     } else {
       totalScoreTop += organ.getOrganScore();
+      topPlayer.claimOrgan(organ);
     }
 
     bottomPlayer.setScore(totalScoreBottom);
     topPlayer.setScore(totalScoreTop);
 
-    end = true;
+    game.endEncounter();
+  }
 
-    //game.
+  private void sendResourceUpdates() {
+    topResources.update();
+    bottomResources.update();
+    serverSender.sendMessage(topResources.getUpdateMessage());
+    serverSender.sendMessage(bottomResources.getUpdateMessage());
+  }
+
+  private void sendPlayerHealthUpdates() {
+    double healthBottom = bottomBase.getHealth();
+    double healthBottomMax = bottomBase.getMaxHealth();
+    double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
+    int healthB = (int) healthPercentage;
+    String messageb = MessageMaker.healthUpdate(healthB, PlayerType.PLAYER_BOTTOM);
+
+    double healthTop = topBase.getHealth();
+    double healthTopMax = topBase.getMaxHealth();
+    double healthPercentageT = (healthTop / healthTopMax) * 100.0;
+    int healthT = (int) healthPercentageT;
+
+    String messaget = MessageMaker.healthUpdate(healthT, PlayerType.PLAYER_TOP);
+
+    serverSender.sendMessage(messageb);
+    serverSender.sendMessage(messaget);
+  }
+
+  private void sendPlayerScoreUpdates() {
+    String pointsMessage = MessageMaker.pointsMessage(totalScoreTop, totalScoreBottom);
+    serverSender.sendMessage(pointsMessage);
   }
 
   public CopyOnWriteArrayList<Troop> getTroopsTop() {
@@ -407,14 +387,6 @@ public class EncounterState extends GameState {
 
   public CopyOnWriteArrayList<Troop> getTroopsBottom() {
     return troopsBottom;
-  }
-
-  public Resources getBottomResources() {
-    return bottomResources;
-  }
-
-  public Resources getTopResources() {
-    return topResources;
   }
 
   public void castAbility(AbilityType abilityType, PlayerType playerType, int xDest, int yDest) {
