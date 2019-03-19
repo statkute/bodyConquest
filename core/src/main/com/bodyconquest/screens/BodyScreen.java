@@ -449,143 +449,159 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
             t_header.getHeight() / 2);
     allImages.add(title);
 
-    heart = new Image(t_heart);
-    heart.setBounds(
-            BodyConquest.V_WIDTH / 5 - t_heart.getWidth() * 1.5f / 2,
-            330,
-            t_heart.getWidth() * 1.5f,
-            t_heart.getHeight() * 1.5f);
-    allImages.add(heart);
 
-    heartSelected = new Image(t_heartSelected);
-    heartSelected.setBounds(
-            BodyConquest.V_WIDTH / 5 - t_heartSelected.getWidth() * 1.5f / 2,
-            330,
-            t_heartSelected.getWidth() * 1.5f,
-            t_heartSelected.getHeight() * 1.5f);
+    if(!communicator.wasHeartSelected()){
+      heart = new Image(t_heart);
+      heart.setBounds(
+              BodyConquest.V_WIDTH / 5 - t_heart.getWidth() * 1.5f / 2,
+              330,
+              t_heart.getWidth() * 1.5f,
+              t_heart.getHeight() * 1.5f);
 
-    heartpoints = new Image(t_heartpoints);
-    heartpoints.setBounds(
-            BodyConquest.V_WIDTH / 5 - t_heartpoints.getWidth() / 3f / 2,
-            280,
-            t_heartpoints.getWidth() / 3f,
-            t_heartpoints.getHeight() / 3f);
-    allImages.add(heartpoints);
+      allImages.add(heart);
 
-    eye = new Image(t_eye);
-    eye.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_eye.getWidth() * 1.5f / 2,
-            330,
-            t_eye.getWidth() * 1.5f,
-            t_eye.getHeight() * 1.5f);
-    allImages.add(eye);
+      heartSelected = new Image(t_heartSelected);
+      heartSelected.setBounds(
+              BodyConquest.V_WIDTH / 5 - t_heartSelected.getWidth() * 1.5f / 2,
+              330,
+              t_heartSelected.getWidth() * 1.5f,
+              t_heartSelected.getHeight() * 1.5f);
 
-    eyeSelected = new Image(t_eyeSelected);
-    eyeSelected.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_eyeSelected.getWidth() * 1.5f / 2,
-            330,
-            t_eyeSelected.getWidth() * 1.5f,
-            t_eyeSelected.getHeight() * 1.5f);
+      heartpoints = new Image(t_heartpoints);
+      heartpoints.setBounds(
+              BodyConquest.V_WIDTH / 5 - t_heartpoints.getWidth() / 3f / 2,
+              280,
+              t_heartpoints.getWidth() / 3f,
+              t_heartpoints.getHeight() / 3f);
+      allImages.add(heartpoints);
+    }
 
-    eyepoints = new Image(t_eyepoints);
-    eyepoints.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_eyepoints.getWidth() / 3f / 2,
-            280,
-            t_eyepoints.getWidth() / 3f,
-            t_eyepoints.getHeight() / 3f);
-    allImages.add(eyepoints);
 
-    lungs = new Image(t_lungs);
-    lungs.setBounds(
-            BodyConquest.V_WIDTH / 5 * 4 - t_lungs.getWidth() * 1.5f / 2,
-            330,
-            t_lungs.getWidth() * 1.5f,
-            t_lungs.getHeight() * 1.5f);
-    allImages.add(lungs);
+    if(!communicator.wasEyeSelected()){
+      eye = new Image(t_eye);
+      eye.setBounds(
+              BodyConquest.V_WIDTH / 2 - t_eye.getWidth() * 1.5f / 2,
+              330,
+              t_eye.getWidth() * 1.5f,
+              t_eye.getHeight() * 1.5f);
+      allImages.add(eye);
 
-    lungsSelected = new Image(t_lungsSelected);
-    lungsSelected.setBounds(
-            BodyConquest.V_WIDTH / 5 * 4 - t_lungsSelected.getWidth() * 1.5f / 2,
-            330,
-            t_lungsSelected.getWidth() * 1.5f,
-            t_lungsSelected.getHeight() * 1.5f);
+      eyeSelected = new Image(t_eyeSelected);
+      eyeSelected.setBounds(
+              BodyConquest.V_WIDTH / 2 - t_eyeSelected.getWidth() * 1.5f / 2,
+              330,
+              t_eyeSelected.getWidth() * 1.5f,
+              t_eyeSelected.getHeight() * 1.5f);
 
-    lungspoints = new Image(t_lungspoints);
-    lungspoints.setBounds(
-            BodyConquest.V_WIDTH / 5 * 4 - t_lungspoints.getWidth() / 3f / 2,
-            280,
-            t_lungspoints.getWidth() / 3f,
-            t_lungspoints.getHeight() / 3f);
-    allImages.add(lungspoints);
+      eyepoints = new Image(t_eyepoints);
+      eyepoints.setBounds(
+              BodyConquest.V_WIDTH / 2 - t_eyepoints.getWidth() / 3f / 2,
+              280,
+              t_eyepoints.getWidth() / 3f,
+              t_eyepoints.getHeight() / 3f);
+      allImages.add(eyepoints);
+    }
 
-    brain = new Image(t_brain);
-    brain.setBounds(
-            BodyConquest.V_WIDTH / 5 - t_brain.getWidth() * 1.5f / 2,
-            150,
-            t_brain.getWidth() * 1.5f,
-            t_brain.getHeight() * 1.5f);
-    allImages.add(brain);
+    if(!communicator.wasLungsSelected()){
+      lungs = new Image(t_lungs);
+      lungs.setBounds(
+              BodyConquest.V_WIDTH / 5 * 4 - t_lungs.getWidth() * 1.5f / 2,
+              330,
+              t_lungs.getWidth() * 1.5f,
+              t_lungs.getHeight() * 1.5f);
+      allImages.add(lungs);
 
-    brainSelected = new Image(t_brainSelected);
-    brainSelected.setBounds(
-            BodyConquest.V_WIDTH / 5 - t_brainSelected.getWidth() * 1.5f / 2,
-            150,
-            t_brainSelected.getWidth() * 1.5f,
-            t_brainSelected.getHeight() * 1.5f);
+      lungsSelected = new Image(t_lungsSelected);
+      lungsSelected.setBounds(
+              BodyConquest.V_WIDTH / 5 * 4 - t_lungsSelected.getWidth() * 1.5f / 2,
+              330,
+              t_lungsSelected.getWidth() * 1.5f,
+              t_lungsSelected.getHeight() * 1.5f);
 
-    brainpoints = new Image(t_brainpoints);
-    brainpoints.setBounds(
-            BodyConquest.V_WIDTH / 5 - t_brainpoints.getWidth() / 3f / 2,
-            100,
-            t_brainpoints.getWidth() / 3f,
-            t_brainpoints.getHeight() / 3f);
-    allImages.add(brainpoints);
+      lungspoints = new Image(t_lungspoints);
+      lungspoints.setBounds(
+              BodyConquest.V_WIDTH / 5 * 4 - t_lungspoints.getWidth() / 3f / 2,
+              280,
+              t_lungspoints.getWidth() / 3f,
+              t_lungspoints.getHeight() / 3f);
+      allImages.add(lungspoints);
+    }
 
-    teeth = new Image(t_teeth);
-    teeth.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_teeth.getWidth() * 1.5f / 2,
-            150,
-            t_teeth.getWidth() * 1.5f,
-            t_teeth.getHeight() * 1.5f);
-    allImages.add(teeth);
 
-    teethSelected = new Image(t_teethSelected);
-    teethSelected.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_teethSelected.getWidth() * 1.5f / 2,
-            150,
-            t_teethSelected.getWidth() * 1.5f,
-            t_teethSelected.getHeight() * 1.5f);
+    if(!communicator.wasBrainSelected()){
+      brain = new Image(t_brain);
+      brain.setBounds(
+              BodyConquest.V_WIDTH / 5 - t_brain.getWidth() * 1.5f / 2,
+              150,
+              t_brain.getWidth() * 1.5f,
+              t_brain.getHeight() * 1.5f);
+      allImages.add(brain);
 
-    teethpoints = new Image(t_teethpoints);
-    teethpoints.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_teethpoints.getWidth() / 3f / 2,
-            100,
-            t_teethpoints.getWidth() / 3f,
-            t_teethpoints.getHeight() / 3f);
-    allImages.add(teethpoints);
+      brainSelected = new Image(t_brainSelected);
+      brainSelected.setBounds(
+              BodyConquest.V_WIDTH / 5 - t_brainSelected.getWidth() * 1.5f / 2,
+              150,
+              t_brainSelected.getWidth() * 1.5f,
+              t_brainSelected.getHeight() * 1.5f);
 
-    intestines = new Image(t_intestines);
-    intestines.setBounds(
-            BodyConquest.V_WIDTH / 5 * 4 - t_intestines.getWidth() * 1.5f / 2,
-            150,
-            t_intestines.getWidth() * 1.5f,
-            t_intestines.getHeight() * 1.5f);
-    allImages.add(intestines);
+      brainpoints = new Image(t_brainpoints);
+      brainpoints.setBounds(
+              BodyConquest.V_WIDTH / 5 - t_brainpoints.getWidth() / 3f / 2,
+              100,
+              t_brainpoints.getWidth() / 3f,
+              t_brainpoints.getHeight() / 3f);
+      allImages.add(brainpoints);
+    }
 
-    intestinesSelected = new Image(t_intestinesSelected);
-    intestinesSelected.setBounds(
-            BodyConquest.V_WIDTH / 5 * 4 - t_intestinesSelected.getWidth() * 1.5f / 2,
-            150,
-            t_intestinesSelected.getWidth() * 1.5f,
-            t_intestinesSelected.getHeight() * 1.5f);
+    if(!communicator.wasTeethSelected()){
+      teeth = new Image(t_teeth);
+      teeth.setBounds(
+              BodyConquest.V_WIDTH / 2 - t_teeth.getWidth() * 1.5f / 2,
+              150,
+              t_teeth.getWidth() * 1.5f,
+              t_teeth.getHeight() * 1.5f);
+      allImages.add(teeth);
 
-    intestinespoints = new Image(t_intestinespoints);
-    intestinespoints.setBounds(
-            BodyConquest.V_WIDTH / 5 * 4 - t_intestinespoints.getWidth() / 3f / 2,
-            100,
-            t_intestinespoints.getWidth() / 3f,
-            t_intestinespoints.getHeight() / 3f);
-    allImages.add(intestinespoints);
+      teethSelected = new Image(t_teethSelected);
+      teethSelected.setBounds(
+              BodyConquest.V_WIDTH / 2 - t_teethSelected.getWidth() * 1.5f / 2,
+              150,
+              t_teethSelected.getWidth() * 1.5f,
+              t_teethSelected.getHeight() * 1.5f);
+
+      teethpoints = new Image(t_teethpoints);
+      teethpoints.setBounds(
+              BodyConquest.V_WIDTH / 2 - t_teethpoints.getWidth() / 3f / 2,
+              100,
+              t_teethpoints.getWidth() / 3f,
+              t_teethpoints.getHeight() / 3f);
+      allImages.add(teethpoints);
+    }
+
+    if(!communicator.wasIntestinesSelected()){
+      intestines = new Image(t_intestines);
+      intestines.setBounds(
+              BodyConquest.V_WIDTH / 5 * 4 - t_intestines.getWidth() * 1.5f / 2,
+              150,
+              t_intestines.getWidth() * 1.5f,
+              t_intestines.getHeight() * 1.5f);
+      allImages.add(intestines);
+
+      intestinesSelected = new Image(t_intestinesSelected);
+      intestinesSelected.setBounds(
+              BodyConquest.V_WIDTH / 5 * 4 - t_intestinesSelected.getWidth() * 1.5f / 2,
+              150,
+              t_intestinesSelected.getWidth() * 1.5f,
+              t_intestinesSelected.getHeight() * 1.5f);
+
+      intestinespoints = new Image(t_intestinespoints);
+      intestinespoints.setBounds(
+              BodyConquest.V_WIDTH / 5 * 4 - t_intestinespoints.getWidth() / 3f / 2,
+              100,
+              t_intestinespoints.getWidth() / 3f,
+              t_intestinespoints.getHeight() / 3f);
+      allImages.add(intestinespoints);
+    }
 
     continueImage = new Image(t_continueImage);
     continueImage.setBounds(

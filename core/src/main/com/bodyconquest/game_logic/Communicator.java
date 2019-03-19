@@ -510,4 +510,12 @@ public class Communicator {
   public boolean wasHeartSelected() {
     return heartSelected;
   }
+
+  public void addOponentOrgan(Organ organ){
+    opponentOrgans.add(organ);
+  }
+
+  public void addOrgan(Organ organ){
+    playerOrgans.add(organ);
+  }
 }
