@@ -43,6 +43,10 @@ public class EncounterScreen implements Screen {
 
   private final float mapSize;
 
+  //private boolean updating;
+
+  private int screenMakingCounter;
+
   private final Map map;
 
   /** The constant timeAlive. */
@@ -129,6 +133,8 @@ public class EncounterScreen implements Screen {
   public EncounterScreen(BodyConquest game, GameType gameType) {
     this.gameType = gameType;
     this.game = game;
+    //updating = true;
+    screenMakingCounter = 0;
     client = game.getClient();
     client.setEncounterLogic();
     clientSender = client.clientSender;
@@ -318,8 +324,12 @@ public class EncounterScreen implements Screen {
     }
 
     if(destroyed) {
+      System.out.println("Hello");
+      screenMakingCounter++;
       determineWinner();
-      switchScreen(game, new BodyScreen(game, gameType));
+      //destroyed = false;
+      if(screenMakingCounter == 1)
+        switchScreen(game, new BodyScreen(game, gameType));
     }
 
   }
@@ -508,10 +518,10 @@ public class EncounterScreen implements Screen {
    * @param game the game
    * @param newScreen the new screen
    */
-  public void switchScreen(final BodyConquest game, final Screen newScreen) {
+  public void switchScreen(final BodyConquest game, Screen newScreen) {
     stage.getRoot().getColor().a = 1;
     SequenceAction sequenceAction = new SequenceAction();
-    sequenceAction.addAction(Actions.fadeOut(1.0f));
+    sequenceAction.addAction(Actions.fadeOut(2.0f));
     sequenceAction.addAction(
         Actions.run(
                 () -> {

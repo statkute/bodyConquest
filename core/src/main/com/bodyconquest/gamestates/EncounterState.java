@@ -337,6 +337,8 @@ public class EncounterState {
   }
 
   private void endGame(PlayerType player) {
+    String endingMessage = MessageMaker.organClaimMessage(player,organ);
+    serverSender.sendMessage(endingMessage);
     if(player == PlayerType.PLAYER_BOTTOM) {
       totalScoreBottom += organ.getOrganScore();
       bottomPlayer.claimOrgan(organ);

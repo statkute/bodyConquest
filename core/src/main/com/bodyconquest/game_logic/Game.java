@@ -3,6 +3,7 @@ package main.com.bodyconquest.game_logic;
 import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.gamestates.EncounterState;
 import main.com.bodyconquest.networking.Server;
+import main.com.bodyconquest.networking.utilities.MessageMaker;
 
 import java.net.SocketException;
 
@@ -97,8 +98,6 @@ public class Game extends Thread {
   }
 
   public void startEncounterState(Organ organ) {
-    // Right now the Single player AI disease is set to INFLUENZA
-    if (gameType == GameType.SINGLE_PLAYER) setPlayerTop(Disease.INFLUENZA);
     encounterState = new EncounterState(this, organ);
     encounter = true;
     // gsm.setCurrentGameState(encounterState);
@@ -120,7 +119,17 @@ public class Game extends Thread {
     server.closeEverything();
   }
 
-  public void startBodyState() { server.startBodyLogic(); }
+  public void startBodyState() {
+    if (gameType == GameType.SINGLE_PLAYER){
+      setPlayerTop(Disease.INFLUENZA);
+//      if(getPlayerBottom().getDisease() != Disease.INFLUENZA)
+//        setPlayerTop(Disease.INFLUENZA);
+//      else if(getPlayerBottom().getDisease() != Disease.MEASLES)
+//        setPlayerTop(Disease.MEASLES);
+      server.getServerSender().sendMessage(MessageMaker.diseaseMessage(Disease.INFLUENZA, PlayerType.PLAYER_TOP));
+    }
+
+    server.startBodyLogic(); }
 
   public void endEncounter() {
     encounter = false;

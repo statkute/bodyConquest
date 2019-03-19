@@ -17,6 +17,7 @@ public class MessageMaker {
   public static final String CONFIRM_ORGAN_HEADER = "CONFIRM_ORGAN_";
   public static final String START_ENCOUNTER_HEADER = "START_ENCOUNTER_";
   public static final String POINTS_HEADER = "POINTS_HEADER_";
+  public static final String ORGAN_CLAIMED = "CLAIMED_";
 
   public static final int RESOURCE_PADDING = 3;
   public static final int HEALTH_PADDING = 3;
@@ -148,5 +149,13 @@ public class MessageMaker {
     message += String.format("%0" + POINTS_PADDING + "d", bottomPlayerPoints);
 
     return message;
+  }
+
+  public static String organClaimMessage(PlayerType playerType, Organ organ){
+    String message = ORGAN_CLAIMED;
+    message += playerType.getEncoded() +"_" + organ.getEncoded();
+
+    return message;
+
   }
 }

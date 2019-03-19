@@ -194,6 +194,24 @@ public class ClientLogic extends Thread {
       communicator.setScoreBottom(bottomPlayerPoints);
 
     }
+
+    else if(message.startsWith(MessageMaker.ORGAN_CLAIMED)){
+      pointer = MessageMaker.ORGAN_CLAIMED.length();
+      String playerString = message.substring(pointer,pointer + PlayerType.getEncodedLength());
+      pointer +=PlayerType.getEncodedLength() +1; // for underscore
+      String organString = message.substring(pointer,pointer+Organ.getEncodedLength());
+
+      PlayerType player = PlayerType.decode(playerString);
+      Organ organ = Organ.decode(organString);
+
+      if(player == PlayerType.PLAYER_BOTTOM){
+        communicator.addOrgan(organ);
+      }
+
+      else{
+        communicator.addOponentOrgan(organ);
+      }
+    }
   }
 
   public void setRaceSelectionLogic() {
