@@ -63,10 +63,7 @@ public abstract class Projectile extends MapObject {
   }
 
   public void update() {
-    double xPrev, yPrev;
     if(distanceTraveled >= maxTravelDistance) setRemove();
-    xPrev = getX();
-    yPrev = getY();
     move();
     distanceTraveled = distFrom(xInit, yInit);
   }
@@ -77,6 +74,13 @@ public abstract class Projectile extends MapObject {
         hit(enemy);
       }
     }
+  }
+
+  @Override
+  public void move() {
+    super.move();
+    setX(dy);
+    setY(dy);
   }
 
   @Override

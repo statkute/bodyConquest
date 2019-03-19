@@ -97,8 +97,8 @@ public class EncounterState extends GameState {
     bottomPlayer = game.getPlayerBottom();
 
     // Initialise unit arrays
-    troopsBottom = new CopyOnWriteArrayList<Troop>();
-    troopsTop = new CopyOnWriteArrayList<Troop>();
+    troopsBottom = new CopyOnWriteArrayList<>();
+    troopsTop = new CopyOnWriteArrayList<>();
 
     // Create player bases
     //bottomBase = new InfluenzaBase(Lane.ALL, PlayerType.PLAYER_BOTTOM);
@@ -107,7 +107,6 @@ public class EncounterState extends GameState {
     troopsBottom.add(bottomBase);
     allMapObjects.add(bottomBase);
 
-    //topBase = new InfluenzaBase(Lane.ALL, PlayerType.PLAYER_TOP);
     topBase = topPlayer.getNewBase();
     topBase.setPosition(Assets.baseTopX, Assets.baseTopY);
     troopsTop.add(topBase);
@@ -216,6 +215,9 @@ public class EncounterState extends GameState {
 
     for (MapObject mo : allMapObjects) mo.update();
 
+    checkCollisions(troopsBottom, troopsTop);
+    checkCollisions(troopsTop, troopsBottom);
+
     // Update All Units
     checkAttack(troopsTop, troopsBottom);
     checkAttack(troopsBottom, troopsTop);
@@ -262,6 +264,12 @@ public class EncounterState extends GameState {
 
     // }
 
+  }
+
+  private void checkCollisions(CopyOnWriteArrayList<Troop> troops, CopyOnWriteArrayList<Troop> enemyTroops) {
+    for(Troop troop : troops) {
+        troop.checkCollisions(new CopyOnWriteArrayList<>(enemyTroops));
+    }
   }
 
   /**
@@ -420,14 +428,42 @@ public class EncounterState extends GameState {
           (Ability)
               abilityType
                   .getAssociatedClass()
-                  .getDeclaredConstructor(PlayerType.class, Lane.class)
-                  .newInstance(playerType, lane);
+                  .getDeclaredConstructor(Lane.class, PlayerType.class)
+                  .newInstance(lane, playerType);
       ability.cast(this);
     } catch (InstantiationException
         | IllegalAccessException
         | NoSuchMethodException
         | InvocationTargetException e) {
       e.printStackTrace();
+    }
+  }
+
+  public CopyOnWriteArrayList<Troop> getEnemyTroops(PlayerType player) {
+    if (player == PlayerType.PLAYER_BOTTOM) {
+      return getTroops(PlayerType.PLAYER_TOP);
+    } else {
+      return getTroops(PlayerType.PLAYER_BOTTOM);
+    }
+  }
+
+  public CopyOnWriteArrayList<Troop> getTroops(PlayerType player) {
+    if(player == PlayerType.PLAYER_BOTTOM) {
+      return troopsBottom;
+    } else {
+      return troopsTop;
+    }
+  }
+
+  public Base getTopBase() {
+    return topBase;
+  }
+
+  public Base getBase(PlayerType player) {
+    if(player == PlayerType.PLAYER_BOTTOM) {
+      return bottomBase;
+    } else {
+      return topBase;
     }
   }
 }

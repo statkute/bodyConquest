@@ -5,6 +5,9 @@ import main.com.bodyconquest.gamestates.EncounterState;
 
 import java.awt.*;
 import java.awt.geom.Area;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * This class contains all the properties and methods that all items will require to interact and
@@ -25,8 +28,8 @@ public abstract class MapObject {
   private double x;
   private double y;
   // Destination x and y
-  private double dx;
-  private double dy;
+  protected double dx;
+  protected double dy;
   // Object width and height
   private int width;
   private int height;
@@ -79,6 +82,7 @@ public abstract class MapObject {
    */
   public void setX(double x) {
     this.x = x;
+    dx = x;
   }
 
   /**
@@ -88,6 +92,7 @@ public abstract class MapObject {
    */
   public void setY(double y) {
     this.y = y;
+    dy = y;
   }
 
   /**
@@ -134,8 +139,29 @@ public abstract class MapObject {
    * @return The euclidean distance between this MapObject and the given MapObject.
    */
   protected double distFrom(MapObject mapObject) {
+    double minDist = Double.MAX_VALUE;
+    for(Point2D point : this.getCorners()) {
+      for(Point2D otherPoint : mapObject.getCorners()) {
+        minDist = Math.min(point.distance(otherPoint), minDist);
+      }
+    }
+    return minDist;
+  }
+  public double distBetween(MapObject mapObject) {
     return distFrom(mapObject.getCentreX(), mapObject.getCentreY());
   }
+
+  protected ArrayList<Point2D> getCorners() {
+    ArrayList<Point2D> corners = new ArrayList<>();
+
+    corners.add(new Point2D.Double(x, y));
+    corners.add(new Point2D.Double(x + cwidth, y));
+    corners.add(new Point2D.Double(x, y + cheight));
+    corners.add(new Point2D.Double(x + cwidth, y + cheight));
+
+    return corners;
+  }
+
 
   /**
    * Get the euclidean distance between the centre of this MapObject and the given co-ordinate.
@@ -441,7 +467,7 @@ public abstract class MapObject {
     dy += currentSpeed * Math.sin(direction);
 
     // This may need to exist outside of move in the future
-    checkCollisions();
+    //checkCollisions();
   }
 
   /**
@@ -462,9 +488,22 @@ public abstract class MapObject {
    * Check if the MapObject will collide if it makes its next movement, if there are no collisions
    * the MapObject finalises the movement. (Currently no collisions are checked)
    */
-  private void checkCollisions() {
+  public void checkCollisions(CopyOnWriteArrayList<MapObject> mapObjects) {
+    for(MapObject mo : mapObjects) {
+      if(this.checkCollision(mo)) return;
+    }
     x = dx;
     y = dy;
+  }
+
+  /**
+   * Get the {@link Shape} that represents the collision boundary of this MapObject when at it's destination.
+   *
+   * @return The {@link Shape} that represents the collision boundary of this MapObject when at it's destination.
+   */
+  private Shape getDestBounds() {
+    return new Rectangle(
+            (int) dx + ((width - cwidth) / 2), (int) dy + ((height - cheight) / 2), cwidth, cheight);
   }
 
   /**

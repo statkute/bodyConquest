@@ -2,47 +2,46 @@ package main.com.bodyconquest.entities.abilities;
 
 import main.com.bodyconquest.constants.Lane;
 import main.com.bodyconquest.constants.PlayerType;
+import main.com.bodyconquest.entities.Troops.Bases.Base;
 import main.com.bodyconquest.entities.Troops.Troop;
 import main.com.bodyconquest.gamestates.EncounterState;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/** An ability that slows all enemy units in a selected lane for a short time period. */
-public class RigorMortis extends Ability {
+public class Necrosis extends Ability {
 
   public static final int SUGARS_COST = 60;
-  public static final int PROTEINS_COST = 20;
-  public static final int LIPIDS_COST = 0;
+  public static final int PROTEINS_COST = 40;
+  public static final int LIPIDS_COST = 80;
 
   private Lane lane;
 
-  public RigorMortis() {
+  private int damage;
+
+  public Necrosis() {
     super(PlayerType.PLAYER_TOP);
   }
 
-  public RigorMortis(Lane lane, PlayerType playerType) {
+  public Necrosis(Lane lane, PlayerType playerType) {
     super(playerType);
-    this.lane = lane;
+    this.lane = lane; // Should always be Lane.ALL
+    this.lane = Lane.ALL;
     init();
   }
 
   private void init() {
     laneEffect = true;
+    damage = 1000000;
   }
 
   @Override
   public void cast(EncounterState game) {
-    CopyOnWriteArrayList<Troop> enemies;
-    if (playerType == PlayerType.PLAYER_TOP) {
-      enemies = game.getTroopsBottom();
-    } else {
-      enemies = game.getTroopsTop();
-    }
+    CopyOnWriteArrayList<Troop> enemies = game.getEnemyTroops(playerType);
+    Base myBase = game.getBase(playerType);
 
     for (Troop enemy : enemies) {
-      if (enemy.getLane() == lane) {
-        System.out.println("Setting slowed");
-        enemy.setSlowed(5000, 40);
+      if (myBase.distBetween(enemy) <= 300) {
+        enemy.hit(damage);
       }
     }
   }
@@ -73,4 +72,5 @@ public class RigorMortis extends Ability {
     // kind of ability
     return null;
   }
+
 }

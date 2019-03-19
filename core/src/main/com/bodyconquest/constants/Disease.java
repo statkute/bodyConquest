@@ -21,7 +21,7 @@ public enum Disease {
       UnitType.BACTERIA,
       UnitType.BACTERIA,
       UnitType.BACTERIA,
-      UnitType.BACTERIA);
+      AbilityType.NECROSIS);
 
   private static final int ENCODED_LENGTH = 3;
 

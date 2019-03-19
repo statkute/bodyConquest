@@ -717,14 +717,10 @@ public class EncounterScreen implements Screen {
     } else if (UnitType.BACTERIA.equals(i)) {
       return new TexturePool(
           Assets.pathBacteria, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
-    } else if (BaseType.INFLUENZA_BASE.equals(i)) {
+    } else if (BaseType.INFLUENZA_BASE == i) {
       return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
-      //        case ROTAVIRUS_BASE:
-      //          ////TO DO add Virus base Texture
-      //          break;
-      //        case MEASLES_BASE:
-      //          ////TO DO add Monster base Texture
-      //          break;
+    } else if (BaseType.ROTAVIRUS_BASE == i) {
+      return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
     } else if (ProjectileType.FLU_PROJECTILE.equals(i)) {
       return new TexturePool(
           Assets.pathProjectile, Assets.frameColsProjectile, Assets.frameRowsProjectile, frameRate);

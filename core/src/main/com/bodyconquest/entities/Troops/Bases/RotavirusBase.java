@@ -12,7 +12,7 @@ public class RotavirusBase extends Base {
   }
 
   private void init() {
-    this.health = 70;
+    this.health = 1000;
     this.maxHealth = health;
     this.damage = 10;
     mapObjectType = BaseType.ROTAVIRUS_BASE;

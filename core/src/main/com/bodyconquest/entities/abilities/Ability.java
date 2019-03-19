@@ -1,6 +1,5 @@
 package main.com.bodyconquest.entities.abilities;
 
-import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.Spawnable;
 import main.com.bodyconquest.gamestates.EncounterState;

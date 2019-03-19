@@ -97,7 +97,9 @@ public class Game extends Thread {
 
   public void startEncounterState(Organ organ) {
     // Right now the Single player AI disease is set to INFLUENZA
-    if (gameType == GameType.SINGLE_PLAYER) setPlayerTop(Disease.INFLUENZA);
+    if (gameType == GameType.SINGLE_PLAYER){
+      setPlayerTop(Disease.INFLUENZA);
+    }
     EncounterState encounterState = new EncounterState(this, organ);
     gsm.setCurrentGameState(encounterState);
   }
