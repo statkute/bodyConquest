@@ -9,7 +9,9 @@ import main.com.bodyconquest.entities.BasicObject;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/** The type Communicator. */
+/**
+ * The type Communicator.
+ */
 public class Communicator {
 
   /** Variables */
@@ -17,6 +19,13 @@ public class Communicator {
 
   private int bottomHealthPercentage;
   private int topHealthPercentage;
+
+  private boolean eyeSelected;
+  private boolean lungsSelected;
+  private boolean brainSelected;
+  private boolean intestinesSelected;
+  private boolean teethSelected;
+  private boolean heartSelected;
 
   private int lipidsTop;
   private int sugarsTop;
@@ -40,7 +49,9 @@ public class Communicator {
   private boolean startBodyScreen;
   private boolean startEncounter;
 
-  /** Instantiates a new Communicator. */
+  /**
+   * Instantiates a new Communicator.
+   */
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();
     playerDisease = null;
@@ -49,6 +60,12 @@ public class Communicator {
     opponentOrgans = new ArrayList<Organ>();
     startBodyScreen = false;
     startEncounter = false;
+    heartSelected = false;
+    eyeSelected = false;
+    brainSelected = false;
+    teethSelected = false;
+    intestinesSelected = false;
+    lungsSelected = false;
   }
 
   /**
@@ -411,6 +428,13 @@ public class Communicator {
     this.currentOrgan = currentOrgan;
   }
 
+  /**
+   * Gets resource.
+   *
+   * @param resource   the resource
+   * @param playerType the player type
+   * @return the resource
+   */
   public int getResource(Resource resource, PlayerType playerType) {
     if (resource == Resource.SUGAR) {
       if (playerType == PlayerType.PLAYER_BOTTOM) {
@@ -431,5 +455,59 @@ public class Communicator {
         return proteinsTop;
       }
     }
+  }
+
+  /**
+   * was eye selected boolean.
+   *
+   * @return the boolean
+   */
+  public boolean wasEyeSelected() {
+    return eyeSelected;
+  }
+
+  /**
+   * was lungs selected boolean.
+   *
+   * @return the boolean
+   */
+  public boolean wasLungsSelected() {
+    return lungsSelected;
+  }
+
+  /**
+   * was brain selected boolean.
+   *
+   * @return the boolean
+   */
+  public boolean wasBrainSelected() {
+    return brainSelected;
+  }
+
+  /**
+   * was intestines selected boolean.
+   *
+   * @return the boolean
+   */
+  public boolean wasIntestinesSelected() {
+    return intestinesSelected;
+  }
+
+  /**
+   * was teeth selected boolean.
+   *
+   * @return the boolean
+   */
+  public boolean wasTeethSelected() {
+    return teethSelected;
+  }
+
+  /**
+   * was heart selected boolean.
+   *
+   * @return the boolean
+   */
+  public boolean wasHeartSelected() {
+    return heartSelected;
   }
 }
