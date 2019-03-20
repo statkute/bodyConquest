@@ -248,7 +248,7 @@ public class Assets {
 
   /** The constant BOT_TURNPOINT_X. */
   // Turnpoints coordinates on the two lanes that have corners: BOTTOM and TOP
-  public static final float BOT_TURNPOINT_X = 150;
+  public static final float BOT_TURNPOINT_X = 100;
   /** The constant BOT_TURNPOINT_Y. */
   public static final float BOT_TURNPOINT_Y = 100;
   /** The constant TOP_TURNPOINT_X. */
@@ -282,7 +282,7 @@ public class Assets {
   /** The constant TP_TOP_LANE_SPAWN_X. */
   public static final float TP_TOP_LANE_SPAWN_X = 300;
   /** The constant TP_TOP_LANE_SPAWN_Y. */
-  public static final float TP_TOP_LANE_SPAWN_Y = 550;
+  public static final float TP_TOP_LANE_SPAWN_Y = 570;
 
   // private final float botLaneTPSpawnX = 170;
   // private final float botLaneTPSpawnY = 470;
