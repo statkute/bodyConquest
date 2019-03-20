@@ -157,7 +157,7 @@ public class EncounterScreen implements Screen {
     long tDelta = tEnd - MenuScreen.timeOfServer;
     elapsedSeconds = tDelta / 1000.0f;
 
-    map = new Map(comms.getCurrentOrgan(), elapsedSeconds);
+    map = new Map(comms.getCurrentOrgan());
     float topOfUnitBar = 27;
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
