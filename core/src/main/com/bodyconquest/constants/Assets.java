@@ -266,13 +266,13 @@ public class Assets {
   /** The constant BP_MID_LANE_SPAWN_Y. */
   public static final float BP_MID_LANE_SPAWN_Y = 230;
   /** The constant BP_TOP_LANE_SPAWN_X. */
-  public static final float BP_TOP_LANE_SPAWN_X = 625;
+  public static final float BP_TOP_LANE_SPAWN_X = 645;
   /** The constant BP_TOP_LANE_SPAWN_Y. */
   public static final float BP_TOP_LANE_SPAWN_Y = 225;
 
   /** The constant TP_BOT_LANE_SPAWN_X. */
   // Spawnpoint coords for TOP player
-  public static final float TP_BOT_LANE_SPAWN_X = 170; // 535;
+  public static final float TP_BOT_LANE_SPAWN_X = 160; // 535;
   /** The constant TP_BOT_LANE_SPAWN_Y. */
   public static final float TP_BOT_LANE_SPAWN_Y = 470; // 90;
   /** The constant TP_MID_LANE_SPAWN_X. */
