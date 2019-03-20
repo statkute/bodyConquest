@@ -13,20 +13,16 @@ public class Map extends Actor {
   private final double MAP_HEIGHT = 516.0;
   private final double MAP_WIDTH = 516.0;
 
-  private Texture texture;
-  private Animation<TextureRegion> animation;
   private float stateTime;
   private int frameCols;
   private int frameRows;
   private float frameRate;
   private Animation<TextureRegion> walkAnimation;
-  private float elapsed;
   private int points;
 
   // Should have some sort of resource manager and system
-  public Map(Organ organ, float elapsedseconds) {
+  public Map(Organ organ) {
     String texturePath = null;
-    elapsed = elapsedseconds;
     if(organ == Organ.LUNGS){
       texturePath = "core/assets/map_lungs_ss.png";
       frameCols = 4;
@@ -71,7 +67,7 @@ public class Map extends Actor {
   public void draw(Batch batch, float parentAlpha) {
 //    stateTime += Gdx.graphics.getDeltaTime();
 //    TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
-    stateTime += elapsed; // Accumulate elapsed animation time
+    stateTime += 10f; // Accumulate elapsed animation time
     // Get current frame of animation for the current stateTime
     //System.out.println(System.currentTimeMillis());
     TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
