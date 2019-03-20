@@ -264,7 +264,7 @@ public class Assets {
   /** The constant BP_MID_LANE_SPAWN_X. */
   public static final float BP_MID_LANE_SPAWN_X = 505;
   /** The constant BP_MID_LANE_SPAWN_Y. */
-  public static final float BP_MID_LANE_SPAWN_Y = 185;
+  public static final float BP_MID_LANE_SPAWN_Y = 230;
   /** The constant BP_TOP_LANE_SPAWN_X. */
   public static final float BP_TOP_LANE_SPAWN_X = 625;
   /** The constant BP_TOP_LANE_SPAWN_Y. */
