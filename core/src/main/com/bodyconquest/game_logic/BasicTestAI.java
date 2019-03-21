@@ -33,8 +33,8 @@ public class BasicTestAI extends Thread {
     running = true;
     units = new ArrayList<UnitType>(2);
     units.add(UnitType.BACTERIA);
-    // units.add(UnitType.FLU);
-    units.add(UnitType.VIRUS);
+    // units.add(UnitType.VIRUS);
+    units.add(UnitType.FUNGUS);
   }
 
   @Override
