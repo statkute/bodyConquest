@@ -94,7 +94,6 @@ public class EncounterScreen implements Screen {
   private DecimalFormat value;
 
   // To get back to menu screen change this to another encounter screen
-  private MenuScreen menuScreen;
 
   private Disease playerDisease;
 
@@ -164,7 +163,6 @@ public class EncounterScreen implements Screen {
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
-   // menuScreen = new MenuScreen(game, username);
     //    while (comms.getPlayerDisease() == null) {
     //      try { Gdx.app.wait(); } catch (InterruptedException e) {e.printStackTrace();}
     //    }
@@ -313,6 +311,7 @@ public class EncounterScreen implements Screen {
 
       if ((accumulatorAfterBaseConquered > 5 && !destroyed) || time == 0.0f) {
         destroyed = true;
+
 //        determineWinner();
 //        switchScreen(game, menuScreen);
       }
@@ -328,29 +327,21 @@ public class EncounterScreen implements Screen {
     }
 
     if(destroyed) {
-      //System.out.println("Hello");
       screenMakingCounter++;
+      organNumber = comms.getOpponentOrgans().size() + comms.getPlayerOrgans().size();
       determineWinner();
-      //organNumber = comms.getOpponentOrgans().size() + comms.getPlayerOrgans().size();
-      //destroyed = false;
+
       if(screenMakingCounter == 1){
 
-       // if(organNumber == 1){
-          //determineWinner();
-//          try {
-//            Thread.sleep(100);
-//          } catch (InterruptedException e) {
-//            e.printStackTrace();
-//          }
-          switchScreen(game, new MenuScreen(game,"adfds"));
-      //  }
+        if(organNumber == 6){
 
-//        else {
-//          switchScreen(game, new BodyScreen(game, gameType));
-//        }
+          switchScreen(game, new GameOverScreen(game,gameType));
+        }
+
+        else {
+          switchScreen(game, new BodyScreen(game, gameType));
+        }
       }
-
-
     }
 
   }

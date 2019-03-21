@@ -24,8 +24,8 @@ import java.util.ArrayList;
 public class BodyScreen extends AbstractGameScreen implements Screen {
   private GameType gameType;
 
-  private final OrthographicCamera gameCamera;
-  private final FitViewport gamePort;
+//  private final OrthographicCamera gameCamera;
+//  private final FitViewport gamePort;
   private final Stage stage;
 
   private Image title;
@@ -126,9 +126,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     //selectedOrganType = null;
 
-    gameCamera = new OrthographicCamera();
-    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
-    stage = new Stage(gamePort);
+//    gameCamera = new OrthographicCamera();
+//    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
+    stage = new Stage(viewport);
     Gdx.input.setInputProcessor(stage);
 
     loadAssets();
@@ -144,7 +144,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     game.batch.begin();
     Gdx.gl.glClearColor(0, 0, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    gameCamera.update();
+    camera.update();
     stage.draw();
     game.batch.end();
     if (communicator.getStartEncounter()) game.setScreen(new EncounterScreen(game, gameType));

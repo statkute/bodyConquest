@@ -2,6 +2,7 @@ package main.com.bodyconquest.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.game_logic.Communicator;
@@ -10,13 +11,18 @@ import main.com.bodyconquest.networking.ClientSender;
 import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.rendering.BodyConquest;
 
+import java.awt.*;
+
 public class GameOverScreen extends AbstractGameScreen implements Screen {
 
     private String usernameTop;
     private String usernameBottom;
     private Texture header;
+    private Image title;
     private int scoreTop;
     private int scoreBottom;
+    private GameType gameType;
+    private Stage stage;
 
     private Client client;
     private Communicator comms;
@@ -24,13 +30,12 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
 
     public GameOverScreen(BodyConquest game,GameType gameType) {
         super(game);
-        System.out.println("Hello");
+        this.gameType = gameType;
+        stage = new Stage(viewport);
         loadAssets();
         getAssets();
         client = game.getClient();
         comms = client.getCommunicator();
-
-
         scoreBottom = comms.getScoreBottom();
         scoreTop = comms.getScoreTop();
 
@@ -78,4 +83,6 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         game.usernameFont.draw(game.batch, Integer.toString(scoreBottom) , BodyConquest.V_WIDTH / 2.0f + 150.0f , 400.0f);
         game.usernameFont.draw(game.batch, Integer.toString(scoreTop) , BodyConquest.V_WIDTH / 2.0f + 150.0f , 200.0f);
     }
+
+//    public void addActors()
 }
