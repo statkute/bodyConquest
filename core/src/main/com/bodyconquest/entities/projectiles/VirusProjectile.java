@@ -2,12 +2,12 @@ package main.com.bodyconquest.entities.projectiles;
 
 import main.com.bodyconquest.constants.ProjectileType;
 
-public class FluProjectile extends Projectile {
+public class VirusProjectile extends Projectile {
 
   private double xDest;
   private double yDest;
 
-  public FluProjectile(int damage, double x, double y, double xDest, double yDest) {
+  public VirusProjectile(int damage, double x, double y, double xDest, double yDest) {
     super();
     xInit = x;
     yInit = y;
@@ -23,8 +23,7 @@ public class FluProjectile extends Projectile {
   private void init() {
     maxSpeed = 1;
     maxTravelDistance = 200;
-    mapObjectType = ProjectileType.FLU_PROJECTILE;
-    piercing = false;
+    mapObjectType = ProjectileType.VIRUS_PROJECTILE;
     moveTowards(xDest, yDest);
 
   }

@@ -1,7 +1,6 @@
 package main.com.bodyconquest.game_logic;
 
 import com.badlogic.gdx.Gdx;
-import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.Lane;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.constants.UnitType;
@@ -59,7 +58,7 @@ public class MultiplayerTestAI extends Thread {
             public void run() {
                 game.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType);
                 game.spawnUnit(UnitType.BACTERIA, Lane.MIDDLE, playerType);
-                game.spawnUnit(UnitType.FLU, Lane.TOP, playerType);
+                game.spawnUnit(UnitType.VIRUS, Lane.TOP, playerType);
             }
         });
     }
