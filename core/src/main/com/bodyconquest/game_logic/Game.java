@@ -109,6 +109,9 @@ public class Game extends Thread {
 
   public void startRaceSelectionState() {
     server.startRaceSelectionLogic(this);
+    if (gameType == GameType.SINGLE_PLAYER) {
+      setPlayerTop(Disease.INFLUENZA);
+    }
   }
 
   public GameType getGameType() {
@@ -121,11 +124,11 @@ public class Game extends Thread {
 
   public void startBodyState() {
     if (gameType == GameType.SINGLE_PLAYER){
-      setPlayerTop(Disease.INFLUENZA);
-//      if(getPlayerBottom().getDisease() != Disease.INFLUENZA)
-//        setPlayerTop(Disease.INFLUENZA);
-//      else if(getPlayerBottom().getDisease() != Disease.MEASLES)
-//        setPlayerTop(Disease.MEASLES);
+//      //setPlayerTop(Disease.INFLUENZA);
+////      if(getPlayerBottom().getDisease() != Disease.INFLUENZA)
+////        setPlayerTop(Disease.INFLUENZA);
+////      else if(getPlayerBottom().getDisease() != Disease.MEASLES)
+////        setPlayerTop(Disease.MEASLES);
       server.getServerSender().sendMessage(MessageMaker.diseaseMessage(Disease.INFLUENZA, PlayerType.PLAYER_TOP));
     }
 

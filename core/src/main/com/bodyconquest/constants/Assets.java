@@ -204,6 +204,11 @@ public class Assets {
   /** The constant continueTextBig. */
   public static String continueTextBig = "core/assets/continue_new_big.png";
 
+
+  /** Game Over Screen Assets */
+
+  public static String headerGameOver = "core/assets/GAMESCORES.png";
+
   /** Base Assets */
 
   /** The constant MINHEALTH. */
@@ -216,7 +221,8 @@ public class Assets {
   /** The constant INCREASEACCUMULATORTILL. */
   public static final int INCREASEACCUMULATORTILL = 300;
 
-  private static String pathAssets = "core/assets/";
+
+    private static String pathAssets = "core/assets/";
 
   /** The constant pathBaseImage. */
   public static String pathBaseImage = pathAssets + "base_boi_ss.png";

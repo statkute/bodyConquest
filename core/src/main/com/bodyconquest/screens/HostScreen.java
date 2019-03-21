@@ -109,7 +109,7 @@ public class HostScreen extends AbstractGameScreen implements Screen {
         playButtonSound();
 
         dispose();
-        game.setScreen(new RaceSelection(game, gameType, username));
+        game.setScreen(new RaceSelection(game, gameType));
     }
 
     /**

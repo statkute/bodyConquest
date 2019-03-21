@@ -111,6 +111,21 @@ public class ClientLogic extends Thread {
     } else if (message.equals(MessageMaker.START_BODY)) {
       communicator.setStartBodyScreen(true);
     }
+
+    else if(message.startsWith(MessageMaker.USERNAME_)) {
+      PlayerType player;
+      pointer = MessageMaker.USERNAME_.length();
+
+      String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
+      player = PlayerType.decode(encodedPlayerType);
+      pointer +=PlayerType.getEncodedLength() +1;
+
+      String username = message.substring(pointer);
+
+      communicator.setUsername(player,username);
+    }
+
+
   }
 
   private void encounterLogic(String message) throws IOException {

@@ -41,6 +41,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /** The type Encounter screen. */
 public class EncounterScreen implements Screen {
 
+  private int organNumber;
+
   private final float mapSize;
 
   //private boolean updating;
@@ -179,6 +181,8 @@ public class EncounterScreen implements Screen {
     poolHashMap = new ConcurrentHashMap<MapObjectType, TexturePool>();
 
     value = new DecimalFormat("0");
+
+    organNumber =0;
   }
 
   public Communicator getCommunicator() {
@@ -324,12 +328,29 @@ public class EncounterScreen implements Screen {
     }
 
     if(destroyed) {
-      System.out.println("Hello");
+      //System.out.println("Hello");
       screenMakingCounter++;
       determineWinner();
+      //organNumber = comms.getOpponentOrgans().size() + comms.getPlayerOrgans().size();
       //destroyed = false;
-      if(screenMakingCounter == 1)
-        switchScreen(game, new BodyScreen(game, gameType));
+      if(screenMakingCounter == 1){
+
+       // if(organNumber == 1){
+          //determineWinner();
+//          try {
+//            Thread.sleep(100);
+//          } catch (InterruptedException e) {
+//            e.printStackTrace();
+//          }
+          switchScreen(game, new MenuScreen(game,"adfds"));
+      //  }
+
+//        else {
+//          switchScreen(game, new BodyScreen(game, gameType));
+//        }
+      }
+
+
     }
 
   }

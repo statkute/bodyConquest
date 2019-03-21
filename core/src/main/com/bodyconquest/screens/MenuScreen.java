@@ -105,7 +105,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
                 System.out.println("Singleplayer Is touched");
                 try {
                     timeOfServer = System.currentTimeMillis();
-                    game.setScreen(new RaceSelection(game, GameType.SINGLE_PLAYER, username));
+                    game.setScreen(new RaceSelection(game, GameType.SINGLE_PLAYER));
                     dispose();
                 } catch (IOException e) {
                     e.printStackTrace();

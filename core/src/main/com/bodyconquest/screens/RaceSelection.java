@@ -56,18 +56,17 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
      *
      * @param game     the game
      * @param gameType the game type
-     * @param username the username
      * @throws IOException the io exception
      */
     public RaceSelection(
-            BodyConquest game, GameType gameType, String username) throws IOException {
+            BodyConquest game, GameType gameType) throws IOException {
         super(game);
         this.gameType = gameType;
-        this.username = username;
+        //this.username = username;
         loadAssets();
         getAssets();
         setRectangles();
-        game.setUsername(username);
+
 
         if (gameType != GameType.MULTIPLAYER_JOIN) {
             g = new Game(gameType);
@@ -84,6 +83,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
             playerType = PlayerType.PLAYER_TOP;
         }
 
+        game.getClient().clientSender.sendMessage(MessageMaker.usernameMessage(playerType,game.getUsername()));
         communicator = game.getClient().getCommunicator();
 
         communicator.setPlayerType(playerType);
