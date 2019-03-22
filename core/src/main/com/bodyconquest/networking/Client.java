@@ -1,6 +1,7 @@
 package main.com.bodyconquest.networking;
 
 import main.com.bodyconquest.game_logic.Communicator;
+import main.com.bodyconquest.networking.utilities.MessageMaker;
 
 import java.io.IOException;
 
@@ -9,6 +10,7 @@ public class Client {
   public ClientReceiver clientReceiver;
   public ClientSender clientSender;
   private ClientLogic clientLogic;
+  private String username;
 
   private Communicator communicator;
 
@@ -29,6 +31,7 @@ public class Client {
     clientLogic.start();
 
     clientSender.sendMessage("connected");
+    //clientSender.sendMessage(MessageMaker.usernameMessage(username));
   }
 
   public static void main(String args[]) throws IOException {
@@ -69,7 +72,11 @@ public class Client {
     clientLogic.setBodyLogic();
   }
 
-  //  public static void main(String argv[]) throws Exception {
+    public void setUsername(String textUsername) {
+      this.username = username;
+    }
+
+    //  public static void main(String argv[]) throws Exception {
   //    ClientReceiver clientReceiver = new ClientReceiver();
   //    ClientSender clientSender = new ClientSender(clientReceiver);
   //

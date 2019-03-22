@@ -40,7 +40,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /** The type Encounter screen. */
 public class EncounterScreen implements Screen {
 
-  // private boolean updating;
+  private int organNumber;
+
+  //private boolean updating;
 
   private int screenMakingCounter;
 
@@ -83,6 +85,10 @@ public class EncounterScreen implements Screen {
   private PlayerType playerType;
 
   private DecimalFormat value;
+
+  // To get back to menu screen change this to another encounter screen
+
+  private Disease playerDisease;
 
   private boolean destroyed = false;
 
@@ -159,6 +165,8 @@ public class EncounterScreen implements Screen {
     poolHashMap = new ConcurrentHashMap<>();
 
     value = new DecimalFormat("0");
+
+    organNumber =0;
   }
 
   public Communicator getCommunicator() {
@@ -299,8 +307,20 @@ public class EncounterScreen implements Screen {
 
     if (destroyed) {
       screenMakingCounter++;
+      organNumber = communicator.getOpponentOrgans().size() + communicator.getPlayerOrgans().size();
       determineWinner();
-      if (screenMakingCounter == 1) switchScreen(game, new BodyScreen(game, gameType));
+
+      if(screenMakingCounter == 1){
+
+        if(organNumber == 1){
+
+          switchScreen(game, new GameOverScreen(game,gameType));
+        }
+
+        else {
+          switchScreen(game, new BodyScreen(game, gameType));
+        }
+      }
     }
   }
 

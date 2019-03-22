@@ -49,6 +49,9 @@ public class Communicator {
   private boolean startBodyScreen;
   private boolean startEncounter;
 
+  private String usernameBottom;
+  private String usernameTop;
+
   /**
    * Instantiates a new Communicator.
    */
@@ -517,5 +520,22 @@ public class Communicator {
 
   public void addOrgan(Organ organ){
     playerOrgans.add(organ);
+  }
+
+  public void setUsername(PlayerType playerType, String username){
+    if(playerType == PlayerType.PLAYER_TOP){
+      usernameTop = username;
+    }
+    else if(playerType == PlayerType.PLAYER_BOTTOM){
+      usernameBottom = username;
+    }
+  }
+
+  public String getUsernameBottom(){
+    return usernameBottom;
+  }
+
+  public String getUsernameTop(){
+    return usernameTop;
   }
 }

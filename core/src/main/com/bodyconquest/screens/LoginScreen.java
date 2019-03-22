@@ -80,6 +80,8 @@ public class LoginScreen extends DatabasesScreen implements Screen {
                 loginBtn.setText("You logged in!");
                 textPassword = txfPassword.getText();
                 textUsername = txfUsername.getText();
+                game.setUsername(textUsername);
+                game.getClient().setUsername(textUsername);
                 System.out.println(textUsername + " " + textPassword);
                 processRegistration();
             }

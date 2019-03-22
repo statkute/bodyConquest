@@ -133,7 +133,22 @@ public class ServerLogic extends Thread {
         game.startBodyState();
         serverSender.sendMessage(MessageMaker.START_BODY);
       }
-    } else {
+    }
+
+    else if(message.startsWith(MessageMaker.USERNAME_)){
+//      PlayerType player;
+//      pointer = MessageMaker.USERNAME_.length();
+//
+//      String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
+//      player = PlayerType.decode(encodedPlayerType);
+//      pointer +=PlayerType.getEncodedLength() +1;
+//
+//      String username = message.substring(pointer);
+
+      serverSender.sendMessage(message);
+    }
+
+    else {
       System.err.println("[ERROR] This message doesn't conform to the current logic.");
     }
   }

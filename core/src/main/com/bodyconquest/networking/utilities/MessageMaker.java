@@ -18,6 +18,7 @@ public class MessageMaker {
   public static final String START_ENCOUNTER_HEADER = "START_ENCOUNTER_";
   public static final String POINTS_HEADER = "POINTS_HEADER_";
   public static final String ORGAN_CLAIMED = "CLAIMED_";
+  public static final String USERNAME_ ="USERNAME_";
 
   public static final int RESOURCE_PADDING = 3;
   public static final int HEALTH_PADDING = 3;
@@ -157,5 +158,15 @@ public class MessageMaker {
 
     return message;
 
+  }
+
+
+
+  public static String usernameMessage(PlayerType playerType, String username){
+    String message = USERNAME_;
+
+    message += playerType.getEncoded() + "_" + username;
+
+    return message;
   }
 }

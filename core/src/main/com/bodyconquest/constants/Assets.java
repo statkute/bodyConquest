@@ -204,6 +204,11 @@ public class Assets {
   /** The constant continueTextBig. */
   public static String continueTextBig = "core/assets/continue_new_big.png";
 
+
+  /** Game Over Screen Assets */
+
+  public static String headerGameOver = "core/assets/GAMESCORES.png";
+
   /** Base Assets */
 
   /** The constant MINHEALTH. */
@@ -216,7 +221,8 @@ public class Assets {
   /** The constant INCREASEACCUMULATORTILL. */
   public static final int INCREASEACCUMULATORTILL = 300;
 
-  private static String pathAssets = "core/assets/";
+
+    private static String pathAssets = "core/assets/";
 
   /** The constant pathBaseImage. */
   public static String pathBaseImage = pathAssets + "base_boi_ss.png";
@@ -248,7 +254,7 @@ public class Assets {
 
   /** The constant BOT_TURNPOINT_X. */
   // Turnpoints coordinates on the two lanes that have corners: BOTTOM and TOP
-  public static final float BOT_TURNPOINT_X = 150;
+  public static final float BOT_TURNPOINT_X = 100;
   /** The constant BOT_TURNPOINT_Y. */
   public static final float BOT_TURNPOINT_Y = 100;
   /** The constant TOP_TURNPOINT_X. */
@@ -266,13 +272,13 @@ public class Assets {
   /** The constant BP_MID_LANE_SPAWN_Y. */
   public static final float BP_MID_LANE_SPAWN_Y = 230;
   /** The constant BP_TOP_LANE_SPAWN_X. */
-  public static final float BP_TOP_LANE_SPAWN_X = 625;
+  public static final float BP_TOP_LANE_SPAWN_X = 645;
   /** The constant BP_TOP_LANE_SPAWN_Y. */
   public static final float BP_TOP_LANE_SPAWN_Y = 225;
 
   /** The constant TP_BOT_LANE_SPAWN_X. */
   // Spawnpoint coords for TOP player
-  public static final float TP_BOT_LANE_SPAWN_X = 170; // 535;
+  public static final float TP_BOT_LANE_SPAWN_X = 160; // 535;
   /** The constant TP_BOT_LANE_SPAWN_Y. */
   public static final float TP_BOT_LANE_SPAWN_Y = 470; // 90;
   /** The constant TP_MID_LANE_SPAWN_X. */
@@ -282,7 +288,7 @@ public class Assets {
   /** The constant TP_TOP_LANE_SPAWN_X. */
   public static final float TP_TOP_LANE_SPAWN_X = 300;
   /** The constant TP_TOP_LANE_SPAWN_Y. */
-  public static final float TP_TOP_LANE_SPAWN_Y = 550;
+  public static final float TP_TOP_LANE_SPAWN_Y = 570;
 
   // private final float botLaneTPSpawnX = 170;
   // private final float botLaneTPSpawnY = 470;
