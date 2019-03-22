@@ -729,6 +729,13 @@ public class EncounterScreen implements Screen {
 
     // Enum i = o.getMapObjectType();
     if (UnitType.FLU.equals(i)) {
+      if(playerDisease == Disease.INFLUENZA){
+        return new TexturePool(Assets.pathFluFlu, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
+      } else if(playerDisease == Disease.MEASLES){
+        return new TexturePool(Assets.pathFluMes, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
+      } else if(playerDisease == Disease.ROTAVIRUS){
+        return new TexturePool(Assets.pathFluRvi, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
+      }
       return new TexturePool(Assets.pathFlu, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
     } else if (UnitType.VIRUS.equals(i)) {
       return new TexturePool(
