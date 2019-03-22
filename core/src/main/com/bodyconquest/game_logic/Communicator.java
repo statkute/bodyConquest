@@ -62,6 +62,8 @@ public class Communicator {
 
   private AtomicBoolean registered = new AtomicBoolean(false);
   private AtomicBoolean registeredIsSet = new AtomicBoolean(false);
+  private String usernameBottom;
+  private String usernameTop;
 
   /** Instantiates a new Communicator. */
   public Communicator() {
@@ -517,8 +519,13 @@ public class Communicator {
     this.registeredIsSet.set(registeredIsSet);
   }
 
-  public String getUsername() {
-    return username;
+  public String getUsername(PlayerType player) {
+    if(player == PlayerType.PLAYER_BOTTOM) {
+      return usernameBottom;
+    } else {
+      return usernameTop;
+    }
+
   }
 
   public void setUsername(String username) {

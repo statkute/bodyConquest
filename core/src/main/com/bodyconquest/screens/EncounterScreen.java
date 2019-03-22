@@ -131,11 +131,12 @@ public class EncounterScreen implements Screen {
     communicator = client.getCommunicator();
     communicator.setStartEncounter(false);
     playerDisease = communicator.getPlayerDisease();
+    playerType = communicator.getPlayerType();
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    this.username = game.getClient().getCommunicator().getUsername();
+    this.username = game.getClient().getCommunicator().getUsername(playerType);
 
     if (gameType != GameType.MULTIPLAYER_JOIN) {
       playerType = PlayerType.PLAYER_BOTTOM;

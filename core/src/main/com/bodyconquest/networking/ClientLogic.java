@@ -110,7 +110,7 @@ public class ClientLogic extends Thread {
       // successful logging in
       if (value == 1) {
         communicator.setLogged(true);
-        communicator.setUsername(values[1]);
+        communicator.setUsername(communicator.getPlayerType(), values[1]);
       } else {
         communicator.setLogged(false);
       }

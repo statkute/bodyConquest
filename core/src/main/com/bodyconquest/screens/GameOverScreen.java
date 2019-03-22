@@ -5,10 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.game_logic.Communicator;
 import main.com.bodyconquest.networking.Client;
-import main.com.bodyconquest.networking.ClientSender;
-import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.awt.*;
@@ -25,7 +24,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     private Stage stage;
 
     private Client client;
-    private Communicator comms;
+    private Communicator communicator;
 
 
     public GameOverScreen(BodyConquest game,GameType gameType) {
@@ -35,17 +34,17 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         loadAssets();
         getAssets();
         client = game.getClient();
-        comms = client.getCommunicator();
-        scoreBottom = comms.getScoreBottom();
-        scoreTop = comms.getScoreTop();
-
+        communicator = client.getCommunicator();
+        scoreBottom = communicator.getScoreBottom();
+        scoreTop = communicator.getScoreTop();
+        communicator = game.getClient().getCommunicator();
         if(gameType == GameType.SINGLE_PLAYER){
-            usernameBottom = game.getUsername();
+            usernameBottom = communicator.getUsername(PlayerType.PLAYER_BOTTOM);
             usernameTop = "AI";
         }
         else{
-            usernameBottom = comms.getUsernameBottom();
-            usernameTop = comms.getUsernameTop();
+            usernameBottom = communicator.getUsername(PlayerType.PLAYER_BOTTOM);
+            usernameTop = communicator.getUsername(PlayerType.PLAYER_TOP);
         }
     }
 
