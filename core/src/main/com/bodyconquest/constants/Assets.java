@@ -228,10 +228,29 @@ public class Assets {
   public static String pathBaseImage = pathAssets + "base_boi_ss.png";
   /** The constant pathVirus. */
   public static String pathVirus = pathAssets + "virus_new.png";
+  /** The constant pathVirus. */
+  public static String pathVirusFlu = pathAssets + "virus_blue.png";
+  /** The constant pathVirus. */
+  public static String pathVirusMes = pathAssets + "virus_green.png";
+  /** The constant pathVirus. */
+  public static String pathVirusRvi = pathAssets + "virus_yellow.png";
   /** The constant pathBacteria. */
   public static String pathBacteria = pathAssets + "bacteria_new.png";
+  /** The constant pathBacteria. */
+  public static String pathBacteriaFlu = pathAssets + "bacteria_blue.png";
+  /** The constant pathBacteria. */
+  public static String pathBacteriaMes = pathAssets + "bacteria_green.png";
+  /** The constant pathBacteria. */
+  public static String pathBacteriaRvi = pathAssets + "bacteria_yellow.png";
   /** The constant pathFlu. */
   public static String pathFlu = pathAssets + "flu_new.png";
+  /** The constant pathFluFlu. */
+  public static String pathFluFlu = pathAssets + "flu_blue.png";
+  /** The constant pathFluMeeasles. */
+  public static String pathFluMes = pathAssets + "flu_green.png";
+  /** The constant pathFluRotavirus. */
+  public static String pathFluRvi = pathAssets + "flu_yellow.png";
+
   /** The constant pathProjectile. */
   public static String pathProjectile = pathAssets + "projectile_with_trail.png";
 

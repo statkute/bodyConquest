@@ -130,6 +130,7 @@ public class EncounterScreen implements Screen {
     clientSender = client.clientSender;
     communicator = client.getCommunicator();
     communicator.setStartEncounter(false);
+    playerDisease = communicator.getPlayerDisease();
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
@@ -682,15 +683,17 @@ public class EncounterScreen implements Screen {
   private TexturePool poolSetup(Enum mapObjectType) {
 
     float frameRate = 0.2f;
+      String path = "";
 
     if (UnitType.VIRUS == mapObjectType) {
-      return new TexturePool(Assets.pathFlu, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
+        path = playerDisease == Disease.INFLUENZA ? Assets.pathFluFlu : playerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;
+        return new TexturePool(path, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
     } else if (UnitType.FUNGUS == mapObjectType) {
-      return new TexturePool(
-          Assets.pathVirus, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
+        path = playerDisease == Disease.INFLUENZA ? Assets.pathVirusFlu : playerDisease == Disease.MEASLES ? Assets.pathVirusMes : Assets.pathVirusRvi;
+        return new TexturePool(path, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
     } else if (UnitType.BACTERIA == mapObjectType) {
-      return new TexturePool(
-          Assets.pathBacteria, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
+        path = playerDisease == Disease.INFLUENZA ? Assets.pathBacteriaFlu : playerDisease == Disease.MEASLES ? Assets.pathBacteriaMes : Assets.pathBacteriaRvi;
+        return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
     } else if (BaseType.INFLUENZA_BASE == mapObjectType) {
       return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
     } else if (BaseType.ROTAVIRUS_BASE == mapObjectType) {

@@ -132,7 +132,7 @@ public abstract class Troop extends MapObject implements Spawnable {
   public void checkAttack(CopyOnWriteArrayList<Troop> enemies) {
     Troop closestEnemy = null;
     for (Troop enemy : enemies) {
-      if (enemy.getLane() == this.getLane() || enemy.getLane() == Lane.ALL) {
+     if (enemy.getLane() == this.getLane() || enemy.getLane() == Lane.ALL) {
         if (closestEnemy == null) closestEnemy = enemy;
         // Attack closest enemy
         closestEnemy = distFrom(enemy) < distFrom(closestEnemy) ? enemy : closestEnemy;
