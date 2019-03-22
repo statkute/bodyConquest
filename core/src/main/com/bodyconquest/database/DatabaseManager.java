@@ -1,4 +1,4 @@
-package com.cauldron.bodyconquest.database;
+package main.com.bodyconquest.database;
 
 import java.io.*;
 import java.sql.Connection;
@@ -22,6 +22,9 @@ public class DatabaseManager {
         connect();
     }
 
+    /**
+     * Attempts to connect to the DB
+     */
     public void connect() {
 
         /*
@@ -84,6 +87,8 @@ public class DatabaseManager {
             } catch (SQLException e) {
                 System.out.println("SQL error in addUser method");
             }
+        } else {
+
         }
 
         return false;
@@ -133,13 +138,20 @@ public class DatabaseManager {
                 resultMap.put(name, points);
             }
         } catch (SQLException e) {
-            System.out.println("Problems while clearing DB");
+            System.out.println("Problems while getting leaderboard");
             attemptReconnection();
         }
 
         return resultMap;
     }
 
+    /**
+     * Tries to insert a new highscore for a user; In case the user already has a larger score in the DB, keep it
+     *
+     * @param username the user whose score is to be inserted
+     * @param points   the score to be inserted for that user
+     * @return
+     */
     public boolean insertAchievement(String username, int points) {
 
         PreparedStatement insertPoints;
@@ -162,6 +174,11 @@ public class DatabaseManager {
         return false;
     }
 
+    /**
+     * Creates the Users table in the DB
+     *
+     * @return True if the users table was created successfully; False if not
+     */
     private boolean createUsers() {
         boolean created = true;
         try {
@@ -180,6 +197,11 @@ public class DatabaseManager {
         return created;
     }
 
+    /**
+     * Creates the Leaderborad table in the DB
+     *
+     * @return True if the table was created successfully; False if not
+     */
     private boolean createBoard() {
         boolean created = true;
         try {
@@ -205,6 +227,38 @@ public class DatabaseManager {
         return createUsers() && createBoard();
     }
 
+    /**
+     * Completely wipes the DB
+     */
+    private void resetDB() {
+        try {
+            Statement statement = dbConn.createStatement();
+            String recreateSchema = "DROP SCHEMA public CASCADE;" +
+                    "CREATE SCHEMA public;" +
+                    "GRANT ALL ON SCHEMA public TO postgres;" +
+                    "GRANT ALL ON SCHEMA public TO public;" +
+                    "COMMENT ON SCHEMA public IS 'standard public schema';";
+            statement.execute(recreateSchema);
+        } catch (SQLException e) {
+            System.out.println("Problems while clearing DB");
+            attemptReconnection();
+        }
+    }
+
+    /**
+     * Clears all data stored in the DB
+     */
+    private void emptyDB() {
+        try {
+            Statement statement = dbConn.createStatement();
+            String emptyTables = "TRUNCATE TABLE Users, Leaderboard;";
+            statement.execute(emptyTables);
+        } catch (SQLException e) {
+            System.out.println("Problems while emptying DB");
+            attemptReconnection();
+        }
+    }
+
     private void attemptReconnection() {
         if (!url.equals(""))
             try {
@@ -220,21 +274,6 @@ public class DatabaseManager {
                 System.out.println("Could not establish connection to database");
                 if (dbConn == null) attemptReconnection();
             }
-    }
-
-    private void resetDB() {
-        try {
-            Statement statement = dbConn.createStatement();
-            String recreateSchema = "DROP SCHEMA public CASCADE;" +
-                    "CREATE SCHEMA public;" +
-                    "GRANT ALL ON SCHEMA public TO postgres;" +
-                    "GRANT ALL ON SCHEMA public TO public;" +
-                    "COMMENT ON SCHEMA public IS 'standard public schema';";
-            statement.execute(recreateSchema);
-        } catch (SQLException e) {
-            System.out.println("Problems while clearing DB");
-            attemptReconnection();
-        }
     }
 
 }

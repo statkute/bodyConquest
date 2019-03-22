@@ -17,7 +17,8 @@ public class ClientLogic extends Thread {
   private enum Logic {
     BODY_LOGIC,
     RACE_SELECTION_LOGIC,
-    ENCOUNTER_LOGIC
+    ENCOUNTER_LOGIC,
+    DATABASE_LOGIC
   }
 
   private Logic currentLogic;
@@ -47,11 +48,16 @@ public class ClientLogic extends Thread {
         if (currentLogic == Logic.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
         if (currentLogic == Logic.ENCOUNTER_LOGIC)      encounterLogic(message);
         if (currentLogic == Logic.BODY_LOGIC)           bodyLogic(message);
+        if (currentLogic == Logic.DATABASE_LOGIC) databaseLogic(message);
 
       } catch (IOException | InterruptedException e) {
         e.printStackTrace();
       }
     }
+  }
+
+  private void databaseLogic(String message) {
+
   }
 
   private void bodyLogic(String message) {
@@ -204,6 +210,10 @@ public class ClientLogic extends Thread {
 
   public void setEncounterLogic() {
     currentLogic = Logic.ENCOUNTER_LOGIC;
+  }
+
+  public void setDatabaseLogic() {
+    currentLogic = Logic.DATABASE_LOGIC;
   }
 
   public void stopRunning() {

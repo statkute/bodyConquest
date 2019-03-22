@@ -2,6 +2,8 @@ package main.com.bodyconquest.networking.utilities;
 
 import main.com.bodyconquest.constants.*;
 
+import java.util.HashMap;
+
 public class MessageMaker {
 
   public static final String OBJECT_UPDATE_HEADER = "OBJECT_UPDATE_";
@@ -17,6 +19,15 @@ public class MessageMaker {
   public static final String CONFIRM_ORGAN_HEADER = "CONFIRM_ORGAN_";
   public static final String START_ENCOUNTER_HEADER = "START_ENCOUNTER_";
   public static final String POINTS_HEADER = "POINTS_HEADER_";
+  public static final String LOGIN_HEADER = "LOGIN_";
+  public static final String SUCCESSFUL_LOGIN_HEADER = "SUCCESSFULLY_LOGGED_IN_";
+  public static final String REGISTER_HEADER = "REGISTER_";
+  public static final String SUCCESSFUL_REGISTER_HEADER = "SUCCESSFULLY_REGISTERED_";
+  public static final String UNSUCCESSFUL_HEADER = "UNSUCCESSFUL_";
+  public static final String GET_LEADERBOARD_HEADER = "GET_LEADERBOARD_";
+  public static final String SET_LEADERBOARD_HEADER = "SET_LEADERBOARD_";
+  public static final String SET_ACHIEVEMENT_HEADER = "SET_ACHIEVEMENT_";
+  public static final String SUCCESSFUL_ADDED_ACHIEVEMENT_HEADER = "SUCCESSFULLY_ADDED_ACHIEVEMENT_";
 
   public static final int RESOURCE_PADDING = 3;
   public static final int HEALTH_PADDING = 3;
@@ -149,4 +160,65 @@ public class MessageMaker {
 
     return message;
   }
+
+  public static String loginMessage(String username, String password) {
+    String message = LOGIN_HEADER;
+
+    message += " " + username;
+
+    message += " " + password;
+
+    return message;
+  }
+
+  public static String loggedInSuccessfullyMessage(String username) {
+    return SUCCESSFUL_LOGIN_HEADER + " " + username;
+  }
+
+  public static String registerMessage(String username, String password) {
+    String message = REGISTER_HEADER;
+
+    message += " " + username;
+
+    message += " " + password;
+
+    return message;
+  }
+
+  public static String registeredSuccessfullyMessage(String username) {
+    return SUCCESSFUL_REGISTER_HEADER + " " + username;
+  }
+
+  public static String unsuccessfulMessage() {
+    return UNSUCCESSFUL_HEADER;
+  }
+
+  public static String getLeaderboardMessage() {
+    return GET_LEADERBOARD_HEADER;
+  }
+
+  public static String sendLeaderboardMessage(HashMap<String, Integer> board) {
+    String message = SET_LEADERBOARD_HEADER;
+
+    for (String i : board.keySet()) {
+      message += " " + i + " " + board.get(i).toString();
+    }
+
+    return message;
+  }
+
+  public static String sendAchievementMessage(String username, int points) {
+    String message = SET_ACHIEVEMENT_HEADER;
+
+    message += " " + username;
+
+    message += " " + points;
+
+    return message;
+  }
+
+  public static String addedAchievementSuccessfullyMessage() {
+    return SUCCESSFUL_ADDED_ACHIEVEMENT_HEADER;
+  }
+
 }
