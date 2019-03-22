@@ -62,7 +62,7 @@ public class EncounterState {
   private int totalScoreTop;
   private int totalScoreBottom;
 
-  private int counter = 0;
+  int counter = 0;
 
   // Move resources in side of player
   private Resources topResources;

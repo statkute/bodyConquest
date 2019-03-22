@@ -37,14 +37,12 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
      * Instantiates a new Menu screen.
      *
      * @param game     the game
-     * @param username the username
      */
-    public MenuScreen(BodyConquest game, String username) {
+    public MenuScreen(BodyConquest game) {
         super(game);
         loadAssets();
         getAssets();
         setRectangles();
-        this.username = username;
     }
 
     /**
