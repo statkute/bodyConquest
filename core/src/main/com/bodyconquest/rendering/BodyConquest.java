@@ -44,6 +44,13 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   private Client client;
   private String username;
 
+  public enum DifficultyLevel{
+    EASY,
+    HARD
+  }
+
+  public DifficultyLevel difficultyLevel;
+
   @Override
   public void create() {
     batch = new SpriteBatch();
@@ -53,6 +60,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     audioPlayer.loadSFX("button_click", Assets.buttonSoundPath);
     audioPlayer.loadMusic("music", Assets.music);
     audioPlayer.playMusicLoop("music");
+    difficultyLevel = DifficultyLevel.EASY;
     //setScreen(new MenuScreen(this));
     setScreen(new StartScreen(this));
     //setScreen(new LeaderboardScreen(this));
@@ -74,6 +82,18 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   public void dispose() {
     batch.dispose();
     font.dispose();
+  }
+
+  public DifficultyLevel getDifficultyLevel(){
+    return difficultyLevel;
+  }
+
+  public void changeDifficulty(){
+    if (difficultyLevel == DifficultyLevel.EASY){
+      difficultyLevel = DifficultyLevel.HARD;
+    } else {
+      difficultyLevel = DifficultyLevel.EASY;
+    }
   }
 
   public Game getGame() {

@@ -20,19 +20,6 @@ import java.util.ArrayList;
 /** The type Settings screen. */
 public class SettingsScreen extends AbstractGameScreen implements Screen {
 
-  //  private Texture header;
-  //  private Texture backButton;
-  //  private Texture soundHeader;
-  //  private Texture musicHeader;
-  //  private Texture soundOn;
-  //  private Texture soundOff;
-  //  private Texture musicOn;
-  //  private Texture musicOff;
-  //  private Rectangle soundBounds;
-  //  private Rectangle musicBounds;
-  //  private Rectangle soundToggleBounds;
-  //  private Rectangle musicToggleBounds;
-  //  private Rectangle backBounds;
   private final OrthographicCamera gameCamera;
   private final FitViewport gamePort;
   private final Stage stage;
@@ -213,11 +200,11 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         t_hard.getWidth(),
         t_hard.getHeight());
 
-    //    if (game.audioPlayer.getMutedSFX()) {
-    //      allImages.add(hard);
-    //    } else {
-    //      allImages.add(easy);
-    //    }
+        if (game.getDifficultyLevel() == BodyConquest.DifficultyLevel.EASY) {
+          allImages.add(easy);
+        } else {
+          allImages.add(hard);
+        }
 
     back = new Image(t_back);
     back.setBounds(
@@ -255,6 +242,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
             game.audioPlayer.toggleMutedMusic();
+            playButtonSound();
             if (game.audioPlayer.getMutedMusic()) {
               musicOn.remove();
               stage.addActor(musicOff);
@@ -272,17 +260,18 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
             playButtonSound();
-//            if (easy) {
-//              hard.remove();
-//              stage.addActor(easy);
-//            } else {
-//              easy.remove();
-//              stage.addActor(hard);
-//            }
+            game.changeDifficulty();
+            if (game.getDifficultyLevel() == BodyConquest.DifficultyLevel.EASY) {
+              hard.remove();
+              stage.addActor(easy);
+            } else {
+              easy.remove();
+              stage.addActor(hard);
+            }
           }
         });
-    musicOn.addListener(musicText.getListeners().peek());
-    musicOff.addListener(musicText.getListeners().peek());
+    easy.addListener(difficultyText.getListeners().peek());
+    hard.addListener(difficultyText.getListeners().peek());
 
     back.addListener(
         new ClickListener() {
