@@ -1,5 +1,6 @@
 package main.com.bodyconquest.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,7 +18,8 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     private String usernameTop;
     private String usernameBottom;
     private Texture header;
-    private Image title;
+    private Texture backButton;
+    private Rectangle backBounds;
     private int scoreTop;
     private int scoreBottom;
     private GameType gameType;
@@ -33,6 +35,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         stage = new Stage(viewport);
         loadAssets();
         getAssets();
+        setRectangles();
         client = game.getClient();
         communicator = client.getCommunicator();
         scoreBottom = communicator.getScoreBottom();
@@ -55,8 +58,10 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         game.batch.begin();
         game.usernameFont.getData().setScale(2.5f, 2.5f);
         game.batch.draw(header, BodyConquest.V_WIDTH / 2.0f - header.getWidth() / 2.0f, 450.0f);
+        game.batch.draw(backButton,BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
         drawUsername();
         drawScore();
+        checkPressed();
         game.batch.end();
     }
 
@@ -64,6 +69,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     public void loadAssets() {
         super.loadAssets();
         manager.load(Assets.headerGameOver, Texture.class);
+        manager.load(Assets.backButton, Texture.class);
         manager.finishLoading();
     }
 
@@ -71,6 +77,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     public void getAssets() {
         super.getAssets();
         header = manager.get(Assets.headerGameOver, Texture.class);
+        backButton = manager.get(Assets.backButton, Texture.class);
     }
 
     public void drawUsername(){
@@ -83,5 +90,26 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         game.usernameFont.draw(game.batch, Integer.toString(scoreTop) , BodyConquest.V_WIDTH / 2.0f + 150.0f , 200.0f);
     }
 
-//    public void addActors()
+    @Override
+    public void setRectangles() {
+        super.setRectangles();
+        backBounds =
+                new Rectangle(
+                        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+                        50,
+                        backButton.getWidth(),
+                        backButton.getHeight());
+    }
+
+    @Override
+    public void checkPressed() {
+        super.checkPressed();
+        if (Gdx.input.justTouched()) {
+            if (backBounds.contains(tmp.x, tmp.y)) {
+                playButtonSound();
+                dispose();
+                game.setScreen(new MenuScreen(game));
+            }
+        }
+    }
 }

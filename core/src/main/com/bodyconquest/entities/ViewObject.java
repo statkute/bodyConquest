@@ -105,9 +105,19 @@ public class ViewObject extends Actor {
       preDraw();
       commonDraw(batch, parentAlpha);
       postDraw();
-    } else{
+    }
+    else{
+      this.setColor(1,1,1,1);
       commonDraw(batch,parentAlpha);
     }
+
+//    if(this.bo.getWasHit() && !(this.bo.getMapObjectType() == BaseType.INFLUENZA_BASE || this.bo.getMapObjectType() == BaseType.MEASLES_BASE || this.bo.getMapObjectType() == BaseType.ROTAVIRUS_BASE)){
+//      this.setColor(1,0,0,1.0f);
+//      //bo.setWasHit(false);
+//      System.out.println("Does it go here");
+////      commonDraw(batch, parentAlpha);
+//      //postDraw();
+//    }
   }
 
   public void postDraw()
@@ -138,9 +148,6 @@ public class ViewObject extends Actor {
 
     }
 
-
-
-
   }
   public void commonDraw(Batch batch, float parentAlpha){
     // TO DO will need to fix logic for this
@@ -148,9 +155,9 @@ public class ViewObject extends Actor {
     // Get current frame of animation for the current stateTime
     //System.out.println(System.currentTimeMillis());
     currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-
     Color color = getColor();
     batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+    //batch.setColor(1, 1, 1, color.a * parentAlpha);
     //batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
     batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 
@@ -164,8 +171,8 @@ public class ViewObject extends Actor {
 //    shapeRenderer.setColor(Color.GREEN);
 //    shapeRenderer.rect((float)bo.getX() + ((bo.getWidth() - bo.getCwidth()) / 2), (float)bo.getY() + ((bo.getHeight() - bo.getCheight()) / 2), bo.getCwidth(), bo.getCheight());
 //    shapeRenderer.end();
-
-    super.draw(batch, parentAlpha);
+    //setColor(1,1,1,1);
+   super.draw(batch, parentAlpha);
   }
 
   public MapObjectType getMapObjectType() { return bo.getMapObjectType(); }

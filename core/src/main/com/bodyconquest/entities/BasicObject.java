@@ -1,5 +1,6 @@
 package main.com.bodyconquest.entities;
 import main.com.bodyconquest.constants.MapObjectType;
+import main.com.bodyconquest.constants.PlayerType;
 
 public class BasicObject {
 
@@ -13,7 +14,9 @@ public class BasicObject {
   private double currentSpeed;
   private double rotation;
   private MapObjectType mapObjectType;
+  private boolean wasHit;
 
+  private PlayerType playerType;
 
   public void setX(double x) {
     this.x = x;
@@ -94,5 +97,21 @@ public class BasicObject {
 
   public void setCheight(int cheight) {
     this.cheight = cheight;
+  }
+
+  public boolean getWasHit(){
+    return wasHit;
+  }
+
+  public boolean setWasHit(boolean wasHit){
+    return this.wasHit = wasHit;
+  }
+
+  public PlayerType getPlayerType() {
+    return playerType;
+  }
+
+  public void setPlayerType(PlayerType playerType) {
+    this.playerType = playerType;
   }
 }
