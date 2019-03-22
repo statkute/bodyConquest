@@ -22,7 +22,7 @@ public class ViewObject extends Actor {
   private BasicObject bo;
   private PlayerType playerType;
 
-//  // Constructor for spritesheet (default time between frames of 0.2f)
+  // Constructor for spritesheet (default time between frames of 0.2f)
 //  public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows, float elapsedTime, PlayerType playerType) {
 //    this.bo = bo;
 //    this.elapsedTime = elapsedTime;

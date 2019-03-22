@@ -4,9 +4,9 @@ public enum Disease {
   INFLUENZA(
       "FLU",
       BaseType.INFLUENZA_BASE,
-      UnitType.FLU,
-      UnitType.BACTERIA,
       UnitType.VIRUS,
+      UnitType.BACTERIA,
+      UnitType.FUNGUS,
       AbilityType.RIGOR_MORTIS),
   MEASLES(
       "MES",

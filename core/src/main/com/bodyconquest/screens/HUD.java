@@ -90,8 +90,6 @@ public class HUD {
     skin = new Skin();
     skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     skin.add("defaultWhite", new Texture("core/assets/Default Sprite.png"));
-    skin.add("badlogic", new Texture("core/assets/badlogic.jpg"));
-    skin.add("spawnpoint", new Texture("core/assets/droplet.png"));
   }
 
   private void setupUnitBar() {

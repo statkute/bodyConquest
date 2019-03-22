@@ -6,9 +6,9 @@ import main.com.bodyconquest.entities.Map;
 import main.com.bodyconquest.entities.MapObject;
 import main.com.bodyconquest.entities.Troops.Bacteria;
 import main.com.bodyconquest.entities.Troops.Bases.Base;
-import main.com.bodyconquest.entities.Troops.Flu;
-import main.com.bodyconquest.entities.Troops.Troop;
 import main.com.bodyconquest.entities.Troops.Virus;
+import main.com.bodyconquest.entities.Troops.Troop;
+import main.com.bodyconquest.entities.Troops.Fungus;
 import main.com.bodyconquest.entities.abilities.Ability;
 import main.com.bodyconquest.entities.projectiles.Projectile;
 import main.com.bodyconquest.entities.resources.Resources;
@@ -62,7 +62,7 @@ public class EncounterState {
   private int totalScoreTop;
   private int totalScoreBottom;
 
-  int counter = 0;
+  private int counter = 0;
 
   // Move resources in side of player
   private Resources topResources;
@@ -99,8 +99,8 @@ public class EncounterState {
     troopsTop.add(topBase);
     allMapObjects.add(topBase);
 
-    projectilesBottom = new CopyOnWriteArrayList<Projectile>();
-    projectilesTop = new CopyOnWriteArrayList<Projectile>();
+    projectilesBottom = new CopyOnWriteArrayList<>();
+    projectilesTop = new CopyOnWriteArrayList<>();
 
     totalScoreBottom = bottomPlayer.getScore();
     totalScoreTop = topPlayer.getScore();
@@ -241,27 +241,27 @@ public class EncounterState {
       } else if(playerType == PlayerType.PLAYER_TOP){
         troop = new Bacteria(lane, playerType);
       }
-    } else if (unitType.equals(UnitType.FLU)) {
-      if(playerType == PlayerType.PLAYER_BOTTOM){
-        if(bottomResources.canAfford(Flu.LIPIDS_COST, Flu.SUGARS_COST, Flu.PROTEINS_COST)){
-          bottomResources.buy(Flu.LIPIDS_COST, Flu.SUGARS_COST, Flu.PROTEINS_COST);
-          troop = new Flu(this, playerType, lane);
-        }else{
-
-        }
-      }else if(playerType == PlayerType.PLAYER_TOP){
-        troop = new Flu(this, playerType, lane);
-      }
     } else if (unitType.equals(UnitType.VIRUS)) {
       if(playerType == PlayerType.PLAYER_BOTTOM){
         if(bottomResources.canAfford(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST)){
           bottomResources.buy(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST);
-          troop = new Virus(lane, playerType);
+          troop = new Virus(this, playerType, lane);
         }else{
 
         }
       }else if(playerType == PlayerType.PLAYER_TOP){
-        troop = new Virus(lane, playerType);
+        troop = new Virus(this, playerType, lane);
+      }
+    } else if (unitType.equals(UnitType.FUNGUS)) {
+      if(playerType == PlayerType.PLAYER_BOTTOM){
+        if(bottomResources.canAfford(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST)){
+          bottomResources.buy(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST);
+          troop = new Fungus(lane, playerType);
+        }else{
+
+        }
+      }else if(playerType == PlayerType.PLAYER_TOP){
+        troop = new Fungus(lane, playerType);
       }
     }
 
