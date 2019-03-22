@@ -10,7 +10,6 @@ public class Client {
   public ClientReceiver clientReceiver;
   public ClientSender clientSender;
   private ClientLogic clientLogic;
-  private String username;
 
   private Communicator communicator;
 
@@ -72,11 +71,11 @@ public class Client {
     clientLogic.setBodyLogic();
   }
 
-    public void setUsername(String textUsername) {
-      this.username = username;
-    }
+  public void setDatabaseLogic() {
+    clientLogic.setDatabaseLogic();
+  }
 
-    //  public static void main(String argv[]) throws Exception {
+  //  public static void main(String argv[]) throws Exception {
   //    ClientReceiver clientReceiver = new ClientReceiver();
   //    ClientSender clientSender = new ClientSender(clientReceiver);
   //

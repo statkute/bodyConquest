@@ -22,15 +22,13 @@ public class HostScreen extends AbstractGameScreen implements Screen {
     private Rectangle hostBounds;
     private Rectangle joinBounds;
     private Rectangle backBounds;
-    private String username;
 
     /**
      * Instantiates a new Host screen.
      *
      * @param game     the game
-     * @param username the username
      */
-    public HostScreen(BodyConquest game, String username) {
+    public HostScreen(BodyConquest game) {
         super(game);
         loadAssets();
         getAssets();
@@ -71,26 +69,30 @@ public class HostScreen extends AbstractGameScreen implements Screen {
         if (Gdx.input.justTouched()) {
             if (hostBounds.contains(tmp.x, tmp.y)) {
                 System.out.println("host pressed");
+                game.setScreen(new StartScreen(game, GameType.MULTIPLAYER_HOST));
+                /*
                 try {
                     startGame(GameType.MULTIPLAYER_HOST);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
             if (joinBounds.contains(tmp.x, tmp.y)) {
                 System.out.println("join pressed");
+                game.setScreen(new StartScreen(game, GameType.MULTIPLAYER_JOIN));
+                /*
                 try {
                     startGame(GameType.MULTIPLAYER_JOIN);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
 
             if (backBounds.contains(tmp.x, tmp.y)) {
                 System.out.println("back pressed");
                 playButtonSound();
                 dispose();
-                game.setScreen(new MenuScreen(game, username));
+                game.setScreen(new MenuScreen(game));
             }
         }
     }

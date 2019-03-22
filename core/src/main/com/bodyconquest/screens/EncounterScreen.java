@@ -135,7 +135,7 @@ public class EncounterScreen implements Screen {
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    this.username = game.getUsername();
+    this.username = game.getClient().getCommunicator().getUsername();
 
     if (gameType != GameType.MULTIPLAYER_JOIN) {
       playerType = PlayerType.PLAYER_BOTTOM;

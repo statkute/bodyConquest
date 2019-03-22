@@ -10,14 +10,17 @@ import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.networking.utilities.Serialization;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientLogic extends Thread {
 
   private enum Logic {
     BODY_LOGIC,
     RACE_SELECTION_LOGIC,
-    ENCOUNTER_LOGIC
+    ENCOUNTER_LOGIC,
+    DATABASE_LOGIC
   }
 
   private Logic currentLogic;
@@ -47,11 +50,73 @@ public class ClientLogic extends Thread {
         if (currentLogic == Logic.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
         if (currentLogic == Logic.ENCOUNTER_LOGIC)      encounterLogic(message);
         if (currentLogic == Logic.BODY_LOGIC)           bodyLogic(message);
+        if (currentLogic == Logic.DATABASE_LOGIC) databaseLogic(message);
 
       } catch (IOException | InterruptedException e) {
         e.printStackTrace();
       }
     }
+  }
+
+  private void databaseLogic(String message) {
+    int pointer;
+
+    if (message.startsWith(MessageMaker.SET_LEADERBOARD_HEADER)) {
+      pointer = MessageMaker.SET_LEADERBOARD_HEADER.length();
+
+      message = message.substring(pointer);
+
+      String values[] = message.split(" ");
+
+      HashMap<String, Integer> board = new HashMap<String, Integer>();
+
+      int i = 0;
+      String username;
+      Integer points;
+      while (i < values.length) {
+        username = values[i];
+        points = Integer.parseInt(values[i + 1]);
+        board.put(username, points);
+        i += 2;
+      }
+
+      communicator.setBoard(board);
+      communicator.setBoardIsSet(true);
+    } else if (message.startsWith(MessageMaker.REGISTER_HEADER)) {
+      pointer = MessageMaker.REGISTER_HEADER.length();
+
+      message = message.substring(pointer + 1);
+
+      //System.out.println(message);
+
+      Integer value = Integer.parseInt(message);
+
+      // successful registering
+      if (value == 1) {
+        communicator.setRegistered(true);
+      } else {
+        communicator.setRegistered(false);
+      }
+      communicator.setRegisteredIsSet(true);
+    } else if (message.startsWith(MessageMaker.LOGIN_HEADER)) {
+      pointer = MessageMaker.LOGIN_HEADER.length();
+
+      message = message.substring(pointer + 1);
+
+      String values[] = message.split(" ");
+
+      Integer value = Integer.parseInt(values[0]);
+
+      // successful logging in
+      if (value == 1) {
+        communicator.setLogged(true);
+        communicator.setUsername(values[1]);
+      } else {
+        communicator.setLogged(false);
+      }
+      communicator.setLoggedIsSet(true);
+    }
+
   }
 
   private void bodyLogic(String message) {
@@ -237,6 +302,10 @@ public class ClientLogic extends Thread {
 
   public void setEncounterLogic() {
     currentLogic = Logic.ENCOUNTER_LOGIC;
+  }
+
+  public void setDatabaseLogic() {
+    currentLogic = Logic.DATABASE_LOGIC;
   }
 
   public void stopRunning() {

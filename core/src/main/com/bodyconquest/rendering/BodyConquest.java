@@ -15,6 +15,7 @@ import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.screens.LeaderboardScreen;
 import main.com.bodyconquest.screens.MenuScreen;
 import main.com.bodyconquest.screens.RaceSelection;
+import main.com.bodyconquest.screens.MenuScreen;
 import main.com.bodyconquest.screens.StartScreen;
 
 import java.io.IOException;
@@ -47,7 +48,6 @@ public class BodyConquest extends com.badlogic.gdx.Game {
 
   private Game game;
   private Client client;
-  private String username;
 
   @Override
   public void create() {
@@ -60,7 +60,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     audioPlayer.playMusicLoop("music");
     client = new Client();
     //setScreen(new MenuScreen(this, "GermBoi"));
-    setScreen(new StartScreen(this));
+    setScreen(new MenuScreen(this));
     //setScreen(new LeaderboardScreen(this));
 
   }
@@ -100,11 +100,4 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     this.client = client;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getUsername() {
-    return username;
-  }
 }

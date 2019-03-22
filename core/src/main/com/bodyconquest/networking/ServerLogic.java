@@ -1,9 +1,12 @@
 package main.com.bodyconquest.networking;
 
 import main.com.bodyconquest.constants.*;
+import main.com.bodyconquest.database.DatabaseManager;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.gamestates.EncounterState;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
+
+import java.util.HashMap;
 
 /** Server Thread responsible for dealing with game logic based on incoming messages */
 public class ServerLogic extends Thread {
@@ -12,7 +15,8 @@ public class ServerLogic extends Thread {
   public enum LogicType {
     RACE_SELECTION_LOGIC,
     BODY_LOGIC,
-    ENCOUNTER_LOGIC
+    ENCOUNTER_LOGIC,
+    DATABASE_LOGIC
   }
 
   private LogicType currentLogicType;
@@ -30,6 +34,8 @@ public class ServerLogic extends Thread {
   private boolean topPlayerReady;
   private boolean bottomPlayerReady;
 
+  private DatabaseManager dbManager;
+
   //private RaceSelectionLogic raceSelectionLogic;
 
   /**
@@ -44,6 +50,7 @@ public class ServerLogic extends Thread {
     topPlayerReady = false;
     bottomPlayerReady = false;
     init();
+    dbManager = new DatabaseManager();
   }
 
   private void init() {
@@ -66,10 +73,74 @@ public class ServerLogic extends Thread {
         if (currentLogicType == LogicType.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
         if (currentLogicType == LogicType.ENCOUNTER_LOGIC) encounterLogic(message);
         if (currentLogicType == LogicType.BODY_LOGIC) bodyLogic(message);
+        if (currentLogicType == LogicType.DATABASE_LOGIC) databaseLogic(message);
 
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
+    }
+  }
+
+  private void databaseLogic(String message) {
+    int pointer;
+
+    if (message.startsWith(MessageMaker.REGISTER_HEADER)) {
+      pointer = MessageMaker.REGISTER_HEADER.length();
+
+      message = message.substring(pointer + 1);
+
+      String[] values = message.split(" ");
+
+      String username = values[0];
+      String password = values[1];
+
+      boolean response = dbManager.addUser(username, password);
+      //System.out.println(response);
+      if (response == true) {
+        serverSender.sendMessage(MessageMaker.registeredSuccessfullyMessage());
+      } else {
+        serverSender.sendMessage(MessageMaker.unsuccessfulRegisterMessage());
+      }
+    } else if (message.startsWith(MessageMaker.LOGIN_HEADER)) {
+      pointer = MessageMaker.LOGIN_HEADER.length();
+
+      message = message.substring(pointer);
+
+      String[] values = message.split(" ");
+
+      String username = values[1];
+      String password = values[2];
+
+      boolean response = dbManager.checkUser(username, password);
+      if (response == true) {
+        serverSender.sendMessage(MessageMaker.loggedInSuccessfullyMessage(username));
+      } else {
+        serverSender.sendMessage(MessageMaker.unsuccessfulLoginMessage(username));
+      }
+    } else if (message.startsWith(MessageMaker.GET_LEADERBOARD_HEADER)) {
+      pointer = MessageMaker.GET_LEADERBOARD_HEADER.length();
+
+      HashMap<String, Integer> board = dbManager.getLeaderboard();
+
+      serverSender.sendMessage(MessageMaker.sendLeaderboardMessage(board));
+    } else if (message.startsWith(MessageMaker.SET_ACHIEVEMENT_HEADER)) {
+      pointer = MessageMaker.GET_LEADERBOARD_HEADER.length();
+
+      message = message.substring(pointer);
+
+      String[] values = message.split(" ");
+
+      String username = values[1];
+      Integer points = Integer.getInteger(values[2]);
+
+      boolean response = dbManager.insertAchievement(username, points);
+
+      /*if (response == true) {
+        serverSender.sendMessage(MessageMaker.addedAchievementSuccessfullyMessage());
+      } else {
+        serverSender.sendMessage(MessageMaker.unsuccessfulMessage());
+      }*/
+
     }
   }
 
@@ -240,6 +311,10 @@ public class ServerLogic extends Thread {
 
   public void setBodyLogic() {
     currentLogicType = LogicType.BODY_LOGIC;
+  }
+
+  public void setDatabaseLogic() {
+    currentLogicType = LogicType.DATABASE_LOGIC;
   }
 
 

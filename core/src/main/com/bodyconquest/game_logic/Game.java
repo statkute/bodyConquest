@@ -140,4 +140,8 @@ public class Game extends Thread {
     startBodyState();
   }
 
+    public void startDatabaseState() {
+        server.startDatabaseLogic();
+    }
+
 }

@@ -37,14 +37,12 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
      * Instantiates a new Menu screen.
      *
      * @param game     the game
-     * @param username the username
      */
-    public MenuScreen(BodyConquest game, String username) {
+    public MenuScreen(BodyConquest game) {
         super(game);
         loadAssets();
         getAssets();
         setRectangles();
-        this.username = username;
     }
 
     /**
@@ -97,19 +95,15 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
                 timeOfServer = System.currentTimeMillis();
                 System.out.println("Multiplayer Is touched");
                 dispose();
-                game.setScreen(new HostScreen(game, username));
+                game.setScreen(new HostScreen(game));
             }
 
             if (singleplayerBounds.contains(tmp.x, tmp.y)) {
                 playButtonSound();
                 System.out.println("Singleplayer Is touched");
-                try {
-                    timeOfServer = System.currentTimeMillis();
-                    game.setScreen(new RaceSelection(game, GameType.SINGLE_PLAYER));
-                    dispose();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                timeOfServer = System.currentTimeMillis();
+                game.setScreen(new StartScreen(game, GameType.SINGLE_PLAYER));
+                dispose();
             }
             if (settingsBounds.contains(tmp.x, tmp.y)) {
                 playButtonSound();
