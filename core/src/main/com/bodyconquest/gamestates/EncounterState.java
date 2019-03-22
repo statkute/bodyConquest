@@ -79,7 +79,7 @@ public class EncounterState {
 
     game.startEncounterLogic(this);
 
-    allMapObjects = new CopyOnWriteArrayList<MapObject>();
+    allMapObjects = new CopyOnWriteArrayList<>();
 
     topPlayer = game.getPlayerTop();
     bottomPlayer = game.getPlayerBottom();
