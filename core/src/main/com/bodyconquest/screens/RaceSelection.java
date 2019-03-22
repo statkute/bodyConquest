@@ -155,7 +155,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
                     server.closeEverything();
                 }
                 game.getClient().closeEverything();
-                game.setScreen(new MenuScreen(game, username));
+                game.setScreen(new MenuScreen(game));
                 dispose();
             }
         }

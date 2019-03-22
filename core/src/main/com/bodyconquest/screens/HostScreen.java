@@ -90,7 +90,7 @@ public class HostScreen extends AbstractGameScreen implements Screen {
                 System.out.println("back pressed");
                 playButtonSound();
                 dispose();
-                game.setScreen(new MenuScreen(game, username));
+                game.setScreen(new MenuScreen(game));
             }
         }
     }
