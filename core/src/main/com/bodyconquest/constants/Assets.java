@@ -231,9 +231,9 @@ public class Assets {
   /** The constant pathVirus. */
   public static String pathVirusFlu = pathAssets + "virus_blue.png";
   /** The constant pathVirus. */
-  public static String pathVirusMeasles = pathAssets + "virus_green.png";
+  public static String pathVirusMes = pathAssets + "virus_green.png";
   /** The constant pathVirus. */
-  public static String pathVirusRotavirus = pathAssets + "virus_yellow.png";
+  public static String pathVirusRvi = pathAssets + "virus_yellow.png";
   /** The constant pathBacteria. */
   public static String pathBacteria = pathAssets + "bacteria_new.png";
   /** The constant pathFlu. */

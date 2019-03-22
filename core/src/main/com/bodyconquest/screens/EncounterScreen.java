@@ -695,6 +695,13 @@ public class EncounterScreen implements Screen {
       }
       return new TexturePool(Assets.pathFlu, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
     } else if (UnitType.FUNGUS == mapObjectType) {
+        if(playerDisease == Disease.INFLUENZA){
+            return new TexturePool(Assets.pathVirusFlu, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
+        } else if(playerDisease == Disease.MEASLES){
+            return new TexturePool(Assets.pathVirusMes, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
+        } else if(playerDisease == Disease.ROTAVIRUS){
+            return new TexturePool(Assets.pathVirusRvi, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
+        }
       return new TexturePool(
           Assets.pathVirus, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
     } else if (UnitType.BACTERIA == mapObjectType) {
