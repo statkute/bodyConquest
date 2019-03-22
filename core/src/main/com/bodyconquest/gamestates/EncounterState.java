@@ -189,7 +189,15 @@ public class EncounterState {
     checkProjectiles(projectilesBottom, troopsTop);
 
 
+
     if (counter == 3) {
+
+      if(topBase.getHealth() <= 0) {
+        endGame(PlayerType.PLAYER_BOTTOM);
+      }
+      if(bottomBase.getHealth() <= 0) {
+        endGame(PlayerType.PLAYER_TOP);
+      }
 
       sendMapObjectUpdates();
 
@@ -200,13 +208,6 @@ public class EncounterState {
       sendPlayerScoreUpdates();
 
       counter = 0;
-
-      if(topBase.getHealth() <= 0) {
-        endGame(PlayerType.PLAYER_BOTTOM);
-      }
-      if(bottomBase.getHealth() <= 0) {
-        endGame(PlayerType.PLAYER_TOP);
-      }
 
     }
 
