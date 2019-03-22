@@ -87,7 +87,7 @@ public class ServerLogic extends Thread {
     if (message.startsWith(MessageMaker.REGISTER_HEADER)) {
       pointer = MessageMaker.REGISTER_HEADER.length();
 
-      message = message.substring(pointer);
+      message = message.substring(pointer + 1);
 
       String[] values = message.split(" ");
 
@@ -95,10 +95,11 @@ public class ServerLogic extends Thread {
       String password = values[1];
 
       boolean response = dbManager.addUser(username, password);
+      //System.out.println(response);
       if (response == true) {
-        serverSender.sendMessage(MessageMaker.registeredSuccessfullyMessage(username));
+        serverSender.sendMessage(MessageMaker.registeredSuccessfullyMessage());
       } else {
-        serverSender.sendMessage(MessageMaker.unsuccessfulMessage());
+        serverSender.sendMessage(MessageMaker.unsuccessfulRegisterMessage());
       }
     } else if (message.startsWith(MessageMaker.LOGIN_HEADER)) {
       pointer = MessageMaker.LOGIN_HEADER.length();
@@ -107,14 +108,14 @@ public class ServerLogic extends Thread {
 
       String[] values = message.split(" ");
 
-      String username = values[0];
-      String password = values[1];
+      String username = values[1];
+      String password = values[2];
 
       boolean response = dbManager.checkUser(username, password);
       if (response == true) {
         serverSender.sendMessage(MessageMaker.loggedInSuccessfullyMessage(username));
       } else {
-        serverSender.sendMessage(MessageMaker.unsuccessfulMessage());
+        serverSender.sendMessage(MessageMaker.unsuccessfulLoginMessage(username));
       }
     } else if (message.startsWith(MessageMaker.GET_LEADERBOARD_HEADER)) {
       pointer = MessageMaker.GET_LEADERBOARD_HEADER.length();
@@ -129,16 +130,17 @@ public class ServerLogic extends Thread {
 
       String[] values = message.split(" ");
 
-      String username = values[0];
-      Integer points = Integer.getInteger(values[1]);
+      String username = values[1];
+      Integer points = Integer.getInteger(values[2]);
 
       boolean response = dbManager.insertAchievement(username, points);
 
-      if (response == true) {
-        //serverSender.sendMessage(MessageMaker.addedAchievementSuccessfullyMessage());
+      /*if (response == true) {
+        serverSender.sendMessage(MessageMaker.addedAchievementSuccessfullyMessage());
       } else {
         serverSender.sendMessage(MessageMaker.unsuccessfulMessage());
-      }
+      }*/
+
     }
   }
 

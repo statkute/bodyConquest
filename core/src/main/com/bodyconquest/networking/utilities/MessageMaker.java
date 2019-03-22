@@ -20,14 +20,10 @@ public class MessageMaker {
   public static final String START_ENCOUNTER_HEADER = "START_ENCOUNTER_";
   public static final String POINTS_HEADER = "POINTS_HEADER_";
   public static final String LOGIN_HEADER = "LOGIN_";
-  public static final String SUCCESSFUL_LOGIN_HEADER = "SUCCESSFULLY_LOGGED_IN_";
   public static final String REGISTER_HEADER = "REGISTER_";
-  public static final String SUCCESSFUL_REGISTER_HEADER = "SUCCESSFULLY_REGISTERED_";
-  public static final String UNSUCCESSFUL_HEADER = "UNSUCCESSFUL_";
   public static final String GET_LEADERBOARD_HEADER = "GET_LEADERBOARD_";
   public static final String SET_LEADERBOARD_HEADER = "SET_LEADERBOARD_";
   public static final String SET_ACHIEVEMENT_HEADER = "SET_ACHIEVEMENT_";
-  public static final String SUCCESSFUL_ADDED_ACHIEVEMENT_HEADER = "SUCCESSFULLY_ADDED_ACHIEVEMENT_";
 
   public static final int RESOURCE_PADDING = 3;
   public static final int HEALTH_PADDING = 3;
@@ -172,7 +168,21 @@ public class MessageMaker {
   }
 
   public static String loggedInSuccessfullyMessage(String username) {
-    return SUCCESSFUL_LOGIN_HEADER + " " + username;
+    String message = LOGIN_HEADER;
+
+    message += " 1";
+
+    message += " " + username;
+    return message;
+  }
+
+  public static String unsuccessfulLoginMessage(String username) {
+    String message = LOGIN_HEADER;
+
+    message += " 0";
+
+    message += " " + username;
+    return message;
   }
 
   public static String registerMessage(String username, String password) {
@@ -185,12 +195,18 @@ public class MessageMaker {
     return message;
   }
 
-  public static String registeredSuccessfullyMessage(String username) {
-    return SUCCESSFUL_REGISTER_HEADER + " " + username;
+  public static String registeredSuccessfullyMessage() {
+    String message = REGISTER_HEADER;
+
+    message += " 1";
+    return message;
   }
 
-  public static String unsuccessfulMessage() {
-    return UNSUCCESSFUL_HEADER;
+  public static String unsuccessfulRegisterMessage() {
+    String message = REGISTER_HEADER;
+
+    message += " 0";
+    return message;
   }
 
   public static String getLeaderboardMessage() {
@@ -215,10 +231,6 @@ public class MessageMaker {
     message += " " + points;
 
     return message;
-  }
-
-  public static String addedAchievementSuccessfullyMessage() {
-    return SUCCESSFUL_ADDED_ACHIEVEMENT_HEADER;
   }
 
 }

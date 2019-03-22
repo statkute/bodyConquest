@@ -41,14 +41,11 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     private Rectangle greenVirusBounds;
     private Rectangle yellowVirusBounds;
 
-    private Game g;
-
     private PlayerType playerType;
     private GameType gameType;
 
     private Disease playerDisease;
 
-    private String username;
     private Communicator communicator;
 
     /**
@@ -56,26 +53,26 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
      *
      * @param game     the game
      * @param gameType the game type
-     * @param username the username
      * @throws IOException the io exception
      */
     public RaceSelection(
-            BodyConquest game, GameType gameType, String username) throws IOException {
+            BodyConquest game, GameType gameType) throws IOException {
         super(game);
         this.gameType = gameType;
-        this.username = username;
         loadAssets();
         getAssets();
         setRectangles();
-        game.setUsername(username);
+        //game.setUsername(username);
+
 
         if (gameType != GameType.MULTIPLAYER_JOIN) {
-            g = new Game(gameType);
-            game.setGame(g);
-            g.startRaceSelectionState();
-            g.start();
+            game.getGame().startRaceSelectionState();
         }
+        game.getClient().setRaceSelectionLogic();
 
+        this.communicator = game.getClient().getCommunicator();
+        this.playerType = communicator.getPlayerType();
+        /*
         game.getClient().startClient();
 
         if (gameType != GameType.MULTIPLAYER_JOIN) {
@@ -88,6 +85,8 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
 
         communicator.setPlayerType(playerType);
         game.getClient().setRaceSelectionLogic();
+        */
+
     }
 
     /**
@@ -155,7 +154,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
                     server.closeEverything();
                 }
                 game.getClient().closeEverything();
-                game.setScreen(new MenuScreen(game, username));
+                game.setScreen(new MenuScreen(game));
                 dispose();
             }
         }

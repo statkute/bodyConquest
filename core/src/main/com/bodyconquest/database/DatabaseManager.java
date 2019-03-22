@@ -20,6 +20,7 @@ public class DatabaseManager {
 
     public DatabaseManager() {
         connect();
+        //createTables();
     }
 
     /**
@@ -183,7 +184,7 @@ public class DatabaseManager {
         boolean created = true;
         try {
             Statement statement = dbConn.createStatement();
-            String createUsersTable = "CREATE TABLE Users (\n" +
+            String createUsersTable = "CREATE TABLE Users (" +
                     "	username			VARCHAR(50)		NOT NULL," +
                     "	password			VARCHAR(50)		NOT NULL," +
                     "	PRIMARY KEY (username)" +

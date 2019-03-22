@@ -7,8 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import main.com.bodyconquest.constants.Assets;
+import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.database.DatabaseManager;
+import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
+
+import java.io.IOException;
 
 /**
  * The type Login screen.
@@ -18,18 +22,14 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     private Texture login;
     private TextButton loginBtn;
     private Image loginImage;
-
-    /**
-     * The Database manager.
-     */
-    DatabaseManager dbManager;
+    private GameType gameType;
 
     /**
      * Instantiates a new Login screen.
      *
      * @param game the game
      */
-    public LoginScreen(BodyConquest game) {
+    public LoginScreen(BodyConquest game, GameType gameType) {
         super(game);
         loginImage = new Image(login);
         loginBtn = new TextButton("Login", skin);
@@ -37,7 +37,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         settingSizes();
         settingPositions();
         adding();
-        this.dbManager = new DatabaseManager();
+        this.gameType = gameType;
     }
 
     /**
@@ -80,6 +80,8 @@ public class LoginScreen extends DatabasesScreen implements Screen {
                 loginBtn.setText("You logged in!");
                 textPassword = txfPassword.getText();
                 textUsername = txfUsername.getText();
+                String message = MessageMaker.loginMessage(textUsername, textPassword);
+                game.getClient().clientSender.sendMessage(message);
                 System.out.println(textUsername + " " + textPassword);
                 processRegistration();
             }
@@ -92,7 +94,21 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     @Override
     public void processRegistration() {
         super.processRegistration();
-        game.setScreen(new MenuScreen(game, textUsername));
+        //wait till the login answer is received from server
+        while (game.getClient().getCommunicator().getLoggedIsSet().get() == false) {
+        }
+        if (game.getClient().getCommunicator().getLogged().get() == true) {
+            //if successfully logged in, go to menu screen
+            try {
+                game.setScreen(new RaceSelection(game, gameType));
+            } catch (IOException e) {
+                System.out.println("Exception when displaying race selection screen");
+            }
+
+        } else {
+            //else go back to login screen
+            game.setScreen(new LoginScreen(game, gameType));
+        }
     }
 
     /**

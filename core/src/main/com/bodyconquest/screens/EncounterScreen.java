@@ -138,7 +138,7 @@ public class EncounterScreen implements Screen {
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    this.username = game.getUsername();
+    this.username = game.getClient().getCommunicator().getUsername();
 
     if (gameType != GameType.MULTIPLAYER_JOIN) {
       server = game.getServer();
@@ -156,7 +156,7 @@ public class EncounterScreen implements Screen {
     mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
-    menuScreen = new MenuScreen(game, username);
+    menuScreen = new MenuScreen(game);
     //    while (comms.getPlayerDisease() == null) {
     //      try { Gdx.app.wait(); } catch (InterruptedException e) {e.printStackTrace();}
     //    }
@@ -518,7 +518,7 @@ public class EncounterScreen implements Screen {
               @Override
               public void run() {
                 dispose();
-                game.setScreen(new MenuScreen(game, ""));
+                game.setScreen(new MenuScreen(game));
               }
             }));
     stage.getRoot().addAction(sequenceAction);

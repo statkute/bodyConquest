@@ -7,13 +7,17 @@ import main.com.bodyconquest.constants.Resource;
 import main.com.bodyconquest.entities.BasicObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /** The type Communicator. */
 public class Communicator {
 
   /** Variables */
   private CopyOnWriteArrayList<BasicObject> objects;
+
+  private String username;
 
   private int bottomHealthPercentage;
   private int topHealthPercentage;
@@ -23,6 +27,7 @@ public class Communicator {
   private int proteinsTop;
   private int lipidsBottom;
   private int sugarsBottom;
+
   private int proteinsBottom;
 
   private int scoreBottom;
@@ -39,6 +44,15 @@ public class Communicator {
 
   private boolean startBodyScreen;
   private boolean startEncounter;
+
+  private HashMap<String, Integer> board;
+  private AtomicBoolean boardIsSet = new AtomicBoolean(false);
+
+  private AtomicBoolean logged = new AtomicBoolean(false);
+  private AtomicBoolean loggedIsSet = new AtomicBoolean(false);
+
+  private AtomicBoolean registered = new AtomicBoolean(false);
+  private AtomicBoolean registeredIsSet = new AtomicBoolean(false);
 
   /** Instantiates a new Communicator. */
   public Communicator() {
@@ -431,5 +445,61 @@ public class Communicator {
         return proteinsTop;
       }
     }
+  }
+
+  public HashMap<String, Integer> getBoard() {
+    return board;
+  }
+
+  public void setBoard(HashMap<String, Integer> board) {
+    this.board = board;
+  }
+
+  public AtomicBoolean getBoardIsSet() {
+    return boardIsSet;
+  }
+
+  public void setBoardIsSet(boolean boardIsSet) {
+    this.boardIsSet.set(boardIsSet);
+  }
+
+  public AtomicBoolean getLogged() {
+    return logged;
+  }
+
+  public void setLogged(boolean logged) {
+    this.logged.set(logged);
+  }
+
+  public AtomicBoolean getLoggedIsSet() {
+    return loggedIsSet;
+  }
+
+  public void setLoggedIsSet(boolean loggedIsSet) {
+    this.loggedIsSet.set(loggedIsSet);
+  }
+
+  public AtomicBoolean getRegistered() {
+    return registered;
+  }
+
+  public void setRegistered(boolean registered) {
+    this.registered.set(registered);
+  }
+
+  public AtomicBoolean getRegisteredIsSet() {
+    return registeredIsSet;
+  }
+
+  public void setRegisteredIsSet(boolean registeredIsSet) {
+    this.registeredIsSet.set(registeredIsSet);
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 }

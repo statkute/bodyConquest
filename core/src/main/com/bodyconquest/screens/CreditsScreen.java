@@ -75,7 +75,7 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
       if (backBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         dispose();
-        game.setScreen(new MenuScreen(game,username));
+          game.setScreen(new MenuScreen(game));
       }
     }
   }
