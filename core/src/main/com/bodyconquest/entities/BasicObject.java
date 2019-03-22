@@ -13,6 +13,7 @@ public class BasicObject {
   private double currentSpeed;
   private double rotation;
   private MapObjectType mapObjectType;
+  private boolean wasHit;
 
 
   public void setX(double x) {
@@ -94,5 +95,13 @@ public class BasicObject {
 
   public void setCheight(int cheight) {
     this.cheight = cheight;
+  }
+
+  public boolean getWasHit(){
+    return wasHit;
+  }
+
+  public boolean setWasHit(boolean wasHit){
+    return this.wasHit = wasHit;
   }
 }

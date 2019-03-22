@@ -63,6 +63,7 @@ public class EncounterState {
   private int totalScoreBottom;
 
   int counter = 0;
+  int damageCounter = 0;
 
   // Move resources in side of player
   private Resources topResources;
@@ -176,8 +177,13 @@ public class EncounterState {
   /** {@inheritDoc} */
   public void update() {
     counter ++;
+    damageCounter++;
 
-    for (MapObject mo : allMapObjects) mo.update();
+    for (MapObject mo : allMapObjects) {
+      mo.update();
+
+    }
+
 
     checkCollisions(troopsBottom, troopsTop);
     checkCollisions(troopsTop, troopsBottom);

@@ -73,6 +73,7 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   // Temporary implementation to get images for the HUD
   public Image sprite;
+  private int damageCounter;
 
 
   /**
@@ -100,6 +101,7 @@ public abstract class Troop extends MapObject implements Spawnable {
     attacking = false;
     collidable = true;
     killingPoints = 0;
+    damageCounter = 0;
   }
 
   /**
@@ -109,6 +111,7 @@ public abstract class Troop extends MapObject implements Spawnable {
    */
   public void hit(int damage) {
     setHealth(getHealth() - damage);
+    setWasHit(true);
   }
 
   /**
@@ -155,6 +158,11 @@ public abstract class Troop extends MapObject implements Spawnable {
     updateMovement();
     checkEffects();
     move();
+    damageCounter++;
+    if(this.getWasHit() && damageCounter >=30){
+      damageCounter =0;
+      this.setWasHit(false);
+    }
   }
 
   private void checkEffects() {
