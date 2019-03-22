@@ -319,6 +319,14 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         });
     musicOn.addListener(musicText.getListeners().peek());
     musicOff.addListener(musicText.getListeners().peek());
+
+    back.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            playButtonSound();
+            game.setScreen(new MenuScreen(game, username));
+          }
+        });
   }
 
   //  /** {@inheritDoc} */
