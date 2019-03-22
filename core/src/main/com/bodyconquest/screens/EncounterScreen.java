@@ -298,7 +298,6 @@ public class EncounterScreen implements Screen {
     }
 
     if (destroyed) {
-      System.out.println("Hello");
       screenMakingCounter++;
       determineWinner();
       if (screenMakingCounter == 1) switchScreen(game, new BodyScreen(game, gameType));

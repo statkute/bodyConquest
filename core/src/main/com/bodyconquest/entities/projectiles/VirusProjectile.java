@@ -13,7 +13,7 @@ public class VirusProjectile extends Projectile {
     yInit = y;
     this.damage = damage;
     setSize(60, 60);
-    setPosition(x - (getWidth() / 2), y - (getHeight() / 2));
+    setPosition(x - (getWidth() / 2.0), y - (getHeight() / 2.0));
     this.xDest = xDest;
     this.yDest = yDest;
     setCSize(45, 15);
@@ -25,7 +25,6 @@ public class VirusProjectile extends Projectile {
     maxTravelDistance = 200;
     mapObjectType = ProjectileType.VIRUS_PROJECTILE;
     moveTowards(xDest, yDest);
-
   }
 
   @Override

@@ -68,7 +68,7 @@ public abstract class Projectile extends MapObject {
   @Override
   public void move() {
     super.move();
-    setX(dy);
+    setX(dx);
     setY(dy);
   }
 

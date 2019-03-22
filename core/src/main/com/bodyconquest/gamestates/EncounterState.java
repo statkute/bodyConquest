@@ -62,7 +62,7 @@ public class EncounterState {
   private int totalScoreTop;
   private int totalScoreBottom;
 
-  int counter = 0;
+  private int counter = 0;
 
   // Move resources in side of player
   private Resources topResources;
@@ -99,8 +99,8 @@ public class EncounterState {
     troopsTop.add(topBase);
     allMapObjects.add(topBase);
 
-    projectilesBottom = new CopyOnWriteArrayList<Projectile>();
-    projectilesTop = new CopyOnWriteArrayList<Projectile>();
+    projectilesBottom = new CopyOnWriteArrayList<>();
+    projectilesTop = new CopyOnWriteArrayList<>();
 
     totalScoreBottom = bottomPlayer.getScore();
     totalScoreTop = topPlayer.getScore();

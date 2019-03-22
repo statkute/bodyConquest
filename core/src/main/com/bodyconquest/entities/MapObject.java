@@ -191,7 +191,7 @@ public abstract class MapObject {
    * @return The y co-ordinate at the centre of this MapObject.
    */
   public double getCentreY() {
-    return getY() + (getHeight() / 2.0f);
+    return getY() + (getHeight() / 2.0);
   }
 
   /**
@@ -490,6 +490,7 @@ public abstract class MapObject {
    */
   public void checkCollisions(CopyOnWriteArrayList<MapObject> mapObjects) {
     for(MapObject mo : mapObjects) {
+      // Should use to be location to check collisions
       if(this.checkCollision(mo)) return;
     }
     x = dx;
