@@ -236,6 +236,12 @@ public class Assets {
   public static String pathVirusRvi = pathAssets + "virus_yellow.png";
   /** The constant pathBacteria. */
   public static String pathBacteria = pathAssets + "bacteria_new.png";
+  /** The constant pathBacteria. */
+  public static String pathBacteriaFlu = pathAssets + "bacteria_blue.png";
+  /** The constant pathBacteria. */
+  public static String pathBacteriaMes = pathAssets + "bacteria_green.png";
+  /** The constant pathBacteria. */
+  public static String pathBacteriaRvi = pathAssets + "bacteria_yellow.png";
   /** The constant pathFlu. */
   public static String pathFlu = pathAssets + "flu_new.png";
   /** The constant pathFluFlu. */
