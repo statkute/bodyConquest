@@ -1,6 +1,7 @@
 package main.com.bodyconquest.entities;
 
 import main.com.bodyconquest.constants.MapObjectType;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.gamestates.EncounterState;
 
 import java.awt.*;
@@ -36,6 +37,8 @@ public abstract class MapObject {
   // Collision box width and height
   private int cwidth;
   private int cheight;
+
+  protected PlayerType playerType;
 
   // Movement attributes
   /**
@@ -525,6 +528,7 @@ public abstract class MapObject {
     bo.setCurrentSpeed(currentSpeed);
     bo.setMapObjectType(mapObjectType);
     bo.setRotation((direction + Math.PI) * (180 / Math.PI));
+    bo.setPlayerType(playerType);
     //bo.setRotation(direction + Math.PI);
     return bo;
   }

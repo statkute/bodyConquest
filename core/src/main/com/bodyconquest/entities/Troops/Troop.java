@@ -24,7 +24,7 @@ public abstract class Troop extends MapObject implements Spawnable {
    * The {@link PlayerType} that this Troop is affiliated with. (Used to make decisions on who to
    * attack and how to move.
    */
-  protected final PlayerType playerType;
+  //protected final PlayerType playerType;
 
   /** Enumeration for each type of Unit/Troop that exists. */
 
