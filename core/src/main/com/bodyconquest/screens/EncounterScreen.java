@@ -130,6 +130,7 @@ public class EncounterScreen implements Screen {
     clientSender = client.clientSender;
     communicator = client.getCommunicator();
     communicator.setStartEncounter(false);
+    playerDisease = communicator.getPlayerDisease();
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
