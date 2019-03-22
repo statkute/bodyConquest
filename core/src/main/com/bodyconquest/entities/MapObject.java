@@ -1,6 +1,7 @@
 package main.com.bodyconquest.entities;
 
 import main.com.bodyconquest.constants.MapObjectType;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.gamestates.EncounterState;
 
 import java.awt.*;
@@ -38,6 +39,8 @@ public abstract class MapObject {
   private int cheight;
 
   protected boolean wasHit = false;
+
+  protected PlayerType playerType;
 
   // Movement attributes
   /**
@@ -193,7 +196,7 @@ public abstract class MapObject {
    * @return The y co-ordinate at the centre of this MapObject.
    */
   public double getCentreY() {
-    return getY() + (getHeight() / 2.0f);
+    return getY() + (getHeight() / 2.0);
   }
 
   /**
@@ -492,6 +495,7 @@ public abstract class MapObject {
    */
   public void checkCollisions(CopyOnWriteArrayList<MapObject> mapObjects) {
     for(MapObject mo : mapObjects) {
+      // Should use to be location to check collisions
       if(this.checkCollision(mo)) return;
     }
     x = dx;
@@ -534,6 +538,7 @@ public abstract class MapObject {
     bo.setCurrentSpeed(currentSpeed);
     bo.setMapObjectType(mapObjectType);
     bo.setRotation((direction + Math.PI) * (180 / Math.PI));
+    bo.setPlayerType(playerType);
     bo.setWasHit(wasHit);
     //bo.setRotation(direction + Math.PI);
     return bo;

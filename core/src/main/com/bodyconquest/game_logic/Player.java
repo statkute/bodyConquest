@@ -1,6 +1,5 @@
 package main.com.bodyconquest.game_logic;
 
-import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.Disease;
 import main.com.bodyconquest.constants.Organ;
 import main.com.bodyconquest.constants.PlayerType;

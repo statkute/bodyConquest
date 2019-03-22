@@ -1,5 +1,6 @@
 package main.com.bodyconquest.entities;
 import main.com.bodyconquest.constants.MapObjectType;
+import main.com.bodyconquest.constants.PlayerType;
 
 public class BasicObject {
 
@@ -15,6 +16,7 @@ public class BasicObject {
   private MapObjectType mapObjectType;
   private boolean wasHit;
 
+  private PlayerType playerType;
 
   public void setX(double x) {
     this.x = x;
@@ -103,5 +105,13 @@ public class BasicObject {
 
   public boolean setWasHit(boolean wasHit){
     return this.wasHit = wasHit;
+  }
+
+  public PlayerType getPlayerType() {
+    return playerType;
+  }
+
+  public void setPlayerType(PlayerType playerType) {
+    this.playerType = playerType;
   }
 }

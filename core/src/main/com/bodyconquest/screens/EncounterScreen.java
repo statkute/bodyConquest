@@ -22,14 +22,13 @@ import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.entities.BasicObject;
 import main.com.bodyconquest.entities.Map;
 import main.com.bodyconquest.entities.Troops.Bacteria;
-import main.com.bodyconquest.entities.Troops.Flu;
 import main.com.bodyconquest.entities.Troops.Virus;
+import main.com.bodyconquest.entities.Troops.Fungus;
 import main.com.bodyconquest.entities.ViewObject;
 import main.com.bodyconquest.game_logic.Communicator;
 import main.com.bodyconquest.handlers.AnimationWrapper;
 import main.com.bodyconquest.networking.Client;
 import main.com.bodyconquest.networking.ClientSender;
-import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
@@ -43,8 +42,6 @@ public class EncounterScreen implements Screen {
 
   private int organNumber;
 
-  private final float mapSize;
-
   //private boolean updating;
 
   private int screenMakingCounter;
@@ -52,14 +49,14 @@ public class EncounterScreen implements Screen {
   private final Map map;
 
   /** The constant timeAlive. */
-  protected static float timeAlive;
+  private static float timeAlive;
 
   private static float timeOfDmgTakenBottom;
 
   private static float timeOfDmgTakenTop;
 
   /** The Fps. */
-  FPSLogger fps = new FPSLogger();
+  private FPSLogger fps = new FPSLogger();
 
   private static final float SHAKE_TIME_ON_DMG = 0.5f;
 
@@ -81,13 +78,9 @@ public class EncounterScreen implements Screen {
 
   private final HUD hud;
 
-  private Communicator comms;
+  private Communicator communicator;
 
   private ClientSender clientSender;
-
-  private Client client;
-
-  private Server server;
 
   private PlayerType playerType;
 
@@ -98,9 +91,6 @@ public class EncounterScreen implements Screen {
   private Disease playerDisease;
 
   private boolean destroyed = false;
-
-  private int scoreTop;
-  private int scoreBottom;
 
   private ArrayList<ViewObject> viewObjects;
 
@@ -134,13 +124,13 @@ public class EncounterScreen implements Screen {
   public EncounterScreen(BodyConquest game, GameType gameType) {
     this.gameType = gameType;
     this.game = game;
-    //updating = true;
     screenMakingCounter = 0;
-    client = game.getClient();
+    Client client = game.getClient();
     client.setEncounterLogic();
     clientSender = client.clientSender;
-    comms = client.getCommunicator();
-    comms.setStartEncounter(false);
+    communicator = client.getCommunicator();
+    communicator.setStartEncounter(false);
+    playerDisease = communicator.getPlayerDisease();
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
@@ -148,7 +138,6 @@ public class EncounterScreen implements Screen {
     this.username = game.getUsername();
 
     if (gameType != GameType.MULTIPLAYER_JOIN) {
-      server = game.getServer();
       playerType = PlayerType.PLAYER_BOTTOM;
     } else {
       playerType = PlayerType.PLAYER_TOP;
@@ -158,15 +147,13 @@ public class EncounterScreen implements Screen {
     long tDelta = tEnd - MenuScreen.timeOfServer;
     elapsedSeconds = tDelta / 1000.0f;
 
-    map = new Map(comms.getCurrentOrgan());
     float topOfUnitBar = 27;
-    mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
+    float mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
+    map = new Map(communicator.getCurrentOrgan());
     map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
-    //    while (comms.getPlayerDisease() == null) {
-    //      try { Gdx.app.wait(); } catch (InterruptedException e) {e.printStackTrace();}
-    //    }
-    hud = new HUD(this, playerType, comms.getPlayerDisease(), stage);
+
+    hud = new HUD(this, playerType, communicator.getPlayerDisease(), stage);
 
     accumulatorAfterBaseConquered = 0;
     timeAlive = 0;
@@ -176,7 +163,7 @@ public class EncounterScreen implements Screen {
     healthTopBaseBefore = 100;
     healthBottomBaseBefore = 100;
 
-    poolHashMap = new ConcurrentHashMap<MapObjectType, TexturePool>();
+    poolHashMap = new ConcurrentHashMap<>();
 
     value = new DecimalFormat("0");
 
@@ -184,7 +171,7 @@ public class EncounterScreen implements Screen {
   }
 
   public Communicator getCommunicator() {
-    return comms;
+    return communicator;
   }
 
   /** The type Texture Pool. */
@@ -231,11 +218,8 @@ public class EncounterScreen implements Screen {
 
     updateResourceBars();
 
-    scoreBottom = comms.getScoreBottom();
-    scoreTop = comms.getScoreTop();
-
-    healthBottomBase = comms.getBottomHealthPercentage();
-    healthTopBase = comms.getTopHealthPercentage();
+    healthBottomBase = communicator.getBottomHealthPercentage();
+    healthTopBase = communicator.getTopHealthPercentage();
 
     if (healthBottomBaseBefore != healthBottomBase) {
       timeOfDmgTakenBottom = timeAlive;
@@ -253,10 +237,10 @@ public class EncounterScreen implements Screen {
     // fps.log();
 
     if (accumulatorAfterBaseConquered < Assets.UPDATESCREENTILL) {
-      objects = comms.getAllObjects();
+      objects = communicator.getAllObjects();
 
       // Turn BasicObjects from server/communicator into ViewObjects (and gives them a texture)
-      viewObjects = new ArrayList<ViewObject>();
+      viewObjects = new ArrayList<>();
       long tEnd = System.currentTimeMillis();
       long tDelta = tEnd - MenuScreen.timeOfServer;
       elapsedSeconds = tDelta / 1000.0f;
@@ -264,7 +248,7 @@ public class EncounterScreen implements Screen {
 
         Enum i = o.getMapObjectType();
 
-        if (!poolHashMap.containsKey(i)) poolHashMap.put(o.getMapObjectType(), poolSetup(i));
+        if (!poolHashMap.containsKey(i)) poolHashMap.put(o.getMapObjectType(), poolSetup(i, o.getPlayerType()));
 
         viewObjects.add(
             new ViewObject(
@@ -293,9 +277,8 @@ public class EncounterScreen implements Screen {
       // Draw Actors
       stage.draw();
 
-      // draw a font with numbers
-
       shakeCamera();
+
       // Start, draw and end spriteBatch
       game.batch.begin();
 
@@ -311,9 +294,6 @@ public class EncounterScreen implements Screen {
 
       if ((accumulatorAfterBaseConquered > 5 && !destroyed) || time == 0.0f) {
         destroyed = true;
-
-//        determineWinner();
-//        switchScreen(game, menuScreen);
       }
 
       if (!destroyed) updateUnitButtons();
@@ -326,9 +306,9 @@ public class EncounterScreen implements Screen {
       accumulatorAfterBaseConquered++;
     }
 
-    if(destroyed) {
+    if (destroyed) {
       screenMakingCounter++;
-      organNumber = comms.getOpponentOrgans().size() + comms.getPlayerOrgans().size();
+      organNumber = communicator.getOpponentOrgans().size() + communicator.getPlayerOrgans().size();
       determineWinner();
 
       if(screenMakingCounter == 1){
@@ -343,7 +323,6 @@ public class EncounterScreen implements Screen {
         }
       }
     }
-
   }
 
   /** Draws a username of the player on the batch */
@@ -388,11 +367,11 @@ public class EncounterScreen implements Screen {
     game.timerFont.getData().setScale(1.25f, 1.25f);
     if (playerType == PlayerType.PLAYER_TOP) {
       game.timerFont.draw(
-          game.batch, Integer.toString(comms.getScoreTop()), BodyConquest.V_WIDTH - 110.0f, 350.0f);
+          game.batch, Integer.toString(communicator.getScoreTop()), BodyConquest.V_WIDTH - 110.0f, 350.0f);
     } else {
       game.timerFont.draw(
           game.batch,
-          Integer.toString(comms.getScoreBottom()),
+          Integer.toString(communicator.getScoreBottom()),
           BodyConquest.V_WIDTH - 110.0f,
           350.0f);
     }
@@ -400,9 +379,9 @@ public class EncounterScreen implements Screen {
 
   /** Updates the amount of resources on the batch */
   private void updateResourceBars() {
-    int l = comms.getLipidsBottom();
-    int p = comms.getProteinsBottom();
-    int c = comms.getSugarsBottom();
+    int l = communicator.getLipidsBottom();
+    int p = communicator.getProteinsBottom();
+    int c = communicator.getSugarsBottom();
 
     hud.updateResourceBars(l, p, c, elapsedSeconds);
   }
@@ -419,10 +398,9 @@ public class EncounterScreen implements Screen {
     Rectangle r1 = new Rectangle(b1.getX(), b1.getY(), b1.getWidth(), b1.getHeight());
     Rectangle r2 = new Rectangle(b2.getX(), b2.getY(), b2.getWidth(), b2.getHeight());
     if (r0.contains(tmp.x, tmp.y)) {
-      // hud.makeBucketVisible();
       game.font.draw(
           game.batch,
-          "P:" + Flu.PROTEINS_COST + " | C: " + Flu.SUGARS_COST + " | L: " + Flu.LIPIDS_COST,
+          "P:" + Virus.PROTEINS_COST + " | C: " + Virus.SUGARS_COST + " | L: " + Virus.LIPIDS_COST,
           r0.x - 90,
           r0.y + 50);
     } else if (r1.contains(tmp.x, tmp.y)) {
@@ -439,7 +417,12 @@ public class EncounterScreen implements Screen {
     } else if (r2.contains(tmp.x, tmp.y)) {
       game.font.draw(
           game.batch,
-          "P:" + Virus.PROTEINS_COST + " | C: " + Virus.SUGARS_COST + " | L: " + Virus.LIPIDS_COST,
+          "P:"
+              + Fungus.PROTEINS_COST
+              + " | C: "
+              + Fungus.SUGARS_COST
+              + " | L: "
+              + Fungus.LIPIDS_COST,
           r2.x - 90,
           r2.y + 50);
     }
@@ -530,16 +513,16 @@ public class EncounterScreen implements Screen {
    * @param game the game
    * @param newScreen the new screen
    */
-  public void switchScreen(final BodyConquest game, Screen newScreen) {
+  private void switchScreen(final BodyConquest game, Screen newScreen) {
     stage.getRoot().getColor().a = 1;
     SequenceAction sequenceAction = new SequenceAction();
     sequenceAction.addAction(Actions.fadeOut(2.0f));
     sequenceAction.addAction(
         Actions.run(
-                () -> {
-                  dispose();
-                  game.setScreen(newScreen);
-                }));
+            () -> {
+              dispose();
+              game.setScreen(newScreen);
+            }));
     stage.getRoot().addAction(sequenceAction);
   }
 
@@ -568,7 +551,7 @@ public class EncounterScreen implements Screen {
     game.font.setColor(Color.WHITE);
   }
 
-  /** Font for determining a winnner */
+  /** Font for determining a winner */
   private void ShowGameResult(String result) {
     DrawShadowed(
         result, 0, BodyConquest.V_HEIGHT / 2.0f + 30, stage.getWidth(), Align.center, Color.RED);
@@ -581,44 +564,18 @@ public class EncounterScreen implements Screen {
     if (playerType == PlayerType.PLAYER_BOTTOM) {
       if ((healthBottomBase <= 0) || (time == 0.0f && healthBottomBase < healthTopBase)) {
         ShowGameResult("DEFEAT!");
-//        client.closeEverything();
-//        if (server != null) {
-//          server.closeEverything();
-//        }
       } else if ((healthTopBase <= 0) || (time == 0.0f && healthBottomBase > healthTopBase)) {
-        scoreBottom += map.getPoints();
         ShowGameResult("VICTORY!\nYou get: " + map.getPoints() + "points");
-//        client.closeEverything();
-//        if (server != null) {
-//          server.closeEverything();
-//        }
       } else if (time == 0.0f && healthTopBase == healthBottomBase) {
         ShowGameResult("DRAW!");
-//        client.closeEverything();
-//        if (server != null) {
-//          server.closeEverything();
-//        }
       }
     } else {
       if (healthTopBase <= 0 || (time == 0.0f && healthBottomBase > healthTopBase)) {
         ShowGameResult("DEFEAT!");
-//        client.closeEverything();
-//        if (server != null) {
-//          server.closeEverything();
-//        }
       } else if (healthBottomBase <= 0 || (time == 0.0f && healthBottomBase < healthTopBase)) {
-        scoreTop += map.getPoints();
         ShowGameResult("VICTORY!\nYou get: " + map.getPoints() + "points");
-//        client.closeEverything();
-//        if (server != null) {
-//          server.closeEverything();
-//        }
       } else if (time == 0.0f && healthTopBase == healthBottomBase) {
         ShowGameResult("DRAW!");
-//        client.closeEverything();
-//        if (server != null) {
-//          server.closeEverything();
-//        }
       }
     }
     game.batch.end();
@@ -694,7 +651,7 @@ public class EncounterScreen implements Screen {
     game.font.getData().setScale(1.0f, 1.0f);
     game.font.draw(
         game.batch,
-        Integer.toString(comms.getSugarsBottom()),
+        Integer.toString(communicator.getSugarsBottom()),
         hud.getCarbsResourceBar().getX() + 15,
         hud.getCarbsResourceBar().getY() + 30,
         10,
@@ -702,7 +659,7 @@ public class EncounterScreen implements Screen {
         false);
     game.font.draw(
         game.batch,
-        Integer.toString(comms.getLipidsBottom()),
+        Integer.toString(communicator.getLipidsBottom()),
         hud.getLipidsResourceBar().getX() + 15,
         hud.getLipidsResourceBar().getY() + 30,
         10,
@@ -710,7 +667,7 @@ public class EncounterScreen implements Screen {
         false);
     game.font.draw(
         game.batch,
-        Integer.toString(comms.getProteinsBottom()),
+        Integer.toString(communicator.getProteinsBottom()),
         hud.getProteinResourceBar().getX() + 15,
         hud.getProteinResourceBar().getY() + 30,
         10,
@@ -721,26 +678,33 @@ public class EncounterScreen implements Screen {
   /**
    * Takes a texture from the texture Pool
    *
-   * @param i the type of the map object to get the texture
+   * @param mapObjectType the type of the map object to get the texture
    */
-  private TexturePool poolSetup(Enum i) {
+  private TexturePool poolSetup(Enum mapObjectType, PlayerType playerType) {
 
     float frameRate = 0.2f;
+      String path = "";
+    Disease newPlayerDisease;
+    if(playerType == this.playerType){
+        newPlayerDisease = playerDisease;
+    } else {
+        newPlayerDisease = communicator.getOpponentDisease();
+    }
 
-    // Enum i = o.getMapObjectType();
-    if (UnitType.FLU.equals(i)) {
-      return new TexturePool(Assets.pathFlu, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
-    } else if (UnitType.VIRUS.equals(i)) {
-      return new TexturePool(
-          Assets.pathVirus, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
-    } else if (UnitType.BACTERIA.equals(i)) {
-      return new TexturePool(
-          Assets.pathBacteria, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
-    } else if (BaseType.INFLUENZA_BASE == i) {
+    if (UnitType.VIRUS == mapObjectType) {
+        path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathFluFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;
+        return new TexturePool(path, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
+    } else if (UnitType.FUNGUS == mapObjectType) {
+        path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathVirusFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathVirusMes : Assets.pathVirusRvi;
+        return new TexturePool(path, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
+    } else if (UnitType.BACTERIA == mapObjectType) {
+        path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathBacteriaFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathBacteriaMes : Assets.pathBacteriaRvi;
+        return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
+    } else if (BaseType.INFLUENZA_BASE == mapObjectType) {
       return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
-    } else if (BaseType.ROTAVIRUS_BASE == i) {
+    } else if (BaseType.ROTAVIRUS_BASE == mapObjectType) {
       return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
-    } else if (ProjectileType.FLU_PROJECTILE.equals(i)) {
+    } else if (ProjectileType.VIRUS_PROJECTILE == mapObjectType) {
       return new TexturePool(
           Assets.pathProjectile, Assets.frameColsProjectile, Assets.frameRowsProjectile, frameRate);
     }

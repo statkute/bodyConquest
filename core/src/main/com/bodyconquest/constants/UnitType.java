@@ -1,34 +1,31 @@
 package main.com.bodyconquest.constants;
 
 import main.com.bodyconquest.entities.Troops.Bacteria;
-import main.com.bodyconquest.entities.Troops.Flu;
 import main.com.bodyconquest.entities.Troops.Virus;
+import main.com.bodyconquest.entities.Troops.Fungus;
 
 /**
  * The enum Unit type.
  */
-// EVERYTHINGS
-//public static enum MapObjectType {BACTERIA, FLU, BASE, INFLUENZA_BASE, ROTAVIRUS_BASE, MEASLES_BASE, VIRUS,BUCKET,PROJECTILE, FLUPROJECTILE}
-// ALL units
 public enum UnitType implements ClassOwner, Encodable, MapObjectType {
   /**
    * Bacteria unit type.
    */
   BACTERIA("BAC", Bacteria.class),
   /**
-   * Flu unit type.
-   */
-  FLU("FLU", Flu.class),
-  /**
    * Virus unit type.
    */
-  VIRUS("VIR", Virus.class);
+  VIRUS("VIR", Virus.class),
+  /**
+   * Fungus unit type.
+   */
+  FUNGUS("FNG", Fungus.class);
 
   private static final int ENCODED_LENGTH = 3;
 
   private static final String ENCODED_BACTERIA = "BAC";
-  private static final String ENCODED_FLU = "FLU";
   private static final String ENCODED_VIRUS = "VIR";
+  private static final String ENCODED_FUNGUS = "FNG";
 
 
   private String encodedUnit;
@@ -51,8 +48,8 @@ public enum UnitType implements ClassOwner, Encodable, MapObjectType {
     UnitType unitType = null;
 
     if (unitString.equals(ENCODED_BACTERIA)) unitType = BACTERIA;
-    if (unitString.equals(ENCODED_FLU)) unitType = FLU;
     if (unitString.equals(ENCODED_VIRUS)) unitType = VIRUS;
+    if (unitString.equals(ENCODED_FUNGUS)) unitType = FUNGUS;
 
     return unitType;
   }
