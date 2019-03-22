@@ -90,7 +90,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
     stage.draw();
     game.batch.end();
 
-//    super.render(delta);
+    //    super.render(delta);
     //
     //    game.batch.begin();
     //    game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
@@ -302,7 +302,24 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         });
     soundOn.addListener(soundText.getListeners().peek());
     soundOff.addListener(soundText.getListeners().peek());
-    }
+
+    musicText.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            game.audioPlayer.toggleMutedMusic();
+            if (game.audioPlayer.getMutedMusic()) {
+              musicOn.remove();
+              stage.addActor(musicOff);
+            } else {
+              playButtonSound();
+              musicOff.remove();
+              stage.addActor(musicOn);
+            }
+          }
+        });
+    musicOn.addListener(musicText.getListeners().peek());
+    musicOff.addListener(musicText.getListeners().peek());
+  }
 
   //  /** {@inheritDoc} */
   //  @Override
