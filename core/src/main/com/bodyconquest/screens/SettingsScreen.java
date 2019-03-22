@@ -17,7 +17,7 @@ import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
 
-/** The type Settings screen. */
+/** The Settings screen. */
 public class SettingsScreen extends AbstractGameScreen implements Screen {
 
   private final OrthographicCamera gameCamera;
@@ -119,6 +119,9 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
     t_back = manager.get(Assets.hostBack, Texture.class);
   }
 
+  /**
+   * Creates an Image for each texture and adds the images that have to be displayed to the stage
+   */
   public void addActors() {
     header = new Image(t_header);
     header.setBounds(
@@ -200,11 +203,11 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         t_hard.getWidth(),
         t_hard.getHeight());
 
-        if (game.getDifficultyLevel() == BodyConquest.DifficultyLevel.EASY) {
-          allImages.add(easy);
-        } else {
-          allImages.add(hard);
-        }
+    if (game.getDifficultyLevel() == BodyConquest.DifficultyLevel.EASY) {
+      allImages.add(easy);
+    } else {
+      allImages.add(hard);
+    }
 
     back = new Image(t_back);
     back.setBounds(
@@ -219,7 +222,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
     }
   }
 
-  /** Add buttons to the stage. */
+  /** Adds buttons to the stage. */
   public void addButtons() {
     soundText.addListener(
         new ClickListener() {
