@@ -51,6 +51,12 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
   private Texture t_musicOn;
   private Image musicOff;
   private Texture t_musicOff;
+  private Image difficultyText;
+  private Texture t_difficultyText;
+  private Image easy;
+  private Texture t_easy;
+  private Image hard;
+  private Texture t_hard;
   private Image back;
   private Texture t_back;
 
@@ -89,99 +95,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
     gameCamera.update();
     stage.draw();
     game.batch.end();
-
-    //    super.render(delta);
-    //
-    //    game.batch.begin();
-    //    game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    //    game.batch.draw(header, BodyConquest.V_WIDTH / 2.0f - header.getWidth() / 2.0f, 450);
-    //    game.batch.draw(soundHeader, BodyConquest.V_WIDTH / 5.0f, 300);
-    //
-    //    if (game.audioPlayer.getMutedSFX()) {
-    //      game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5.0f * 4.0f - soundOff.getWidth(),
-    // 300);
-    //    } else {
-    //      game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5.0f * 4.0f - soundOn.getWidth(), 300);
-    //    }
-    //
-    //    game.batch.draw(musicHeader, BodyConquest.V_WIDTH / 5.0f, 240);
-    //
-    //    if (game.audioPlayer.getMutedMusic()) {
-    //      game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5.0f * 4.0f - musicOff.getWidth(),
-    // 240);
-    //    } else {
-    //      game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5.0f * 4.0f - musicOn.getWidth(), 240);
-    //    }
-    //
-    //    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
-    //    checkPressed();
-    //    game.batch.end();
   }
-
-  //  /** {@inheritDoc} */
-  //  @Override
-  //  public void checkPressed() {
-  //
-  //    super.checkPressed();
-  //
-  //    if (Gdx.input.justTouched()) {
-  //      if (backBounds.contains(tmp.x, tmp.y)) {
-  //        System.out.println("back pressed");
-  //        playButtonSound();
-  //        dispose();
-  //        game.setScreen(new MenuScreen(game, username));
-  //      }
-  //
-  //      if (soundBounds.contains(tmp.x, tmp.y) || soundToggleBounds.contains(tmp.x, tmp.y)) {
-  //        game.audioPlayer.toggleMutedSFX();
-  //        playButtonSound();
-  //        if (game.audioPlayer.getMutedSFX()) {
-  //          game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5.0f * 4.0f - soundOff.getWidth(),
-  // 300);
-  //          soundToggleBounds =
-  //              new Rectangle(
-  //                  BodyConquest.V_WIDTH / 5.0f * 4.0f - soundOff.getWidth(),
-  //                  300,
-  //                  soundOff.getWidth(),
-  //                  soundOff.getHeight());
-  //        } else {
-  //          game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5.0f * 4.0f - soundOn.getWidth(),
-  // 300);
-  //          soundToggleBounds =
-  //              new Rectangle(
-  //                  BodyConquest.V_WIDTH / 5.0f * 4.0f - soundOn.getWidth(),
-  //                  300,
-  //                  soundOn.getWidth(),
-  //                  soundOn.getHeight());
-  //        }
-  //      }
-  //
-  //      if (musicBounds.contains(tmp.x, tmp.y) || musicToggleBounds.contains(tmp.x, tmp.y)) {
-  //        game.audioPlayer.toggleMutedMusic();
-  //        playButtonSound();
-  //        if (game.audioPlayer.getMutedMusic()) {
-  //          System.out.println("DRAWING OFF MUSIC");
-  //          game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5.0f * 4.0f - musicOff.getWidth(),
-  // 240);
-  //          musicToggleBounds =
-  //              new Rectangle(
-  //                  BodyConquest.V_WIDTH / 5.0f * 4.0f - musicOff.getWidth(),
-  //                  240,
-  //                  musicOff.getWidth(),
-  //                  musicOff.getHeight());
-  //        } else {
-  //          game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5.0f * 4.0f - musicOn.getWidth(),
-  // 240);
-  //          musicToggleBounds =
-  //              new Rectangle(
-  //                  BodyConquest.V_WIDTH / 5.0f * 4.0f - musicOn.getWidth(),
-  //                  240,
-  //                  musicOn.getWidth(),
-  //                  musicOn.getHeight());
-  //        }
-  //      }
-  //    }
-  //  }
 
   /** {@inheritDoc} */
   @Override
@@ -192,9 +106,12 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
     manager.load(Assets.settingsSoundOff, Texture.class);
     manager.load(Assets.settingsSoundOn, Texture.class);
     manager.load(Assets.settingsMusicHeader, Texture.class);
-    manager.load(Assets.hostBack, Texture.class);
     manager.load(Assets.settingsMusicOff, Texture.class);
     manager.load(Assets.settingsMusicOn, Texture.class);
+    manager.load(Assets.settingsSingleplayerDifficulty, Texture.class);
+    manager.load(Assets.settingsEasy, Texture.class);
+    manager.load(Assets.settingsHard, Texture.class);
+    manager.load(Assets.hostBack, Texture.class);
     manager.finishLoading();
   }
 
@@ -209,6 +126,9 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
     t_soundOff = manager.get(Assets.settingsSoundOff, Texture.class);
     t_musicOn = manager.get(Assets.settingsMusicOn, Texture.class);
     t_musicOff = manager.get(Assets.settingsMusicOff, Texture.class);
+    t_difficultyText = manager.get(Assets.settingsSingleplayerDifficulty, Texture.class);
+    t_easy = manager.get(Assets.settingsEasy, Texture.class);
+    t_hard = manager.get(Assets.settingsHard, Texture.class);
     t_back = manager.get(Assets.hostBack, Texture.class);
   }
 
@@ -271,6 +191,34 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
       allImages.add(musicOn);
     }
 
+    difficultyText = new Image(t_difficultyText);
+    difficultyText.setBounds(
+        BodyConquest.V_WIDTH / 5.0f,
+        180,
+        t_difficultyText.getWidth(),
+        t_difficultyText.getHeight());
+    allImages.add(difficultyText);
+
+    easy = new Image(t_easy);
+    easy.setBounds(
+        BodyConquest.V_WIDTH / 5.0f * 4.0f - easy.getWidth(),
+        180,
+        t_easy.getWidth(),
+        t_easy.getHeight());
+
+    hard = new Image(t_hard);
+    hard.setBounds(
+        BodyConquest.V_WIDTH / 5.0f * 4.0f - hard.getWidth(),
+        180,
+        t_hard.getWidth(),
+        t_hard.getHeight());
+
+    //    if (game.audioPlayer.getMutedSFX()) {
+    //      allImages.add(hard);
+    //    } else {
+    //      allImages.add(easy);
+    //    }
+
     back = new Image(t_back);
     back.setBounds(
         BodyConquest.V_WIDTH / 2.0f - back.getWidth() / 2.0f,
@@ -320,6 +268,22 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
     musicOn.addListener(musicText.getListeners().peek());
     musicOff.addListener(musicText.getListeners().peek());
 
+    difficultyText.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            playButtonSound();
+//            if (easy) {
+//              hard.remove();
+//              stage.addActor(easy);
+//            } else {
+//              easy.remove();
+//              stage.addActor(hard);
+//            }
+          }
+        });
+    musicOn.addListener(musicText.getListeners().peek());
+    musicOff.addListener(musicText.getListeners().peek());
+
     back.addListener(
         new ClickListener() {
           public void clicked(InputEvent event, float x, float y) {
@@ -328,56 +292,4 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
           }
         });
   }
-
-  //  /** {@inheritDoc} */
-  //  @Override
-  //  public void setRectangles() {
-  //    super.setRectangles();
-  //    backBounds =
-  //        new Rectangle(
-  //            BodyConquest.V_WIDTH / 2.0f - backButton.getWidth() / 2.0f,
-  //            60,
-  //            backButton.getWidth(),
-  //            backButton.getHeight());
-  //
-  //    soundBounds =
-  //        new Rectangle(
-  //            BodyConquest.V_WIDTH / 5.0f, 300, soundHeader.getWidth(), soundHeader.getHeight());
-  //
-  //    musicBounds =
-  //        new Rectangle(
-  //            BodyConquest.V_WIDTH / 5.0f, 240, musicHeader.getWidth(), musicHeader.getHeight());
-  //
-  //    if (game.audioPlayer.getMutedSFX()) {
-  //      soundToggleBounds =
-  //          new Rectangle(
-  //              BodyConquest.V_WIDTH / 5.0f * 4.0f - soundOff.getWidth(),
-  //              300,
-  //              soundOff.getWidth(),
-  //              soundOff.getHeight());
-  //    } else {
-  //      soundToggleBounds =
-  //          new Rectangle(
-  //              BodyConquest.V_WIDTH / 5.0f * 4.0f - soundOn.getWidth(),
-  //              300,
-  //              soundOn.getWidth(),
-  //              soundOn.getHeight());
-  //    }
-  //
-  //    if (game.audioPlayer.getMutedMusic()) {
-  //      musicToggleBounds =
-  //          new Rectangle(
-  //              BodyConquest.V_WIDTH / 5.0f * 4.0f - musicOff.getWidth(),
-  //              240,
-  //              musicOff.getWidth(),
-  //              musicOff.getHeight());
-  //    } else {
-  //      musicToggleBounds =
-  //          new Rectangle(
-  //              BodyConquest.V_WIDTH / 5.0f * 4.0f - musicOn.getWidth(),
-  //              240,
-  //              musicOn.getWidth(),
-  //              musicOn.getHeight());
-  //    }
-  //  }
 }
