@@ -40,6 +40,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /** The type Encounter screen. */
 public class EncounterScreen implements Screen {
 
+  private static int encounterScreenWidth = 800;
+  private static int encounterScreenHeight = 600;
+
   private int organNumber;
 
   //private boolean updating;
@@ -132,7 +135,7 @@ public class EncounterScreen implements Screen {
     communicator.setStartEncounter(false);
     playerDisease = communicator.getPlayerDisease();
     gameCamera = new OrthographicCamera();
-    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
+    gamePort = new FitViewport(encounterScreenWidth,encounterScreenHeight, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
     this.username = game.getUsername();
@@ -150,7 +153,7 @@ public class EncounterScreen implements Screen {
     float topOfUnitBar = 27;
     float mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
     map = new Map(communicator.getCurrentOrgan());
-    map.setBounds((BodyConquest.V_WIDTH / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
+    map.setBounds((encounterScreenWidth / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
     stage.addActor(map);
 
     hud = new HUD(this, playerType, communicator.getPlayerDisease(), stage);

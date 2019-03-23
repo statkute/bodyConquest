@@ -9,6 +9,4 @@ public class SpriteBatchWrapper extends SpriteBatch {
   public SpriteBatchWrapper(float scaleFactor) {
     this.scaleFactor = scaleFactor;
   }
-
-
 }

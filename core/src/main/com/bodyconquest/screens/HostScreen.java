@@ -52,11 +52,11 @@ public class HostScreen extends AbstractGameScreen implements Screen {
 
         super.render(delta);
         game.batch.begin();
-        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-        game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
-        game.batch.draw(hostButtton, BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2, 300);
-        game.batch.draw(joinButton, BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2, 240);
-        game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
+        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.scaleRatio *BodyConquest.V_HEIGHT);
+        game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, BodyConquest.scaleRatio *450);
+        game.batch.draw(hostButtton, BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2, BodyConquest.scaleRatio *300);
+        game.batch.draw(joinButton, BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2, BodyConquest.scaleRatio *240);
+        game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, BodyConquest.scaleRatio *60);
         checkPressed();
         game.batch.end();
     }

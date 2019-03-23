@@ -8,62 +8,62 @@ public class Assets {
   /** The constant menuBackground. */
   public static String menuBackground = "core/assets/background_new.png";
   /** The constant menuTitle. */
-  public static String menuTitle = "core/assets/title_new.png";
+  public static String menuTitle = "core/assets/title_new_big.png";
   /** The constant multiplayerButton. */
-  public static String multiplayerButton = "core/assets/multiplayer_new.png";
+  public static String multiplayerButton = "core/assets/multiplayer_new_big.png";
   /** The constant singleplayerButton. */
-  public static String singleplayerButton = "core/assets/singleplayer_new.png";
+  public static String singleplayerButton = "core/assets/singleplayer_new_big.png";
   /** The constant settingsButton. */
-  public static String settingsButton = "core/assets/settings_new.png";
+  public static String settingsButton = "core/assets/settings_new_big.png";
   /** The constant creditsButton. */
-  public static String creditsButton = "core/assets/credits_new.png";
+  public static String creditsButton = "core/assets/credits_new_big.png";
   /** The constant exitButton. */
-  public static String exitButton = "core/assets/exit_new.png";
+  public static String exitButton = "core/assets/exit_new_big.png";
 
   /** Credit Screen Assets */
 
   /** The constant alexandru. */
-  public static String alexandru = "core/assets/alexandru_new.png";
+  public static String alexandru = "core/assets/alexandru_new_big.png";
   /** The constant augustas. */
-  public static String augustas = "core/assets/augustas_new.png";
+  public static String augustas = "core/assets/augustas_new_big.png";
   /** The constant brandon. */
-  public static String brandon = "core/assets/brandon_new.png";
+  public static String brandon = "core/assets/brandon_new_big.png";
   /** The constant gintare. */
-  public static String gintare = "core/assets/gintare_new.png";
+  public static String gintare = "core/assets/gintare_new_big.png";
   /** The constant paul. */
-  public static String paul = "core/assets/paul_new.png";
+  public static String paul = "core/assets/paul_new_big.png";
   /** The constant creditsHeader. */
-  public static String creditsHeader = "core/assets/creditsheader_new.png";
+  public static String creditsHeader = "core/assets/creditsheader_new_big.png";
   /** The constant backButton. */
-  public static String backButton = "core/assets/back_new.png";
+  public static String backButton = "core/assets/back_new_big.png";
 
   /** Host Screen Assets */
 
   /** The constant hostHeader. */
-  public static String hostHeader = "core/assets/multiplayerheader_new.png";
+  public static String hostHeader = "core/assets/multiplayerheader_new_big.png";
   /** The constant hostButton. */
-  public static String hostButton = "core/assets/host_new.png";
+  public static String hostButton = "core/assets/host_new_big.png";
   /** The constant joinButton. */
-  public static String joinButton = "core/assets/join_new.png";
+  public static String joinButton = "core/assets/join_new_big.png";
   /** The constant hostBack. */
-  public static String hostBack = "core/assets/back_new.png";
+  public static String hostBack = "core/assets/back_new_big.png";
 
   /** Settings Screen Assets */
 
   /** The constant settingsHeader. */
-  public static String settingsHeader = "core/assets/settingsheader_new.png";
+  public static String settingsHeader = "core/assets/settingsheader_new_big.png";
   /** The constant settingsSoundHeader. */
-  public static String settingsSoundHeader = "core/assets/sound.png";
+  public static String settingsSoundHeader = "core/assets/sound_big.png";
   /** The constant settingsSoundOff. */
-  public static String settingsSoundOff = "core/assets/off.png";
+  public static String settingsSoundOff = "core/assets/off_big.png";
   /** The constant settingsMusicHeader. */
-  public static String settingsMusicHeader = "core/assets/music.png";
+  public static String settingsMusicHeader = "core/assets/music_big.png";
   /** The constant settingsMusicOff. */
-  public static String settingsMusicOff = "core/assets/off.png";
+  public static String settingsMusicOff = "core/assets/off_big.png";
   /** The constant settingsMusicOn. */
-  public static String settingsMusicOn = "core/assets/on.png";
+  public static String settingsMusicOn = "core/assets/on_big.png";
   /** The constant settingsSoundOn. */
-  public static String settingsSoundOn = "core/assets/on.png";
+  public static String settingsSoundOn = "core/assets/on_big.png";
 
   /** Race Selection Assets */
 
@@ -82,15 +82,15 @@ public class Assets {
   /** The constant raceYellowVirusSelected. */
   public static String raceYellowVirusSelected = "core/assets/yellowvirusselected.png";
   /** The constant raceBlueDescription. */
-  public static String raceBlueDescription = "core/assets/bluevirus_characteristics.png";
+  public static String raceBlueDescription = "core/assets/bluevirus_characteristics_big.png";
   /** The constant raceGreenDescription. */
-  public static String raceGreenDescription = "core/assets/greenvirus_characteristics.png";
+  public static String raceGreenDescription = "core/assets/greenvirus_characteristics_big.png";
   /** The constant raceYellowDescription. */
-  public static String raceYellowDescription = "core/assets/yellowvirus_characteristics.png";
+  public static String raceYellowDescription = "core/assets/yellowvirus_characteristics_big.png";
   /** The constant raceContinueText. */
-  public static String raceContinueText = "core/assets/continue_new.png";
+  public static String raceContinueText = "core/assets/continue_new_big.png";
   /** The constant raceBackButton. */
-  public static String raceBackButton = "core/assets/back_new.png";
+  public static String raceBackButton = "core/assets/back_new_big.png";
   /** The constant raceBlueVirusNoBorder. */
   public static String raceBlueVirusNoBorder = "core/assets/bluevirus_noborder.png";
   /** The constant raceGreenVirusNoBorder. */

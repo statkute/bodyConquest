@@ -57,6 +57,10 @@ public class HUD {
 
   private Disease disease;
 
+  private static int encounterScreenWidth = 800;
+  private static int encounterScreenHeight = 600;
+
+
   public HUD(
       final EncounterScreen screen, final PlayerType playerType, Disease disease, Stage stage) {
     this.screen = screen;
@@ -65,7 +69,7 @@ public class HUD {
     manager = new AssetManager();
 
     viewport =
-        new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, new OrthographicCamera());
+            new FitViewport(encounterScreenWidth, encounterScreenHeight, new OrthographicCamera());
     this.stage = stage;
     Gdx.input.setInputProcessor(stage);
 
@@ -130,8 +134,8 @@ public class HUD {
   }
 
   private int mapResource(int resource) {
-    int y = resource * (BodyConquest.V_HEIGHT / 100);
-    return y - BodyConquest.V_HEIGHT;
+    float y = resource * (encounterScreenHeight/100.0f);
+    return (int)y - encounterScreenHeight;
   }
 
   private void setUpDragAndDrop() {

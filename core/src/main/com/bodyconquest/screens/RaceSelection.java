@@ -99,19 +99,19 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         super.render(delta);
 
         game.batch.begin();
-        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-        game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
-        game.batch.draw(blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), 220);
-        game.batch.draw(greenVirus, (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2), 220);
-        game.batch.draw(yellowVirus, (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2), 220);
+        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.scaleRatio *BodyConquest.V_HEIGHT);
+        game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, BodyConquest.scaleRatio *450);
+        game.batch.draw(blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), BodyConquest.scaleRatio *220);
+        game.batch.draw(greenVirus, (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2), BodyConquest.scaleRatio *220);
+        game.batch.draw(yellowVirus, (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2), BodyConquest.scaleRatio *220);
         game.batch.draw(
-                blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), 160);
+                blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), BodyConquest.scaleRatio *160);
         game.batch.draw(
-                greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), 160);
+                greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), BodyConquest.scaleRatio *160);
         game.batch.draw(
-                yellowDescription, (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2), 160);
-        if (selection != 0) game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 80);
-        game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
+                yellowDescription, (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2), BodyConquest.scaleRatio *160);
+        if (selection != 0) game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, BodyConquest.scaleRatio *80);
+        game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, BodyConquest.scaleRatio *30);
 
         if (communicator.getStartBodyScreen()) game.setScreen(new BodyScreen(game, gameType));
 

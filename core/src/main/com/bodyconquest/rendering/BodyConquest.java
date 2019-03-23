@@ -17,6 +17,7 @@ import main.com.bodyconquest.screens.MenuScreen;
 import main.com.bodyconquest.screens.RaceSelection;
 import main.com.bodyconquest.screens.StartScreen;
 
+import java.awt.*;
 import java.io.IOException;
 
 /*
@@ -28,8 +29,11 @@ public class BodyConquest extends com.badlogic.gdx.Game {
 
   // private static final Logger log = Logger.getLogger(MyGdxGame.class);
 
-  public static final int V_WIDTH = 800;
-  public static final int V_HEIGHT = 600;
+  private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+  public static final float V_WIDTH = (float) screenSize.getWidth();
+  public static final float V_HEIGHT = (float) screenSize.getHeight();
+
 
   public final AudioPlayer audioPlayer = new AudioPlayer();
 
@@ -46,6 +50,10 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   public BitmapFont usernameFont;
 
   private Game game;
+  public static final float originalAspectRatio = 4.0f / 3.0f;
+  public static float yourAspectRatio = V_WIDTH / V_HEIGHT;
+  public static float scaleRatio = yourAspectRatio / originalAspectRatio;
+
   private Client client;
   private String username;
 
@@ -70,7 +78,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     super.render();
     if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
     if (Gdx.input.isKeyJustPressed(Input.Keys.M)
-            && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
+        && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
             || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
       audioPlayer.toggleMuted();
     }

@@ -53,25 +53,25 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         super.render(delta);
 
         game.batch.begin();
-        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-        game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450);
-        game.batch.draw(soundHeader, BodyConquest.V_WIDTH / 5, 300);
+        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.scaleRatio *BodyConquest.V_HEIGHT);
+        game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, BodyConquest.scaleRatio *450);
+        game.batch.draw(soundHeader, BodyConquest.V_WIDTH / 5, BodyConquest.scaleRatio *300);
 
         if (game.audioPlayer.getMutedSFX()) {
-            game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), 300);
+            game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), BodyConquest.scaleRatio *300);
         } else {
-            game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), 300);
+            game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), BodyConquest.scaleRatio *300);
         }
 
-        game.batch.draw(musicHeader, BodyConquest.V_WIDTH / 5, 240);
+        game.batch.draw(musicHeader, BodyConquest.V_WIDTH / 5, BodyConquest.scaleRatio *240);
 
         if (game.audioPlayer.getMutedMusic()) {
-            game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), 240);
+            game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), BodyConquest.scaleRatio *240);
         } else {
-            game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), 240);
+            game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), BodyConquest.scaleRatio *240);
         }
 
-        game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
+        game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, BodyConquest.scaleRatio *60);
         checkPressed();
         game.batch.end();
     }
@@ -96,9 +96,9 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
                 game.audioPlayer.toggleMutedSFX();
                 playButtonSound();
                 if (game.audioPlayer.getMutedSFX()) {
-                    game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), 300);
+                    game.batch.draw(soundOff, BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(), BodyConquest.scaleRatio *300);
                 } else {
-                    game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), 300);
+                    game.batch.draw(soundOn, BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(), BodyConquest.scaleRatio *300);
                 }
             }
 
@@ -106,9 +106,9 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
                 game.audioPlayer.toggleMutedMusic();
                 playButtonSound();
                 if (game.audioPlayer.getMutedMusic()) {
-                    game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), 240);
+                    game.batch.draw(musicOff, BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(), BodyConquest.scaleRatio *240);
                 } else {
-                    game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), 240);
+                    game.batch.draw(musicOn, BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(), BodyConquest.scaleRatio *240);
                 }
             }
         }
