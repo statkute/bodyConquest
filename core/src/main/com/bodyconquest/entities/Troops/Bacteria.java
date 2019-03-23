@@ -27,6 +27,11 @@ public class Bacteria extends Troop {
     init();
   }
 
+  public Bacteria(Lane lane, PlayerType playerType, float damageMult, float speedMult, float healthMult, float attackSpeedMult) {
+    super(lane, playerType);
+    initSpecific(damageMult, speedMult, healthMult, attackSpeedMult);
+  }
+
   private void init() {
     // Dimensions
     setSize(100, 100);
@@ -49,6 +54,27 @@ public class Bacteria extends Troop {
     // Temporary implementation for images for the HUD
     //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/bacteria.png");
     //sprite = new Image(walkAnimation.getKeyFrame(0));
+  }
+
+  private void initSpecific(float damageMult, float speedMult, float healthMult, float attackSpeedMult){
+
+    setSize(100, 100);
+    setCSize(50, 50);
+
+    // Troop Stats
+    health = maxHealth = MAX_HEALTH;
+    health = (int)(health * healthMult);
+    maxSpeed = 1 * (double)speedMult;
+    cooldown = (int)(1000 * attackSpeedMult); // Milliseconds
+    range = 50;
+    damage = (int)(30 * damageMult);
+    mapObjectType = UnitType.BACTERIA;
+
+    lipidsCost = LIPIDS_COST;
+    sugarsCost = SUGARS_COST;
+    proteinCost = PROTEINS_COST;
+
+    killingPoints = 5;
   }
 
   @Override
