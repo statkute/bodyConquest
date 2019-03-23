@@ -43,40 +43,40 @@
 //    game.batch.begin();
 //    game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
 //    game.batch.draw(
-//        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
+//        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatioHeight);
 //
-//    game.batch.draw(soundHeader, BodyConquest.V_WIDTH / 5, 300 * BodyConquest.scaleRatio);
+//    game.batch.draw(soundHeader, BodyConquest.V_WIDTH / 5, 300 * BodyConquest.scaleRatioHeight);
 //
 //    if (game.audioPlayer.getMutedSFX()) {
 //      game.batch.draw(
 //          soundOff,
 //          BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
-//          300 * BodyConquest.scaleRatio);
+//          300 * BodyConquest.scaleRatioHeight);
 //    } else {
 //      game.batch.draw(
 //          soundOn,
 //          BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(),
-//          300 * BodyConquest.scaleRatio);
+//          300 * BodyConquest.scaleRatioHeight);
 //    }
 //
-//    game.batch.draw(musicHeader, BodyConquest.V_WIDTH / 5, 240 * BodyConquest.scaleRatio);
+//    game.batch.draw(musicHeader, BodyConquest.V_WIDTH / 5, 240 * BodyConquest.scaleRatioHeight);
 //
 //    if (game.audioPlayer.getMutedMusic()) {
 //      game.batch.draw(
 //          musicOff,
 //          BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
-//          240 * BodyConquest.scaleRatio);
+//          240 * BodyConquest.scaleRatioHeight);
 //    } else {
 //      game.batch.draw(
 //          musicOn,
 //          BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(),
-//          240 * BodyConquest.scaleRatio);
+//          240 * BodyConquest.scaleRatioHeight);
 //    }
 //
 //    game.batch.draw(
 //        backButton,
 //        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-//        60 * BodyConquest.scaleRatio);
+//        60 * BodyConquest.scaleRatioHeight);
 //
 //    checkPressed();
 //    game.batch.end();
@@ -102,12 +102,12 @@
 //          game.batch.draw(
 //              soundOff,
 //              BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
-//              300 * BodyConquest.scaleRatio);
+//              300 * BodyConquest.scaleRatioHeight);
 //        } else {
 //          game.batch.draw(
 //              soundOn,
 //              BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(),
-//              300 * BodyConquest.scaleRatio);
+//              300 * BodyConquest.scaleRatioHeight);
 //        }
 //      }
 //
@@ -118,12 +118,12 @@
 //          game.batch.draw(
 //              musicOff,
 //              BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
-//              240 * BodyConquest.scaleRatio);
+//              240 * BodyConquest.scaleRatioHeight);
 //        } else {
 //          game.batch.draw(
 //              musicOn,
 //              BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(),
-//              240 * BodyConquest.scaleRatio);
+//              240 * BodyConquest.scaleRatioHeight);
 //        }
 //      }
 //    }
@@ -162,30 +162,30 @@
 //    backBounds =
 //        new Rectangle(
 //            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-//            60 * BodyConquest.scaleRatio,
+//            60 * BodyConquest.scaleRatioHeight,
 //            backButton.getWidth(),
 //            backButton.getHeight());
 //
 //    soundBounds =
 //        new Rectangle(
-//            BodyConquest.V_WIDTH / 5, 300 * BodyConquest.scaleRatio, soundHeader.getWidth(), soundHeader.getHeight());
+//            BodyConquest.V_WIDTH / 5, 300 * BodyConquest.scaleRatioHeight, soundHeader.getWidth(), soundHeader.getHeight());
 //
 //    musicBounds =
 //        new Rectangle(
-//            BodyConquest.V_WIDTH / 5, 240 * BodyConquest.scaleRatio, musicHeader.getWidth(), musicHeader.getHeight());
+//            BodyConquest.V_WIDTH / 5, 240 * BodyConquest.scaleRatioHeight, musicHeader.getWidth(), musicHeader.getHeight());
 //
 //    if (game.audioPlayer.getMutedSFX()) {
 //      soundToggleBounds =
 //          new Rectangle(
 //              BodyConquest.V_WIDTH / 5 * 4 - soundOff.getWidth(),
-//              300 * BodyConquest.scaleRatio,
+//              300 * BodyConquest.scaleRatioHeight,
 //              soundOff.getWidth(),
 //              soundOff.getHeight());
 //    } else {
 //      soundToggleBounds =
 //          new Rectangle(
 //              BodyConquest.V_WIDTH / 5 * 4 - soundOn.getWidth(),
-//              300 * BodyConquest.scaleRatio,
+//              300 * BodyConquest.scaleRatioHeight,
 //              soundOn.getWidth(),
 //              soundOn.getHeight());
 //    }
@@ -194,14 +194,14 @@
 //      musicToggleBounds =
 //          new Rectangle(
 //              BodyConquest.V_WIDTH / 5 * 4 - musicOff.getWidth(),
-//              240 * BodyConquest.scaleRatio,
+//              240 * BodyConquest.scaleRatioHeight,
 //              musicOff.getWidth(),
 //              musicOff.getHeight());
 //    } else {
 //      musicToggleBounds =
 //          new Rectangle(
 //              BodyConquest.V_WIDTH / 5 * 4 - musicOn.getWidth(),
-//              240 * BodyConquest.scaleRatio,
+//              240 * BodyConquest.scaleRatioHeight,
 //              musicOn.getWidth(),
 //              musicOn.getHeight());
 //    }

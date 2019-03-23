@@ -64,6 +64,13 @@ public class Assets {
   public static String settingsMusicOn = "core/assets/on_big.png";
   /** The constant settingsSoundOn. */
   public static String settingsSoundOn = "core/assets/on_big.png";
+  /** The constant settingsSingleplayerDifficulty. */
+  public static String settingsSingleplayerDifficulty = "core/assets/difficulty.png";
+  /** The constant settingsEasy. */
+  public static String settingsEasy = "core/assets/easy.png";
+  /** The constant settingsHard. */
+  public static String settingsHard = "core/assets/hard.png";
+
 
   /** Race Selection Assets */
 

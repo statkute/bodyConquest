@@ -34,13 +34,15 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
    * Instantiates a new Menu screen.
    *
    * @param game the game
+   * @param username the username
    */
-  public MenuScreen(BodyConquest game) {
+  public MenuScreen(BodyConquest game, String username) {
     super(game);
     loadAssets();
     getAssets();
     setRectangles();
-    System.out.println(BodyConquest.scaleRatio);
+    this.username = username;
+    System.out.println(BodyConquest.scaleRatioHeight);
   }
 
   /** {@inheritDoc} */
@@ -56,34 +58,35 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
 
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
     game.batch.draw(
-        title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450 * BodyConquest.scaleRatio);
+        title,
+        BodyConquest.V_WIDTH / 2 - title.getWidth() / 2,
+        450 * BodyConquest.scaleRatioHeight);
     game.batch.draw(
         playButtonSinglePlayer,
         BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-        300 * BodyConquest.scaleRatio);
+        300 * BodyConquest.scaleRatioHeight);
     game.batch.draw(
         playButtonMultiplayer,
         BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-        240 * BodyConquest.scaleRatio);
+        240 * BodyConquest.scaleRatioHeight);
     game.batch.draw(
         settingsButton,
         BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
-        180 * BodyConquest.scaleRatio);
+        180 * BodyConquest.scaleRatioHeight);
     game.batch.draw(
         creditsButton,
         BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
-        120 * BodyConquest.scaleRatio);
+        120 * BodyConquest.scaleRatioHeight);
     game.batch.draw(
         exitButton,
         BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,
-        60 * BodyConquest.scaleRatio);
+        60 * BodyConquest.scaleRatioHeight);
 
     checkPressed();
 
     game.batch.end();
   }
 
-  /** {@inheritDoc} */
   @Override
   public void checkPressed() {
 
@@ -103,7 +106,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         System.out.println("Singleplayer Is touched");
         try {
           timeOfServer = System.currentTimeMillis();
-          game.setScreen(new RaceSelection(game, GameType.SINGLE_PLAYER));
+          game.setScreen(new RaceSelection(game, GameType.SINGLE_PLAYER, username));
           dispose();
         } catch (IOException e) {
           e.printStackTrace();
@@ -163,33 +166,33 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
     singleplayerBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-            300 * BodyConquest.scaleRatio,
+            300 * BodyConquest.scaleRatioHeight,
             playButtonSinglePlayer.getWidth(),
             playButtonSinglePlayer.getHeight());
 
     multiplayerBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-            240 * BodyConquest.scaleRatio,
+            240 * BodyConquest.scaleRatioHeight,
             playButtonMultiplayer.getWidth(),
             playButtonMultiplayer.getHeight());
 
     settingsBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
-            180 * BodyConquest.scaleRatio,
+            180 * BodyConquest.scaleRatioHeight,
             settingsButton.getWidth(),
             settingsButton.getHeight());
     creditsBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
-            120 * BodyConquest.scaleRatio,
+            120 * BodyConquest.scaleRatioHeight,
             creditsButton.getWidth(),
             creditsButton.getHeight());
     exitBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,
-            60 * BodyConquest.scaleRatio,
+            60 * BodyConquest.scaleRatioHeight,
             exitButton.getWidth(),
             exitButton.getHeight());
   }

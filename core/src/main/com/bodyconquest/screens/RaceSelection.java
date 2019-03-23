@@ -59,14 +59,14 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
      * @throws IOException the io exception
      */
     public RaceSelection(
-            BodyConquest game, GameType gameType) throws IOException {
+        BodyConquest game, GameType gameType, String username) throws IOException {
         super(game);
         this.gameType = gameType;
-        //this.username = username;
+        this.username = username;
         loadAssets();
         getAssets();
         setRectangles();
-
+        game.setUsername(username);
 
         if (gameType != GameType.MULTIPLAYER_JOIN) {
             g = new Game(gameType);
@@ -83,12 +83,12 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
             playerType = PlayerType.PLAYER_TOP;
         }
 
-        game.getClient().clientSender.sendMessage(MessageMaker.usernameMessage(playerType,game.getUsername()));
         communicator = game.getClient().getCommunicator();
 
         communicator.setPlayerType(playerType);
         game.getClient().setRaceSelectionLogic();
     }
+
 
     /**
      * {@inheritDoc}
@@ -99,19 +99,19 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         super.render(delta);
 
         game.batch.begin();
-        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.scaleRatio *BodyConquest.V_HEIGHT);
-        game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, BodyConquest.scaleRatio *450);
-        game.batch.draw(blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), BodyConquest.scaleRatio *220);
-        game.batch.draw(greenVirus, (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2), BodyConquest.scaleRatio *220);
-        game.batch.draw(yellowVirus, (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2), BodyConquest.scaleRatio *220);
+        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.scaleRatioHeight *BodyConquest.V_HEIGHT);
+        game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, BodyConquest.scaleRatioHeight *450);
+        game.batch.draw(blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), BodyConquest.scaleRatioHeight *220);
+        game.batch.draw(greenVirus, (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2), BodyConquest.scaleRatioHeight *220);
+        game.batch.draw(yellowVirus, (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2), BodyConquest.scaleRatioHeight *220);
         game.batch.draw(
-                blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), BodyConquest.scaleRatio *160);
+                blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), BodyConquest.scaleRatioHeight *160);
         game.batch.draw(
-                greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), BodyConquest.scaleRatio *160);
+                greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), BodyConquest.scaleRatioHeight *160);
         game.batch.draw(
-                yellowDescription, (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2), BodyConquest.scaleRatio *160);
-        if (selection != 0) game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, BodyConquest.scaleRatio *80);
-        game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, BodyConquest.scaleRatio *30);
+                yellowDescription, (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2), BodyConquest.scaleRatioHeight *160);
+        if (selection != 0) game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, BodyConquest.scaleRatioHeight *80);
+        game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, BodyConquest.scaleRatioHeight *30);
 
         if (communicator.getStartBodyScreen()) game.setScreen(new BodyScreen(game, gameType));
 
@@ -155,7 +155,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
                     server.closeEverything();
                 }
                 game.getClient().closeEverything();
-                game.setScreen(new MenuScreen(game));
+                game.setScreen(new MenuScreen(game, username));
                 dispose();
             }
         }

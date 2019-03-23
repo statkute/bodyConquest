@@ -10,159 +10,160 @@ import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.io.IOException;
 
-/**
- * The type Host screen.
- */
+/** The type Host screen. */
 public class HostScreen extends AbstractGameScreen implements Screen {
 
-    private Texture header;
-    private Texture hostButtton;
-    private Texture joinButton;
-    private Texture backButton;
-    private Rectangle hostBounds;
-    private Rectangle joinBounds;
-    private Rectangle backBounds;
-    private String username;
+  private Texture header;
+  private Texture hostButtton;
+  private Texture joinButton;
+  private Texture backButton;
+  private Rectangle hostBounds;
+  private Rectangle joinBounds;
+  private Rectangle backBounds;
+  private String username;
 
-    /**
-     * Instantiates a new Host screen.
-     *
-     * @param game     the game
-     * @param username the username
-     */
-    public HostScreen(BodyConquest game, String username) {
-        super(game);
-        loadAssets();
-        getAssets();
-        setRectangles();
-    }
+  /**
+   * Instantiates a new Host screen.
+   *
+   * @param game the game
+   * @param username the username
+   */
+  public HostScreen(BodyConquest game, String username) {
+    super(game);
+    loadAssets();
+    getAssets();
+    setRectangles();
+    this.username = username;
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void show() {
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void show() {}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void render(float delta) {
+  /** {@inheritDoc} */
+  @Override
+  public void render(float delta) {
 
-        super.render(delta);
-        game.batch.begin();
-        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.scaleRatio *BodyConquest.V_HEIGHT);
-        game.batch.draw(header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, BodyConquest.scaleRatio *450);
-        game.batch.draw(hostButtton, BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2, BodyConquest.scaleRatio *300);
-        game.batch.draw(joinButton, BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2, BodyConquest.scaleRatio *240);
-        game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, BodyConquest.scaleRatio *60);
-        checkPressed();
-        game.batch.end();
-    }
+    super.render(delta);
+    game.batch.begin();
+    game.batch.draw(
+        background,
+        0,
+        0,
+        BodyConquest.V_WIDTH,
+        BodyConquest.scaleRatioHeight * BodyConquest.V_HEIGHT);
+    game.batch.draw(
+        header,
+        BodyConquest.V_WIDTH / 2 - header.getWidth() / 2,
+        BodyConquest.scaleRatioHeight * 450);
+    game.batch.draw(
+        hostButtton,
+        BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2,
+        BodyConquest.scaleRatioHeight * 300);
+    game.batch.draw(
+        joinButton,
+        BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2,
+        BodyConquest.scaleRatioHeight * 240);
+    game.batch.draw(
+        backButton,
+        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+        BodyConquest.scaleRatioHeight * 60);
+    checkPressed();
+    game.batch.end();
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void checkPressed() {
-        super.checkPressed();
+  /** {@inheritDoc} */
+  @Override
+  public void checkPressed() {
+    super.checkPressed();
 
-        if (Gdx.input.justTouched()) {
-            if (hostBounds.contains(tmp.x, tmp.y)) {
-                System.out.println("host pressed");
-                try {
-                    startGame(GameType.MULTIPLAYER_HOST);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (joinBounds.contains(tmp.x, tmp.y)) {
-                System.out.println("join pressed");
-                try {
-                    startGame(GameType.MULTIPLAYER_JOIN);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (backBounds.contains(tmp.x, tmp.y)) {
-                System.out.println("back pressed");
-                playButtonSound();
-                dispose();
-                game.setScreen(new MenuScreen(game));
-            }
+    if (Gdx.input.justTouched()) {
+      if (hostBounds.contains(tmp.x, tmp.y)) {
+        System.out.println("host pressed");
+        try {
+          startGame(GameType.MULTIPLAYER_HOST);
+        } catch (IOException e) {
+          e.printStackTrace();
         }
-    }
-
-
-    /**
-     * Starts the game depending on single or multi player
-     *
-     * @param gameType the type of the game
-     */
-    private void startGame(GameType gameType) throws IOException {
-        if (gameType == GameType.SINGLE_PLAYER) {
-            System.err.println("[ERROR] Game type is set to single player on the host screen.");
-            return;
+      }
+      if (joinBounds.contains(tmp.x, tmp.y)) {
+        System.out.println("join pressed");
+        try {
+          startGame(GameType.MULTIPLAYER_JOIN);
+        } catch (IOException e) {
+          e.printStackTrace();
         }
+      }
+
+      if (backBounds.contains(tmp.x, tmp.y)) {
+        System.out.println("back pressed");
         playButtonSound();
-
         dispose();
-        game.setScreen(new RaceSelection(game, gameType));
+        game.setScreen(new MenuScreen(game, username));
+      }
     }
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void loadAssets() {
-        super.loadAssets();
-        manager.load(Assets.hostHeader, Texture.class);
-        manager.load(Assets.hostButton, Texture.class);
-        manager.load(Assets.joinButton, Texture.class);
-        manager.load(Assets.hostBack, Texture.class);
-        manager.finishLoading();
+  /**
+   * Starts the game depending on single or multi player
+   *
+   * @param gameType the type of the game
+   */
+  private void startGame(GameType gameType) throws IOException {
+    if (gameType == GameType.SINGLE_PLAYER) {
+      System.err.println("[ERROR] Game type is set to single player on the host screen.");
+      return;
     }
+    playButtonSound();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void getAssets() {
-        super.getAssets();
-        header = manager.get(Assets.hostHeader, Texture.class);
-        hostButtton = manager.get(Assets.hostButton, Texture.class);
-        joinButton = manager.get(Assets.joinButton, Texture.class);
-        backButton = manager.get(Assets.hostBack, Texture.class);
-    }
+    dispose();
+    game.setScreen(new RaceSelection(game, gameType, username));
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setRectangles() {
-        super.setRectangles();
-        hostBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2,
-                        300,
-                        hostButtton.getWidth(),
-                        hostButtton.getHeight());
+  /** {@inheritDoc} */
+  @Override
+  public void loadAssets() {
+    super.loadAssets();
+    manager.load(Assets.hostHeader, Texture.class);
+    manager.load(Assets.hostButton, Texture.class);
+    manager.load(Assets.joinButton, Texture.class);
+    manager.load(Assets.hostBack, Texture.class);
+    manager.finishLoading();
+  }
 
-        joinBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2,
-                        240,
-                        joinButton.getWidth(),
-                        joinButton.getHeight());
+  /** {@inheritDoc} */
+  @Override
+  public void getAssets() {
+    super.getAssets();
+    header = manager.get(Assets.hostHeader, Texture.class);
+    hostButtton = manager.get(Assets.hostButton, Texture.class);
+    joinButton = manager.get(Assets.joinButton, Texture.class);
+    backButton = manager.get(Assets.hostBack, Texture.class);
+  }
 
-        backBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-                        60,
-                        backButton.getWidth(),
-                        backButton.getHeight());
+  /** {@inheritDoc} */
+  @Override
+  public void setRectangles() {
+    super.setRectangles();
+    hostBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2,
+            300,
+            hostButtton.getWidth(),
+            hostButtton.getHeight());
 
-    }
+    joinBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2,
+            240,
+            joinButton.getWidth(),
+            joinButton.getHeight());
+
+    backBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+            60,
+            backButton.getWidth(),
+            backButton.getHeight());
+  }
 }

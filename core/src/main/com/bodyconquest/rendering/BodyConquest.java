@@ -52,11 +52,19 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   private Game game;
   public static final float originalAspectRatio = 4.0f / 3.0f;
   public static float yourAspectRatio = V_WIDTH / V_HEIGHT;
-//  public static float scaleRatio = yourAspectRatio / originalAspectRatio;
-  public static float scaleRatio = V_HEIGHT / 600.0f;
+//  public static float scaleRatioHeight = yourAspectRatio / originalAspectRatio;
+  public static float scaleRatioHeight = V_HEIGHT / 600.0f;
 
   private Client client;
   private String username;
+
+  public enum DifficultyLevel{
+    EASY,
+    HARD
+  }
+
+  public DifficultyLevel difficultyLevel;
+
 
   @Override
   public void create() {
@@ -70,6 +78,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     client = new Client();
     // setScreen(new MenuScreen(this, "GermBoi"));
     System.out.println(V_HEIGHT / 600.0f);
+    difficultyLevel = DifficultyLevel.EASY;
     setScreen(new StartScreen(this));
     //setScreen(new LeaderboardScreen(this));
 
@@ -95,6 +104,19 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   public Game getGame() {
     return game;
   }
+
+  public DifficultyLevel getDifficultyLevel(){
+    return difficultyLevel;
+  }
+
+  public void changeDifficulty(){
+    if (difficultyLevel == DifficultyLevel.EASY){
+      difficultyLevel = DifficultyLevel.HARD;
+    } else {
+      difficultyLevel = DifficultyLevel.EASY;
+    }
+  }
+
 
   public Server getServer() { return game.getServer(); }
 

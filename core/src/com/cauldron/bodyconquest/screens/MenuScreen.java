@@ -42,18 +42,18 @@
 //
 //    game.batch.begin();
 //    game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-//    game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450 * BodyConquest.scaleRatio);
+//    game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450 * BodyConquest.scaleRatioHeight);
 //    game.batch.draw(
 //        playButtonSinglePlayer,
 //        BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-//        300 * BodyConquest.scaleRatio);
+//        300 * BodyConquest.scaleRatioHeight);
 //    game.batch.draw(
 //        playButtonMultiplayer,
 //        BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-//        240 * BodyConquest.scaleRatio);
-//    game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 180 * BodyConquest.scaleRatio);
-//    game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 120 * BodyConquest.scaleRatio);
-//    game.batch.draw(exitButton, BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2, 60 * BodyConquest.scaleRatio);
+//        240 * BodyConquest.scaleRatioHeight);
+//    game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 180 * BodyConquest.scaleRatioHeight);
+//    game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 120 * BodyConquest.scaleRatioHeight);
+//    game.batch.draw(exitButton, BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2, 60 * BodyConquest.scaleRatioHeight);
 //
 //    checkPressed();
 //
@@ -145,33 +145,33 @@
 //    singleplayerBounds =
 //            new Rectangle(
 //                    BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-//                    300 * BodyConquest.scaleRatio,
+//                    300 * BodyConquest.scaleRatioHeight,
 //                    playButtonSinglePlayer.getWidth(),
 //                    playButtonSinglePlayer.getHeight());
 //
 //    multiplayerBounds =
 //            new Rectangle(
 //                    BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-//                    240 * BodyConquest.scaleRatio,
+//                    240 * BodyConquest.scaleRatioHeight,
 //                    playButtonMultiplayer.getWidth(),
 //                    playButtonMultiplayer.getHeight());
 //
 //    settingsBounds =
 //            new Rectangle(
 //                    BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
-//                    180 * BodyConquest.scaleRatio,
+//                    180 * BodyConquest.scaleRatioHeight,
 //                    settingsButton.getWidth(),
 //                    settingsButton.getHeight());
 //    creditsBounds =
 //            new Rectangle(
 //                    BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
-//                    120 * BodyConquest.scaleRatio,
+//                    120 * BodyConquest.scaleRatioHeight,
 //                    creditsButton.getWidth(),
 //                    creditsButton.getHeight());
 //    exitBounds =
 //            new Rectangle(
 //                    BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,
-//                    60 * BodyConquest.scaleRatio,
+//                    60 * BodyConquest.scaleRatioHeight,
 //                    exitButton.getWidth(),
 //                    exitButton.getHeight());
 //

@@ -43,19 +43,19 @@
 //    game.batch.begin();
 //    game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
 //    game.batch.draw(
-//        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
+//        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatioHeight);
 //    game.batch.draw(
 //        hostButtton,
 //        BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2,
-//        300 * BodyConquest.scaleRatio);
+//        300 * BodyConquest.scaleRatioHeight);
 //    game.batch.draw(
 //        joinButton,
 //        BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2,
-//        240 * BodyConquest.scaleRatio);
+//        240 * BodyConquest.scaleRatioHeight);
 //    game.batch.draw(
 //        backButton,
 //        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-//        60 * BodyConquest.scaleRatio);
+//        60 * BodyConquest.scaleRatioHeight);
 //
 //    checkPressed();
 //    game.batch.end();
@@ -136,21 +136,21 @@
 //    hostBounds =
 //        new Rectangle(
 //            BodyConquest.V_WIDTH / 2 - hostButtton.getWidth() / 2,
-//            300 * BodyConquest.scaleRatio,
+//            300 * BodyConquest.scaleRatioHeight,
 //            hostButtton.getWidth(),
 //            hostButtton.getHeight());
 //
 //    joinBounds =
 //        new Rectangle(
 //            BodyConquest.V_WIDTH / 2 - joinButton.getWidth() / 2,
-//            240 * BodyConquest.scaleRatio,
+//            240 * BodyConquest.scaleRatioHeight,
 //            joinButton.getWidth(),
 //            joinButton.getHeight());
 //
 //    backBounds =
 //        new Rectangle(
 //            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-//            60 * BodyConquest.scaleRatio,
+//            60 * BodyConquest.scaleRatioHeight,
 //            backButton.getWidth(),
 //            backButton.getHeight());
 //  }

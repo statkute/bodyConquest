@@ -51,27 +51,27 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
 
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
     game.batch.draw(
-        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatio);
+        header, BodyConquest.V_WIDTH / 2 - header.getWidth() / 2, 450 * BodyConquest.scaleRatioHeight);
 
     game.batch.draw(
         alexandru,
         BodyConquest.V_WIDTH / 2 - alexandru.getWidth() / 2,
-        350 * BodyConquest.scaleRatio);
+        350 * BodyConquest.scaleRatioHeight);
     game.batch.draw(
         augustas,
         BodyConquest.V_WIDTH / 2 - augustas.getWidth() / 2,
-        300 * BodyConquest.scaleRatio);
+        300 * BodyConquest.scaleRatioHeight);
     game.batch.draw(
-        brandon, BodyConquest.V_WIDTH / 2 - brandon.getWidth() / 2, 250 * BodyConquest.scaleRatio);
+        brandon, BodyConquest.V_WIDTH / 2 - brandon.getWidth() / 2, 250 * BodyConquest.scaleRatioHeight);
     game.batch.draw(
-        gintare, BodyConquest.V_WIDTH / 2 - gintare.getWidth() / 2, 200 * BodyConquest.scaleRatio);
+        gintare, BodyConquest.V_WIDTH / 2 - gintare.getWidth() / 2, 200 * BodyConquest.scaleRatioHeight);
     game.batch.draw(
-        paul, BodyConquest.V_WIDTH / 2 - paul.getWidth() / 2, 150 * BodyConquest.scaleRatio);
+        paul, BodyConquest.V_WIDTH / 2 - paul.getWidth() / 2, 150 * BodyConquest.scaleRatioHeight);
 
     game.batch.draw(
         backButton,
         BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-        60 * BodyConquest.scaleRatio);
+        60 * BodyConquest.scaleRatioHeight);
 
     checkPressed();
     game.batch.end();
@@ -87,7 +87,7 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
       if (backBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         dispose();
-        game.setScreen(new MenuScreen(game));
+        game.setScreen(new MenuScreen(game, username));
       }
     }
   }
@@ -132,7 +132,7 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
     backBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-            60 * BodyConquest.scaleRatio,
+            60 * BodyConquest.scaleRatioHeight,
             backButton.getWidth(),
             backButton.getHeight());
   }
