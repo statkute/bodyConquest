@@ -124,12 +124,11 @@ public class Game extends Thread {
 
   public void startBodyState() {
     if (gameType == GameType.SINGLE_PLAYER){
-//      //setPlayerTop(Disease.INFLUENZA);
-////      if(getPlayerBottom().getDisease() != Disease.INFLUENZA)
-////        setPlayerTop(Disease.INFLUENZA);
-////      else if(getPlayerBottom().getDisease() != Disease.MEASLES)
-////        setPlayerTop(Disease.MEASLES);
-      server.getServerSender().sendMessage(MessageMaker.diseaseMessage(Disease.INFLUENZA, PlayerType.PLAYER_TOP));
+      if(getPlayerBottom().getDisease() != Disease.INFLUENZA)
+        setPlayerTop(Disease.INFLUENZA);
+      else if(getPlayerBottom().getDisease() != Disease.ROTAVIRUS)
+        setPlayerTop(Disease.ROTAVIRUS);
+      server.getServerSender().sendMessage(MessageMaker.diseaseMessage(getPlayerTop().getDisease(), PlayerType.PLAYER_TOP));
     }
 
     server.startBodyLogic(); }
