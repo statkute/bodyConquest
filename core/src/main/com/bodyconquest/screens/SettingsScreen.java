@@ -123,34 +123,34 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
      */
     public void addActors() {
         header = new Image(t_header);
-        header.setBounds(
-            BodyConquest.V_WIDTH / 2.0f - header.getWidth() / 2.0f,
-            460,
-            t_header.getWidth(),
-            t_header.getHeight());
+    header.setBounds(
+        BodyConquest.V_WIDTH / 2.0f - header.getWidth() / 2.0f,
+        460 * BodyConquest.scaleRatioHeight,
+        t_header.getWidth(),
+        t_header.getHeight());
         allImages.add(header);
 
         soundText = new Image(t_soundText);
         soundText.setBounds(
-            BodyConquest.V_WIDTH / 5.0f, 300, t_soundText.getWidth(), t_soundText.getHeight());
+            BodyConquest.V_WIDTH / 5.0f, 300 * BodyConquest.scaleRatioHeight, t_soundText.getWidth(), t_soundText.getHeight());
         allImages.add(soundText);
 
         musicText = new Image(t_musicText);
         musicText.setBounds(
-            BodyConquest.V_WIDTH / 5.0f, 240, t_musicText.getWidth(), t_musicText.getHeight());
+            BodyConquest.V_WIDTH / 5.0f, 240 * BodyConquest.scaleRatioHeight, t_musicText.getWidth(), t_musicText.getHeight());
         allImages.add(musicText);
 
         soundOn = new Image(t_soundOn);
         soundOn.setBounds(
             BodyConquest.V_WIDTH / 5.0f * 4.0f - soundOn.getWidth(),
-            300,
+            300 * BodyConquest.scaleRatioHeight,
             t_soundOn.getWidth(),
             t_soundOn.getHeight());
 
         soundOff = new Image(t_soundOff);
         soundOff.setBounds(
             BodyConquest.V_WIDTH / 5.0f * 4.0f - soundOff.getWidth(),
-            300,
+            300 * BodyConquest.scaleRatioHeight,
             t_soundOff.getWidth(),
             t_soundOff.getHeight());
 
@@ -163,14 +163,14 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         musicOn = new Image(t_musicOn);
         musicOn.setBounds(
             BodyConquest.V_WIDTH / 5.0f * 4.0f - musicOn.getWidth(),
-            240,
+            240 * BodyConquest.scaleRatioHeight,
             t_musicOn.getWidth(),
             t_musicOn.getHeight());
 
         musicOff = new Image(t_musicOff);
         musicOff.setBounds(
             BodyConquest.V_WIDTH / 5.0f * 4.0f - musicOff.getWidth(),
-            240,
+            240 * BodyConquest.scaleRatioHeight,
             t_musicOff.getWidth(),
             t_musicOff.getHeight());
 
@@ -183,7 +183,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         difficultyText = new Image(t_difficultyText);
         difficultyText.setBounds(
             BodyConquest.V_WIDTH / 5.0f,
-            180,
+            180 * BodyConquest.scaleRatioHeight,
             t_difficultyText.getWidth(),
             t_difficultyText.getHeight());
         allImages.add(difficultyText);
@@ -191,14 +191,14 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         easy = new Image(t_easy);
         easy.setBounds(
             BodyConquest.V_WIDTH / 5.0f * 4.0f - easy.getWidth(),
-            180,
+            180 * BodyConquest.scaleRatioHeight,
             t_easy.getWidth(),
             t_easy.getHeight());
 
         hard = new Image(t_hard);
         hard.setBounds(
             BodyConquest.V_WIDTH / 5.0f * 4.0f - hard.getWidth(),
-            180,
+            180 * BodyConquest.scaleRatioHeight,
             t_hard.getWidth(),
             t_hard.getHeight());
 
@@ -211,7 +211,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         back = new Image(t_back);
         back.setBounds(
             BodyConquest.V_WIDTH / 2.0f - back.getWidth() / 2.0f,
-            60,
+            60 * BodyConquest.scaleRatioHeight,
             t_back.getWidth(),
             t_back.getHeight());
         allImages.add(back);
