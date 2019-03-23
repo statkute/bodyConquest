@@ -75,7 +75,7 @@ public class Assets {
   /** Race Selection Assets */
 
   /** The constant raceHeader. */
-  public static String raceHeader = "core/assets/selectvirusheader_new.png";
+  public static String raceHeader = "core/assets/selectvirusheader_new_big.png";
   /** The constant raceBlueVirus. */
   public static String raceBlueVirus = "core/assets/bluevirus.png";
   /** The constant raceGreenVirus. */
