@@ -105,7 +105,7 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
   public void settingPositions() {
     passwordImage.setPosition(
         BodyConquest.V_WIDTH / 2.0f - passwordImage.getWidth() / 2.0f,
-        200.0f * BodyConquest.scaleRatioHeight);
+        190.0f * BodyConquest.scaleRatioHeight);
     usernameImage.setPosition(
         BodyConquest.V_WIDTH / 2.0f - usernameImage.getWidth() / 2.0f,
         340.0f * BodyConquest.scaleRatioHeight);
