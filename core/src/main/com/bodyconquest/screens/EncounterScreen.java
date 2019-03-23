@@ -247,7 +247,6 @@ public class EncounterScreen implements Screen {
       for (BasicObject o : objects) {
 
         Enum i = o.getMapObjectType();
-        System.out.println(i.name());
         String key = i.name() + o.getPlayerType().getEncoded();
         if (!poolHashMap.containsKey(key)) poolHashMap.put(key, poolSetup(i, o.getPlayerType()));
 
@@ -682,9 +681,7 @@ public class EncounterScreen implements Screen {
    * @param mapObjectType the type of the map object to get the texture
    */
   private TexturePool poolSetup(Enum mapObjectType, PlayerType playerType) {
-
-    System.out.println("ENEMY DISEASE: " + communicator.getOpponentDisease());
-    System.out.println("MY DISEASE: " + communicator.getPlayerDisease());
+    
     float frameRate = 0.2f;
       String path = "";
     Disease newPlayerDisease;
