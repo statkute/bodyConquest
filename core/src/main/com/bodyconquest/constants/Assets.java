@@ -120,12 +120,19 @@ public class Assets {
   public static String loginheader_big = "core/assets/loginheader_big.png";
 
 
+  /** Register Screen Assets */
+
+  public static String registerheader_big = "core/assets/registerheader_big.png";
+
+
   /** Joint Register and Login Screens' Assets */
 
   /** The constant rlUsername. */
-  public static String rlUsername = "core/assets/username_big.png";
+  public static String rlUsername = "core/assets/username_new_big.png";
   /** The constant rlPassword. */
-  public static String rlPassword = "core/assets/password_big.png";
+  public static String rlPassword = "core/assets/password_new_big.png";
+  /** The constant rlSubmit. */
+  public static String rlSubmit = "core/assets/submit_big.png";
 
   /** Leaderboard Screen Assets */
   public static String headerLeaderboard = "core/assets/topscores.png";

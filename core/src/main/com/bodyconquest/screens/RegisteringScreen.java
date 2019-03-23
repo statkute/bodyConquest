@@ -15,9 +15,11 @@ import main.com.bodyconquest.rendering.BodyConquest;
  */
 public class RegisteringScreen extends DatabasesScreen implements Screen {
 
-    private Texture register;
-    private TextButton registerBtn;
+  //    private TextButton registerBtn;
+    private Texture t_register;
     private Image registerImage;
+    private Texture t_submit;
+    private Image submitImage;
 
     /**
      * The Database manager.
@@ -31,9 +33,10 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
      */
     public RegisteringScreen(BodyConquest game) {
         super(game);
-        registerImage = new Image(register);
-        registerBtn = new TextButton("Register", skin);
-        listenButton(registerBtn);
+        registerImage = new Image(t_register);
+        submitImage = new Image(t_submit);
+//        registerBtn = new TextButton("Register", skin);
+        listenButton(submitImage);
         settingSizes();
         settingPositions();
         adding();
@@ -54,7 +57,8 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void loadAssets() {
         super.loadAssets();
-        manager.load(Assets.startRegister, Texture.class);
+        manager.load(Assets.registerheader_big, Texture.class);
+      manager.load(Assets.rlSubmit, Texture.class);
         manager.finishLoading();
     }
 
@@ -64,22 +68,20 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void getAssets() {
         super.getAssets();
-        register = manager.get(Assets.startRegister, Texture.class);
+        t_register = manager.get(Assets.registerheader_big, Texture.class);
+        t_submit = manager.get(Assets.rlSubmit, Texture.class);
     }
 
 
     /**
      * Listen button for a click.
      *
-     * @param registerBtn the register btn
+     * @param registerBtn the t_register btn
      */
 
-    public void listenButton(TextButton registerBtn) {
+    public void listenButton(Image registerBtn) {
         registerBtn.addListener(new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                registerBtn.setText("You registered!");
+          public void clicked(InputEvent event, float x, float y) {
                 textPassword = txfPassword.getText();
                 textUsername = txfUsername.getText();
                 System.out.println(textUsername + " " + textPassword);
@@ -103,8 +105,9 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void settingPositions() {
         super.settingPositions();
-        registerImage.setPosition(BodyConquest.V_WIDTH / 2.0f - registerImage.getWidth() / 2.0f, 450.0f);
-        registerBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - registerBtn.getWidth() / 2.0f, 50.0f);
+        registerImage.setPosition(BodyConquest.V_WIDTH / 2.0f - registerImage.getWidth() / 2.0f, 450.0f * BodyConquest.scaleRatioHeight);
+        submitImage.setPosition(BodyConquest.V_WIDTH / 2.0f - submitImage.getWidth() / 2.0f, 50.0f * BodyConquest.scaleRatioHeight);
+//        registerBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - registerBtn.getWidth() / 2.0f, 50.0f * BodyConquest.scaleRatioHeight);
     }
 
     /**
@@ -114,7 +117,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     public void adding() {
         super.adding();
         stage.addActor(registerImage);
-        stage.addActor(registerBtn);
+        stage.addActor(submitImage);
     }
 
     /**
@@ -123,7 +126,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void settingSizes() {
         super.settingSizes();
-        registerBtn.setSize(250, 50);
-        registerImage.setSize(register.getWidth(), register.getHeight());
+        submitImage.setSize(t_submit.getWidth(), t_submit.getHeight());
+        registerImage.setSize(t_register.getWidth(), t_register.getHeight());
     }
 }
