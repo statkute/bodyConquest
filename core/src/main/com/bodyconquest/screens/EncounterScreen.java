@@ -42,8 +42,6 @@ public class EncounterScreen implements Screen {
 
   private int organNumber;
 
-  //private boolean updating;
-
   private int screenMakingCounter;
 
   private final Map map;
@@ -67,6 +65,8 @@ public class EncounterScreen implements Screen {
 
   /** The constant BLINK_TIME_AFTER_DMG. */
   public static final float BLINK_TIME_AFTER_DMG = 0.07f;
+
+  public static final float BLINK_TIME_AFTER_DMG_BACTERIAS = 200f;
 
   private final OrthographicCamera gameCamera;
 
