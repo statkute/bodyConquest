@@ -682,6 +682,8 @@ public class EncounterScreen implements Screen {
    */
   private TexturePool poolSetup(Enum mapObjectType, PlayerType playerType) {
 
+    System.out.println("ENEMY DISEASE: " + communicator.getOpponentDisease());
+    System.out.println("MY DISEASE: " + communicator.getPlayerDisease());
     float frameRate = 0.2f;
       String path = "";
     Disease newPlayerDisease;

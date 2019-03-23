@@ -111,13 +111,13 @@ public class ViewObject extends Actor {
       commonDraw(batch,parentAlpha);
     }
 
-//    if(this.bo.getWasHit() && !(this.bo.getMapObjectType() == BaseType.INFLUENZA_BASE || this.bo.getMapObjectType() == BaseType.MEASLES_BASE || this.bo.getMapObjectType() == BaseType.ROTAVIRUS_BASE)){
-//      this.setColor(1,0,0,1.0f);
-//      //bo.setWasHit(false);
-//      System.out.println("Does it go here");
-////      commonDraw(batch, parentAlpha);
-//      //postDraw();
-//    }
+    if(this.bo.getWasHit() && !(this.bo.getMapObjectType() == BaseType.INFLUENZA_BASE || this.bo.getMapObjectType() == BaseType.MEASLES_BASE || this.bo.getMapObjectType() == BaseType.ROTAVIRUS_BASE)){
+      this.setColor(1,0,0,1.0f);
+      //bo.setWasHit(false);
+      System.out.println("Does it go here");
+      commonDraw(batch, parentAlpha);
+//      postDraw();
+    }
   }
 
   public void postDraw()
