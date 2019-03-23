@@ -11,15 +11,6 @@ import main.com.bodyconquest.handlers.GifDecoder;
 import main.com.bodyconquest.screens.EncounterScreen;
 import main.com.bodyconquest.constants.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Date;
-
 public class ViewObject extends Actor {
 
     private Texture texture;
@@ -31,10 +22,7 @@ public class ViewObject extends Actor {
     private BasicObject bo;
     private PlayerType playerType;
 
-    //private DateFormat DATE_FORMAT = new SimpleDateFormat("EEE MMM dd hh:mm:ss ZZZ yyyy");
-
-
-    // Constructor for spritesheet (default time between frames of 0.2f)
+  // Constructor for spritesheet (default time between frames of 0.2f)
 //  public ViewObject(BasicObject bo, String pathTexture, int frameCols, int frameRows, float elapsedTime, PlayerType playerType) {
 //    this.bo = bo;
 //    this.elapsedTime = elapsedTime;
@@ -145,7 +133,6 @@ public class ViewObject extends Actor {
             setColor(1, 0, 0, t);
         }
 
-
     }
 
     public void preDraw() {
@@ -174,7 +161,17 @@ public class ViewObject extends Actor {
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
         batch.draw(currentFrame, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+        //AffineTransform trans = AffineTransform.getRotateInstance(getDirection() + Math.PI, getX() + ((getWidth() - getCwidth()) / 2), getY() + ((getHeight() - getCheight()) / 2)
 
+//    ShapeRenderer shapeRenderer = new ShapeRenderer();
+//
+//      shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+//
+//    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+//    shapeRenderer.setColor(Color.GREEN);
+//    shapeRenderer.rect((float)bo.getX() + ((bo.getWidth() - bo.getCwidth()) / 2), (float)bo.getY() + ((bo.getHeight() - bo.getCheight()) / 2), bo.getCwidth(), bo.getCheight());
+//    shapeRenderer.end();
+        //setColor(1,1,1,1);
         super.draw(batch, parentAlpha);
     }
 
@@ -182,7 +179,11 @@ public class ViewObject extends Actor {
         return bo.getMapObjectType();
     }
 
-    public Animation<TextureRegion> getWalkAnimation() {
-        return walkAnimation;
-    }
+  public Animation<TextureRegion> getWalkAnimation() { return walkAnimation; }
+
+  public String getKey() {
+    Enum mot = bo.getMapObjectType();
+    return mot.name() + bo.getPlayerType().getEncoded();
+  }
+
 }

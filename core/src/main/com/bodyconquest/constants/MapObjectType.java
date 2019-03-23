@@ -4,5 +4,4 @@ public interface MapObjectType {
 
   <T extends Enum & MapObjectType> T getMapObjectType();
 
-
 }
