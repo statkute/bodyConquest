@@ -148,7 +148,7 @@ public class Assets {
   /** Body Screen Assets */
 
   /** The constant bodyHeader. */
-  public static String bodyHeader = "core/assets/selectorganheader.png";
+  public static String bodyHeader = "core/assets/selectorganheader_big.png";
   /** The constant heart. */
   public static String heart = "core/assets/heart.png";
   /** The constant heart_blue. */
@@ -160,7 +160,7 @@ public class Assets {
   /** The constant heart_selected. */
   public static String heart_selected = "core/assets/heart_selected.png";
   /** The constant heartpoints. */
-  public static String heartpoints = "core/assets/heartpoints.png";
+  public static String heartpoints = "core/assets/heartpoints_new.png";
   /** The constant eye. */
   public static String eye = "core/assets/eye.png";
   /** The constant eye_blue. */
@@ -172,7 +172,7 @@ public class Assets {
   /** The constant eye_selected. */
   public static String eye_selected = "core/assets/eye_selected.png";
   /** The constant eyepoints. */
-  public static String eyepoints = "core/assets/eyepoints.png";
+  public static String eyepoints = "core/assets/eyepoints_new.png";
   /** The constant lungs. */
   public static String lungs = "core/assets/lungs.png";
   /** The constant lungs_blue. */
@@ -184,7 +184,7 @@ public class Assets {
   /** The constant lungs_selected. */
   public static String lungs_selected = "core/assets/lungs_selected.png";
   /** The constant lungspoints. */
-  public static String lungspoints = "core/assets/lungspoints.png";
+  public static String lungspoints = "core/assets/lungspoints_new.png";
   /** The constant brain. */
   public static String brain = "core/assets/brain.png";
   /** The constant brain_blue. */
@@ -196,7 +196,7 @@ public class Assets {
   /** The constant brain_selected. */
   public static String brain_selected = "core/assets/brain_selected.png";
   /** The constant brainpoints. */
-  public static String brainpoints = "core/assets/brainpoints.png";
+  public static String brainpoints = "core/assets/brainpoints_new.png";
   /** The constant teeth. */
   public static String teeth = "core/assets/teeth.png";
   /** The constant teeth_blue. */
@@ -208,7 +208,7 @@ public class Assets {
   /** The constant teeth_selected. */
   public static String teeth_selected = "core/assets/teeth_selected.png";
   /** The constant teethpoints. */
-  public static String teethpoints = "core/assets/teethpoints.png";
+  public static String teethpoints = "core/assets/teethpoints_new.png";
   /** The constant intestines. */
   public static String intestines = "core/assets/intestines.png";
   /** The constant intestines_blue. */
@@ -220,7 +220,7 @@ public class Assets {
   /** The constant intestines_selected. */
   public static String intestines_selected = "core/assets/intestines_selected.png";
   /** The constant intestinespoints. */
-  public static String intestinespoints = "core/assets/intestinespoints.png";
+  public static String intestinespoints = "core/assets/intestinespoints_new.png";
   /** The constant continueTextBig. */
   public static String continueTextBig = "core/assets/continue_new_big.png";
 
