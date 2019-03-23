@@ -54,7 +54,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     @Override
     public void loadAssets() {
         super.loadAssets();
-        manager.load(Assets.startLogin, Texture.class);
+        manager.load(Assets.loginheader_big, Texture.class);
         manager.finishLoading();
     }
 
@@ -64,7 +64,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     @Override
     public void getAssets() {
         super.getAssets();
-        login = manager.get(Assets.startLogin, Texture.class);
+        login = manager.get(Assets.loginheader_big, Texture.class);
     }
 
     /**
@@ -77,7 +77,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                loginBtn.setText("You logged in!");
+                loginBtn.setText("You are logged in!");
                 textPassword = txfPassword.getText();
                 textUsername = txfUsername.getText();
                 game.setUsername(textUsername);
@@ -103,8 +103,8 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     @Override
     public void settingPositions() {
         super.settingPositions();
-        loginImage.setPosition(BodyConquest.V_WIDTH / 2.0f - loginImage.getWidth() / 2.0f, 450.0f);
-        loginBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - loginBtn.getWidth() / 2.0f, 50.0f);
+        loginImage.setPosition(BodyConquest.V_WIDTH / 2.0f - loginImage.getWidth() / 2.0f, 450.0f * BodyConquest.scaleRatioHeight);
+        loginBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - loginBtn.getWidth() / 2.0f, 50.0f * BodyConquest.scaleRatioHeight);
     }
 
     /**

@@ -114,12 +114,18 @@ public class Assets {
   /** The constant startLogin. */
   public static String startLogin = "core/assets/login_big.png";
 
-  /** Register Screen Assets */
 
-  /** The constant registerUsername. */
-  public static String registerUsername = "core/assets/USERNAME_start.png";
-  /** The constant registerPassword. */
-  public static String registerPassword = "core/assets/PASSWORD_start.png";
+  /** Login Screen Assets */
+
+  public static String loginheader_big = "core/assets/loginheader_big.png";
+
+
+  /** Joint Register and Login Screens' Assets */
+
+  /** The constant rlUsername. */
+  public static String rlUsername = "core/assets/username_big.png";
+  /** The constant rlPassword. */
+  public static String rlPassword = "core/assets/password_big.png";
 
   /** Leaderboard Screen Assets */
   public static String headerLeaderboard = "core/assets/topscores.png";
