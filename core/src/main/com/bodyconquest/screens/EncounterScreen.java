@@ -42,8 +42,6 @@ public class EncounterScreen implements Screen {
 
   private int organNumber;
 
-  //private boolean updating;
-
   private int screenMakingCounter;
 
   private final Map map;
@@ -67,6 +65,8 @@ public class EncounterScreen implements Screen {
 
   /** The constant BLINK_TIME_AFTER_DMG. */
   public static final float BLINK_TIME_AFTER_DMG = 0.07f;
+
+  public static final float BLINK_TIME_AFTER_DMG_BACTERIAS = 200f;
 
   private final OrthographicCamera gameCamera;
 
@@ -113,7 +113,7 @@ public class EncounterScreen implements Screen {
 
   private String username;
 
-  private ConcurrentHashMap<MapObjectType, TexturePool> poolHashMap;
+  private ConcurrentHashMap<String, TexturePool> poolHashMap;
 
   /**
    * Instantiates a new Encounter screen where all the battle takes place.
@@ -164,11 +164,11 @@ public class EncounterScreen implements Screen {
     healthTopBaseBefore = 100;
     healthBottomBaseBefore = 100;
 
-    poolHashMap = new ConcurrentHashMap<>();
+    poolHashMap = new ConcurrentHashMap<String, TexturePool>();
 
     value = new DecimalFormat("0");
 
-    organNumber =0;
+    organNumber = 0;
   }
 
   public Communicator getCommunicator() {
@@ -248,15 +248,15 @@ public class EncounterScreen implements Screen {
       for (BasicObject o : objects) {
 
         Enum i = o.getMapObjectType();
-
-        if (!poolHashMap.containsKey(i)) poolHashMap.put(o.getMapObjectType(), poolSetup(i, o.getPlayerType()));
+        String key = i.name() + o.getPlayerType().getEncoded();
+        if (!poolHashMap.containsKey(key)) poolHashMap.put(key, poolSetup(i, o.getPlayerType()));
 
         viewObjects.add(
             new ViewObject(
                 o,
                 elapsedSeconds,
                 game.getClient().getCommunicator().getPlayerType(),
-                poolHashMap.get(i).obtain()));
+                poolHashMap.get(key).obtain()));
       }
 
       for (ViewObject vo : viewObjects) {
@@ -289,7 +289,7 @@ public class EncounterScreen implements Screen {
       drawNumbersOnResourceBars();
 
       for (ViewObject vo : viewObjects) {
-        poolHashMap.get(vo.getMapObjectType()).free(vo.getWalkAnimation());
+        poolHashMap.get(vo.getKey()).free(vo.getWalkAnimation());
         vo.remove();
       }
 
@@ -682,24 +682,31 @@ public class EncounterScreen implements Screen {
    * @param mapObjectType the type of the map object to get the texture
    */
   private TexturePool poolSetup(Enum mapObjectType, PlayerType playerType) {
-
+    
     float frameRate = 0.2f;
       String path = "";
     Disease newPlayerDisease;
     if(playerType == this.playerType){
         newPlayerDisease = playerDisease;
+        System.out.println("same\n");
     } else {
         newPlayerDisease = communicator.getOpponentDisease();
+        System.out.println("different\n");
     }
+
+      System.out.println("this: " + newPlayerDisease + "\n");
 
     if (UnitType.VIRUS == mapObjectType) {
         path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathFluFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;
+        System.out.println(path + "\n");
         return new TexturePool(path, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
     } else if (UnitType.FUNGUS == mapObjectType) {
         path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathVirusFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathVirusMes : Assets.pathVirusRvi;
+        System.out.println(path + "\n");
         return new TexturePool(path, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
     } else if (UnitType.BACTERIA == mapObjectType) {
         path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathBacteriaFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathBacteriaMes : Assets.pathBacteriaRvi;
+        System.out.println(path + "\n");
         return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
     } else if (BaseType.INFLUENZA_BASE == mapObjectType) {
       return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);

@@ -23,6 +23,33 @@ public class Fungus extends Troop {
     super(lane, playerType);
     init();
   }
+
+  public Fungus(Lane lane, PlayerType playerType, float damageMult, float speedMult, float healthMult, float attackSpeedMult) {
+    super(lane, playerType);
+    initSpecific(damageMult, speedMult, healthMult, attackSpeedMult);
+  }
+
+  private void initSpecific(float damageMult, float speedMult, float healthMult, float attackSpeedMult) {
+    setSize(85, 85);
+    setCSize(85, 85);
+
+    // Troop Stats
+    health = maxHealth = 250;
+    health = (int)(health * healthMult);
+    maxSpeed = 0.6 * (double)speedMult;
+    cooldown = (int)(1800 * attackSpeedMult); // Milliseconds
+    lastAttack = 0;
+    range = 50;
+    damage = (int)(45 * damageMult);
+    mapObjectType = UnitType.FUNGUS;
+
+    lipidsCost = LIPIDS_COST;
+    sugarsCost = SUGARS_COST;
+    proteinCost = PROTEINS_COST;
+
+    killingPoints = 10;
+  }
+
   private void init(){
     // Dimensions
     setSize(85, 85);
