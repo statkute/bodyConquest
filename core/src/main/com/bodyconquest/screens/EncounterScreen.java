@@ -150,10 +150,10 @@ public class EncounterScreen implements Screen {
     long tDelta = tEnd - MenuScreen.timeOfServer;
     elapsedSeconds = tDelta / 1000.0f;
 
-    float topOfUnitBar = 27;
-    float mapSize = BodyConquest.V_HEIGHT - topOfUnitBar;
+    float topOfUnitBar = 28;
+    float mapSize = encounterScreenWidth - topOfUnitBar;
     map = new Map(communicator.getCurrentOrgan());
-    map.setBounds((encounterScreenWidth / 2.0f) - (mapSize / 2), topOfUnitBar, mapSize, mapSize);
+    map.setBounds((encounterScreenWidth / 7.0f), topOfUnitBar, encounterScreenHeight, encounterScreenHeight);
     stage.addActor(map);
 
     hud = new HUD(this, playerType, communicator.getPlayerDisease(), stage);
