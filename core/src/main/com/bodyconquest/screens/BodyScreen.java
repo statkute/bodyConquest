@@ -413,157 +413,165 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   public void addActors() {
     title = new Image(t_header);
     title.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_header.getWidth() / 2,
-            460 * BodyConquest.scaleRatioHeight,
-            t_header.getWidth(),
-            t_header.getHeight());
+        BodyConquest.V_WIDTH / 2 - t_header.getWidth()/ 2.0f,
+        460 * BodyConquest.scaleRatioHeight,
+        t_header.getWidth(),
+        t_header.getHeight());
     allImages.add(title);
 
-     heart = new Image(t_heart);
-      heart.setBounds(
-              BodyConquest.V_WIDTH / 5 - t_heart.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              330 * BodyConquest.scaleRatioHeight,
-              t_heart.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_heart.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
+    heart = new Image(t_heart);
+    heart.setBounds(
+        BodyConquest.V_WIDTH / 5 - t_heart.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        330 * BodyConquest.scaleRatioHeight,
+        t_heart.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_heart.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
 
-      allImages.add(heart);
+    allImages.add(heart);
 
-      heartSelected = new Image(t_heartSelected);
-      heartSelected.setBounds(
-              BodyConquest.V_WIDTH / 5 - t_heartSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              330 * BodyConquest.scaleRatioHeight,
-              t_heartSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_heartSelected.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
+    heartSelected = new Image(t_heartSelected);
+    heartSelected.setBounds(
+        BodyConquest.V_WIDTH / 5
+            - t_heartSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        330 * BodyConquest.scaleRatioHeight,
+        t_heartSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_heartSelected.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
 
-      heartpoints = new Image(t_heartpoints);
-      heartpoints.setBounds(
-              BodyConquest.V_WIDTH / 5 - t_heartpoints.getWidth() / 3f / 2,
-              280 * BodyConquest.scaleRatioHeight,
-              t_heartpoints.getWidth() / 3f,
-              t_heartpoints.getHeight() / 3f);
-      allImages.add(heartpoints);
+    heartpoints = new Image(t_heartpoints);
+    heartpoints.setBounds(
+        BodyConquest.V_WIDTH / 5 - t_heartpoints.getWidth()/ 2.0f,
+        270 * BodyConquest.scaleRatioHeight,
+        t_heartpoints.getWidth(),
+        t_heartpoints.getHeight());
+    allImages.add(heartpoints);
 
-      eye = new Image(t_eye);
-      eye.setBounds(
-              BodyConquest.V_WIDTH / 2 - t_eye.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              330 * BodyConquest.scaleRatioHeight,
-              t_eye.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_eye.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
-      allImages.add(eye);
+    eye = new Image(t_eye);
+    eye.setBounds(
+        BodyConquest.V_WIDTH / 2 - t_eye.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        330 * BodyConquest.scaleRatioHeight,
+        t_eye.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_eye.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
+    allImages.add(eye);
 
-      eyeSelected = new Image(t_eyeSelected);
-      eyeSelected.setBounds(
-              BodyConquest.V_WIDTH / 2 - t_eyeSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              330 * BodyConquest.scaleRatioHeight,
-              t_eyeSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_eyeSelected.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
+    eyeSelected = new Image(t_eyeSelected);
+    eyeSelected.setBounds(
+        BodyConquest.V_WIDTH / 2
+            - t_eyeSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        330 * BodyConquest.scaleRatioHeight,
+        t_eyeSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_eyeSelected.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
 
-      eyepoints = new Image(t_eyepoints);
-      eyepoints.setBounds(
-              BodyConquest.V_WIDTH / 2 - t_eyepoints.getWidth() / 3f / 2,
-              280 * BodyConquest.scaleRatioHeight,
-              t_eyepoints.getWidth() / 3f,
-              t_eyepoints.getHeight() / 3f);
-      allImages.add(eyepoints);
+    eyepoints = new Image(t_eyepoints);
+    eyepoints.setBounds(
+        BodyConquest.V_WIDTH / 2 - t_eyepoints.getWidth()/ 2.0f,
+        270 * BodyConquest.scaleRatioHeight,
+        t_eyepoints.getWidth(),
+        t_eyepoints.getHeight());
+    allImages.add(eyepoints);
 
-      lungs = new Image(t_lungs);
-      lungs.setBounds(
-              BodyConquest.V_WIDTH / 5 * 4 - t_lungs.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              330 * BodyConquest.scaleRatioHeight,
-              t_lungs.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_lungs.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
-      allImages.add(lungs);
+    lungs = new Image(t_lungs);
+    lungs.setBounds(
+        BodyConquest.V_WIDTH / 5 * 4
+            - t_lungs.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        330 * BodyConquest.scaleRatioHeight,
+        t_lungs.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_lungs.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
+    allImages.add(lungs);
 
-      lungsSelected = new Image(t_lungsSelected);
-      lungsSelected.setBounds(
-              BodyConquest.V_WIDTH / 5 * 4 - t_lungsSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              330 * BodyConquest.scaleRatioHeight,
-              t_lungsSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_lungsSelected.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
+    lungsSelected = new Image(t_lungsSelected);
+    lungsSelected.setBounds(
+        BodyConquest.V_WIDTH / 5 * 4
+            - t_lungsSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        330 * BodyConquest.scaleRatioHeight,
+        t_lungsSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_lungsSelected.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
 
-      lungspoints = new Image(t_lungspoints);
-      lungspoints.setBounds(
-              BodyConquest.V_WIDTH / 5 * 4 - t_lungspoints.getWidth() / 3f / 2,
-              280 * BodyConquest.scaleRatioHeight,
-              t_lungspoints.getWidth() / 3f,
-              t_lungspoints.getHeight() / 3f);
-      allImages.add(lungspoints);
+    lungspoints = new Image(t_lungspoints);
+    lungspoints.setBounds(
+        BodyConquest.V_WIDTH / 5 * 4 - t_lungspoints.getWidth()/ 2.0f,
+        270 * BodyConquest.scaleRatioHeight,
+        t_lungspoints.getWidth(),
+        t_lungspoints.getHeight());
+    allImages.add(lungspoints);
 
-      brain = new Image(t_brain);
-      brain.setBounds(
-              BodyConquest.V_WIDTH / 5 - t_brain.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              150 * BodyConquest.scaleRatioHeight,
-              t_brain.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_brain.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
-      allImages.add(brain);
+    brain = new Image(t_brain);
+    brain.setBounds(
+        BodyConquest.V_WIDTH / 5 - t_brain.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        140 * BodyConquest.scaleRatioHeight,
+        t_brain.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_brain.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
+    allImages.add(brain);
 
-      brainSelected = new Image(t_brainSelected);
-      brainSelected.setBounds(
-              BodyConquest.V_WIDTH / 5 - t_brainSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              150 * BodyConquest.scaleRatioHeight,
-              t_brainSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_brainSelected.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
+    brainSelected = new Image(t_brainSelected);
+    brainSelected.setBounds(
+        BodyConquest.V_WIDTH / 5
+            - t_brainSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        140 * BodyConquest.scaleRatioHeight,
+        t_brainSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_brainSelected.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
 
-      brainpoints = new Image(t_brainpoints);
-      brainpoints.setBounds(
-              BodyConquest.V_WIDTH / 5 - t_brainpoints.getWidth() / 3f / 2,
-              100 * BodyConquest.scaleRatioHeight,
-              t_brainpoints.getWidth() / 3f,
-              t_brainpoints.getHeight() / 3f);
-      allImages.add(brainpoints);
+    brainpoints = new Image(t_brainpoints);
+    brainpoints.setBounds(
+        BodyConquest.V_WIDTH / 5 - t_brainpoints.getWidth()/ 2.0f,
+        80 * BodyConquest.scaleRatioHeight,
+        t_brainpoints.getWidth(),
+        t_brainpoints.getHeight());
+    allImages.add(brainpoints);
 
-      teeth = new Image(t_teeth);
-      teeth.setBounds(
-              BodyConquest.V_WIDTH / 2 - t_teeth.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              150 * BodyConquest.scaleRatioHeight,
-              t_teeth.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_teeth.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
-      allImages.add(teeth);
+    teeth = new Image(t_teeth);
+    teeth.setBounds(
+        BodyConquest.V_WIDTH / 2 - t_teeth.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        140 * BodyConquest.scaleRatioHeight,
+        t_teeth.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_teeth.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
+    allImages.add(teeth);
 
-      teethSelected = new Image(t_teethSelected);
-      teethSelected.setBounds(
-              BodyConquest.V_WIDTH / 2 - t_teethSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              150 * BodyConquest.scaleRatioHeight,
-              t_teethSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_teethSelected.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
+    teethSelected = new Image(t_teethSelected);
+    teethSelected.setBounds(
+        BodyConquest.V_WIDTH / 2
+            - t_teethSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        140 * BodyConquest.scaleRatioHeight,
+        t_teethSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_teethSelected.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
 
-      teethpoints = new Image(t_teethpoints);
-      teethpoints.setBounds(
-              BodyConquest.V_WIDTH / 2 - t_teethpoints.getWidth() / 3f / 2,
-              100 * BodyConquest.scaleRatioHeight,
-              t_teethpoints.getWidth() / 3f,
-              t_teethpoints.getHeight() / 3f);
-      allImages.add(teethpoints);
+    teethpoints = new Image(t_teethpoints);
+    teethpoints.setBounds(
+        BodyConquest.V_WIDTH / 2 - t_teethpoints.getWidth()/ 2.0f,
+        80 * BodyConquest.scaleRatioHeight,
+        t_teethpoints.getWidth(),
+        t_teethpoints.getHeight());
+    allImages.add(teethpoints);
 
-      intestines = new Image(t_intestines);
-      intestines.setBounds(
-              BodyConquest.V_WIDTH / 5 * 4 - t_intestines.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              150 * BodyConquest.scaleRatioHeight,
-              t_intestines.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_intestines.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
-      allImages.add(intestines);
+    intestines = new Image(t_intestines);
+    intestines.setBounds(
+        BodyConquest.V_WIDTH / 5 * 4
+            - t_intestines.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        140 * BodyConquest.scaleRatioHeight,
+        t_intestines.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_intestines.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
+    allImages.add(intestines);
 
-      intestinesSelected = new Image(t_intestinesSelected);
-      intestinesSelected.setBounds(
-              BodyConquest.V_WIDTH / 5 * 4 - t_intestinesSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight) / 2,
-              150 * BodyConquest.scaleRatioHeight,
-              t_intestinesSelected.getWidth() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight),
-              t_intestinesSelected.getHeight() * (BodyConquest.scaleRatioHeight * BodyConquest.scaleRatioHeight));
+    intestinesSelected = new Image(t_intestinesSelected);
+    intestinesSelected.setBounds(
+        BodyConquest.V_WIDTH / 5 * 4
+            - t_intestinesSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f)/ 2.0f,
+        140 * BodyConquest.scaleRatioHeight,
+        t_intestinesSelected.getWidth() * (BodyConquest.scaleRatioHeight * 1.6f),
+        t_intestinesSelected.getHeight() * (BodyConquest.scaleRatioHeight * 1.6f));
 
-      intestinespoints = new Image(t_intestinespoints);
-      intestinespoints.setBounds(
-              BodyConquest.V_WIDTH / 5 * 4 - t_intestinespoints.getWidth() / 2,
-              100 * BodyConquest.scaleRatioHeight,
-              t_intestinespoints.getWidth(),
-              t_intestinespoints.getHeight());
-      allImages.add(intestinespoints);
+    intestinespoints = new Image(t_intestinespoints);
+    intestinespoints.setBounds(
+        BodyConquest.V_WIDTH / 5 * 4 - t_intestinespoints.getWidth()/ 2.0f,
+        80 * BodyConquest.scaleRatioHeight,
+        t_intestinespoints.getWidth(),
+        t_intestinespoints.getHeight());
+    allImages.add(intestinespoints);
 
     continueImage = new Image(t_continueImage);
     continueImage.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_continueImage.getWidth() / 2,
-            30 * BodyConquest.scaleRatioHeight,
-            t_continueImage.getWidth(),
-            t_continueImage.getHeight());
+        BodyConquest.V_WIDTH / 2 - t_continueImage.getWidth()/ 2.0f,
+        25 * BodyConquest.scaleRatioHeight,
+        t_continueImage.getWidth(),
+        t_continueImage.getHeight());
 
     for (Image i : allImages) {
       stage.addActor(i);
@@ -576,132 +584,130 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   /** Add buttons to the stage. */
   public void addButtons() {
     heart.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                  selectedOrganType = Organ.HEART;
-                  selectedOrganImage = heartSelected;
-                  stage.addActor(heartSelected);
-                } else {
-                  selectedOrganImage = heartSelected;
-                  stage.addActor(heartSelected);
-                  selectedOrganType = Organ.HEART;
-                  stage.addActor(continueImage);
-                }
-
-              }
-            });
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            playButtonSound();
+            if (selectedOrganType != null) {
+              selectedOrganImage.remove();
+              selectedOrganType = Organ.HEART;
+              selectedOrganImage = heartSelected;
+              stage.addActor(heartSelected);
+            } else {
+              selectedOrganImage = heartSelected;
+              stage.addActor(heartSelected);
+              selectedOrganType = Organ.HEART;
+              stage.addActor(continueImage);
+            }
+          }
+        });
     heartpoints.addListener(heart.getListeners().peek());
 
     eye.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                } else {
-                  stage.addActor(continueImage);
-                }
-                selectedOrganImage = eyeSelected;
-                stage.addActor(eyeSelected);
-                selectedOrganType = Organ.EYES;
-              }
-            });
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            playButtonSound();
+            if (selectedOrganType != null) {
+              selectedOrganImage.remove();
+            } else {
+              stage.addActor(continueImage);
+            }
+            selectedOrganImage = eyeSelected;
+            stage.addActor(eyeSelected);
+            selectedOrganType = Organ.EYES;
+          }
+        });
     eyepoints.addListener(eye.getListeners().peek());
 
     lungs.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                  selectedOrganImage = lungsSelected;
-                  stage.addActor(lungsSelected);
-                  selectedOrganType = Organ.LUNGS;
-                } else {
-                  selectedOrganImage = lungsSelected;
-                  stage.addActor(lungsSelected);
-                  selectedOrganType = Organ.LUNGS;
-                  stage.addActor(continueImage);
-                }
-              }
-            });
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            playButtonSound();
+            if (selectedOrganType != null) {
+              selectedOrganImage.remove();
+              selectedOrganImage = lungsSelected;
+              stage.addActor(lungsSelected);
+              selectedOrganType = Organ.LUNGS;
+            } else {
+              selectedOrganImage = lungsSelected;
+              stage.addActor(lungsSelected);
+              selectedOrganType = Organ.LUNGS;
+              stage.addActor(continueImage);
+            }
+          }
+        });
     lungspoints.addListener(lungs.getListeners().peek());
 
     brain.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                  selectedOrganImage = brainSelected;
-                  stage.addActor(brainSelected);
-                  selectedOrganType = Organ.BRAIN;
-                } else {
-                  selectedOrganImage = brainSelected;
-                  stage.addActor(brainSelected);
-                  selectedOrganType = Organ.BRAIN;
-                  stage.addActor(continueImage);
-                }
-              }
-            });
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            playButtonSound();
+            if (selectedOrganType != null) {
+              selectedOrganImage.remove();
+              selectedOrganImage = brainSelected;
+              stage.addActor(brainSelected);
+              selectedOrganType = Organ.BRAIN;
+            } else {
+              selectedOrganImage = brainSelected;
+              stage.addActor(brainSelected);
+              selectedOrganType = Organ.BRAIN;
+              stage.addActor(continueImage);
+            }
+          }
+        });
     brainpoints.addListener(brain.getListeners().peek());
 
     teeth.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                  selectedOrganImage = teethSelected;
-                  stage.addActor(teethSelected);
-                  selectedOrganType = Organ.TEETH;
-                } else {
-                  selectedOrganImage = teethSelected;
-                  stage.addActor(teethSelected);
-                  selectedOrganType = Organ.TEETH;
-                  stage.addActor(continueImage);
-                }
-              }
-            });
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            playButtonSound();
+            if (selectedOrganType != null) {
+              selectedOrganImage.remove();
+              selectedOrganImage = teethSelected;
+              stage.addActor(teethSelected);
+              selectedOrganType = Organ.TEETH;
+            } else {
+              selectedOrganImage = teethSelected;
+              stage.addActor(teethSelected);
+              selectedOrganType = Organ.TEETH;
+              stage.addActor(continueImage);
+            }
+          }
+        });
 
     teethpoints.addListener(teeth.getListeners().peek());
 
     intestines.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                  selectedOrganImage = intestinesSelected;
-                  stage.addActor(intestinesSelected);
-                  selectedOrganType = Organ.INTESTINES;
-                } else {
-                  selectedOrganImage = intestinesSelected;
-                  stage.addActor(intestinesSelected);
-                  selectedOrganType = Organ.INTESTINES;
-                  stage.addActor(continueImage);
-                }
-              }
-            });
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            playButtonSound();
+            if (selectedOrganType != null) {
+              selectedOrganImage.remove();
+              selectedOrganImage = intestinesSelected;
+              stage.addActor(intestinesSelected);
+              selectedOrganType = Organ.INTESTINES;
+            } else {
+              selectedOrganImage = intestinesSelected;
+              stage.addActor(intestinesSelected);
+              selectedOrganType = Organ.INTESTINES;
+              stage.addActor(continueImage);
+            }
+          }
+        });
 
     intestinespoints.addListener(intestines.getListeners().peek());
 
     continueImage.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                dispose();
-                game.getClient()
-                        .clientSender
-                        .sendMessage(MessageMaker.confirmOrganMessage(selectedOrganType));
-                // if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startEncounterState();
-                // We should probably have some sort of loading screen? Or at least a loading symbol?
-                // game.setScreen(new EncounterScreen(game, gameType));
-
-                playButtonSound();
-              }
-            });
+        new ClickListener() {
+          public void clicked(InputEvent event, float x, float y) {
+            dispose();
+            game.getClient()
+                .clientSender
+                .sendMessage(MessageMaker.confirmOrganMessage(selectedOrganType));
+            // if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startEncounterState();
+            // We should probably have some sort of loading screen? Or at least a loading symbol?
+            // game.setScreen(new EncounterScreen(game, gameType));
+            playButtonSound();
+          }
+        });
   }
 }
