@@ -108,11 +108,11 @@ public class Assets {
   /** Starting Screen Assets */
 
   /** The constant startTitle. */
-  public static String startTitle = "core/assets/title_new.png";
+  public static String startTitle = "core/assets/signinheader_big.png";
   /** The constant startRegister. */
-  public static String startRegister = "core/assets/REGISTER_start.png";
+  public static String startRegister = "core/assets/register_big.png";
   /** The constant startLogin. */
-  public static String startLogin = "core/assets/LOGIN_start.png";
+  public static String startLogin = "core/assets/login_big.png";
 
   /** Register Screen Assets */
 
