@@ -330,19 +330,19 @@ public class EncounterScreen implements Screen {
 
   /** Draws a username of the player on the batch */
   private void drawUsername() {
-    game.usernameFont.getData().setScale(0.70f, 0.70f);
+    game.usernameFont.getData().setScale(0.9f, 0.9f);
 
     if (username.length() > 9) {
       game.usernameFont.draw(
           game.batch,
           username.toLowerCase().substring(0, 9),
-          BodyConquest.V_WIDTH - 105.0f,
+          encounterScreenWidth - 80.0f,
           hud.getUnitBar().getImageHeight() + 24.0f);
     } else {
       game.usernameFont.draw(
           game.batch,
           username.toLowerCase(),
-          BodyConquest.V_WIDTH - 105.0f,
+          encounterScreenWidth - 80.0f,
           hud.getUnitBar().getImageHeight() + 24.0f);
     }
   }
@@ -353,29 +353,29 @@ public class EncounterScreen implements Screen {
     if (time < 0) {
       time = 0.0f;
     }
-    game.timerFont.getData().setScale(0.75f, 0.75f);
-    game.timerFont.draw(game.batch, "Time Left", BodyConquest.V_WIDTH - 110.0f, 550.0f);
-    game.timerFont.getData().setScale(1.25f, 1.25f);
+    game.timerFont.getData().setScale(0.9f, 0.9f);
+    game.timerFont.draw(game.batch, "Time", encounterScreenWidth - 80.0f, 550.0f);
+    game.timerFont.getData().setScale(0.9f, 0.9f);
     game.timerFont.draw(
         game.batch,
-        Double.toString(Double.valueOf(value.format(time))),
-        BodyConquest.V_WIDTH - 110.0f,
+        Integer.toString(Integer.valueOf(value.format(time))),
+        encounterScreenWidth - 80.0f,
         510.0f);
   }
 
   /** Draws score on the batch */
   private void drawScore() {
-    game.timerFont.getData().setScale(1.25f, 1.25f);
-    game.timerFont.draw(game.batch, "Score", BodyConquest.V_WIDTH - 110.0f, 400.0f);
-    game.timerFont.getData().setScale(1.25f, 1.25f);
+    game.timerFont.getData().setScale(0.9f, 0.9f);
+    game.timerFont.draw(game.batch, "Score", encounterScreenWidth - 80.0f, 400.0f);
+    game.timerFont.getData().setScale(0.9f, 0.9f);
     if (playerType == PlayerType.PLAYER_TOP) {
       game.timerFont.draw(
-          game.batch, Integer.toString(communicator.getScoreTop()), BodyConquest.V_WIDTH - 110.0f, 350.0f);
+          game.batch, Integer.toString(communicator.getScoreTop()), encounterScreenWidth - 110.0f, 350.0f);
     } else {
       game.timerFont.draw(
           game.batch,
           Integer.toString(communicator.getScoreBottom()),
-          BodyConquest.V_WIDTH - 110.0f,
+          encounterScreenWidth - 80.0f,
           350.0f);
     }
   }
