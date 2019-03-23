@@ -24,6 +24,36 @@ public class Virus extends Troop {
     init();
   }
 
+  public Virus(Lane lane, PlayerType playerType, float damageMult, float speedMult, float healthMult, float attackSpeedMult){
+    super(lane, playerType);
+    initSpecific(damageMult, speedMult, healthMult, attackSpeedMult);
+  }
+
+  private void initSpecific(float damageMult, float speedMult, float healthMult, float attackSpeedMult) {
+    setSize(50, 50);
+    setCSize(50, 50);
+    // Troop Stats
+    health = maxHealth = 70;
+    health = (int)(health * healthMult);
+    maxSpeed = 2 * (double)speedMult;
+    attackable = true;
+    moving = true;
+    attacking = false;
+    cooldown = (int)(3000 * attackSpeedMult); // Milliseconds
+    lastAttack = 0;
+    range = 200;
+    damage = (int)(40 * damageMult);
+
+    mapObjectType = UnitType.VIRUS;
+
+    lipidsCost = LIPIDS_COST;
+    sugarsCost = SUGARS_COST;
+    proteinCost = PROTEINS_COST;
+
+    killingPoints = 7;
+
+  }
+
   /*
   Each moving unit could be given a queue of checkpoints to reach
   and then one left at the enemy base it would be within range and attack

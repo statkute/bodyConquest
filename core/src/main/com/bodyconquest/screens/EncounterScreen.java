@@ -687,18 +687,25 @@ public class EncounterScreen implements Screen {
     Disease newPlayerDisease;
     if(playerType == this.playerType){
         newPlayerDisease = playerDisease;
+        System.out.println("same\n");
     } else {
         newPlayerDisease = communicator.getOpponentDisease();
+        System.out.println("different\n");
     }
+
+      System.out.println("this: " + newPlayerDisease + "\n");
 
     if (UnitType.VIRUS == mapObjectType) {
         path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathFluFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;
+        System.out.println(path + "\n");
         return new TexturePool(path, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
     } else if (UnitType.FUNGUS == mapObjectType) {
         path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathVirusFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathVirusMes : Assets.pathVirusRvi;
+        System.out.println(path + "\n");
         return new TexturePool(path, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
     } else if (UnitType.BACTERIA == mapObjectType) {
         path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathBacteriaFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathBacteriaMes : Assets.pathBacteriaRvi;
+        System.out.println(path + "\n");
         return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
     } else if (BaseType.INFLUENZA_BASE == mapObjectType) {
       return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
