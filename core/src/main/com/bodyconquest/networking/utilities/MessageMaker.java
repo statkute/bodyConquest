@@ -1,11 +1,8 @@
 package main.com.bodyconquest.networking.utilities;
 
-import main.com.bodyconquest.constants.AbilityType;
-import main.com.bodyconquest.constants.Assets.Lane;
-import main.com.bodyconquest.constants.Assets.PlayerType;
-import main.com.bodyconquest.constants.Assets.UnitType;
-import main.com.bodyconquest.constants.Disease;
-import main.com.bodyconquest.constants.Organ;
+import main.com.bodyconquest.constants.*;
+
+import java.util.HashMap;
 
 public class MessageMaker {
 
@@ -21,10 +18,19 @@ public class MessageMaker {
   public static final String CONFIRM_RACE_HEADER = "CONFIRM_RACE_";
   public static final String CONFIRM_ORGAN_HEADER = "CONFIRM_ORGAN_";
   public static final String START_ENCOUNTER_HEADER = "START_ENCOUNTER_";
+  public static final String POINTS_HEADER = "POINTS_HEADER_";
+  public static final String LOGIN_HEADER = "LOGIN_";
+  public static final String REGISTER_HEADER = "REGISTER_";
+  public static final String GET_LEADERBOARD_HEADER = "GET_LEADERBOARD_";
+  public static final String SET_LEADERBOARD_HEADER = "SET_LEADERBOARD_";
+  public static final String SET_ACHIEVEMENT_HEADER = "SET_ACHIEVEMENT_";
+  public static final String ORGAN_CLAIMED = "CLAIMED_";
+  public static final String USERNAME_ ="USERNAME_";
 
   public static final int RESOURCE_PADDING = 3;
   public static final int HEALTH_PADDING = 3;
   public static final int COORDINATE_PADDING = 4;
+  public static final int POINTS_PADDING = 4;
 
   public static final String PAUSE_MESSAGE = "PAUSE";
   public static final String EXIT_MESSAGE = "EXIT";
@@ -60,7 +66,7 @@ public class MessageMaker {
   }
 
   public static String castAbilityMessage(
-      AbilityType abilityType, Lane lane, PlayerType playerType) {
+          AbilityType abilityType, Lane lane, PlayerType playerType) {
     String message = LANE_ABILITY_CAST_HEADER;
 
     message += abilityType.getEncoded();
@@ -139,6 +145,111 @@ public class MessageMaker {
   public static String startEncounterMessage(Organ organ) {
     String message = START_ENCOUNTER_HEADER;
     message += organ.getEncoded();
+    return message;
+  }
+
+  public static String pointsMessage(int topPlayerPoints, int bottomPlayerPoints) {
+    String message = POINTS_HEADER;
+
+    message += String.format("%0" + POINTS_PADDING + "d", topPlayerPoints);
+    message += "_";
+
+    message += String.format("%0" + POINTS_PADDING + "d", bottomPlayerPoints);
+
+    return message;
+  }
+
+  public static String organClaimMessage(PlayerType playerType, Organ organ){
+    String message = ORGAN_CLAIMED;
+    message += playerType.getEncoded() +"_" + organ.getEncoded();
+
+    return message;
+
+  }
+
+
+
+  public static String usernameMessage(PlayerType playerType, String username){
+    String message = USERNAME_;
+
+    message += playerType.getEncoded() + "_" + username;
+
+    return message;
+  }
+
+  public static String loginMessage(String username, String password) {
+    String message = LOGIN_HEADER;
+
+    message += " " + username;
+
+    message += " " + password;
+
+    return message;
+  }
+
+  public static String loggedInSuccessfullyMessage(String username) {
+    String message = LOGIN_HEADER;
+
+    message += " 1";
+
+    message += " " + username;
+    return message;
+  }
+
+  public static String unsuccessfulLoginMessage(String username) {
+    String message = LOGIN_HEADER;
+
+    message += " 0";
+
+    message += " " + username;
+    return message;
+  }
+
+  public static String registerMessage(String username, String password) {
+    String message = REGISTER_HEADER;
+
+    message += " " + username;
+
+    message += " " + password;
+
+    return message;
+  }
+
+  public static String registeredSuccessfullyMessage() {
+    String message = REGISTER_HEADER;
+
+    message += " 1";
+    return message;
+  }
+
+  public static String unsuccessfulRegisterMessage() {
+    String message = REGISTER_HEADER;
+
+    message += " 0";
+    return message;
+  }
+
+  public static String getLeaderboardMessage() {
+    return GET_LEADERBOARD_HEADER;
+  }
+
+  public static String sendLeaderboardMessage(HashMap<String, Integer> board) {
+    String message = SET_LEADERBOARD_HEADER;
+
+    for (String i : board.keySet()) {
+      message += " " + i + " " + board.get(i).toString();
+    }
+
+    return message;
+  }
+
+  public static String sendAchievementMessage(String username, int points) {
+    String message = SET_ACHIEVEMENT_HEADER;
+
+    message += " " + username;
+
+    message += " " + points;
+
     return message;
   }
 

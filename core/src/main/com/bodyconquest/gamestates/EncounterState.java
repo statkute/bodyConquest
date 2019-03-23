@@ -1,18 +1,14 @@
 package main.com.bodyconquest.gamestates;
 
-import com.badlogic.gdx.Gdx;
-import main.com.bodyconquest.constants.AbilityType;
-import main.com.bodyconquest.constants.Assets;
-import main.com.bodyconquest.constants.GameType;
-import main.com.bodyconquest.constants.Organ;
+import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.entities.BasicObject;
 import main.com.bodyconquest.entities.Map;
 import main.com.bodyconquest.entities.MapObject;
 import main.com.bodyconquest.entities.Troops.Bacteria;
 import main.com.bodyconquest.entities.Troops.Bases.Base;
-import main.com.bodyconquest.entities.Troops.Flu;
-import main.com.bodyconquest.entities.Troops.Troop;
 import main.com.bodyconquest.entities.Troops.Virus;
+import main.com.bodyconquest.entities.Troops.Troop;
+import main.com.bodyconquest.entities.Troops.Fungus;
 import main.com.bodyconquest.entities.abilities.Ability;
 import main.com.bodyconquest.entities.projectiles.Projectile;
 import main.com.bodyconquest.entities.resources.Resources;
@@ -20,7 +16,6 @@ import main.com.bodyconquest.game_logic.BasicTestAI;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.game_logic.MultiplayerTestAI;
 import main.com.bodyconquest.game_logic.Player;
-import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.networking.ServerSender;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.networking.utilities.Serialization;
@@ -29,18 +24,10 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/** The {@link GameState} where all of the encounter logic takes place. */
-public class EncounterState extends GameState {
+/** The game state where all of the encounter logic takes place. */
+public class EncounterState {
 
-  /**
-   * An enumeration for the different assignments {@link Troop}s can have to determine how Troops
-   * move and who/what they attack.
-   */
-
-  /**
-   * An enumeration for the different lanes {@link Troop}s can be assigned to, to determine how
-   * those Troops move.
-   */
+  private Game game;
 
   /** The map object that holds all information that needs to be known about the map. */
   private Map map;
@@ -85,49 +72,47 @@ public class EncounterState extends GameState {
 
   /** Constructor. */
   public EncounterState(Game game, Organ organ) {
-    super(game);
+    this.game = game;
     this.organ = organ;
-    Server server = game.getServer();
-    serverSender = server.getServerSender();
-    // map = new Map();
+
+    serverSender = game.getServer().getServerSender();
 
     game.startEncounterLogic(this);
 
-    allMapObjects = new CopyOnWriteArrayList<MapObject>();
+    allMapObjects = new CopyOnWriteArrayList<>();
 
     topPlayer = game.getPlayerTop();
     bottomPlayer = game.getPlayerBottom();
 
     // Initialise unit arrays
-    troopsBottom = new CopyOnWriteArrayList<Troop>();
-    troopsTop = new CopyOnWriteArrayList<Troop>();
+    troopsBottom = new CopyOnWriteArrayList<>();
+    troopsTop = new CopyOnWriteArrayList<>();
 
     // Create player bases
-    //bottomBase = new InfluenzaBase(Lane.ALL, PlayerType.PLAYER_BOTTOM);
     bottomBase = bottomPlayer.getNewBase();
     bottomBase.setPosition(Assets.baseBottomX, Assets.baseBottomY);
     troopsBottom.add(bottomBase);
     allMapObjects.add(bottomBase);
 
-    //topBase = new InfluenzaBase(Lane.ALL, PlayerType.PLAYER_TOP);
     topBase = topPlayer.getNewBase();
     topBase.setPosition(Assets.baseTopX, Assets.baseTopY);
     troopsTop.add(topBase);
     allMapObjects.add(topBase);
 
-    projectilesBottom = new CopyOnWriteArrayList<Projectile>();
-    projectilesTop = new CopyOnWriteArrayList<Projectile>();
+    projectilesBottom = new CopyOnWriteArrayList<>();
+    projectilesTop = new CopyOnWriteArrayList<>();
 
-    // Maybe make constructors for these in the Player class so they can be modified for each player
-    // And the modifications can be kept consistent across Encounters
-    bottomResources = new Resources(server, Assets.PlayerType.PLAYER_BOTTOM);
-    topResources = new Resources(server, Assets.PlayerType.PLAYER_TOP);
+    totalScoreBottom = bottomPlayer.getScore();
+    totalScoreTop = topPlayer.getScore();
+
+    bottomResources = new Resources(PlayerType.PLAYER_BOTTOM);
+    topResources = new Resources(PlayerType.PLAYER_TOP);
 
     bottomResources.start();
     topResources.start();
 
     if (game.getGameType() == GameType.SINGLE_PLAYER) {
-      BasicTestAI ai = new BasicTestAI(this, Assets.PlayerType.PLAYER_TOP, topResources);
+      BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
       ai.start();
     } else {
       MultiplayerTestAI ai = new MultiplayerTestAI(this);
@@ -148,23 +133,21 @@ public class EncounterState extends GameState {
 
     for (Troop troop : troopsP1) {
       if (troop.isDead()) {
-        if(troop.getPlayerType() == Assets.PlayerType.PLAYER_TOP){
-          totalScoreBottom += troop.getKillingPoints();
-          //serverSender.sendMessage();
-        }
-        else if(troop.getPlayerType() == Assets.PlayerType.PLAYER_BOTTOM){
-          totalScoreTop += troop.getKillingPoints();
-          //serverSender.sendMessage();
-        }
         deadTroops.add(troop);
         continue;
       }
       troop.checkAttack(troopsP2);
     }
 
-    for (Troop u : deadTroops) {
-      troopsP1.remove(u);
-      allMapObjects.remove(u);
+    for (Troop troop : deadTroops) {
+      if(troop.getPlayerType() == PlayerType.PLAYER_TOP){
+        totalScoreBottom += troop.getKillingPoints();
+      }
+      else if(troop.getPlayerType() == PlayerType.PLAYER_BOTTOM){
+        totalScoreTop += troop.getKillingPoints();
+      }
+      troopsP1.remove(troop);
+      allMapObjects.remove(troop);
     }
   }
 
@@ -191,28 +174,13 @@ public class EncounterState extends GameState {
   }
 
   /** {@inheritDoc} */
-  @Override
   public void update() {
     counter ++;
-   // Timer.startTimer(20);
-
-//    try {
-//      Thread.sleep(20);
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-//    }
-
-    // ! Important if you do not want to update encounter state, bases health should go to minus
-    // because
-    // Encounter state is instantiated before encounter screen and it starts getting health before
-    // game is started of the base
-
-    //    if(comms.getBottomHealthPercentage() >= 0 && comms.getTopHealthPercentage() >= 0){
-    //
-    //     System.out.println(comms.getBottomHealthPercentage());
-
 
     for (MapObject mo : allMapObjects) mo.update();
+
+    checkCollisions(troopsBottom, troopsTop);
+    checkCollisions(troopsTop, troopsBottom);
 
     // Update All Units
     checkAttack(troopsTop, troopsBottom);
@@ -220,42 +188,35 @@ public class EncounterState extends GameState {
     checkProjectiles(projectilesTop, troopsBottom);
     checkProjectiles(projectilesBottom, troopsTop);
 
-    // Change this so it only add new objects
-    CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
-    for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
 
-    if (counter == 3){
-      String json = "";
-      try {
-        json = Serialization.serialize(sentObjects);
 
-        serverSender.sendObjectUpdates(json);
+    if (counter == 3) {
 
-        double healthBottom = bottomBase.getHealth();
-        double healthBottomMax = bottomBase.getMaxHealth();
-        double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
-        int healthB = (int) healthPercentage;
-        String messageb = MessageMaker.healthUpdate(healthB, Assets.PlayerType.PLAYER_BOTTOM);
-
-        double healthTop = topBase.getHealth();
-        double healthTopMax = topBase.getMaxHealth();
-        double healthPercentageT = (healthTop / healthTopMax) * 100.0;
-        int healthT = (int) healthPercentageT;
-
-        String messaget = MessageMaker.healthUpdate(healthT, Assets.PlayerType.PLAYER_TOP);
-
-        serverSender.sendMessage(messageb);
-        serverSender.sendMessage(messaget);
-        counter = 0;
-
-      } catch (IOException e) {
-        e.printStackTrace();
+      if(topBase.getHealth() <= 0) {
+        endGame(PlayerType.PLAYER_BOTTOM);
       }
+      if(bottomBase.getHealth() <= 0) {
+        endGame(PlayerType.PLAYER_TOP);
+      }
+
+      sendMapObjectUpdates();
+
+      sendPlayerHealthUpdates();
+
+      sendResourceUpdates();
+
+      sendPlayerScoreUpdates();
+
+      counter = 0;
+
     }
-    // TO DO: send this to the client
 
-    // }
+  }
 
+  private void checkCollisions(CopyOnWriteArrayList<Troop> troops, CopyOnWriteArrayList<Troop> enemyTroops) {
+    for(Troop troop : troops) {
+        troop.checkCollisions(new CopyOnWriteArrayList<>(enemyTroops));
+    }
   }
 
   /**
@@ -265,36 +226,42 @@ public class EncounterState extends GameState {
    * @param lane The lane the unit/troop will be assigned to.
    * @param playerType The player the unit/troop will be assigned to.
    */
-  public void spawnUnit(Assets.UnitType unitType, Assets.Lane lane, Assets.PlayerType playerType) {
+  public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
     Troop troop = null;
 
     // Initialise troop type
-    if (unitType.equals(Assets.UnitType.BACTERIA)) {
-      if(playerType == Assets.PlayerType.PLAYER_BOTTOM){
+    if (unitType.equals(UnitType.BACTERIA)) {
+      if(playerType == PlayerType.PLAYER_BOTTOM){
         if(bottomResources.canAfford(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST)){
           bottomResources.buy(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST);
-          troop = new Bacteria(playerType, lane);
+          troop = new Bacteria(lane, playerType);
         } else{
 
         }
+      } else if(playerType == PlayerType.PLAYER_TOP){
+        troop = new Bacteria(lane, playerType);
       }
-    } else if (unitType.equals(Assets.UnitType.FLU)) {
-      if(playerType == Assets.PlayerType.PLAYER_BOTTOM){
-        if(bottomResources.canAfford(Flu.LIPIDS_COST, Flu.SUGARS_COST, Flu.PROTEINS_COST)){
-          bottomResources.buy(Flu.LIPIDS_COST, Flu.SUGARS_COST, Flu.PROTEINS_COST);
-          troop = new Flu(this, playerType, lane);
-        }else{
-
-        }
-      }
-    } else if (unitType.equals(Assets.UnitType.VIRUS)) {
-      if(playerType == Assets.PlayerType.PLAYER_BOTTOM){
+    } else if (unitType.equals(UnitType.VIRUS)) {
+      if(playerType == PlayerType.PLAYER_BOTTOM){
         if(bottomResources.canAfford(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST)){
           bottomResources.buy(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST);
-          troop = new Virus(playerType, lane);
+          troop = new Virus(this, playerType, lane);
         }else{
 
         }
+      }else if(playerType == PlayerType.PLAYER_TOP){
+        troop = new Virus(this, playerType, lane);
+      }
+    } else if (unitType.equals(UnitType.FUNGUS)) {
+      if(playerType == PlayerType.PLAYER_BOTTOM){
+        if(bottomResources.canAfford(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST)){
+          bottomResources.buy(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST);
+          troop = new Fungus(lane, playerType);
+        }else{
+
+        }
+      }else if(playerType == PlayerType.PLAYER_TOP){
+        troop = new Fungus(lane, playerType);
       }
     }
 
@@ -302,16 +269,16 @@ public class EncounterState extends GameState {
     if (troop == null || lane == null || playerType == null) return;
 
     // Spawn units for bottom player
-    if (playerType.equals(Assets.PlayerType.PLAYER_BOTTOM)) {
-      if (lane == Assets.Lane.BOTTOM) {
+    if (playerType.equals(PlayerType.PLAYER_BOTTOM)) {
+      if (lane == Lane.BOTTOM) {
         troop.setPosition(
             Assets.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
             Assets.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Assets.Lane.MIDDLE) {
+      } else if (lane == Lane.MIDDLE) {
         troop.setPosition(
             Assets.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
             Assets.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Assets.Lane.TOP) {
+      } else if (lane == Lane.TOP) {
         troop.setPosition(
             Assets.BP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
             Assets.BP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
@@ -320,16 +287,16 @@ public class EncounterState extends GameState {
     }
 
     // Spawn units for top player
-    if (playerType.equals(Assets.PlayerType.PLAYER_TOP)) {
-      if (lane == Assets.Lane.BOTTOM) {
+    if (playerType.equals(PlayerType.PLAYER_TOP)) {
+      if (lane == Lane.BOTTOM) {
         troop.setPosition(
             Assets.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
             Assets.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Assets.Lane.MIDDLE) {
+      } else if (lane == Lane.MIDDLE) {
         troop.setPosition(
             Assets.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
             Assets.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Assets.Lane.TOP) {
+      } else if (lane == Lane.TOP) {
         troop.setPosition(
             Assets.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
             Assets.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
@@ -346,12 +313,12 @@ public class EncounterState extends GameState {
    * @param projectile The projectile to be added to the EncounterState/Map.
    * @param playerType The player that the projectile belongs to.
    */
-  public void addProjectile(Projectile projectile, Assets.PlayerType playerType) {
+  public void addProjectile(Projectile projectile, PlayerType playerType) {
     if (playerType == null || projectile == null) return;
 
-    if (playerType == Assets.PlayerType.PLAYER_BOTTOM) {
+    if (playerType == PlayerType.PLAYER_BOTTOM) {
       projectilesBottom.add(projectile);
-    } else if (playerType == Assets.PlayerType.PLAYER_TOP) {
+    } else if (playerType == PlayerType.PLAYER_TOP) {
       projectilesTop.add(projectile);
     } else {
       return;
@@ -359,11 +326,62 @@ public class EncounterState extends GameState {
     allMapObjects.add(projectile);
   }
 
-  private void checkPressed() {
-    if (Gdx.input.isKeyJustPressed(1)) {
-      // activate1();
-
+  private void sendMapObjectUpdates() {
+    CopyOnWriteArrayList<BasicObject> sentObjects = new CopyOnWriteArrayList<BasicObject>();
+    for (MapObject o : allMapObjects) sentObjects.add(o.getBasicObject());
+    try {
+      String json = Serialization.serialize(sentObjects);
+      serverSender.sendObjectUpdates(json);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
+
+  private void endGame(PlayerType player) {
+    String endingMessage = MessageMaker.organClaimMessage(player,organ);
+    serverSender.sendMessage(endingMessage);
+    if(player == PlayerType.PLAYER_BOTTOM) {
+      totalScoreBottom += organ.getOrganScore();
+      bottomPlayer.claimOrgan(organ);
+    } else {
+      totalScoreTop += organ.getOrganScore();
+      topPlayer.claimOrgan(organ);
+    }
+
+    bottomPlayer.setScore(totalScoreBottom);
+    topPlayer.setScore(totalScoreTop);
+
+    game.endEncounter();
+  }
+
+  private void sendResourceUpdates() {
+    topResources.update();
+    bottomResources.update();
+    serverSender.sendMessage(topResources.getUpdateMessage());
+    serverSender.sendMessage(bottomResources.getUpdateMessage());
+  }
+
+  private void sendPlayerHealthUpdates() {
+    double healthBottom = bottomBase.getHealth();
+    double healthBottomMax = bottomBase.getMaxHealth();
+    double healthPercentage = (healthBottom / healthBottomMax) * 100.0;
+    int healthB = (int) healthPercentage;
+    String messageb = MessageMaker.healthUpdate(healthB, PlayerType.PLAYER_BOTTOM);
+
+    double healthTop = topBase.getHealth();
+    double healthTopMax = topBase.getMaxHealth();
+    double healthPercentageT = (healthTop / healthTopMax) * 100.0;
+    int healthT = (int) healthPercentageT;
+
+    String messaget = MessageMaker.healthUpdate(healthT, PlayerType.PLAYER_TOP);
+
+    serverSender.sendMessage(messageb);
+    serverSender.sendMessage(messaget);
+  }
+
+  private void sendPlayerScoreUpdates() {
+    String pointsMessage = MessageMaker.pointsMessage(totalScoreTop, totalScoreBottom);
+    serverSender.sendMessage(pointsMessage);
   }
 
   public CopyOnWriteArrayList<Troop> getTroopsTop() {
@@ -374,33 +392,53 @@ public class EncounterState extends GameState {
     return troopsBottom;
   }
 
-  public Resources getBottomResources() {
-    return bottomResources;
-  }
-
-  public Resources getTopResources() {
-    return topResources;
-  }
-
-  public void castAbility(AbilityType abilityType, Assets.PlayerType playerType, int xDest, int yDest) {
+  public void castAbility(AbilityType abilityType, PlayerType playerType, int xDest, int yDest) {
     // Implement functionality
   }
 
-  public void castAbility(AbilityType abilityType, Assets.PlayerType playerType, Assets.Lane lane) {
+  public void castAbility(AbilityType abilityType, PlayerType playerType, Lane lane) {
     try {
       @SuppressWarnings("unchecked")
       Ability ability =
           (Ability)
               abilityType
                   .getAssociatedClass()
-                  .getDeclaredConstructor(Assets.PlayerType.class, Assets.Lane.class)
-                  .newInstance(playerType, lane);
+                  .getDeclaredConstructor(Lane.class, PlayerType.class)
+                  .newInstance(lane, playerType);
       ability.cast(this);
     } catch (InstantiationException
         | IllegalAccessException
         | NoSuchMethodException
         | InvocationTargetException e) {
       e.printStackTrace();
+    }
+  }
+
+  public CopyOnWriteArrayList<Troop> getEnemyTroops(PlayerType player) {
+    if (player == PlayerType.PLAYER_BOTTOM) {
+      return getTroops(PlayerType.PLAYER_TOP);
+    } else {
+      return getTroops(PlayerType.PLAYER_BOTTOM);
+    }
+  }
+
+  public CopyOnWriteArrayList<Troop> getTroops(PlayerType player) {
+    if(player == PlayerType.PLAYER_BOTTOM) {
+      return troopsBottom;
+    } else {
+      return troopsTop;
+    }
+  }
+
+  public Base getTopBase() {
+    return topBase;
+  }
+
+  public Base getBase(PlayerType player) {
+    if(player == PlayerType.PLAYER_BOTTOM) {
+      return bottomBase;
+    } else {
+      return topBase;
     }
   }
 }

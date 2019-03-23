@@ -89,7 +89,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
                 System.out.println("back pressed");
                 playButtonSound();
                 dispose();
-                game.setScreen(new MenuScreen(game, username));
+                game.setScreen(new MenuScreen(game));
             }
 
             if (soundBounds.contains(tmp.x, tmp.y) || soundToggleBounds.contains(tmp.x, tmp.y)) {

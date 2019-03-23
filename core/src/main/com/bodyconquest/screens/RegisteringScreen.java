@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import main.com.bodyconquest.constants.Assets;
+import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.database.DatabaseManager;
+import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
 /**
@@ -19,17 +21,14 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     private TextButton registerBtn;
     private Image registerImage;
 
-    /**
-     * The Database manager.
-     */
-    DatabaseManager dbManager;
+    private GameType gameType;
 
     /**
      * Instantiates a new Registering screen.
      *
      * @param game the game
      */
-    public RegisteringScreen(BodyConquest game) {
+    public RegisteringScreen(BodyConquest game, GameType gameType) {
         super(game);
         registerImage = new Image(register);
         registerBtn = new TextButton("Register", skin);
@@ -37,7 +36,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
         settingSizes();
         settingPositions();
         adding();
-        this.dbManager = new DatabaseManager();
+        this.gameType = gameType;
     }
 
     /**
@@ -82,6 +81,8 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
                 registerBtn.setText("You registered!");
                 textPassword = txfPassword.getText();
                 textUsername = txfUsername.getText();
+                String message = MessageMaker.registerMessage(textUsername, textPassword);
+                game.getClient().clientSender.sendMessage(message);
                 System.out.println(textUsername + " " + textPassword);
                 processRegistration();
             }
@@ -94,7 +95,19 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void processRegistration() {
         super.processRegistration();
-        game.setScreen(new LoginScreen(game));
+        //wait till the register answer is received from server
+        while (game.getClient().getCommunicator().getRegisteredIsSet().get() == false) {
+        }
+        //System.out.println("Got after registered is set");
+        //System.out.println(game.getClient().getCommunicator().getRegistered());
+        //System.out.println(game.getClient().getCommunicator().getRegisteredIsSet());
+        if (game.getClient().getCommunicator().getRegistered().get() == true) {
+            //if successfully registered, go to login screen
+            game.setScreen(new LoginScreen(game, gameType));
+        } else {
+            //else go back to registering screen
+            game.setScreen(new RegisteringScreen(game, gameType));
+        }
     }
 
     /**

@@ -1,6 +1,8 @@
 package main.com.bodyconquest.entities.Troops.Bases;
 
 import main.com.bodyconquest.constants.Assets;
+import main.com.bodyconquest.constants.Lane;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.Troops.Troop;
 
 public abstract class Base extends Troop {
@@ -11,8 +13,8 @@ public abstract class Base extends Troop {
 //    public static final float BLINK_TIME_AFTER_DMG = 0.25f;
 
 
-    public Base(Assets.PlayerType playerType) {
-      super(Assets.Lane.ALL, playerType);
+    public Base(PlayerType playerType) {
+      super(Lane.ALL, playerType);
       this.attackable = true;
       this.moving = false;
       this.attacking = false;

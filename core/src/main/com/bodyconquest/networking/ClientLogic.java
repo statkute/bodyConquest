@@ -3,20 +3,24 @@ package main.com.bodyconquest.networking;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.Disease;
 import main.com.bodyconquest.constants.Organ;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.BasicObject;
 import main.com.bodyconquest.game_logic.Communicator;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.networking.utilities.Serialization;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientLogic extends Thread {
 
   private enum Logic {
     BODY_LOGIC,
     RACE_SELECTION_LOGIC,
-    ENCOUNTER_LOGIC
+    ENCOUNTER_LOGIC,
+    DATABASE_LOGIC
   }
 
   private Logic currentLogic;
@@ -46,11 +50,73 @@ public class ClientLogic extends Thread {
         if (currentLogic == Logic.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
         if (currentLogic == Logic.ENCOUNTER_LOGIC)      encounterLogic(message);
         if (currentLogic == Logic.BODY_LOGIC)           bodyLogic(message);
+        if (currentLogic == Logic.DATABASE_LOGIC) databaseLogic(message);
 
       } catch (IOException | InterruptedException e) {
         e.printStackTrace();
       }
     }
+  }
+
+  private void databaseLogic(String message) {
+    int pointer;
+
+    if (message.startsWith(MessageMaker.SET_LEADERBOARD_HEADER)) {
+      pointer = MessageMaker.SET_LEADERBOARD_HEADER.length();
+
+      message = message.substring(pointer);
+
+      String values[] = message.split(" ");
+
+      HashMap<String, Integer> board = new HashMap<String, Integer>();
+
+      int i = 0;
+      String username;
+      Integer points;
+      while (i < values.length) {
+        username = values[i];
+        points = Integer.parseInt(values[i + 1]);
+        board.put(username, points);
+        i += 2;
+      }
+
+      communicator.setBoard(board);
+      communicator.setBoardIsSet(true);
+    } else if (message.startsWith(MessageMaker.REGISTER_HEADER)) {
+      pointer = MessageMaker.REGISTER_HEADER.length();
+
+      message = message.substring(pointer + 1);
+
+      //System.out.println(message);
+
+      Integer value = Integer.parseInt(message);
+
+      // successful registering
+      if (value == 1) {
+        communicator.setRegistered(true);
+      } else {
+        communicator.setRegistered(false);
+      }
+      communicator.setRegisteredIsSet(true);
+    } else if (message.startsWith(MessageMaker.LOGIN_HEADER)) {
+      pointer = MessageMaker.LOGIN_HEADER.length();
+
+      message = message.substring(pointer + 1);
+
+      String values[] = message.split(" ");
+
+      Integer value = Integer.parseInt(values[0]);
+
+      // successful logging in
+      if (value == 1) {
+        communicator.setLogged(true);
+        communicator.setUsername(communicator.getPlayerType(), values[1]);
+      } else {
+        communicator.setLogged(false);
+      }
+      communicator.setLoggedIsSet(true);
+    }
+
   }
 
   private void bodyLogic(String message) {
@@ -73,7 +139,7 @@ public class ClientLogic extends Thread {
     int pointer;
     if (message.startsWith(MessageMaker.RACE_HEADER)) {
       Disease disease;
-      Assets.PlayerType player;
+      PlayerType player;
 
       pointer = MessageMaker.RACE_HEADER.length();
 
@@ -82,34 +148,49 @@ public class ClientLogic extends Thread {
       pointer += Disease.getEncodedLength() + 1;
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
-      player = Assets.PlayerType.decode(encodedPlayerType);
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+      player = PlayerType.decode(encodedPlayerType);
 
       if (communicator.getPlayerType() != player) communicator.setOpponentDisease(disease);
     } else if (message.startsWith(MessageMaker.FIRST_PICKER_HEADER)) {
-      Assets.PlayerType firstPicker;
+      PlayerType firstPicker;
 
       pointer = MessageMaker.FIRST_PICKER_HEADER.length();
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
-      firstPicker = Assets.PlayerType.decode(encodedPlayerType);
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+      firstPicker = PlayerType.decode(encodedPlayerType);
 
       communicator.setPicker(firstPicker == communicator.getPlayerType());
 
     } else if (message.startsWith(MessageMaker.CHOOSE_RACE_HEADER)) {
-      Assets.PlayerType player;
+      PlayerType player;
 
       pointer = MessageMaker.CHOOSE_RACE_HEADER.length();
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
-      player = Assets.PlayerType.decode(encodedPlayerType);
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+      player = PlayerType.decode(encodedPlayerType);
 
       if (player == communicator.getPlayerType()) communicator.setPicker(true);
     } else if (message.equals(MessageMaker.START_BODY)) {
       communicator.setStartBodyScreen(true);
     }
+
+    else if(message.startsWith(MessageMaker.USERNAME_)) {
+      PlayerType player;
+      pointer = MessageMaker.USERNAME_.length();
+
+      String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
+      player = PlayerType.decode(encodedPlayerType);
+      pointer +=PlayerType.getEncodedLength() +1;
+
+      String username = message.substring(pointer);
+
+      communicator.setUsername(player,username);
+    }
+
+
   }
 
   private void encounterLogic(String message) throws IOException {
@@ -121,28 +202,28 @@ public class ClientLogic extends Thread {
       communicator.populateObjectList(objects);
 
     } else if (message.startsWith(MessageMaker.HEALTH_HEADER)) {
-      Assets.PlayerType player;
+      PlayerType player;
       int health;
 
       pointer = MessageMaker.HEALTH_HEADER.length();
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
-      player = Assets.PlayerType.decode(encodedPlayerType);
-      pointer += Assets.PlayerType.getEncodedLength() + 1;
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+      player = PlayerType.decode(encodedPlayerType);
+      pointer += PlayerType.getEncodedLength() + 1;
 
       String healthString = message.substring(pointer);
       health = Integer.parseInt(healthString);
 
-      if (player == Assets.PlayerType.PLAYER_BOTTOM) {
+      if (player == PlayerType.PLAYER_BOTTOM) {
         communicator.setBottomHealthPercentage(health);
-      } else if (player == Assets.PlayerType.PLAYER_TOP || player == Assets.PlayerType.AI) {
+      } else if (player == PlayerType.PLAYER_TOP || player == PlayerType.AI) {
         communicator.setTopHealthPercentage(health);
       }
     } else if (message.startsWith(MessageMaker.RESOURCES_HEADER)) {
       //System.out.println("THE MESSAGE: " + message);
 
-      Assets.PlayerType player;
+      PlayerType player;
       int lipids;
       int sugars;
       int proteins;
@@ -150,9 +231,9 @@ public class ClientLogic extends Thread {
       pointer = MessageMaker.RESOURCES_HEADER.length();
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + Assets.PlayerType.getEncodedLength());
-      player = Assets.PlayerType.decode(encodedPlayerType);
-      pointer += Assets.PlayerType.getEncodedLength() + 1;
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+      player = PlayerType.decode(encodedPlayerType);
+      pointer += PlayerType.getEncodedLength() + 1;
 
       String lipidsString = message.substring(pointer, pointer + MessageMaker.RESOURCE_PADDING);
       lipids = Integer.parseInt(lipidsString);
@@ -168,7 +249,7 @@ public class ClientLogic extends Thread {
       // Lots of this doesn't make sense, the client doesn't need to know their opponents resources
       // As it doesn't need to print it or make any decisions based on it
       // Also I dont know if both players are sent both resources? If so they shouldn't
-      if (player == Assets.PlayerType.PLAYER_BOTTOM) {
+      if (player == PlayerType.PLAYER_BOTTOM) {
         communicator.setLipidsBottom(lipids);
         communicator.setSugarsBottom(sugars);
         communicator.setProteinsBottom(proteins);
@@ -176,6 +257,39 @@ public class ClientLogic extends Thread {
         communicator.setLipidsTop(lipids);
         communicator.setSugarsTop(sugars);
         communicator.setProteinsTop(proteins);
+      }
+    } else if (message.startsWith(MessageMaker.POINTS_HEADER)) {
+      int topPlayerPoints;
+      int bottomPlayerPoints;
+      pointer = MessageMaker.POINTS_HEADER.length();
+
+      String topPointsString = message.substring(pointer, pointer + MessageMaker.POINTS_PADDING);
+      topPlayerPoints = Integer.parseInt(topPointsString);
+      pointer += MessageMaker.POINTS_PADDING + 1;
+
+      String bottomPointsString = message.substring(pointer, pointer + MessageMaker.POINTS_PADDING);
+      bottomPlayerPoints = Integer.parseInt(bottomPointsString);
+
+      communicator.setScoreTop(topPlayerPoints);
+      communicator.setScoreBottom(bottomPlayerPoints);
+
+    }
+
+    else if(message.startsWith(MessageMaker.ORGAN_CLAIMED)){
+      pointer = MessageMaker.ORGAN_CLAIMED.length();
+      String playerString = message.substring(pointer,pointer + PlayerType.getEncodedLength());
+      pointer +=PlayerType.getEncodedLength() +1; // for underscore
+      String organString = message.substring(pointer,pointer+Organ.getEncodedLength());
+
+      PlayerType player = PlayerType.decode(playerString);
+      Organ organ = Organ.decode(organString);
+
+      if(player == PlayerType.PLAYER_BOTTOM){
+        communicator.addOrgan(organ);
+      }
+
+      else{
+        communicator.addOponentOrgan(organ);
       }
     }
   }
@@ -188,6 +302,10 @@ public class ClientLogic extends Thread {
 
   public void setEncounterLogic() {
     currentLogic = Logic.ENCOUNTER_LOGIC;
+  }
+
+  public void setDatabaseLogic() {
+    currentLogic = Logic.DATABASE_LOGIC;
   }
 
   public void stopRunning() {

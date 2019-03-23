@@ -1,5 +1,9 @@
 package main.com.bodyconquest.entities;
 import main.com.bodyconquest.constants.MapObjectType;
+import main.com.bodyconquest.constants.PlayerType;
+
+import java.time.Instant;
+import java.util.Date;
 
 public class BasicObject {
 
@@ -13,7 +17,29 @@ public class BasicObject {
   private double currentSpeed;
   private double rotation;
   private MapObjectType mapObjectType;
+  private boolean wasHit;
 
+  protected long timeAlive;
+
+  public long getTimeAlive() {
+    return timeAlive;
+  }
+
+  public void setTimeAlive(long timeAlive) {
+    this.timeAlive = timeAlive;
+  }
+
+  public long getTimeOfDmgTaken() {
+    return timeOfDmgTaken;
+  }
+
+  public void setTimeOfDmgTaken(long timeOfDmgTaken) {
+    this.timeOfDmgTaken = timeOfDmgTaken;
+  }
+
+  protected long timeOfDmgTaken;
+
+  private PlayerType playerType;
 
   public void setX(double x) {
     this.x = x;
@@ -95,4 +121,21 @@ public class BasicObject {
   public void setCheight(int cheight) {
     this.cheight = cheight;
   }
+
+  public boolean getWasHit(){
+    return wasHit;
+  }
+
+  public void setWasHit(boolean wasHit){
+    this.wasHit = wasHit;
+  }
+
+  public PlayerType getPlayerType() {
+    return playerType;
+  }
+
+  public void setPlayerType(PlayerType playerType) {
+    this.playerType = playerType;
+  }
+
 }

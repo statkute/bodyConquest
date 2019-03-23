@@ -8,10 +8,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import main.com.bodyconquest.audio.AudioPlayer;
 import main.com.bodyconquest.constants.Assets;
+import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.networking.Client;
 import main.com.bodyconquest.networking.Server;
+import main.com.bodyconquest.screens.LeaderboardScreen;
+import main.com.bodyconquest.screens.MenuScreen;
+import main.com.bodyconquest.screens.RaceSelection;
+import main.com.bodyconquest.screens.MenuScreen;
 import main.com.bodyconquest.screens.StartScreen;
+
+import java.io.IOException;
 
 /*
 The core of the rendering engine, hosts the sprite batch for the current screen,
@@ -41,7 +48,6 @@ public class BodyConquest extends com.badlogic.gdx.Game {
 
   private Game game;
   private Client client;
-  private String username;
 
   @Override
   public void create() {
@@ -52,9 +58,11 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     audioPlayer.loadSFX("button_click", Assets.buttonSoundPath);
     audioPlayer.loadMusic("music", Assets.music);
     audioPlayer.playMusicLoop("music");
-    //setScreen(new MenuScreen(this));
-    setScreen(new StartScreen(this));
     client = new Client();
+    //setScreen(new MenuScreen(this, "GermBoi"));
+    setScreen(new MenuScreen(this));
+    //setScreen(new LeaderboardScreen(this));
+
   }
 
   @Override
@@ -92,11 +100,4 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     this.client = client;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getUsername() {
-    return username;
-  }
 }

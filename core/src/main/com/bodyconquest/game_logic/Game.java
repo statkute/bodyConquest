@@ -1,12 +1,9 @@
 package main.com.bodyconquest.game_logic;
 
-import main.com.bodyconquest.constants.Assets;
-import main.com.bodyconquest.constants.Disease;
-import main.com.bodyconquest.constants.GameType;
-import main.com.bodyconquest.constants.Organ;
+import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.gamestates.EncounterState;
-import main.com.bodyconquest.gamestates.GameStateManager;
 import main.com.bodyconquest.networking.Server;
+import main.com.bodyconquest.networking.utilities.MessageMaker;
 
 import java.net.SocketException;
 
@@ -19,12 +16,13 @@ public class Game extends Thread {
   private final long targetTime = 1000 / FPS;
 
   private Server server;
-  private GameStateManager gsm;
+  private EncounterState encounterState;
 
   private final GameType gameType;
 
   private Player playerBottom;
   private Player playerTop;
+  private boolean encounter;
 
   /**
    * Constructor
@@ -40,7 +38,6 @@ public class Game extends Thread {
 
   private void init() {
     running = true;
-    gsm = new GameStateManager(this);
   }
 
   @Override
@@ -75,7 +72,9 @@ public class Game extends Thread {
   }
 
   private void update() {
-    gsm.update();
+    if (encounter && encounterState != null){
+      encounterState.update();
+    }
   }
 
   public Server getServer() {
@@ -83,11 +82,11 @@ public class Game extends Thread {
   }
 
   public void setPlayerBottom(Disease disease) {
-    playerBottom = new Player(Assets.PlayerType.PLAYER_BOTTOM, disease);
+    playerBottom = new Player(PlayerType.PLAYER_BOTTOM, disease);
   }
 
   public void setPlayerTop(Disease disease) {
-    playerTop = new Player(Assets.PlayerType.PLAYER_TOP, disease);
+    playerTop = new Player(PlayerType.PLAYER_TOP, disease);
   }
 
   public Player getPlayerBottom() {
@@ -99,10 +98,9 @@ public class Game extends Thread {
   }
 
   public void startEncounterState(Organ organ) {
-    // Right now the Single player AI disease is set to INFLUENZA
-    if (gameType == GameType.SINGLE_PLAYER) setPlayerTop(Disease.INFLUENZA);
-    EncounterState encounterState = new EncounterState(this, organ);
-    gsm.setCurrentGameState(encounterState);
+    encounterState = new EncounterState(this, organ);
+    encounter = true;
+    // gsm.setCurrentGameState(encounterState);
   }
 
   public void startEncounterLogic(EncounterState encounterState) {
@@ -111,6 +109,9 @@ public class Game extends Thread {
 
   public void startRaceSelectionState() {
     server.startRaceSelectionLogic(this);
+    if (gameType == GameType.SINGLE_PLAYER) {
+      setPlayerTop(Disease.INFLUENZA);
+    }
   }
 
   public GameType getGameType() {
@@ -121,6 +122,26 @@ public class Game extends Thread {
     server.closeEverything();
   }
 
-  public void startBodyState() { server.startBodyLogic(); }
+  public void startBodyState() {
+    if (gameType == GameType.SINGLE_PLAYER){
+//      //setPlayerTop(Disease.INFLUENZA);
+////      if(getPlayerBottom().getDisease() != Disease.INFLUENZA)
+////        setPlayerTop(Disease.INFLUENZA);
+////      else if(getPlayerBottom().getDisease() != Disease.MEASLES)
+////        setPlayerTop(Disease.MEASLES);
+      server.getServerSender().sendMessage(MessageMaker.diseaseMessage(Disease.INFLUENZA, PlayerType.PLAYER_TOP));
+    }
+
+    server.startBodyLogic(); }
+
+  public void endEncounter() {
+    encounter = false;
+    encounterState = null;
+    startBodyState();
+  }
+
+    public void startDatabaseState() {
+        server.startDatabaseLogic();
+    }
 
 }

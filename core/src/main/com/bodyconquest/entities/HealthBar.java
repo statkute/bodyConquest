@@ -6,15 +6,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import main.com.bodyconquest.constants.Assets;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.screens.EncounterScreen;
 
 public class HealthBar extends ProgressBar {
 
   private EncounterScreen encounterScreen;
-  private Assets.PlayerType playerType;
+  private PlayerType playerType;
   private Texture healthBorder;
 
-  public HealthBar(int width, int height, EncounterScreen screen, Assets.PlayerType playerType) {
+  public HealthBar(int width, int height, EncounterScreen screen, PlayerType playerType) {
 
     super(0f, 1f, 0.2f, false, new ProgressBarStyle());
 
@@ -32,11 +33,11 @@ public class HealthBar extends ProgressBar {
 
   @Override
   public void draw(Batch batch, float parentAlpha) {
-    if (playerType == Assets.PlayerType.PLAYER_TOP) {
+    if (playerType == PlayerType.PLAYER_TOP) {
       batch.draw(
           healthBorder,
-          Assets.baseTopX - 4,
-          Assets.baseTopY + Assets.healthYAdjustmentTop - 3);
+          Assets.baseTopX - 10,
+          Assets.baseTopY + Assets.healthYAdjustmentTop - 22);
       updateTop();
     } else {
       batch.draw(

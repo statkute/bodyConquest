@@ -1,11 +1,13 @@
 package main.com.bodyconquest.game_logic;
 
 import com.badlogic.gdx.Gdx;
+import main.com.bodyconquest.constants.Lane;
+import main.com.bodyconquest.constants.PlayerType;
+import main.com.bodyconquest.constants.UnitType;
 import main.com.bodyconquest.entities.Spawnable;
 import main.com.bodyconquest.entities.Troops.Troop;
 import main.com.bodyconquest.entities.resources.Resources;
 import main.com.bodyconquest.gamestates.EncounterState;
-import main.com.bodyconquest.constants.Assets.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,8 +33,8 @@ public class BasicTestAI extends Thread {
     running = true;
     units = new ArrayList<UnitType>(2);
     units.add(UnitType.BACTERIA);
-    // units.add(UnitType.FLU);
-    units.add(UnitType.VIRUS);
+    // units.add(UnitType.VIRUS);
+    units.add(UnitType.FUNGUS);
   }
 
   @Override

@@ -2,14 +2,14 @@ package main.com.bodyconquest.resourcebars;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import main.com.bodyconquest.constants.Assets;
+import main.com.bodyconquest.constants.Resource;
 import main.com.bodyconquest.handlers.AnimationWrapper;
 import main.com.bodyconquest.rendering.BodyConquest;
 
 public class LipidsResourceBar extends ResourceBar {
 
     public LipidsResourceBar() {
-        setResourceType(Assets.ResourceType.LIPID);
+        setResourceType(Resource.LIPID);
         setOutline(new TextureRegion(new Texture("core/assets/lipid_outline.png")));
         setInside(new TextureRegion(new Texture("core/assets/lipids_inside.png")));
         setInsideTexturePath("core/assets/lipids_inside.png");

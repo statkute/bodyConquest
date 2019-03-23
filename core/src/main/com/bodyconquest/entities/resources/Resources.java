@@ -1,6 +1,6 @@
 package main.com.bodyconquest.entities.resources;
 
-import main.com.bodyconquest.constants.Assets;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.Spawnable;
 import main.com.bodyconquest.game_logic.utils.Timer;
 import main.com.bodyconquest.networking.Server;
@@ -8,20 +8,21 @@ import main.com.bodyconquest.networking.ServerSender;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 
 public class Resources extends Thread {
+
   private final int MAX_RESOURCE = 100;
+  private final long UPDATE_COOLDOWN = 1000;
+
   private int lipids;
   private int sugars;
   private int proteins;
   private int regenerationLipids;
   private int regenerationSugars;
   private int regenerationProteins;
-  private ServerSender serverSender;
-  private Assets.PlayerType player;
-  private Server server;
+  private PlayerType player;
 
-  public Resources(Server server, Assets.PlayerType player) {
-    this.serverSender = server.getServerSender();
-    this.server = server;
+  private long updateTimer;
+
+  public Resources(PlayerType player) {
     this.player = player;
     lipids = 100;
     sugars = 100;
@@ -29,50 +30,47 @@ public class Resources extends Thread {
     regenerationLipids = 7;
     regenerationSugars = 5;
     regenerationProteins = 6;
-
-    sendUpdate(player, serverSender);
   }
 
-  public void run() {
+  public void update() {
     // wait for a second before increasing the resources
-    while(!server.isGameEnded()){
-      boolean successfulTimer = Timer.startTimer(1000);
-      while (!successfulTimer){
-        successfulTimer = Timer.startTimer(1000);
-      }
+//    while(!server.isGameEnded()){
+//      boolean successfulTimer = Timer.startTimer(1000);
+//      while (!successfulTimer){
+//        successfulTimer = Timer.startTimer(1000);
+//      }
 
-      if (lipids < MAX_RESOURCE) {
-        if (lipids + regenerationLipids > MAX_RESOURCE) {
-          lipids = MAX_RESOURCE;
-        } else {
-          lipids += regenerationLipids;
-        }
-      }
+      if (updateTimer < System.currentTimeMillis()) {
 
-      if (sugars < MAX_RESOURCE) {
-        if (sugars + regenerationSugars > MAX_RESOURCE) {
-          sugars = MAX_RESOURCE;
-        } else {
-          sugars += regenerationSugars;
+        if (lipids < MAX_RESOURCE) {
+          if (lipids + regenerationLipids > MAX_RESOURCE) {
+            lipids = MAX_RESOURCE;
+          } else {
+            lipids += regenerationLipids;
+          }
         }
-      }
 
-      if (proteins < MAX_RESOURCE) {
-        if (proteins + regenerationProteins > MAX_RESOURCE) {
-          proteins = MAX_RESOURCE;
-        } else {
-          proteins += regenerationProteins;
+        if (sugars < MAX_RESOURCE) {
+          if (sugars + regenerationSugars > MAX_RESOURCE) {
+            sugars = MAX_RESOURCE;
+          } else {
+            sugars += regenerationSugars;
+          }
         }
-      }
-      if (!server.isGameEnded()){
-        sendUpdate(player, serverSender);
-      }
+
+        if (proteins < MAX_RESOURCE) {
+          if (proteins + regenerationProteins > MAX_RESOURCE) {
+            proteins = MAX_RESOURCE;
+          } else {
+            proteins += regenerationProteins;
+          }
+        }
+      updateTimer = System.currentTimeMillis() + UPDATE_COOLDOWN;
     }
   }
 
-  private void sendUpdate(Assets.PlayerType player, ServerSender serverSender) {
-    String message = MessageMaker.resourceUpdate(lipids, sugars, proteins, player);
-    serverSender.sendMessage(message);
+  public String getUpdateMessage() {
+    return MessageMaker.resourceUpdate(lipids, sugars, proteins, player);
   }
 
   public boolean canAfford(Spawnable spawnableObject) {
@@ -96,7 +94,6 @@ public class Resources extends Thread {
     lipids -= priceLipids;
     sugars -= priceSugars;
     proteins -= priceProteins;
-    sendUpdate(player, serverSender);
   }
 
   public void increaseLipidRegeneration(int increase) {

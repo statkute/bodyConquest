@@ -4,24 +4,24 @@ public enum Disease {
   INFLUENZA(
       "FLU",
       BaseType.INFLUENZA_BASE,
-      Assets.UnitType.FLU,
-      Assets.UnitType.BACTERIA,
-      Assets.UnitType.VIRUS,
+      UnitType.VIRUS,
+      UnitType.BACTERIA,
+      UnitType.FUNGUS,
       AbilityType.RIGOR_MORTIS),
   MEASLES(
       "MES",
       BaseType.MEASLES_BASE,
-      Assets.UnitType.BACTERIA,
-      Assets.UnitType.BACTERIA,
-      Assets.UnitType.BACTERIA,
-      Assets.UnitType.BACTERIA),
+      UnitType.BACTERIA,
+      UnitType.BACTERIA,
+      UnitType.BACTERIA,
+      UnitType.BACTERIA),
   ROTAVIRUS(
       "RVI",
       BaseType.ROTAVIRUS_BASE,
-      Assets.UnitType.BACTERIA,
-      Assets.UnitType.BACTERIA,
-      Assets.UnitType.BACTERIA,
-      Assets.UnitType.BACTERIA);
+      UnitType.BACTERIA,
+      UnitType.BACTERIA,
+      UnitType.BACTERIA,
+      AbilityType.NECROSIS);
 
   private static final int ENCODED_LENGTH = 3;
 

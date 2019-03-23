@@ -1,6 +1,7 @@
 package main.com.bodyconquest.entities.abilities;
 
-import main.com.bodyconquest.constants.Assets;
+import main.com.bodyconquest.constants.Lane;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.Troops.Troop;
 import main.com.bodyconquest.gamestates.EncounterState;
 
@@ -13,13 +14,13 @@ public class RigorMortis extends Ability {
   public static final int PROTEINS_COST = 20;
   public static final int LIPIDS_COST = 0;
 
-  private Assets.Lane lane;
+  private Lane lane;
 
   public RigorMortis() {
-    super(Assets.PlayerType.PLAYER_TOP);
+    super(PlayerType.PLAYER_TOP);
   }
 
-  public RigorMortis(Assets.PlayerType playerType, Assets.Lane lane) {
+  public RigorMortis(Lane lane, PlayerType playerType) {
     super(playerType);
     this.lane = lane;
     init();
@@ -32,7 +33,7 @@ public class RigorMortis extends Ability {
   @Override
   public void cast(EncounterState game) {
     CopyOnWriteArrayList<Troop> enemies;
-    if (playerType == Assets.PlayerType.PLAYER_TOP) {
+    if (playerType == PlayerType.PLAYER_TOP) {
       enemies = game.getTroopsBottom();
     } else {
       enemies = game.getTroopsTop();

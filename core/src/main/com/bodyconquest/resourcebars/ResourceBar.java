@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import jdk.management.resource.ResourceType;
+import main.com.bodyconquest.constants.Resource;
 import main.com.bodyconquest.rendering.BodyConquest;
-import main.com.bodyconquest.constants.Assets;
 
 public abstract class ResourceBar extends Actor {
 
     private float resource;
-    private Assets.ResourceType resourceType;
+    private Resource resourceType;
     private TextureRegion outline;
     private TextureRegion inside;
     private TextureRegion currentFrame;
@@ -32,7 +33,7 @@ public abstract class ResourceBar extends Actor {
         this.resource = resource;
     }
 
-    protected void setResourceType(Assets.ResourceType rt) {
+    protected void setResourceType(Resource rt) {
         this.resourceType = rt;
     }
 

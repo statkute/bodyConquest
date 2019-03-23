@@ -73,9 +73,7 @@ public class ClientReceiver extends Thread {
 //        System.out.println(
 //            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
         receivedMessages.put(received.trim());
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (InterruptedException e) {
+      } catch (IOException | InterruptedException e) {
         e.printStackTrace();
       }
     }

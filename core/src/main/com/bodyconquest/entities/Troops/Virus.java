@@ -1,54 +1,115 @@
 package main.com.bodyconquest.entities.Troops;
 
-import main.com.bodyconquest.constants.Assets;
-import main.com.bodyconquest.constants.Assets.Lane;
-import main.com.bodyconquest.constants.Assets.PlayerType;
+import main.com.bodyconquest.constants.Lane;
+import main.com.bodyconquest.constants.PlayerType;
+import main.com.bodyconquest.constants.UnitType;
+import main.com.bodyconquest.entities.projectiles.VirusProjectile;
+import main.com.bodyconquest.gamestates.EncounterState;
 
 public class Virus extends Troop {
 
-  public static final int SUGARS_COST = 20;
-  public static final int PROTEINS_COST = 20;
-  public static final int LIPIDS_COST = 50;
+  public static final int SUGARS_COST = 80;
+  public static final int PROTEINS_COST = 30;
+  public static final int LIPIDS_COST = 20;
+
+  private EncounterState map;
 
   public Virus() {
     super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
     init();
-    killingPoints = 10;
+  }
+
+  public Virus(Lane lane, PlayerType playerType) {
+    super(lane, playerType);
+    init();
+  }
+
+  public Virus(Lane lane, PlayerType playerType, float damageMult, float speedMult, float healthMult, float attackSpeedMult){
+    super(lane, playerType);
+    initSpecific(damageMult, speedMult, healthMult, attackSpeedMult);
+  }
+
+  private void initSpecific(float damageMult, float speedMult, float healthMult, float attackSpeedMult) {
+    setSize(50, 50);
+    setCSize(50, 50);
+    // Troop Stats
+    health = maxHealth = 70;
+    health = (int)(health * healthMult);
+    maxSpeed = 2 * (double)speedMult;
+    attackable = true;
+    moving = true;
+    attacking = false;
+    cooldown = (int)(3000 * attackSpeedMult); // Milliseconds
+    lastAttack = 0;
+    range = 200;
+    damage = (int)(40 * damageMult);
+
+    mapObjectType = UnitType.VIRUS;
+
+    lipidsCost = LIPIDS_COST;
+    sugarsCost = SUGARS_COST;
+    proteinCost = PROTEINS_COST;
+
+    killingPoints = 7;
+
   }
 
   /*
   Each moving unit could be given a queue of checkpoints to reach
   and then one left at the enemy base it would be within range and attack
   */
-  public Virus(PlayerType playerType, Lane lane) {
+  public Virus(EncounterState map, PlayerType playerType, Lane lane) {
     super(lane, playerType);
+    this.map = map;
     init();
   }
-  private void init(){
-    // Dimensions
-    setSize(85, 85);
-    setCSize(85, 85);
 
+  private void init() {
+    // Dimensions
+    setSize(50, 50);
+    setCSize(50, 50);
     // Troop Stats
-    health = maxHealth = 250;
-    maxSpeed = 0.6;
-    cooldown = 1800; // Milliseconds
+    health = maxHealth = 70;
+    maxSpeed = 2;
+    attackable = true;
+    moving = true;
+    attacking = false;
+    cooldown = 3000; // Milliseconds
     lastAttack = 0;
-    range = 50;
-    damage = 45;
-    mapObjectType = Assets.UnitType.VIRUS;
+    range = 200;
+    damage = 40;
+
+    mapObjectType = UnitType.VIRUS;
 
     lipidsCost = LIPIDS_COST;
     sugarsCost = SUGARS_COST;
     proteinCost = PROTEINS_COST;
 
+    killingPoints = 7;
+
     // Temporary implementation for images for the HUD
-    //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/virus.png");
+    //Animation<TextureRegion> walkAnimation = AnimationWrapper.getSpriteSheet(7, 1, 0.2f, "core/assets/flu.png");
     //sprite = new Image(walkAnimation.getKeyFrame(0));
   }
 
   @Override
+  public void attack(Troop troop) {
+    if (troop != null && troop.isAttackable()) {
+      setMoving(false);
+      long time = System.currentTimeMillis();
+      if (!attacking && (time > lastAttack + cooldown)) {
+        VirusProjectile proj = new VirusProjectile(getDamage(), getCentreX(), getCentreY(), troop.getCentreX(), troop.getCentreY());
+        map.addProjectile(proj, playerType);
+        lastAttack = time;
+      }
+    } else {
+      if (!moving) setMoving(true);
+    }
+  }
+
+
+  @Override
   public String getPortraitLocation() {
-    return "core/assets/virus_button.png";
+    return "core/assets/flu_button.png";
   }
 }

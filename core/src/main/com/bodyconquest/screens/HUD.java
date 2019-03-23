@@ -20,18 +20,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import main.com.bodyconquest.constants.AbilityType;
-import main.com.bodyconquest.constants.Assets;
-import main.com.bodyconquest.constants.ClassOwner;
-import main.com.bodyconquest.constants.Disease;
+import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.entities.HealthBar;
 import main.com.bodyconquest.entities.Spawnable;
 import main.com.bodyconquest.entities.UnitBar;
+import main.com.bodyconquest.game_logic.Communicator;
 import main.com.bodyconquest.rendering.BodyConquest;
 import main.com.bodyconquest.resourcebars.CarbsResourceBar;
 import main.com.bodyconquest.resourcebars.LipidsResourceBar;
 import main.com.bodyconquest.resourcebars.ProteinResourceBar;
 import main.com.bodyconquest.resourcebars.ResourceBar;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class HUD {
 
@@ -39,7 +39,7 @@ public class HUD {
   private Texture greenVirus;
   private Texture yellowVirus;
   private final EncounterScreen screen;
-  private final Assets.PlayerType playerType;
+  private final PlayerType playerType;
   private Skin skin;
   private Viewport viewport;
   private Stage stage;
@@ -57,8 +57,8 @@ public class HUD {
 
   private Disease disease;
 
-
-  public HUD(final EncounterScreen screen, final Assets.PlayerType playerType, Disease disease, Stage stage) {
+  public HUD(
+      final EncounterScreen screen, final PlayerType playerType, Disease disease, Stage stage) {
     this.screen = screen;
     this.playerType = playerType;
     this.disease = disease;
@@ -69,8 +69,8 @@ public class HUD {
     this.stage = stage;
     Gdx.input.setInputProcessor(stage);
 
-    healthBarBottom = setUpHealthBar(healthBarBottom, Assets.PlayerType.PLAYER_BOTTOM);
-    healthBarTop = setUpHealthBar(healthBarTop, Assets.PlayerType.PLAYER_TOP);
+    healthBarBottom = setUpHealthBar(healthBarBottom, PlayerType.PLAYER_BOTTOM);
+    healthBarTop = setUpHealthBar(healthBarTop, PlayerType.PLAYER_TOP);
     loadAssets();
     getAssets();
 
@@ -90,8 +90,6 @@ public class HUD {
     skin = new Skin();
     skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     skin.add("defaultWhite", new Texture("core/assets/Default Sprite.png"));
-    skin.add("badlogic", new Texture("core/assets/badlogic.jpg"));
-    skin.add("spawnpoint", new Texture("core/assets/droplet.png"));
   }
 
   private void setupUnitBar() {
@@ -100,21 +98,21 @@ public class HUD {
     stage.addActor(unitBar);
   }
 
-  private void setupNewUnitBar(){
+  private void setupNewUnitBar() {
     newUnitBar = new UnitBar();
     stage.addActor(newUnitBar);
   }
 
-  private void setupResourceBars(){
+  private void setupResourceBars() {
     proteinResourceBar = new ProteinResourceBar();
-    carbsResourceBar   = new CarbsResourceBar();
-    lipidsResourceBar  = new LipidsResourceBar();
+    carbsResourceBar = new CarbsResourceBar();
+    lipidsResourceBar = new LipidsResourceBar();
     stage.addActor(proteinResourceBar);
     stage.addActor(carbsResourceBar);
     stage.addActor(lipidsResourceBar);
   }
 
-  public void updateResourceBars(int lipids, int proteins, int carbs, float s){
+  public void updateResourceBars(int lipids, int proteins, int carbs, float s) {
     int mappedLipids = mapResource(lipids);
     int mappedProteins = mapResource(proteins);
     int mappedCarbs = mapResource(carbs);
@@ -122,17 +120,17 @@ public class HUD {
     lipidsResourceBar.setInsideY(mappedLipids);
     proteinResourceBar.setInsideY(mappedProteins);
     carbsResourceBar.setInsideY(mappedCarbs);
-//    lipidsResourceBar.setInsideY(0);
-//    proteinResourceBar.setInsideY(0);
-//    carbsResourceBar.setInsideY(0);
+    //    lipidsResourceBar.setInsideY(0);
+    //    proteinResourceBar.setInsideY(0);
+    //    carbsResourceBar.setInsideY(0);
 
     lipidsResourceBar.updateTime(s);
     carbsResourceBar.updateTime(s);
     proteinResourceBar.updateTime(s);
   }
 
-  private int mapResource(int resource){
-    int y = resource * (BodyConquest.V_HEIGHT/100);
+  private int mapResource(int resource) {
+    int y = resource * (BodyConquest.V_HEIGHT / 100);
     return y - BodyConquest.V_HEIGHT;
   }
 
@@ -140,15 +138,15 @@ public class HUD {
     dragAndDrop = new DragAndDrop();
 
     // Bottom player spawn points
-    if(playerType == Assets.PlayerType.PLAYER_BOTTOM){
-      addSpawnPoint(475, 50,  Assets.Lane.BOTTOM);
-      addSpawnPoint(475, 160, Assets.Lane.MIDDLE);
-      addSpawnPoint(575, 200, Assets.Lane.TOP);
+    if (playerType == PlayerType.PLAYER_BOTTOM) {
+      addSpawnPoint(475, 50, Lane.BOTTOM);
+      addSpawnPoint(475, 160, Lane.MIDDLE);
+      addSpawnPoint(575, 200, Lane.TOP);
     } else {
       // Top player spawn points
-      addSpawnPoint(250, 500, Assets.Lane.TOP);
-      addSpawnPoint(220, 410, Assets.Lane.MIDDLE);
-      addSpawnPoint(130, 370, Assets.Lane.BOTTOM);
+      addSpawnPoint(250, 500, Lane.TOP);
+      addSpawnPoint(220, 410, Lane.MIDDLE);
+      addSpawnPoint(130, 370, Lane.BOTTOM);
     }
 
     addDragAndDropSource(0, disease.getSpawn1());
@@ -157,7 +155,7 @@ public class HUD {
     addDragAndDropSource(3, disease.getSpawn4());
   }
 
-  private void addSpawnPoint(int x, int y, final Assets.Lane lane) {
+  private void addSpawnPoint(int x, int y, final Lane lane) {
     Image bottomSpawnPoint = new Image(skin, "defaultWhite");
     bottomSpawnPoint.setBounds(x, y, 100, 100);
     bottomSpawnPoint.setColor(0, 255, 0, 0);
@@ -165,8 +163,37 @@ public class HUD {
 
     dragAndDrop.addTarget(
         new Target(bottomSpawnPoint) {
+          @SuppressWarnings("unchecked")
           public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-            getActor().setColor(0, 255, 0, 0.5f);
+            // If you cannot afford the payload, then the colour should be set to red instead of
+            // green
+            ClassOwner co = (ClassOwner) payload.getObject();
+            boolean canAfford = true;
+            if (payload.getObject().getClass().equals(UnitType.class)) {
+              try {
+                Communicator comms = screen.getCommunicator();
+                Spawnable instance =
+                    (Spawnable)
+                        co.getAssociatedClass()
+                            .getDeclaredConstructor(Lane.class, PlayerType.class)
+                            .newInstance(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
+                canAfford =
+                    comms.getResource(Resource.LIPID, playerType) >= instance.getLipidCost()
+                        && comms.getResource(Resource.PROTEIN, playerType)
+                            >= instance.getProteinCost()
+                        && comms.getResource(Resource.SUGAR, playerType) >= instance.getSugarCost();
+              } catch (NoSuchMethodException
+                  | InstantiationException
+                  | InvocationTargetException
+                  | IllegalAccessException e) {
+                e.printStackTrace();
+              }
+            }
+            if (canAfford) {
+              getActor().setColor(0, 255, 0, 0.5f);
+            } else {
+              getActor().setColor(255, 0, 0, 0.5f);
+            }
             return true;
           }
 
@@ -175,9 +202,9 @@ public class HUD {
           }
 
           public void drop(Source source, Payload payload, float x, float y, int pointer) {
-            //System.out.println("SPAWN HERE");
-            if (payload.getObject().getClass().equals(Assets.UnitType.class)) {
-              screen.spawnUnit((Assets.UnitType) payload.getObject(), lane, playerType);
+            // System.out.println("SPAWN HERE");
+            if (payload.getObject().getClass().equals(UnitType.class)) {
+              screen.spawnUnit((UnitType) payload.getObject(), lane, playerType);
             } else {
               screen.useAbility((AbilityType) payload.getObject(), lane, playerType);
             }
@@ -189,72 +216,78 @@ public class HUD {
   private void addDragAndDropSource(int index, ClassOwner spawnableEnum) {
     try {
       Class<Spawnable> spawnableClass = (Class<Spawnable>) spawnableEnum.getAssociatedClass();
-    final ImageButton spawnableButton;
-    spawnableButton = new ImageButton(new Image(new Texture(spawnableClass.newInstance().getPortraitLocation())).getDrawable());
+      final ImageButton spawnableButton;
+      spawnableButton =
+          new ImageButton(
+              new Image(new Texture(spawnableClass.newInstance().getPortraitLocation()))
+                  .getDrawable());
 
-    spawnableButton.setBounds(
-        unitBar.getWidth() / 4 + 25 * index,
-        unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
-        25,
-        25);
-    spawnableButton.addListener(
-        new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent event, Actor actor) {
-            screen.spawnUnit(Assets.UnitType.BACTERIA, Assets.Lane.BOTTOM, playerType);
-          }
-        });
-    
-    stage.addActor(spawnableButton);
+      spawnableButton.setBounds(
+          unitBar.getWidth() / 4 + 25 * index,
+          unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
+          25,
+          25);
+      spawnableButton.addListener(
+          new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+              screen.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType);
+            }
+          });
 
-    Image mouseover = new Image();
-    mouseover.setBounds(unitBar.getWidth() / 4 + 23 * (index+2),
-            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
-            20,
-            25);
-    mouseover.setName("bucket" + index);
-    stage.addActor(mouseover);
+      stage.addActor(spawnableButton);
 
-    Source s =
-        new Source(spawnableButton) {
-          public Payload dragStart(InputEvent event, float x, float y, int pointer) {
-            Payload payload = new Payload();
-            payload.setObject(spawnableEnum);
+      Image mouseover = new Image();
+      mouseover.setBounds(
+          unitBar.getWidth() / 4 + 23 * (index + 2),
+          unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
+          20,
+          25);
+      mouseover.setName("bucket" + index);
+      stage.addActor(mouseover);
 
-            payload.setDragActor(new Image(spawnableButton.getImage().getDrawable()));
+      Source s =
+          new Source(spawnableButton) {
+            public Payload dragStart(InputEvent event, float x, float y, int pointer) {
+              Payload payload = new Payload();
+              payload.setObject(spawnableEnum);
 
-//            if(spawnableClass.getSuperclass().equals(Troop.class)) {
-//              payload.setDragActor(new Image(spawnableButton.getImage().getDrawable()));
-//            } else {
-//              // It's an ability it may have a unique drag actor.
-//
-//              try {
-//                Ability abilityInstance = (Ability) spawnableClass.newInstance();
-//                Image dragActor = new Image(new Texture(abilityInstance.damageAreaPath()));
-//              } catch (InstantiationException | IllegalAccessException e) {
-//                e.printStackTrace();
-//              }
-//
-//            }
+              payload.setDragActor(new Image(spawnableButton.getImage().getDrawable()));
 
-            Label validLabel = new Label("Release to drop " + spawnableClass.getSimpleName() + "!", skin);
-            validLabel.setColor(0, 1, 0, 1);
-            payload.setValidDragActor(validLabel);
+              //            if(spawnableClass.getSuperclass().equals(Troop.class)) {
+              //              payload.setDragActor(new
+              // Image(spawnableButton.getImage().getDrawable()));
+              //            } else {
+              //              // It's an ability it may have a unique drag actor.
+              //
+              //              try {
+              //                Ability abilityInstance = (Ability) spawnableClass.newInstance();
+              //                Image dragActor = new Image(new
+              // Texture(abilityInstance.damageAreaPath()));
+              //              } catch (InstantiationException | IllegalAccessException e) {
+              //                e.printStackTrace();
+              //              }
+              //
+              //            }
 
-            Label invalidLabel = new Label("Some payload!", skin);
-            invalidLabel.setColor(1, 0, 0, 1);
-            payload.setInvalidDragActor(invalidLabel);
+              Label validLabel =
+                  new Label("Release to drop " + spawnableClass.getSimpleName() + "!", skin);
+              validLabel.setColor(0, 1, 0, 1);
+              payload.setValidDragActor(validLabel);
 
-            return payload;
-          }
-        };
+              Label invalidLabel = new Label("Some payload!", skin);
+              invalidLabel.setColor(1, 0, 0, 1);
+              payload.setInvalidDragActor(invalidLabel);
 
-    dragAndDrop.addSource(s);
-    } catch (InstantiationException|IllegalAccessException e) {
+              return payload;
+            }
+          };
+
+      dragAndDrop.addSource(s);
+    } catch (InstantiationException | IllegalAccessException e) {
       e.printStackTrace();
     }
   }
-
 
   public Stage getStage() {
     return stage;
@@ -264,15 +297,12 @@ public class HUD {
     return unitBar;
   }
 
-  public HealthBar setUpHealthBar(HealthBar healthBar, Assets.PlayerType playerType) {
+  public HealthBar setUpHealthBar(HealthBar healthBar, PlayerType playerType) {
 
-    if (playerType == Assets.PlayerType.PLAYER_BOTTOM) {
+    if (playerType == PlayerType.PLAYER_BOTTOM) {
       healthBar =
           new HealthBar(
-              Assets.healthBarWidth,
-              Assets.healthBarHeight,
-              screen,
-              Assets.PlayerType.PLAYER_BOTTOM);
+              Assets.healthBarWidth, Assets.healthBarHeight, screen, PlayerType.PLAYER_BOTTOM);
 
       healthBar.setPosition(
           Assets.baseBottomX, Assets.baseBottomY - Assets.healthYAdjustmentBottom);
@@ -281,9 +311,8 @@ public class HUD {
     else {
       healthBar =
           new HealthBar(
-              Assets.healthBarWidth, Assets.healthBarHeight, screen, Assets.PlayerType.PLAYER_TOP);
-      healthBar.setPosition(
-          Assets.baseTopX, Assets.baseTopY + Assets.healthYAdjustmentTop);
+              Assets.healthBarWidth, Assets.healthBarHeight, screen, PlayerType.PLAYER_TOP);
+      healthBar.setPosition(Assets.baseTopX -5, Assets.baseTopY + Assets.healthYAdjustmentTop -18);
     }
 
     stage.addActor(healthBar);
@@ -314,9 +343,9 @@ public class HUD {
     this.carbsResourceBar = carbsResourceBar;
   }
 
-  public void setUpDisease(Disease disease){
+  public void setUpDisease(Disease disease) {
 
-    switch (disease){
+    switch (disease) {
       case INFLUENZA:
         imageDisease = new Image(blueVirus);
         break;
@@ -327,52 +356,50 @@ public class HUD {
         imageDisease = new Image(yellowVirus);
         break;
     }
-    imageDisease.setSize(100,100);
-    imageDisease.setPosition(BodyConquest.V_WIDTH -120,70);
+    imageDisease.setSize(100, 100);
+    imageDisease.setPosition(BodyConquest.V_WIDTH - 120, 70);
     stage.addActor(imageDisease);
-
   }
 
-  public void loadAssets(){
+  public void loadAssets() {
     manager.load(Assets.raceBlueVirusNoBorder, Texture.class);
     manager.load(Assets.raceGreenVirusNoBorder, Texture.class);
     manager.load(Assets.raceYellowVirusNoBorder, Texture.class);
     manager.finishLoading();
   }
 
-  public void getAssets(){
+  public void getAssets() {
     blueVirus = manager.get(Assets.raceBlueVirusNoBorder, Texture.class);
     greenVirus = manager.get(Assets.raceGreenVirusNoBorder, Texture.class);
     yellowVirus = manager.get(Assets.raceYellowVirusNoBorder, Texture.class);
   }
 
-  //private Image bucket;
+  // private Image bucket;
   private Image bucketDown;
 
-  private void setupBucket(){
-//    bucket = new Image(new Texture(Assets.pathBacteria));
-//    bucket.setPosition(unitBar.getWidth() / 6 + 25 * 0,
-//            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2) + 50);
-//    bucketDown = new Image(new Texture(Assets.pathFlu));
-//    bucketDown.setColor(1,1,1,0);
-//    bucketDown.setBounds(
-//            unitBar.getWidth() / 4 + 25 * 2,
-//            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
-//            25,
-//            25);
-//    bucketDown.setName("bucket");
-//    //stage.addActor(bucket);
-//    stage.addActor(bucketDown);
-
+  private void setupBucket() {
+    //    bucket = new Image(new Texture(Assets.pathBacteria));
+    //    bucket.setPosition(unitBar.getWidth() / 6 + 25 * 0,
+    //            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2) + 50);
+    //    bucketDown = new Image(new Texture(Assets.pathFlu));
+    //    bucketDown.setColor(1,1,1,0);
+    //    bucketDown.setBounds(
+    //            unitBar.getWidth() / 4 + 25 * 2,
+    //            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
+    //            25,
+    //            25);
+    //    bucketDown.setName("bucket");
+    //    //stage.addActor(bucket);
+    //    stage.addActor(bucketDown);
 
   }
 
-//  public void setBucketInvisible(){
-//    bucket.setColor(1,1,1,0);
-//  }
-//
-//  public void makeBucketVisible(){
-//    bucket.setColor(1,1,1,1);
-//  }
+  //  public void setBucketInvisible(){
+  //    bucket.setColor(1,1,1,0);
+  //  }
+  //
+  //  public void makeBucketVisible(){
+  //    bucket.setColor(1,1,1,1);
+  //  }
 
 }
