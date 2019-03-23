@@ -10,195 +10,187 @@ import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.io.IOException;
 
-/**
- * The type Menu screen.
- */
+/** The type Menu screen. */
 public class MenuScreen extends AbstractGameScreen implements Screen {
 
-    private Texture title;
-    private Texture playButtonMultiplayer;
-    private Texture playButtonSinglePlayer;
-    private Texture settingsButton;
-    private Texture creditsButton;
-    private Texture exitButton;
-    private Rectangle multiplayerBounds;
-    private Rectangle singleplayerBounds;
-    private Rectangle settingsBounds;
-    private Rectangle creditsBounds;
-    private Rectangle exitBounds;
+  private Texture title;
+  private Texture playButtonMultiplayer;
+  private Texture playButtonSinglePlayer;
+  private Texture settingsButton;
+  private Texture creditsButton;
+  private Texture exitButton;
+  private Rectangle multiplayerBounds;
+  private Rectangle singleplayerBounds;
+  private Rectangle settingsBounds;
+  private Rectangle creditsBounds;
+  private Rectangle exitBounds;
 
-    /**
-     * The constant timeOfServer which shows how long the server is running.
-     */
-    public static long timeOfServer;
-    private String username;
+  /** The constant timeOfServer which shows how long the server is running. */
+  public static long timeOfServer;
 
-    /**
-     * Instantiates a new Menu screen.
-     *
-     * @param game     the game
-     */
-    public MenuScreen(BodyConquest game) {
-        super(game);
-        loadAssets();
-        getAssets();
-        setRectangles();
-    }
+  private String username;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void show() {
+  /**
+   * Instantiates a new Menu screen.
+   *
+   * @param game the game
+   */
+  public MenuScreen(BodyConquest game) {
+    super(game);
+    loadAssets();
+    getAssets();
+    setRectangles();
+    System.out.println(BodyConquest.scaleRatio);
+  }
 
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void show() {}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void render(float delta) {
+  /** {@inheritDoc} */
+  @Override
+  public void render(float delta) {
 
-        super.render(delta);
-        game.batch.begin();
+    super.render(delta);
+    game.batch.begin();
 
-        game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-        game.batch.draw(title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450);
-        game.batch.draw(
-                playButtonSinglePlayer,
-                BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-                300);
-        game.batch.draw(
-                playButtonMultiplayer,
-                BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-                240);
-        game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 180);
-        game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 120);
-        game.batch.draw(exitButton, BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2, 60);
+    game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
+    game.batch.draw(
+        title, BodyConquest.V_WIDTH / 2 - title.getWidth() / 2, 450 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        playButtonSinglePlayer,
+        BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
+        300 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        playButtonMultiplayer,
+        BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
+        240 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        settingsButton,
+        BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
+        180 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        creditsButton,
+        BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
+        120 * BodyConquest.scaleRatio);
+    game.batch.draw(
+        exitButton,
+        BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,
+        60 * BodyConquest.scaleRatio);
 
-        checkPressed();
+    checkPressed();
 
-        game.batch.end();
-    }
+    game.batch.end();
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void checkPressed() {
+  /** {@inheritDoc} */
+  @Override
+  public void checkPressed() {
 
-        super.checkPressed();
+    super.checkPressed();
 
-        if (Gdx.input.justTouched()) {
-            if (multiplayerBounds.contains(tmp.x, tmp.y)) {
-                playButtonSound();
-                timeOfServer = System.currentTimeMillis();
-                System.out.println("Multiplayer Is touched");
-                dispose();
-                game.setScreen(new HostScreen(game, username));
-            }
+    if (Gdx.input.justTouched()) {
+      if (multiplayerBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
+        timeOfServer = System.currentTimeMillis();
+        System.out.println("Multiplayer Is touched");
+        dispose();
+        game.setScreen(new HostScreen(game, username));
+      }
 
-            if (singleplayerBounds.contains(tmp.x, tmp.y)) {
-                playButtonSound();
-                System.out.println("Singleplayer Is touched");
-                try {
-                    timeOfServer = System.currentTimeMillis();
-                    game.setScreen(new RaceSelection(game, GameType.SINGLE_PLAYER));
-                    dispose();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (settingsBounds.contains(tmp.x, tmp.y)) {
-                playButtonSound();
-                System.out.println("Settings Is touched");
-                dispose();
-                game.setScreen(new SettingsScreen(game, username));
-
-            }
-            if (creditsBounds.contains(tmp.x, tmp.y)) {
-                playButtonSound();
-                System.out.println("Credits Is touched");
-                dispose();
-                game.setScreen(new CreditsScreen(game, username));
-
-            }
-
-            if (exitBounds.contains(tmp.x, tmp.y)) {
-                playButtonSound();
-                dispose();
-                Gdx.app.exit();
-                System.exit(0);
-            }
+      if (singleplayerBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
+        System.out.println("Singleplayer Is touched");
+        try {
+          timeOfServer = System.currentTimeMillis();
+          game.setScreen(new RaceSelection(game, GameType.SINGLE_PLAYER));
+          dispose();
+        } catch (IOException e) {
+          e.printStackTrace();
         }
+      }
+      if (settingsBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
+        System.out.println("Settings Is touched");
+        dispose();
+        game.setScreen(new SettingsScreen(game, username));
+      }
+      if (creditsBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
+        System.out.println("Credits Is touched");
+        dispose();
+        game.setScreen(new CreditsScreen(game, username));
+      }
+
+      if (exitBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
+        dispose();
+        Gdx.app.exit();
+        System.exit(0);
+      }
     }
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void loadAssets() {
-        super.loadAssets();
-        manager.load(Assets.menuTitle, Texture.class);
-        manager.load(Assets.multiplayerButton, Texture.class);
-        manager.load(Assets.singleplayerButton, Texture.class);
-        manager.load(Assets.settingsButton, Texture.class);
-        manager.load(Assets.creditsButton, Texture.class);
-        manager.load(Assets.exitButton, Texture.class);
-        manager.finishLoading();
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void loadAssets() {
+    super.loadAssets();
+    manager.load(Assets.menuTitle, Texture.class);
+    manager.load(Assets.multiplayerButton, Texture.class);
+    manager.load(Assets.singleplayerButton, Texture.class);
+    manager.load(Assets.settingsButton, Texture.class);
+    manager.load(Assets.creditsButton, Texture.class);
+    manager.load(Assets.exitButton, Texture.class);
+    manager.finishLoading();
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void getAssets() {
-        super.getAssets();
-        title = manager.get(Assets.menuTitle, Texture.class);
-        playButtonMultiplayer = manager.get(Assets.multiplayerButton, Texture.class);
-        playButtonSinglePlayer = manager.get(Assets.singleplayerButton, Texture.class);
-        settingsButton = manager.get(Assets.settingsButton, Texture.class);
-        creditsButton = manager.get(Assets.creditsButton, Texture.class);
-        exitButton = manager.get(Assets.exitButton, Texture.class);
-    }
+  /** {@inheritDoc} */
+  @Override
+  public void getAssets() {
+    super.getAssets();
+    title = manager.get(Assets.menuTitle, Texture.class);
+    playButtonMultiplayer = manager.get(Assets.multiplayerButton, Texture.class);
+    playButtonSinglePlayer = manager.get(Assets.singleplayerButton, Texture.class);
+    settingsButton = manager.get(Assets.settingsButton, Texture.class);
+    creditsButton = manager.get(Assets.creditsButton, Texture.class);
+    exitButton = manager.get(Assets.exitButton, Texture.class);
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setRectangles() {
+  /** {@inheritDoc} */
+  @Override
+  public void setRectangles() {
 
-        singleplayerBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-                        300,
-                        playButtonSinglePlayer.getWidth(),
-                        playButtonSinglePlayer.getHeight());
+    singleplayerBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
+            300 * BodyConquest.scaleRatio,
+            playButtonSinglePlayer.getWidth(),
+            playButtonSinglePlayer.getHeight());
 
-        multiplayerBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-                        240,
-                        playButtonMultiplayer.getWidth(),
-                        playButtonMultiplayer.getHeight());
+    multiplayerBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
+            240 * BodyConquest.scaleRatio,
+            playButtonMultiplayer.getWidth(),
+            playButtonMultiplayer.getHeight());
 
-        settingsBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
-                        180,
-                        settingsButton.getWidth(),
-                        settingsButton.getHeight());
-        creditsBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
-                        120,
-                        creditsButton.getWidth(),
-                        creditsButton.getHeight());
-        exitBounds =
-                new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,
-                        60,
-                        exitButton.getWidth(),
-                        exitButton.getHeight());
-    }
+    settingsBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2,
+            180 * BodyConquest.scaleRatio,
+            settingsButton.getWidth(),
+            settingsButton.getHeight());
+    creditsBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2,
+            120 * BodyConquest.scaleRatio,
+            creditsButton.getWidth(),
+            creditsButton.getHeight());
+    exitBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,
+            60 * BodyConquest.scaleRatio,
+            exitButton.getWidth(),
+            exitButton.getHeight());
+  }
 }

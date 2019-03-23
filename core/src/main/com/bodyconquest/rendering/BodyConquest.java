@@ -52,7 +52,8 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   private Game game;
   public static final float originalAspectRatio = 4.0f / 3.0f;
   public static float yourAspectRatio = V_WIDTH / V_HEIGHT;
-  public static float scaleRatio = yourAspectRatio / originalAspectRatio;
+//  public static float scaleRatio = yourAspectRatio / originalAspectRatio;
+  public static float scaleRatio = V_HEIGHT / 600.0f;
 
   private Client client;
   private String username;
@@ -67,7 +68,8 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     audioPlayer.loadMusic("music", Assets.music);
     audioPlayer.playMusicLoop("music");
     client = new Client();
-    //setScreen(new MenuScreen(this, "GermBoi"));
+    // setScreen(new MenuScreen(this, "GermBoi"));
+    System.out.println(V_HEIGHT / 600.0f);
     setScreen(new StartScreen(this));
     //setScreen(new LeaderboardScreen(this));
 

@@ -94,7 +94,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         super.setRectangles();
         backBounds =
                 new Rectangle(
-                        BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+                    (int) (BodyConquest.V_WIDTH  / 2 - backButton.getWidth() / 2),
                         50,
                         backButton.getWidth(),
                         backButton.getHeight());
