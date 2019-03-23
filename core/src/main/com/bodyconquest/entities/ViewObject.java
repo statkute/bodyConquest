@@ -178,4 +178,10 @@ public class ViewObject extends Actor {
   public MapObjectType getMapObjectType() { return bo.getMapObjectType(); }
 
   public Animation<TextureRegion> getWalkAnimation() { return walkAnimation; }
+
+  public String getKey() {
+    Enum mot = bo.getMapObjectType();
+    return mot.name() + bo.getPlayerType().getEncoded();
+  }
+
 }
