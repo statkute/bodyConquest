@@ -8,11 +8,11 @@ public class ProjectileTypeTest {
 
     @Test
     public void getMapObjectType() {
-        assertEquals(ProjectileType.FLU_PROJECTILE.getMapObjectType(), ProjectileType.FLU_PROJECTILE);
+        assertEquals(ProjectileType.VIRUS_PROJECTILE.getMapObjectType(), ProjectileType.VIRUS_PROJECTILE);
     }
 
     @Test
     public void isProjectileType() {
-        assertTrue(ProjectileType.isProjectileType(ProjectileType.FLU_PROJECTILE));
+        assertTrue(ProjectileType.isProjectileType(ProjectileType.VIRUS_PROJECTILE));
     }
 }

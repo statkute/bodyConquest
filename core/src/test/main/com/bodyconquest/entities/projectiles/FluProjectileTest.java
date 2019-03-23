@@ -8,11 +8,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class FluProjectileTest {
-    FluProjectile fp;
+    VirusProjectile fp;
 
     @Before
     public void init(){
-        fp = new FluProjectile(10,10,10,20,20);
+        fp = new VirusProjectile(10,10,10,20,20);
     }
 
     @Test

@@ -1,9 +1,6 @@
 package main.com.bodyconquest.entities.Troops.Bases;
 
-import main.com.bodyconquest.constants.Assets;
-import main.com.bodyconquest.constants.BaseType;
-import main.com.bodyconquest.constants.MapObjectType;
-import main.com.bodyconquest.constants.Organ;
+import main.com.bodyconquest.constants.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,12 +45,12 @@ public class BaseTest {
 
     @Test
     public void playerType(){
-        assertEquals(b.getPlayerType(), Assets.PlayerType.PLAYER_BOTTOM);
+        assertEquals(b.getPlayerType(), PlayerType.PLAYER_BOTTOM);
     }
 
     @Test
     public void lane(){
-        assertEquals(b.getLane(), Assets.Lane.ALL);
+        assertEquals(b.getLane(), Lane.ALL);
     }
 
     @Test
@@ -80,9 +77,9 @@ public class BaseTest {
     @Parameterized.Parameters
     public static Collection<Object[]> testData(){
         Object[][] data = new Object[][]{
-                {new InfluenzaBase(Assets.PlayerType.PLAYER_BOTTOM),1000, 3,  130, BaseType.INFLUENZA_BASE},
-                {new MeaslesBase(Assets.PlayerType.PLAYER_BOTTOM),  75,   8,  0,   BaseType.MEASLES_BASE},
-                {new RotavirusBase(Assets.PlayerType.PLAYER_BOTTOM),70,   10, 0,   BaseType.ROTAVIRUS_BASE}};
+                {new InfluenzaBase(PlayerType.PLAYER_BOTTOM),1000, 3,  130, BaseType.INFLUENZA_BASE},
+                {new MeaslesBase(PlayerType.PLAYER_BOTTOM),  75,   8,  0,   BaseType.MEASLES_BASE},
+                {new RotavirusBase(PlayerType.PLAYER_BOTTOM),1000,   10, 0,   BaseType.ROTAVIRUS_BASE}};
         return Arrays.asList(data);
     }
 

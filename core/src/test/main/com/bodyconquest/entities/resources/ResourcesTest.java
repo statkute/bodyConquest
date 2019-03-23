@@ -2,6 +2,7 @@ package main.com.bodyconquest.entities.resources;
 
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.networking.Server;
 import org.junit.Before;
@@ -19,7 +20,7 @@ public class ResourcesTest {
     @BeforeClass
     public static void init() throws Exception{
         Game g = new Game(GameType.SINGLE_PLAYER);
-        r = new Resources(g.getServer(), Assets.PlayerType.PLAYER_BOTTOM);
+        r = new Resources(PlayerType.PLAYER_BOTTOM);
     }
 
     @Test
