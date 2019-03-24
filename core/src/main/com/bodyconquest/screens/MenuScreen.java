@@ -133,13 +133,8 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
             if(leaderboardBounds.contains(tmp.x,tmp.y)){
                 playButtonSound();
                 System.out.println("Leaderboard Is touched");
-              //  if(game.getClient() == null){
-
-               // }
-                //else{
-                    dispose();
-                    game.setScreen(new LeaderboardScreen(game));
-                //}
+                dispose();
+                game.setScreen(new LeaderboardScreen(game));
 
             }
         }
