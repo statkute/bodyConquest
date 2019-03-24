@@ -1,6 +1,7 @@
 package main.com.bodyconquest.screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -22,22 +23,42 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     private Texture login;
     private TextButton loginBtn;
     private Image loginImage;
-    private GameType gameType;
+    //private GameType gameType;
+    private int counter;
+    protected TextButton backBtn;
 
     /**
      * Instantiates a new Login screen.
      *
      * @param game the game
      */
-    public LoginScreen(BodyConquest game, GameType gameType) {
-        super(game);
+    public LoginScreen(BodyConquest game, GameType gameType, int counter) {
+        super(game, gameType);
         loginImage = new Image(login);
-        loginBtn = new TextButton("Login", skin);
+        this.counter = counter;
+//        backBtn = new TextButton("Back",skin);
+        if (counter > 0) {
+            loginBtn = new TextButton("WRONG Details", skin);
+            loginBtn.getLabel().setColor(Color.BLACK);
+            txfUsername.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    super.clicked(event, x, y);
+                    loginBtn.getLabel().setColor(1, 1, 1, 1);
+                    loginBtn.getLabel().setText("Login");
+                }
+            });
+        } else {
+            loginBtn = new TextButton("Login", skin);
+        }
+
+        backBtn = new TextButton("Back to Register", skin);
         listenButton(loginBtn);
         settingSizes();
         settingPositions();
         adding();
-        this.gameType = gameType;
+        backButtonListener(backBtn);
+        //this.gameType = gameType;
     }
 
     /**
@@ -88,6 +109,8 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         });
     }
 
+    //public void listenBack
+
     /**
      * {@inheritDoc}
      */
@@ -107,7 +130,15 @@ public class LoginScreen extends DatabasesScreen implements Screen {
 
         } else {
             //else go back to login screen
-            game.setScreen(new LoginScreen(game, gameType));
+            //loginBtn.setText("Bad details!");
+//            try {
+//                Thread.sleep(10000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            counter++;
+            game.setScreen(new LoginScreen(game, gameType, counter));
+
         }
     }
 
@@ -118,7 +149,8 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     public void settingPositions() {
         super.settingPositions();
         loginImage.setPosition(BodyConquest.V_WIDTH / 2.0f - loginImage.getWidth() / 2.0f, 450.0f);
-        loginBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - loginBtn.getWidth() / 2.0f, 50.0f);
+        loginBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - loginBtn.getWidth() / 2.0f - 150.f, 50.0f);
+        backBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - backBtn.getWidth() / 2.0f + 150.f, 50.0f);
     }
 
     /**
@@ -129,6 +161,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         super.adding();
         stage.addActor(loginImage);
         stage.addActor(loginBtn);
+        stage.addActor(backBtn);
     }
 
     /**
@@ -138,6 +171,17 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     public void settingSizes() {
         super.settingSizes();
         loginBtn.setSize(250, 50);
+        backBtn.setSize(250, 50);
         loginImage.setSize(login.getWidth(), login.getHeight());
+    }
+
+    public void backButtonListener(TextButton backBtn) {
+        backBtn.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.setScreen(new RegisteringScreen(game, gameType));
+            }
+        });
     }
 }

@@ -20,8 +20,9 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     private Texture register;
     private TextButton registerBtn;
     private Image registerImage;
+    protected TextButton backBtn;
 
-    private GameType gameType;
+//    private GameType gameType;
 
     /**
      * Instantiates a new Registering screen.
@@ -29,14 +30,16 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
      * @param game the game
      */
     public RegisteringScreen(BodyConquest game, GameType gameType) {
-        super(game);
+        super(game,gameType);
         registerImage = new Image(register);
         registerBtn = new TextButton("Register", skin);
+        backBtn = new TextButton("Back to Login",skin);
         listenButton(registerBtn);
         settingSizes();
         settingPositions();
         adding();
-        this.gameType = gameType;
+        backButtonListener(backBtn);
+        //this.gameType = gameType;
     }
 
     /**
@@ -103,7 +106,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
         //System.out.println(game.getClient().getCommunicator().getRegisteredIsSet());
         if (game.getClient().getCommunicator().getRegistered().get() == true) {
             //if successfully registered, go to login screen
-            game.setScreen(new LoginScreen(game, gameType));
+            game.setScreen(new LoginScreen(game, gameType,0));
         } else {
             //else go back to registering screen
             game.setScreen(new RegisteringScreen(game, gameType));
@@ -117,7 +120,8 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     public void settingPositions() {
         super.settingPositions();
         registerImage.setPosition(BodyConquest.V_WIDTH / 2.0f - registerImage.getWidth() / 2.0f, 450.0f);
-        registerBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - registerBtn.getWidth() / 2.0f, 50.0f);
+        registerBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - registerBtn.getWidth() / 2.0f -150.0f, 50.0f);
+        backBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - backBtn.getWidth() / 2.0f + 150.f, 50.0f);
     }
 
     /**
@@ -128,6 +132,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
         super.adding();
         stage.addActor(registerImage);
         stage.addActor(registerBtn);
+        stage.addActor(backBtn);
     }
 
     /**
@@ -138,5 +143,17 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
         super.settingSizes();
         registerBtn.setSize(250, 50);
         registerImage.setSize(register.getWidth(), register.getHeight());
+        backBtn.setSize(250, 50);
+    }
+
+
+    public void backButtonListener(TextButton backBtn) {
+        backBtn.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.setScreen(new LoginScreen(game, gameType,0));
+            }
+        });
     }
 }

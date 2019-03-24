@@ -93,7 +93,8 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   }
 
   public Client getClient() {
-    return client;
+      return client;
+
   }
 
   public void setClient(Client client) {
