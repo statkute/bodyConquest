@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
-import main.com.bodyconquest.database.DatabaseManager;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 

@@ -120,7 +120,8 @@ public class ServerLogic extends Thread {
     } else if (message.startsWith(MessageMaker.GET_LEADERBOARD_HEADER)) {
       pointer = MessageMaker.GET_LEADERBOARD_HEADER.length();
 
-      HashMap<String, Integer> board = dbManager.getLeaderboard();
+      HashMap<String, Integer> board = new HashMap<>();
+      board.putAll(dbManager.getLeaderboard());
 
       serverSender.sendMessage(MessageMaker.sendLeaderboardMessage(board));
     } else if (message.startsWith(MessageMaker.SET_ACHIEVEMENT_HEADER)) {
@@ -131,7 +132,7 @@ public class ServerLogic extends Thread {
       String[] values = message.split(" ");
 
       String username = values[1];
-      Integer points = Integer.getInteger(values[2]);
+      Integer points = Integer.parseInt(values[2]);
 
       boolean response = dbManager.insertAchievement(username, points);
 

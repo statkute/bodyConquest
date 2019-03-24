@@ -50,6 +50,11 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
 //        leaderboard.put("Jack", 11);
 //        leaderboard.put("Rose", 10);
         client = game.getClient();
+        //setting database logic to get leaderboard from server
+        game.getGame().startDatabaseState();
+
+        client.setDatabaseLogic();
+
         client.clientSender.sendMessage(MessageMaker.getLeaderboardMessage());
         comms = client.getCommunicator();
         loadAssets();
