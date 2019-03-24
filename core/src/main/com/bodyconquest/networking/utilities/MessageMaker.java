@@ -167,8 +167,6 @@ public class MessageMaker {
 
   }
 
-
-
   public static String usernameMessage(PlayerType playerType, String username){
     String message = USERNAME_;
 
@@ -239,6 +237,8 @@ public class MessageMaker {
     for (String i : board.keySet()) {
       message += " " + i + " " + board.get(i).toString();
     }
+
+    System.out.println(message);
 
     return message;
   }

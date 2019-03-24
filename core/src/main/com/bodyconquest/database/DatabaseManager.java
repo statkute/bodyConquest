@@ -20,6 +20,7 @@ public class DatabaseManager {
 
     public DatabaseManager() {
         connect();
+        //resetDB();
         //createTables();
     }
 
@@ -129,7 +130,7 @@ public class DatabaseManager {
 
         PreparedStatement getLeaderboard;
         try {
-            String getLeaderboardString = "SELECT username, points" +
+            String getLeaderboardString = "SELECT username, points " +
                     "FROM Leaderboard;";
             getLeaderboard = dbConn.prepareStatement(getLeaderboardString);
             ResultSet rs = getLeaderboard.executeQuery();
@@ -157,17 +158,16 @@ public class DatabaseManager {
 
         PreparedStatement insertPoints;
         try {
-            String insertPointsString = "INSERT INTO Leaderboard (aid, username, points) " +
-                    "VALUES (COUNT(aid) + 1, ?, ?) " +
+            String insertPointsString = "INSERT INTO Leaderboard (username, points) " +
+                    "VALUES (?, ?) " +
                     "ON CONFLICT (username) DO UPDATE " +
-                    "SET points = MAX(points, ?) " +
-                    "SET aid = MIN(aid, COUNT(aid) + 1) ";
+                    "SET points =  GREATEST(Leaderboard.points, EXCLUDED.points)";
             insertPoints = dbConn.prepareStatement(insertPointsString);
             insertPoints.setString(1, username);
             insertPoints.setInt(2, points);
-            insertPoints.setInt(3, points);
 
             insertPoints.executeUpdate();
+            return true;
         } catch (SQLException e) {
             System.out.println("SQL error in insertAchievement method");
         }
@@ -208,9 +208,10 @@ public class DatabaseManager {
         try {
             Statement statement = dbConn.createStatement();
             String createLeaderboardTable = "CREATE TABLE Leaderboard (\n" +
-                    "	aid					INTEGER			," +
+                    "	aid					SERIAL," +
                     "	username			VARCHAR(50)		NOT NULL," +
                     "	points			    INTEGER		    NOT NULL," +
+                    "   UNIQUE(username)," +
                     "	PRIMARY KEY (aid)," +
                     "   FOREIGN KEY (username) REFERENCES Users(username)" +
                     "	    ON UPDATE CASCADE" +
@@ -234,12 +235,8 @@ public class DatabaseManager {
     private void resetDB() {
         try {
             Statement statement = dbConn.createStatement();
-            String recreateSchema = "DROP SCHEMA public CASCADE;" +
-                    "CREATE SCHEMA public;" +
-                    "GRANT ALL ON SCHEMA public TO postgres;" +
-                    "GRANT ALL ON SCHEMA public TO public;" +
-                    "COMMENT ON SCHEMA public IS 'standard public schema';";
-            statement.execute(recreateSchema);
+            String dropTables = "DROP TABLE IF EXISTS Users, Leaderboard;";
+            statement.execute(dropTables);
         } catch (SQLException e) {
             System.out.println("Problems while clearing DB");
             attemptReconnection();

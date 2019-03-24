@@ -73,9 +73,9 @@ public class ClientLogic extends Thread {
       int i = 0;
       String username;
       Integer points;
-      while (i < values.length) {
-        username = values[i];
-        points = Integer.parseInt(values[i + 1]);
+      while (i + 1 < values.length) {
+        username = values[i + 1];
+        points = Integer.parseInt(values[i + 2]);
         board.put(username, points);
         i += 2;
       }

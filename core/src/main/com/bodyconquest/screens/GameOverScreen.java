@@ -38,6 +38,11 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         getAssets();
         setRectangles();
         client = game.getClient();
+        //setting database logic to send achievement to server
+        game.getGame().startDatabaseState();
+
+        client.setDatabaseLogic();
+
         communicator = client.getCommunicator();
         scoreBottom = communicator.getScoreBottom();
         scoreTop = communicator.getScoreTop();
