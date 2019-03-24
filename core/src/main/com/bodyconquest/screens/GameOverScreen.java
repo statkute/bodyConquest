@@ -9,6 +9,7 @@ import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.game_logic.Communicator;
 import main.com.bodyconquest.networking.Client;
+import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.awt.*;
@@ -106,6 +107,12 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         super.checkPressed();
         if (Gdx.input.justTouched()) {
             if (backBounds.contains(tmp.x, tmp.y)) {
+                if(gameType == GameType.SINGLE_PLAYER)
+                    client.clientSender.sendMessage(MessageMaker.sendAchievementMessage(usernameBottom,scoreBottom));
+                else if(gameType == GameType.MULTIPLAYER_HOST || gameType == GameType.MULTIPLAYER_JOIN){
+                    client.clientSender.sendMessage(MessageMaker.sendAchievementMessage(usernameBottom,scoreBottom));
+                    client.clientSender.sendMessage(MessageMaker.sendAchievementMessage(usernameTop,scoreTop));
+                }
                 playButtonSound();
                 dispose();
                 game.setScreen(new MenuScreen(game));

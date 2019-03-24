@@ -21,11 +21,13 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
     private Texture settingsButton;
     private Texture creditsButton;
     private Texture exitButton;
+    private Texture leaderboardButton;
     private Rectangle multiplayerBounds;
     private Rectangle singleplayerBounds;
     private Rectangle settingsBounds;
     private Rectangle creditsBounds;
     private Rectangle exitBounds;
+    private Rectangle leaderboardBounds;
 
     /**
      * The constant timeOfServer which shows how long the server is running.
@@ -67,14 +69,15 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         game.batch.draw(
                 playButtonSinglePlayer,
                 BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-                300);
+                360);
         game.batch.draw(
                 playButtonMultiplayer,
                 BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-                240);
+                300);
         game.batch.draw(settingsButton, BodyConquest.V_WIDTH / 2 - settingsButton.getWidth() / 2, 180);
         game.batch.draw(creditsButton, BodyConquest.V_WIDTH / 2 - creditsButton.getWidth() / 2, 120);
         game.batch.draw(exitButton, BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2, 60);
+        game.batch.draw(leaderboardButton, BodyConquest.V_WIDTH / 2 - leaderboardButton.getWidth() / 2, 242);
 
         checkPressed();
 
@@ -126,6 +129,13 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
                 Gdx.app.exit();
                 System.exit(0);
             }
+
+            if(leaderboardBounds.contains(tmp.x,tmp.y)){
+                playButtonSound();
+                System.out.println("Leaderboard Is touched");
+                dispose();
+                game.setScreen(new LeaderboardScreen(game));
+            }
         }
     }
 
@@ -141,6 +151,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         manager.load(Assets.settingsButton, Texture.class);
         manager.load(Assets.creditsButton, Texture.class);
         manager.load(Assets.exitButton, Texture.class);
+        manager.load(Assets.leaderboardButton, Texture.class);
         manager.finishLoading();
     }
 
@@ -156,6 +167,7 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         settingsButton = manager.get(Assets.settingsButton, Texture.class);
         creditsButton = manager.get(Assets.creditsButton, Texture.class);
         exitButton = manager.get(Assets.exitButton, Texture.class);
+        leaderboardButton = manager.get(Assets.leaderboardButton, Texture.class);
     }
 
     /**
@@ -167,14 +179,14 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
         singleplayerBounds =
                 new Rectangle(
                         BodyConquest.V_WIDTH / 2 - playButtonSinglePlayer.getWidth() / 2,
-                        300,
+                        360,
                         playButtonSinglePlayer.getWidth(),
                         playButtonSinglePlayer.getHeight());
 
         multiplayerBounds =
                 new Rectangle(
                         BodyConquest.V_WIDTH / 2 - playButtonMultiplayer.getWidth() / 2,
-                        240,
+                        300,
                         playButtonMultiplayer.getWidth(),
                         playButtonMultiplayer.getHeight());
 
@@ -196,5 +208,9 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
                         60,
                         exitButton.getWidth(),
                         exitButton.getHeight());
+        leaderboardBounds = new Rectangle(BodyConquest.V_WIDTH / 2 - leaderboardButton.getWidth() / 2,
+                242,
+                leaderboardButton.getWidth(),
+                leaderboardButton.getHeight());
     }
 }

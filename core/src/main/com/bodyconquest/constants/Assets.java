@@ -19,6 +19,8 @@ public class Assets {
   public static String creditsButton = "core/assets/credits_new.png";
   /** The constant exitButton. */
   public static String exitButton = "core/assets/exit_new.png";
+  /** The constant leadeboardButton. */
+  public static String leaderboardButton = "core/assets/LEADERBOARD.png";
 
   /** Credit Screen Assets */
 
@@ -116,6 +118,7 @@ public class Assets {
 
   /** Leaderboard Screen Assets */
   public static String headerLeaderboard = "core/assets/topscores.png";
+
 
 
   /** Fonts */
