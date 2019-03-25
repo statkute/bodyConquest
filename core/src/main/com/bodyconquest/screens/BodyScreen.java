@@ -68,6 +68,8 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   private Texture t_intestinespoints;
   private Image continueImage;
   private Texture t_continueImage;
+  private Image waitingImage;
+  private Texture t_waiting;
 
   private Disease myDiseaseType;
   private Disease opponentDiseaseType;
@@ -77,6 +79,8 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   private ArrayList<Image> allImages = new ArrayList<>();
   private Organ selectedOrganType;
   private Image selectedOrganImage;
+
+  private boolean picker;
 
   private Communicator communicator;
 
@@ -119,6 +123,8 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     communicator = game.getClient().getCommunicator();
     communicator.setStartBodyScreen(false);
 
+    picker = communicator.isPicker();
+
     this.myDiseaseType = communicator.getPlayerDisease();
     this.opponentDiseaseType = communicator.getOpponentDisease();
     this.myOrgans = communicator.getPlayerOrgans();
@@ -134,7 +140,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     loadAssets();
     getAssets();
     addActors();
-    addButtons();
+    if (picker){
+      addButtons();
+    }
   }
 
   /** {@inheritDoc} */
@@ -251,7 +259,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
       manager.load(Assets.intestines, Texture.class);
     }
 
-    manager.load(Assets.continueTextBig, Texture.class);
+    if (picker){
+      manager.load(Assets.continueTextBig, Texture.class);
+    } else {
+      manager.load(Assets.waitingText, Texture.class);
+    }
     manager.finishLoading();
   }
 
@@ -321,7 +333,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
       t_intestines = manager.get(Assets.intestines, Texture.class);
     }
 
-    t_continueImage = manager.get(Assets.continueTextBig, Texture.class);
+    if (picker){
+      t_continueImage = manager.get(Assets.continueTextBig, Texture.class);
+    } else{
+      t_waiting = manager.get(Assets.waitingText, Texture.class);
+    }
   }
 
   /**
@@ -602,12 +618,31 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
       allImages.add(intestinespoints);
     //}
 
+<<<<<<< Updated upstream
     continueImage = new Image(t_continueImage);
     continueImage.setBounds(
             BodyConquest.V_WIDTH / 2 - t_continueImage.getWidth() / 2.2f / 2,
             30,
             t_continueImage.getWidth() / 2.2f,
             t_continueImage.getHeight() / 2.2f);
+=======
+    if (picker){
+      continueImage = new Image(t_continueImage);
+      continueImage.setBounds(
+          BodyConquest.V_WIDTH / 2 - t_continueImage.getWidth() / 2.2f / 2,
+          30,
+          t_continueImage.getWidth() / 2.2f,
+          t_continueImage.getHeight() / 2.2f);
+    } else{
+      waitingImage = new Image(t_waiting);
+      waitingImage.setBounds(
+          BodyConquest.V_WIDTH / 2 - t_waiting.getWidth() / 2.2f / 2,
+          30,
+          t_waiting.getWidth() / 2.2f,
+          t_waiting.getHeight() / 2.2f);
+    }
+
+>>>>>>> Stashed changes
 
     for (Image i : allImages) {
       stage.addActor(i);
