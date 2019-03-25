@@ -36,6 +36,9 @@ public class ServerLogic extends Thread {
 
   private DatabaseManager dbManager;
 
+  private String usernameTop;
+  private String usernameBottom;
+
   //private RaceSelectionLogic raceSelectionLogic;
 
   /**
@@ -208,15 +211,18 @@ public class ServerLogic extends Thread {
     }
 
     else if(message.startsWith(MessageMaker.USERNAME_)){
-//      PlayerType player;
-//      pointer = MessageMaker.USERNAME_.length();
-//
-//      String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
-//      player = PlayerType.decode(encodedPlayerType);
-//      pointer +=PlayerType.getEncodedLength() +1;
-//
-//      String username = message.substring(pointer);
+      PlayerType player;
+      pointer = MessageMaker.USERNAME_.length();
 
+      String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
+      player = PlayerType.decode(encodedPlayerType);
+      pointer +=PlayerType.getEncodedLength() +1;
+
+      if(player == PlayerType.PLAYER_BOTTOM)
+        usernameBottom = message.substring(pointer);
+      else if(player == PlayerType.PLAYER_TOP){
+        usernameTop = message.substring(pointer);
+      }
       serverSender.sendMessage(message);
     }
 

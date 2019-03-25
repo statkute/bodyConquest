@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.database.DatabaseManager;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
@@ -26,6 +27,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     //private GameType gameType;
     private int counter;
     protected TextButton backBtn;
+    protected PlayerType playerType;
 
     /**
      * Instantiates a new Login screen.
@@ -37,6 +39,12 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         loginImage = new Image(login);
         this.counter = counter;
 //        backBtn = new TextButton("Back",skin);
+        if(gameType == GameType.SINGLE_PLAYER || gameType == GameType.MULTIPLAYER_HOST){
+            playerType = PlayerType.PLAYER_BOTTOM;
+        }
+        else{
+            playerType = PlayerType.PLAYER_TOP;
+        }
         if (counter > 0) {
             loginBtn = new TextButton("WRONG Details", skin);
             loginBtn.getLabel().setColor(Color.BLACK);
@@ -123,6 +131,9 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         if (game.getClient().getCommunicator().getLogged().get() == true) {
             //if successfully logged in, go to menu screen
             try {
+
+                game.getClient().getCommunicator().setUsername(playerType,textUsername);
+//                game.getClient().clientSender.sendMessage(MessageMaker.usernameMessage(playerType,textUsername));
                 game.setScreen(new RaceSelection(game, gameType));
             } catch (IOException e) {
                 System.out.println("Exception when displaying race selection screen");

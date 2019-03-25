@@ -64,6 +64,9 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         setRectangles();
 
 
+
+
+
         if (gameType != GameType.MULTIPLAYER_JOIN) {
             game.getGame().startRaceSelectionState();
         }
@@ -71,6 +74,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
 
         this.communicator = game.getClient().getCommunicator();
         this.playerType = communicator.getPlayerType();
+        game.getClient().clientSender.sendMessage(MessageMaker.usernameMessage(playerType,game.getClient().getCommunicator().getUsername(playerType)));
         /*
         game.getClient().startClient();
 

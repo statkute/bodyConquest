@@ -528,9 +528,9 @@ public class Communicator {
 
   }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+//  public void setUsername(String username) {
+//    this.username = username;
+//  }
 
   /**
    * was eye selected boolean.
