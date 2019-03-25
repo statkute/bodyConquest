@@ -12,11 +12,8 @@ import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.networking.Client;
 import main.com.bodyconquest.networking.Server;
-import main.com.bodyconquest.screens.LeaderboardScreen;
+import main.com.bodyconquest.screens.*;
 import main.com.bodyconquest.screens.MenuScreen;
-import main.com.bodyconquest.screens.RaceSelection;
-import main.com.bodyconquest.screens.MenuScreen;
-import main.com.bodyconquest.screens.StartScreen;
 
 import java.io.IOException;
 
@@ -60,8 +57,9 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     audioPlayer.playMusicLoop("music");
     client = new Client();
     //setScreen(new MenuScreen(this, "GermBoi"));
-    setScreen(new MenuScreen(this));
+    //setScreen(new MenuScreen(this));
     //setScreen(new LeaderboardScreen(this));
+    setScreen(new WaitingScreen(this,GameType.MULTIPLAYER_HOST));
 
   }
 
