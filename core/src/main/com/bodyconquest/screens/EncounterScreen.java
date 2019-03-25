@@ -314,12 +314,7 @@ public class EncounterScreen implements Screen {
 
       if(screenMakingCounter == 1){
 
-<<<<<<< Updated upstream
-        if(organNumber == 6){
-
-=======
         if(organNumber == 1){
->>>>>>> Stashed changes
           switchScreen(game, new GameOverScreen(game,gameType));
         }
         else {

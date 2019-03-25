@@ -618,14 +618,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
       allImages.add(intestinespoints);
     //}
 
-<<<<<<< Updated upstream
-    continueImage = new Image(t_continueImage);
-    continueImage.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_continueImage.getWidth() / 2.2f / 2,
-            30,
-            t_continueImage.getWidth() / 2.2f,
-            t_continueImage.getHeight() / 2.2f);
-=======
     if (picker){
       continueImage = new Image(t_continueImage);
       continueImage.setBounds(
@@ -642,7 +634,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
           t_waiting.getHeight() / 2.2f);
     }
 
->>>>>>> Stashed changes
 
     for (Image i : allImages) {
       stage.addActor(i);
