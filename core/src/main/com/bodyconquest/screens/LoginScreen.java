@@ -136,6 +136,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
+            game.getClient().getCommunicator().setLoggedIsSet(false);
             counter++;
             game.setScreen(new LoginScreen(game, gameType, counter));
 

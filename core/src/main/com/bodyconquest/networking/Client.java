@@ -13,6 +13,10 @@ public class Client {
 
   private Communicator communicator;
 
+  private boolean isStarted = false;
+
+
+
   /**
    * Starts the receiver and sender threads
    *
@@ -28,6 +32,8 @@ public class Client {
     clientReceiver.start();
     clientSender.start();
     clientLogic.start();
+
+    isStarted = true;
 
     clientSender.sendMessage("connected");
     //clientSender.sendMessage(MessageMaker.usernameMessage(username));
@@ -73,6 +79,10 @@ public class Client {
 
   public void setDatabaseLogic() {
     clientLogic.setDatabaseLogic();
+  }
+
+  public boolean getIsStarted() {
+    return isStarted;
   }
 
   //  public static void main(String argv[]) throws Exception {
