@@ -24,6 +24,8 @@ public class Game extends Thread {
   private Player playerTop;
   private boolean encounter;
 
+  private PlayerType lastPicker;
+
   /**
    * Constructor
    *
@@ -144,4 +146,12 @@ public class Game extends Thread {
         server.startDatabaseLogic();
     }
 
+
+  public PlayerType getLastPicker() {
+    return lastPicker;
+  }
+
+  public void setLastPicker(PlayerType lastPicker) {
+    this.lastPicker = lastPicker;
+  }
 }

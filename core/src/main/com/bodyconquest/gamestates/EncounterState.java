@@ -339,6 +339,14 @@ public class EncounterState {
 
   private void endGame(PlayerType player) {
     String endingMessage = MessageMaker.organClaimMessage(player,organ);
+    PlayerType picker;
+    if(game.getLastPicker() == PlayerType.PLAYER_BOTTOM) {
+      picker = PlayerType.PLAYER_TOP;
+    } else {
+      picker = PlayerType.PLAYER_BOTTOM;
+    }
+    serverSender.sendMessage(MessageMaker.firstPickerMessage(player));
+    game.setLastPicker(picker);
     serverSender.sendMessage(endingMessage);
     if(player == PlayerType.PLAYER_BOTTOM) {
       totalScoreBottom += organ.getOrganScore();

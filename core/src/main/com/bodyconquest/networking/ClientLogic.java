@@ -47,6 +47,17 @@ public class ClientLogic extends Thread {
           continue;
         }
 
+        if(message.startsWith(MessageMaker.FIRST_PICKER_HEADER)) {
+          PlayerType player;
+          int pointer = MessageMaker.FIRST_PICKER_HEADER.length();
+
+          String encodedPlayerType = message.substring(pointer, pointer + PlayerType.getEncodedLength());
+          player = PlayerType.decode(encodedPlayerType);
+
+          communicator.setPicker(communicator.getPlayerType() == player);
+          continue;
+        }
+
         if (currentLogic == Logic.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
         if (currentLogic == Logic.ENCOUNTER_LOGIC)      encounterLogic(message);
         if (currentLogic == Logic.BODY_LOGIC)           bodyLogic(message);
