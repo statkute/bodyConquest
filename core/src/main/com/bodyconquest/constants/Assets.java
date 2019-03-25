@@ -206,7 +206,7 @@ public class Assets {
   public static String intestinespoints = "core/assets/intestinespoints.png";
   /** The constant continueTextBig. */
   public static String continueTextBig = "core/assets/continue_new_big.png";
-
+  public static String waitingText = "core/assets/waiting_big.png";
 
   /** Game Over Screen Assets */
 

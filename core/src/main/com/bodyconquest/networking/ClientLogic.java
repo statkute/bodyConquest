@@ -47,6 +47,17 @@ public class ClientLogic extends Thread {
           continue;
         }
 
+        if(message.startsWith(MessageMaker.FIRST_PICKER_HEADER)) {
+          PlayerType player;
+          int pointer = MessageMaker.FIRST_PICKER_HEADER.length();
+
+          String encodedPlayerType = message.substring(pointer, pointer + PlayerType.getEncodedLength());
+          player = PlayerType.decode(encodedPlayerType);
+
+          communicator.setPicker(communicator.getPlayerType() == player);
+          continue;
+        }
+
         if (currentLogic == Logic.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
         if (currentLogic == Logic.ENCOUNTER_LOGIC)      encounterLogic(message);
         if (currentLogic == Logic.BODY_LOGIC)           bodyLogic(message);
@@ -73,9 +84,9 @@ public class ClientLogic extends Thread {
       int i = 0;
       String username;
       Integer points;
-      while (i + 1 < values.length) {
-        username = values[i + 1];
-        points = Integer.parseInt(values[i + 2]);
+      while (i < values.length) {
+        username = values[i];
+        points = Integer.parseInt(values[i + 1]);
         board.put(username, points);
         i += 2;
       }
@@ -148,7 +159,7 @@ public class ClientLogic extends Thread {
       pointer += Disease.getEncodedLength() + 1;
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+              message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
 
       if (communicator.getPlayerType() != player) communicator.setOpponentDisease(disease);
@@ -158,7 +169,7 @@ public class ClientLogic extends Thread {
       pointer = MessageMaker.FIRST_PICKER_HEADER.length();
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+              message.substring(pointer, pointer + PlayerType.getEncodedLength());
       firstPicker = PlayerType.decode(encodedPlayerType);
 
       communicator.setPicker(firstPicker == communicator.getPlayerType());
@@ -169,7 +180,7 @@ public class ClientLogic extends Thread {
       pointer = MessageMaker.CHOOSE_RACE_HEADER.length();
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+              message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
 
       if (player == communicator.getPlayerType()) communicator.setPicker(true);
@@ -208,7 +219,7 @@ public class ClientLogic extends Thread {
       pointer = MessageMaker.HEALTH_HEADER.length();
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+              message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
       pointer += PlayerType.getEncodedLength() + 1;
 
@@ -231,7 +242,7 @@ public class ClientLogic extends Thread {
       pointer = MessageMaker.RESOURCES_HEADER.length();
 
       String encodedPlayerType =
-          message.substring(pointer, pointer + PlayerType.getEncodedLength());
+              message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
       pointer += PlayerType.getEncodedLength() + 1;
 

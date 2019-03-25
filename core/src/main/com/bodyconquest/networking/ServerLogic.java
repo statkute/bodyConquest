@@ -205,6 +205,8 @@ public class ServerLogic extends Thread {
       }
 
       if(game.getGameType() == GameType.SINGLE_PLAYER || bottomPlayerReady && topPlayerReady) {
+        serverSender.sendMessage(MessageMaker.firstPickerMessage(PlayerType.PLAYER_BOTTOM));
+        game.setLastPicker(PlayerType.PLAYER_BOTTOM);
         game.startBodyState();
         serverSender.sendMessage(MessageMaker.START_BODY);
       }
