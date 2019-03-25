@@ -7,27 +7,40 @@ public enum Disease {
       UnitType.VIRUS,
       UnitType.BACTERIA,
       UnitType.FUNGUS,
-      AbilityType.RIGOR_MORTIS),
+      AbilityType.RIGOR_MORTIS,
+      1.0f,
+      1.2f,
+      1.0f,
+      1.0f),
   MEASLES(
       "MES",
       BaseType.MEASLES_BASE,
       UnitType.BACTERIA,
       UnitType.BACTERIA,
       UnitType.BACTERIA,
-      UnitType.BACTERIA),
+      UnitType.BACTERIA,
+      1.0f,
+      1.2f,
+      1.0f,
+      1.0f),
   ROTAVIRUS(
       "RVI",
       BaseType.ROTAVIRUS_BASE,
       UnitType.BACTERIA,
       UnitType.BACTERIA,
       UnitType.BACTERIA,
-      AbilityType.NECROSIS);
+      AbilityType.NECROSIS,
+      1.0f,
+      1.2f,
+      1.0f,
+      1.0f);
 
   private static final int ENCODED_LENGTH = 3;
 
   private final String encodedDisease;
   private final BaseType baseType;
   private final ClassOwner spawn1, spawn2, spawn3, spawn4;
+  private float damageMult, speedMult, attackSpeedMult, healthMult;
 
   Disease(
       String encodedDisease,
@@ -35,7 +48,11 @@ public enum Disease {
       ClassOwner spawn1,
       ClassOwner spawn2,
       ClassOwner spawn3,
-      ClassOwner spawn4) {
+      ClassOwner spawn4,
+      float damageMult,
+      float speedMult,
+      float attackSpeedMult,
+      float healthMult) {
     if (encodedDisease.length() != ENCODED_LENGTH)
       System.err.println("Length of getEncoded disease is incorrect.");
     this.encodedDisease = encodedDisease;
@@ -44,6 +61,10 @@ public enum Disease {
     this.spawn2 = spawn2;
     this.spawn3 = spawn3;
     this.spawn4 = spawn4;
+    this.damageMult = damageMult;
+    this.speedMult = speedMult;
+    this.attackSpeedMult = attackSpeedMult;
+    this.healthMult = healthMult;
   }
 
   public String getEncoded() {
@@ -89,5 +110,21 @@ public enum Disease {
 
   public ClassOwner getSpawn4() {
     return spawn4;
+  }
+
+  public float getDamageMult() {
+    return damageMult;
+  }
+
+  public float getSpeedMult() {
+    return speedMult;
+  }
+
+  public float getAttackSpeedMult() {
+    return attackSpeedMult;
+  }
+
+  public float getHealthMult() {
+    return healthMult;
   }
 }

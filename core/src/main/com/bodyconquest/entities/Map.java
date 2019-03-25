@@ -78,7 +78,9 @@ public class Map extends Actor {
     stateTime += 10f; // Accumulate elapsed animation time
     // Get current frame of animation for the current stateTime
     //System.out.println(System.currentTimeMillis());
+
     TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+
     batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
     super.draw(batch, parentAlpha);
   }

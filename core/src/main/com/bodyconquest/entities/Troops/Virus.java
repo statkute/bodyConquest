@@ -24,8 +24,9 @@ public class Virus extends Troop {
     init();
   }
 
-  public Virus(Lane lane, PlayerType playerType, float damageMult, float speedMult, float healthMult, float attackSpeedMult){
+  public Virus(EncounterState map, Lane lane, PlayerType playerType, float damageMult, float speedMult, float healthMult, float attackSpeedMult){
     super(lane, playerType);
+    this.map = map;
     initSpecific(damageMult, speedMult, healthMult, attackSpeedMult);
   }
 
@@ -78,6 +79,7 @@ public class Virus extends Troop {
     lastAttack = 0;
     range = 200;
     damage = 40;
+    ranged = true;
 
     mapObjectType = UnitType.VIRUS;
 

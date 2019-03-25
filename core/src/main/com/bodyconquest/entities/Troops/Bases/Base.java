@@ -19,6 +19,7 @@ public abstract class Base extends Troop {
       this.moving = false;
       this.attacking = false;
       this.cooldown = 1500;
+      ranged = true;
 //      setTimeAlive(0.0f);
 //      setTimeOfDmgTaken(-1.0f);
       this.setSize(Assets.baseWidth, Assets.baseHeight);

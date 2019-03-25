@@ -63,6 +63,8 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   protected boolean slowed;
 
+  protected boolean ranged;
+
   // Effect Values
   protected long slowTimeEnd;
   protected int slowPercentage;
@@ -102,6 +104,7 @@ public abstract class Troop extends MapObject implements Spawnable {
     collidable = true;
     killingPoints = 0;
     damageCounter = 0;
+    ranged = false;
   }
 
   /**
@@ -393,5 +396,9 @@ public abstract class Troop extends MapObject implements Spawnable {
     slowed = true;
     this.slowPercentage = slowPercentage;
     slowTimeEnd = System.currentTimeMillis() + time;
+  }
+
+  public boolean isRanged() {
+    return ranged;
   }
 }

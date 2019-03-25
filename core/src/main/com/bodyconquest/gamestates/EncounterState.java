@@ -228,13 +228,42 @@ public class EncounterState {
    */
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
     Troop troop = null;
+//    Disease disease;
+//    if (playerType == PlayerType.PLAYER_BOTTOM) {
+//      disease = bottomPlayer.getDisease();
+//    } else {
+//      disease = topPlayer.getDisease();
+//    }
+//    try {
+//      Troop troopInit = (Troop) unitType.getAssociatedClass().newInstance();
+//      if(!troopInit.isRanged()) {
+//         troopInit = (Troop) unitType.getAssociatedClass().getDeclaredConstructor(Lane.class, PlayerType.class, float.class, float.class, float.class, float.class).newInstance(lane, playerType, disease.getDamageMult(),disease.getSpeedMult(), disease.getHealthMult(), disease.getAttackSpeedMult());
+//        if(bottomResources.canAfford(troopInit.getLipidCost(),troopInit.getSugarCost(),troopInit.getProteinCost())){
+//          bottomResources.buy(troopInit.getLipidCost(),troopInit.getSugarCost(),troopInit.getProteinCost());
+//          troop = troopInit;
+//        }
+//      } else {
+//
+//      }
+//
+//
+//    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+//      e.printStackTrace();
+//    }
+
+    Disease disease;
+    if (playerType == PlayerType.PLAYER_BOTTOM) {
+      disease = bottomPlayer.getDisease();
+    } else {
+      disease = topPlayer.getDisease();
+    }
 
     // Initialise troop type
     if (unitType.equals(UnitType.BACTERIA)) {
       if(playerType == PlayerType.PLAYER_BOTTOM){
         if(bottomResources.canAfford(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST)){
           bottomResources.buy(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST);
-          troop = new Bacteria(lane, playerType);
+          troop = new Bacteria(lane, playerType,disease.getDamageMult(),disease.getSpeedMult(), disease.getHealthMult(), disease.getAttackSpeedMult());
         } else{
 
         }
@@ -245,7 +274,7 @@ public class EncounterState {
       if(playerType == PlayerType.PLAYER_BOTTOM){
         if(bottomResources.canAfford(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST)){
           bottomResources.buy(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST);
-          troop = new Virus(this, playerType, lane);
+          troop = new Virus(this, lane, playerType,disease.getDamageMult(),disease.getSpeedMult(), disease.getHealthMult(), disease.getAttackSpeedMult());
         }else{
 
         }
@@ -256,7 +285,7 @@ public class EncounterState {
       if(playerType == PlayerType.PLAYER_BOTTOM){
         if(bottomResources.canAfford(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST)){
           bottomResources.buy(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST);
-          troop = new Fungus(lane, playerType);
+          troop = new Fungus(lane, playerType, disease.getDamageMult(),disease.getSpeedMult(), disease.getHealthMult(), disease.getAttackSpeedMult());
         }else{
 
         }
