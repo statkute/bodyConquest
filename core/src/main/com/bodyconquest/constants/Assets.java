@@ -22,7 +22,7 @@ public class Assets {
   /** The constant exitButton. */
   public static String exitButton = "core/assets/exit_new.png";
   /** The constant leadeboardButton. */
-  public static String leaderboardButton = "core/assets/LEADERBOARD.png";
+  public static String leaderboardButton = "core/assets/leaderboard_new.png";
 
   /** Credit Screen Assets */
 
