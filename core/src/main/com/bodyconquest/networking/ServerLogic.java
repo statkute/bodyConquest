@@ -247,7 +247,6 @@ public class ServerLogic extends Thread {
 //        serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
       }
     }
-
     else {
       System.err.println("[ERROR] This message doesn't conform to the current logic.");
     }
