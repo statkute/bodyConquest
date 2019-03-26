@@ -142,6 +142,15 @@ public class ClientLogic extends Thread {
       communicator.setCurrentOrgan(organ);
       communicator.setStartEncounter(true);
     }
+    else if(message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
+      Organ organ;
+      pointer = MessageMaker.SELECTED_ORGAN_HEADER.length();
+
+      String encodedOrgan = message.substring(pointer, pointer + Organ.getEncodedLength());
+      organ = Organ.decode(encodedOrgan);
+
+      communicator.setSelectedOrgan(organ);
+    }
   }
 
   private void raceSelectionLogic(String message) {
@@ -197,16 +206,6 @@ public class ClientLogic extends Thread {
       String username = message.substring(pointer);
 
       communicator.setUsername(player,username);
-    }
-
-    else if(message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
-      Organ organ;
-      pointer = MessageMaker.SELECTED_ORGAN_HEADER.length();
-
-      String encodedOrgan = message.substring(pointer, pointer + Organ.getEncodedLength());
-      organ = Organ.decode(encodedOrgan);
-
-      communicator.setSelectedOrgan(organ);
     }
 
 
