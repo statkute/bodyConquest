@@ -84,7 +84,7 @@ public class Assets {
   /** The constant raceYellowVirusSelected. */
   public static String raceYellowVirusSelected = "core/assets/yellowvirusselected.png";
   /** The constant raceBlueVirusSelected. */
-  public static String raceBlueVirusOpponent = "core/assets/bluevirusopponent.png";
+  public static String raceBlueVirusOpponent = "core/assets/bluevirussopponent.png";
   /** The constant raceGreenVirusSelected. */
   public static String raceGreenVirusOpponent = "core/assets/greenvirusopponent.png";
   /** The constant raceYellowVirusSelected. */
