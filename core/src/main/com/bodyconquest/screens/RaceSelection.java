@@ -143,7 +143,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 60);
 
     if (!communicator.isPicker()) {
-      game.batch.draw(waitingText, BodyConquest.V_WIDTH / 2 - waitingText.getWidth() / 2, 60);
+      game.batch.draw(waitingText, BodyConquest.V_WIDTH / 2 - waitingText.getWidth() / 2.2f / 2, 60, waitingText.getWidth()/ 2.2f, waitingText.getHeight() / 2.2f);
     }
 
     //game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
@@ -182,16 +182,16 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         checkSelection();
       }
 
-      if (backBounds.contains(tmp.x, tmp.y)) {
-        System.out.println("back pressed");
-        playButtonSound();
-        if (server != null) {
-          server.closeEverything();
-        }
-        game.getClient().closeEverything();
-        game.setScreen(new MenuScreen(game));
-        dispose();
-      }
+//      if (backBounds.contains(tmp.x, tmp.y)) {
+//        System.out.println("back pressed");
+//        playButtonSound();
+//        if (server != null) {
+//          server.closeEverything();
+//        }
+//        game.getClient().closeEverything();
+//        game.setScreen(new MenuScreen(game));
+//        dispose();
+//      }
     }
   }
 
