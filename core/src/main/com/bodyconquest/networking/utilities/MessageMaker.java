@@ -36,6 +36,7 @@ public class MessageMaker {
   public static final String PAUSE_MESSAGE = "PAUSE";
   public static final String EXIT_MESSAGE = "EXIT";
   public static final String START_BODY = "START_BODY";
+  public static final String JOINED_MESSAGE_HEADER = "JOINED_";
 
   public static String spawnTroopsMessage(UnitType troopClass, Lane lane, PlayerType playerType) {
     String message = TROOP_SPAWN_HEADER;
@@ -259,5 +260,7 @@ public class MessageMaker {
 
     return message;
   }
+
+
 
 }
