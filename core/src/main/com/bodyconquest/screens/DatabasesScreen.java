@@ -2,16 +2,12 @@ package main.com.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
-import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
 /** The type Databases screen. */
@@ -86,16 +82,16 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
   @Override
   public void loadAssets() {
     super.loadAssets();
-    manager.load(Assets.registerUsername, Texture.class);
-    manager.load(Assets.registerPassword, Texture.class);
+    manager.load(Assets.enterUsernameText, Texture.class);
+    manager.load(Assets.enterPasswordText, Texture.class);
   }
 
   /** {@inheritDoc} */
   @Override
   public void getAssets() {
     super.getAssets();
-    username = manager.get(Assets.registerUsername, Texture.class);
-    password = manager.get(Assets.registerPassword, Texture.class);
+    username = manager.get(Assets.enterUsernameText, Texture.class);
+    password = manager.get(Assets.enterPasswordText, Texture.class);
   }
 
   /** Process registration. */
@@ -112,12 +108,12 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
 
   /** Setting positions in the batch and stage. */
   public void settingPositions() {
-    passwordImage.setPosition(
-        BodyConquest.V_WIDTH / 2.0f - passwordImage.getWidth() / 2.0f, 220.0f);
     usernameImage.setPosition(
         BodyConquest.V_WIDTH / 2.0f - usernameImage.getWidth() / 2.0f, 360.0f);
-    txfUsername.setPosition(BodyConquest.V_WIDTH / 2.0f - txfUsername.getWidth() / 2.0f, 280.0f);
-    txfPassword.setPosition(BodyConquest.V_WIDTH / 2.0f - txfPassword.getWidth() / 2.0f, 140.0f);
+    passwordImage.setPosition(
+        BodyConquest.V_WIDTH / 2.0f - passwordImage.getWidth() / 2.0f, 220.0f);
+    txfUsername.setPosition(BodyConquest.V_WIDTH / 2.0f - txfUsername.getWidth() / 2.0f, 310.0f);
+    txfPassword.setPosition(BodyConquest.V_WIDTH / 2.0f - txfPassword.getWidth() / 2.0f, 170.0f);
   }
 
   /** Adding actors to Stage. */
@@ -130,9 +126,9 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
 
   /** Setting sizes in the batch and stage. */
   public void settingSizes() {
-    txfUsername.setSize(350, 50);
-    txfPassword.setSize(350, 50);
-    passwordImage.setSize(passwordImage.getWidth() / 2.0f, passwordImage.getHeight() / 2.0f);
-    usernameImage.setSize(usernameImage.getWidth() / 2.0f, usernameImage.getHeight() / 2.0f);
+    txfUsername.setSize(300, 40);
+    txfPassword.setSize(300, 40);
+    passwordImage.setSize(passwordImage.getWidth(), passwordImage.getHeight());
+    usernameImage.setSize(usernameImage.getWidth(), usernameImage.getHeight());
   }
 }

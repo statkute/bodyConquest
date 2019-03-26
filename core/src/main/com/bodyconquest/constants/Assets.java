@@ -122,10 +122,10 @@ public class Assets {
 
   /** Register Screen Assets */
 
-  /** The constant registerUsername. */
-  public static String registerUsername = "core/assets/USERNAME_start.png";
-  /** The constant registerPassword. */
-  public static String registerPassword = "core/assets/PASSWORD_start.png";
+  /** The constant enterUsernameText. */
+  public static String enterUsernameText = "core/assets/enterUsername.png";
+  /** The constant enterPasswordText. */
+  public static String enterPasswordText = "core/assets/enterPassword.png";
 
   /** Leaderboard Screen Assets */
   public static String headerLeaderboard = "core/assets/topscores.png";
