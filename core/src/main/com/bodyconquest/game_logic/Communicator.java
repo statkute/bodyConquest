@@ -65,7 +65,11 @@ public class Communicator {
   private String usernameBottom;
   private String usernameTop;
 
+<<<<<<< HEAD
   private Organ selectedOrgan;
+=======
+  private boolean playersSet;
+>>>>>>> 9d379cc32beef3194a0fc8345acd9cccee205885
 
   /** Instantiates a new Communicator. */
   public Communicator() {
@@ -611,6 +615,13 @@ public class Communicator {
 
   public Organ getSelectedOrgan(){
     return selectedOrgan;
-  }
+
+//  public void setPlayersSet(boolean playersSet){
+//    this.playersSet = playersSet;
+//  }
+//
+//  public boolean getPlayersSet(){
+//    return playersSet;
+//  }
 
 }

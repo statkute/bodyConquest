@@ -24,6 +24,7 @@ public class MessageMaker {
   public static final String GET_LEADERBOARD_HEADER = "GET_LEADERBOARD_";
   public static final String SET_LEADERBOARD_HEADER = "SET_LEADERBOARD_";
   public static final String SET_ACHIEVEMENT_HEADER = "SET_ACHIEVEMENT_";
+  public static final String SELECTED_ORGAN_HEADER = "SELECT_ORGAN_";
   public static final String ORGAN_CLAIMED = "CLAIMED_";
   public static final String USERNAME_ ="USERNAME_";
 
@@ -134,6 +135,12 @@ public class MessageMaker {
 
   public static String exitMessage() {
     return EXIT_MESSAGE;
+  }
+
+  public static String selectedOrganMessage(Organ organ) {
+    String message = SELECTED_ORGAN_HEADER;
+    message += organ.getEncoded();
+    return message;
   }
 
   public static String confirmOrganMessage(Organ organ) {
