@@ -65,6 +65,8 @@ public class Communicator {
   private String usernameBottom;
   private String usernameTop;
 
+  private Organ selectedOrgan;
+
   /** Instantiates a new Communicator. */
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();
@@ -601,6 +603,14 @@ public class Communicator {
     else if(playerType == PlayerType.PLAYER_BOTTOM){
       usernameBottom = username;
     }
+  }
+
+  public void setSelectedOrgan(Organ organ){
+    selectedOrgan = organ;
+  }
+
+  public Organ getSelectedOrgan(){
+    return selectedOrgan;
   }
 
 }
