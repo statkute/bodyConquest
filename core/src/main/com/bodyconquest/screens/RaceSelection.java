@@ -22,7 +22,6 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   private Texture continueText;
   private Texture waitingText;
   private Texture selectText;
-  private Texture backButton;
   private Texture blueVirus;
   private Texture greenVirus;
   private Texture yellowVirus;
@@ -39,8 +38,8 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   private int selection = 0;
 
   private Rectangle continueBounds;
-  private Rectangle backBounds;
   private Rectangle blueVirusBounds;
+  private Rectangle blueDescriptionBounds;
   private Rectangle greenVirusBounds;
   private Rectangle yellowVirusBounds;
 
@@ -132,13 +131,13 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     }
 
     game.batch.draw(
-        blueDescription, (BodyConquest.V_WIDTH / 5.0f - blueDescription.getWidth() / 2.0f), 160);
+        blueDescription, (BodyConquest.V_WIDTH / 5.0f - blueDescription.getWidth() / 2.0f / 2.0f), 165, blueDescription.getWidth() / 2.0f, blueDescription.getHeight() / 2.0f);
     game.batch.draw(
-        greenDescription, (BodyConquest.V_WIDTH / 2.0f - greenDescription.getWidth() / 2.0f), 160);
+        greenDescription, (BodyConquest.V_WIDTH / 2.0f - greenDescription.getWidth() / 2.0f), 165);
     game.batch.draw(
         yellowDescription,
         (BodyConquest.V_WIDTH / 5.0f * 4.0f - yellowDescription.getWidth() / 2.0f),
-        160);
+        165);
 
     if (selection != 0 && communicator.isPicker()) {
       game.batch.draw(
@@ -263,7 +262,6 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     continueText = manager.get(Assets.raceContinueText, Texture.class);
     waitingText = manager.get(Assets.waitingText, Texture.class);
     selectText = manager.get(Assets.selectDiseaseText, Texture.class);
-    backButton = manager.get(Assets.raceBackButton, Texture.class);
     blueVirus = manager.get(Assets.raceBlueVirus, Texture.class);
     greenVirus = manager.get(Assets.raceGreenVirus, Texture.class);
     yellowVirus = manager.get(Assets.raceYellowVirus, Texture.class);
@@ -296,6 +294,13 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
             blueVirus.getWidth(),
             blueVirus.getHeight());
 
+    blueDescriptionBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2.0f / 2.0f,
+            165,
+            blueDescription.getWidth() / 2.0f,
+            blueDescription.getHeight() / 2.0f);
+
     greenVirusBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2,
@@ -321,7 +326,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   /** Check selection of the virus of the user. */
   public void checkSelection() {
 
-    if (blueVirusBounds.contains(tmp.x, tmp.y)) {
+    if (blueVirusBounds.contains(tmp.x, tmp.y) || blueDescriptionBounds.contains(tmp.x, tmp.y)) {
       if (communicator.getOpponentDisease() == Disease.INFLUENZA) {
         return;
       }
