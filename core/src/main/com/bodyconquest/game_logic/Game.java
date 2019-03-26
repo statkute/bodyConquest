@@ -153,7 +153,7 @@ public class Game extends Thread {
   }
 
     public void startDatabaseState() {
-        server.startDatabaseLogic();
+        server.startDatabaseLogic(this);
     }
   public PlayerType getLastPicker() {
     return lastPicker;

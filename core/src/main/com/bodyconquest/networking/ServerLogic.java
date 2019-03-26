@@ -65,9 +65,26 @@ public class ServerLogic extends Thread {
         String message = serverReceiver.receivedMessages.take();
 
         if (currentLogicType == null) {
-          System.err.println("[ERROR] No server logic has been set.");
+          System.err.println("[ERROR] No server logic has been set.\n\t" + message);
           // Right now we throw away messages we don't interpret
           // In future we may want to add them back to the received messages list
+          continue;
+        }
+
+         if(message.startsWith(MessageMaker.USERNAME_)){
+          PlayerType player;
+          int pointer = MessageMaker.USERNAME_.length();
+
+          String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
+          player = PlayerType.decode(encodedPlayerType);
+          pointer +=PlayerType.getEncodedLength() +1;
+
+          if(player == PlayerType.PLAYER_BOTTOM)
+            game.usernameBottom = message.substring(pointer);
+          else if(player == PlayerType.PLAYER_TOP){
+            game.usernameTop = message.substring(pointer);
+          }
+          serverSender.sendMessage(message);
           continue;
         }
 
@@ -231,22 +248,6 @@ public class ServerLogic extends Thread {
       }
     }
 
-    else if(message.startsWith(MessageMaker.USERNAME_)){
-      PlayerType player;
-      pointer = MessageMaker.USERNAME_.length();
-
-      String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
-      player = PlayerType.decode(encodedPlayerType);
-      pointer +=PlayerType.getEncodedLength() +1;
-
-      if(player == PlayerType.PLAYER_BOTTOM)
-        game.usernameBottom = message.substring(pointer);
-      else if(player == PlayerType.PLAYER_TOP){
-        game.usernameTop = message.substring(pointer);
-      }
-      serverSender.sendMessage(message);
-    }
-
     else {
       System.err.println("[ERROR] This message doesn't conform to the current logic.");
     }
@@ -341,8 +342,9 @@ public class ServerLogic extends Thread {
     currentLogicType = LogicType.BODY_LOGIC;
   }
 
-  public void setDatabaseLogic() {
+  public void setDatabaseLogic(Game game) {
     currentLogicType = LogicType.DATABASE_LOGIC;
+    this.game = game;
   }
 
   public void setWaitingLogic() { currentLogicType = LogicType.WAITING_LOGIC; }

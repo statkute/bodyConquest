@@ -76,8 +76,8 @@ public class Server {
 
   public void startBodyLogic() { serverLogic.setBodyLogic(); }
 
-    public void startDatabaseLogic() {
-        serverLogic.setDatabaseLogic();
+    public void startDatabaseLogic(Game game) {
+        serverLogic.setDatabaseLogic(game);
     }
 
 }
