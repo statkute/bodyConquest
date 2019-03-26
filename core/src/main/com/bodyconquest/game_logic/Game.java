@@ -26,6 +26,9 @@ public class Game extends Thread {
   private boolean encounter;
   private PlayerType lastPicker;
 
+  public String usernameTop;
+  public String usernameBottom;
+
   /**
    * Constructor
    *
@@ -113,9 +116,10 @@ public class Game extends Thread {
     server.startRaceSelectionLogic(this);
     if (gameType == GameType.SINGLE_PLAYER) {
       setPlayerTop(Disease.INFLUENZA);
+      server.getServerSender().sendMessage(MessageMaker.firstPickerMessage(PlayerType.PLAYER_BOTTOM));
     } else {
       Random rnd = new Random();
-      server.getServerSender().sendMessage(MessageMaker.firstPickerMessage((rnd.nextInt(1) == 1 ? PlayerType.PLAYER_BOTTOM : PlayerType.PLAYER_TOP)));
+      server.getServerSender().sendMessage(MessageMaker.firstPickerMessage((rnd.nextInt(2) == 1 ? PlayerType.PLAYER_BOTTOM : PlayerType.PLAYER_TOP)));
     }
   }
 
@@ -134,7 +138,11 @@ public class Game extends Thread {
       else if(getPlayerBottom().getDisease() != Disease.ROTAVIRUS)
         setPlayerTop(Disease.ROTAVIRUS);
       server.getServerSender().sendMessage(MessageMaker.diseaseMessage(getPlayerTop().getDisease(), PlayerType.PLAYER_TOP));
+      usernameTop = "AI";
     }
+
+    server.getServerSender().sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_BOTTOM, usernameBottom));
+    server.getServerSender().sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_TOP, usernameTop));
 
     server.startBodyLogic(); }
 

@@ -42,9 +42,7 @@ public class ClientReceiver extends Thread {
       joinGroup(mSocket, group);
       byte[] buf = new byte[256];
       DatagramPacket packet = new DatagramPacket(buf, buf.length);
-      //System.out.println("before rec packet");
       mSocket.receive(packet);
-      //System.out.println("after rec packet");
       address = packet.getAddress();
       mSocket.close();
       return address;
@@ -70,8 +68,8 @@ public class ClientReceiver extends Thread {
         }
         //System.out.println(packet.getData().length);
         String received = new String(packet.getData()).trim();
-        System.out.println(
-            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
+//        System.out.println(
+//            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
         receivedMessages.put(received.trim());
       } catch (IOException | InterruptedException e) {
         e.printStackTrace();
