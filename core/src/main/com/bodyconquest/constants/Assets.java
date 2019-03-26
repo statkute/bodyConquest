@@ -116,16 +116,23 @@ public class Assets {
   public static String startRegister = "core/assets/register_menu.png";
   /** The constant startLogin. */
   public static String startLogin = "core/assets/login_menu.png";
-
-  /** The constant startLogin. */
+  /** The constant loginHeader. */
   public static String loginHeader = "core/assets/login_header.png";
 
-  /** Register Screen Assets */
+
+  /** Register and Login joint Screen Assets */
 
   /** The constant enterUsernameText. */
   public static String enterUsernameText = "core/assets/enterUsername.png";
   /** The constant enterPasswordText. */
   public static String enterPasswordText = "core/assets/enterPassword.png";
+  /** The constant enterPasswordText. */
+  public static String registerButtonLow = "core/assets/registerbutton_low.png";
+  /** The constant enterPasswordText. */
+  public static String submitButtonLow = "core/assets/submitbutton_low.png";
+  /** The constant enterPasswordText. */
+  public static String loginButtonLow = "core/assets/loginbutton_low.png";
+
 
   /** Leaderboard Screen Assets */
   public static String headerLeaderboard = "core/assets/topscores.png";

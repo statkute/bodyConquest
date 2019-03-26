@@ -109,9 +109,9 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
   /** Setting positions in the batch and stage. */
   public void settingPositions() {
     usernameImage.setPosition(
-        BodyConquest.V_WIDTH / 2.0f - usernameImage.getWidth() / 2.0f, 360.0f);
+        BodyConquest.V_WIDTH / 2.0f - usernameImage.getWidth() / 2.0f, 347.0f);
     passwordImage.setPosition(
-        BodyConquest.V_WIDTH / 2.0f - passwordImage.getWidth() / 2.0f, 220.0f);
+        BodyConquest.V_WIDTH / 2.0f - passwordImage.getWidth() / 2.0f, 207.0f);
     txfUsername.setPosition(BodyConquest.V_WIDTH / 2.0f - txfUsername.getWidth() / 2.0f, 310.0f);
     txfPassword.setPosition(BodyConquest.V_WIDTH / 2.0f - txfPassword.getWidth() / 2.0f, 170.0f);
   }
@@ -128,7 +128,7 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
   public void settingSizes() {
     txfUsername.setSize(300, 40);
     txfPassword.setSize(300, 40);
-    passwordImage.setSize(passwordImage.getWidth(), passwordImage.getHeight());
-    usernameImage.setSize(usernameImage.getWidth(), usernameImage.getHeight());
+    passwordImage.setSize(passwordImage.getWidth() / 1.3f, passwordImage.getHeight() / 1.3f);
+    usernameImage.setSize(usernameImage.getWidth() / 1.3f, usernameImage.getHeight() / 1.3f);
   }
 }
