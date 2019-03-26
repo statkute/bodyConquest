@@ -803,14 +803,11 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
             selectedOrganImage = heartSelected;
             stage.addActor(heartSelected);
             selectedOrganType = Organ.HEART;
-            stage.addActor(continueImage);
           }
           break;
         case EYES:
           if (selectedOrganType != null) {
             selectedOrganImage.remove();
-          } else {
-            stage.addActor(continueImage);
           }
           selectedOrganImage = eyeSelected;
           stage.addActor(eyeSelected);
@@ -826,7 +823,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
             selectedOrganImage = lungsSelected;
             stage.addActor(lungsSelected);
             selectedOrganType = Organ.LUNGS;
-            stage.addActor(continueImage);
           }
           break;
         case BRAIN:
@@ -839,7 +835,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
             selectedOrganImage = brainSelected;
             stage.addActor(brainSelected);
             selectedOrganType = Organ.BRAIN;
-            stage.addActor(continueImage);
           }
           break;
         case TEETH:
@@ -852,7 +847,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
             selectedOrganImage = teethSelected;
             stage.addActor(teethSelected);
             selectedOrganType = Organ.TEETH;
-            stage.addActor(continueImage);
           }
           break;
         case INTESTINES:
@@ -865,7 +859,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
             selectedOrganImage = intestinesSelected;
             stage.addActor(intestinesSelected);
             selectedOrganType = Organ.INTESTINES;
-            stage.addActor(continueImage);
           }
           break;
         default:
