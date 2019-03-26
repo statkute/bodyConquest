@@ -7,6 +7,7 @@ import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.MapObject;
 import main.com.bodyconquest.entities.Spawnable;
 
+import java.time.Instant;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /** The parent class for all spawn-able troops that can be spawned by each player (or the AI). */
@@ -77,6 +78,8 @@ public abstract class Troop extends MapObject implements Spawnable {
   public Image sprite;
   private int damageCounter;
 
+  private float timeAlive;
+
 
   /**
    * The constructor.
@@ -115,6 +118,7 @@ public abstract class Troop extends MapObject implements Spawnable {
   public void hit(int damage) {
     setHealth(getHealth() - damage);
     setWasHit(true);
+    setTimeOfDmgTaken(System.currentTimeMillis());
   }
 
   /**
@@ -161,9 +165,7 @@ public abstract class Troop extends MapObject implements Spawnable {
     updateMovement();
     checkEffects();
     move();
-    damageCounter++;
-    if(this.getWasHit() && damageCounter >=30){
-      damageCounter =0;
+    if(this.getWasHit()){
       this.setWasHit(false);
     }
   }
