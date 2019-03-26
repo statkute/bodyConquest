@@ -114,10 +114,10 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
 
     if (communicator.getOpponentDisease() == Disease.MEASLES) {
       game.batch.draw(
-          greenVirusOpponent, (BodyConquest.V_WIDTH / 2 - greenVirusOpponent.getWidth() / 2), 220);
+          greenVirusOpponent, (BodyConquest.V_WIDTH / 2.0f - greenVirusOpponent.getWidth() / 2), 220);
     } else {
       game.batch.draw(
-          greenVirus, (BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2), 220);
+          greenVirus, (BodyConquest.V_WIDTH / 2.0f - greenVirus.getWidth() / 2), 220);
     }
 
     if (communicator.getOpponentDisease() == Disease.ROTAVIRUS) {
@@ -133,17 +133,17 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     }
 
     game.batch.draw(
-        blueDescription, (BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2), 160);
+        blueDescription, (BodyConquest.V_WIDTH / 5.0f - blueDescription.getWidth() / 2.0f), 160);
     game.batch.draw(
-        greenDescription, (BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2), 160);
+        greenDescription, (BodyConquest.V_WIDTH / 2.0f - greenDescription.getWidth() / 2.0f), 160);
     game.batch.draw(
-        yellowDescription, (BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2), 160);
+        yellowDescription, (BodyConquest.V_WIDTH / 5.0f * 4.0f - yellowDescription.getWidth() / 2.0f), 160);
 
     if (selection != 0)
-      game.batch.draw(continueText, BodyConquest.V_WIDTH / 2 - continueText.getWidth() / 2, 60);
+      game.batch.draw(continueText, BodyConquest.V_WIDTH / 2.0f - continueText.getWidth() / 2.0f, 60);
 
     if (!communicator.isPicker()) {
-      game.batch.draw(waitingText, BodyConquest.V_WIDTH / 2 - waitingText.getWidth() / 2, 60);
+      game.batch.draw(waitingText, BodyConquest.V_WIDTH / 2.0f - waitingText.getWidth() / 2.0f, 60);
     }
 
     //game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
@@ -182,21 +182,21 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         checkSelection();
       }
 
-      if (backBounds.contains(tmp.x, tmp.y)) {
-        System.out.println("back pressed");
-        playButtonSound();
-        if (server != null) {
-          server.closeEverything();
-        }
-        game.getClient().closeEverything();
-        game.setScreen(new MenuScreen(game));
-        dispose();
-      }
+//      if (backBounds.contains(tmp.x, tmp.y)) {
+//        System.out.println("back pressed");
+//        playButtonSound();
+//        if (server != null) {
+//          server.closeEverything();
+//        }
+//        game.getClient().closeEverything();
+//        game.setScreen(new MenuScreen(game));
+//        dispose();
+//      }
     }
   }
 
   /** Clean selections of the user ( deletes the borders). */
-  public void cleanSelections() {
+  private void cleanSelections() {
     if (communicator.getOpponentDisease() != Disease.INFLUENZA){
       blueVirus = manager.get(Assets.raceBlueVirus, Texture.class);
     } else {
