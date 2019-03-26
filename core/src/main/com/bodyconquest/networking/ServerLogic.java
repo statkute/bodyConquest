@@ -219,6 +219,7 @@ public class ServerLogic extends Thread {
       } else {
         topPlayerReady = true;
       }
+      serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
 
       if(game.getGameType() == GameType.SINGLE_PLAYER || bottomPlayerReady && topPlayerReady) {
         serverSender.sendMessage(MessageMaker.firstPickerMessage(PlayerType.PLAYER_BOTTOM));
@@ -226,7 +227,7 @@ public class ServerLogic extends Thread {
         game.startBodyState();
         serverSender.sendMessage(MessageMaker.START_BODY);
       } else {
-        serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
+//        serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
       }
     }
 
