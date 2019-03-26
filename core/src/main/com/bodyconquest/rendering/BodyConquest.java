@@ -45,6 +45,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
 
   private Game game;
   private Client client;
+  public BitmapFont gameFont;
 
   @Override
   public void create() {
@@ -52,6 +53,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     font = new BitmapFont();
     timerFont = new BitmapFont(Gdx.files.internal(Assets.timerFont));
     usernameFont = new BitmapFont(Gdx.files.internal(Assets.usernameFont));
+    gameFont = new BitmapFont(Gdx.files.internal(Assets.gameFont));
     audioPlayer.loadSFX("button_click", Assets.buttonSoundPath);
     audioPlayer.loadMusic("music", Assets.music);
     audioPlayer.playMusicLoop("music");

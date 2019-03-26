@@ -1,5 +1,7 @@
 package main.com.bodyconquest.constants;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 /** The type Assets. */
 public class Assets {
 
@@ -231,8 +233,9 @@ public class Assets {
   /** The constant INCREASEACCUMULATORTILL. */
   public static final int INCREASEACCUMULATORTILL = 300;
 
+  public static String gameFont = "core/assets/ArcadePix.fnt";
 
-    private static String pathAssets = "core/assets/";
+  private static String pathAssets = "core/assets/";
 
   /** The constant pathBaseImage. */
   public static String pathBaseImage = pathAssets + "base_boi_ss.png";
