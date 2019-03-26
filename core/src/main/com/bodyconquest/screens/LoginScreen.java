@@ -138,7 +138,8 @@ public class LoginScreen extends DatabasesScreen implements Screen {
                 if(gameType == GameType.SINGLE_PLAYER)
                     game.setScreen(new RaceSelection(game, gameType));
                 else if(gameType == GameType.MULTIPLAYER_HOST || gameType == GameType.MULTIPLAYER_JOIN){
-                    game.setScreen(new WaitingScreen(game, gameType));
+//                    game.setScreen(new WaitingScreen(game, gameType));
+                    game.setScreen(new RaceSelection(game, gameType));
                 }
             } catch (IOException e) {
                 System.out.println("Exception when displaying race selection screen");

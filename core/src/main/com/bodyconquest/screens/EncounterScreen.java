@@ -169,6 +169,7 @@ public class EncounterScreen implements Screen {
     value = new DecimalFormat("0");
 
     organNumber = 0;
+    communicator.setSelectedOrgan(null);
   }
 
   public Communicator getCommunicator() {
