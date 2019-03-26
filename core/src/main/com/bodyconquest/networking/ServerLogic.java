@@ -16,7 +16,8 @@ public class ServerLogic extends Thread {
     RACE_SELECTION_LOGIC,
     BODY_LOGIC,
     ENCOUNTER_LOGIC,
-    DATABASE_LOGIC
+    DATABASE_LOGIC,
+    WAITING_LOGIC
   }
 
   private LogicType currentLogicType;
@@ -73,6 +74,7 @@ public class ServerLogic extends Thread {
           continue;
         }
 
+        if (currentLogicType == LogicType.WAITING_LOGIC) waitingLogic(message);
         if (currentLogicType == LogicType.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
         if (currentLogicType == LogicType.ENCOUNTER_LOGIC) encounterLogic(message);
         if (currentLogicType == LogicType.BODY_LOGIC) bodyLogic(message);
@@ -81,6 +83,14 @@ public class ServerLogic extends Thread {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
+    }
+  }
+
+  private void waitingLogic(String message) {
+    int pointer;
+
+    if(message.startsWith(MessageMaker.JOINED_MESSAGE_HEADER)){
+      // Needs implementing
     }
   }
 
@@ -335,6 +345,7 @@ public class ServerLogic extends Thread {
     currentLogicType = LogicType.DATABASE_LOGIC;
   }
 
+  public void setWaitingLogic() { currentLogicType = LogicType.WAITING_LOGIC; }
 
   public void stopRunning() {
     run = false;
