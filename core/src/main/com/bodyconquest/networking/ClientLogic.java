@@ -5,6 +5,7 @@ import main.com.bodyconquest.constants.Organ;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.BasicObject;
 import main.com.bodyconquest.game_logic.Communicator;
+import main.com.bodyconquest.game_logic.utils.Timer;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.networking.utilities.Serialization;
 
@@ -140,6 +141,7 @@ public class ClientLogic extends Thread {
       organ = Organ.decode(encodedOrgan);
 
       communicator.setCurrentOrgan(organ);
+      Timer.startTimer(200);
       communicator.setStartEncounter(true);
     } else if (message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
       Organ organ;
