@@ -657,6 +657,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 selectedOrganType = Organ.HEART;
                 stage.addActor(continueImage);
               }
+              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
       heartpoints.addListener(heart.getListeners().peek());
@@ -675,6 +676,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               selectedOrganImage = eyeSelected;
               stage.addActor(eyeSelected);
               selectedOrganType = Organ.EYES;
+              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
       eyepoints.addListener(eye.getListeners().peek());
@@ -696,6 +698,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 selectedOrganType = Organ.LUNGS;
                 stage.addActor(continueImage);
               }
+              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
       lungspoints.addListener(lungs.getListeners().peek());
@@ -717,6 +720,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 selectedOrganType = Organ.BRAIN;
                 stage.addActor(continueImage);
               }
+              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
       brainpoints.addListener(brain.getListeners().peek());
@@ -738,6 +742,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 selectedOrganType = Organ.TEETH;
                 stage.addActor(continueImage);
               }
+              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
 
@@ -760,6 +765,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 selectedOrganType = Organ.INTESTINES;
                 stage.addActor(continueImage);
               }
+              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
 
@@ -776,7 +782,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
             // if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startEncounterState();
             // We should probably have some sort of loading screen? Or at least a loading symbol?
             // game.setScreen(new EncounterScreen(game, gameType));
-
             playButtonSound();
           }
         });
