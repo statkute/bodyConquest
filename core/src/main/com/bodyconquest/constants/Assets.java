@@ -111,11 +111,11 @@ public class Assets {
   /** Starting Screen Assets */
 
   /** The constant startTitle. */
-  public static String startTitle = "core/assets/title_new.png";
+  public static String startTitle = "core/assets/signin_big.png";
   /** The constant startRegister. */
-  public static String startRegister = "core/assets/REGISTER_start.png";
+  public static String startRegister = "core/assets/register_menu.png";
   /** The constant startLogin. */
-  public static String startLogin = "core/assets/LOGIN_start.png";
+  public static String startLogin = "core/assets/login_menu.png";
 
   /** Register Screen Assets */
 
@@ -214,9 +214,13 @@ public class Assets {
   public static String intestinespoints = "core/assets/intestinespoints.png";
   /** The constant continueTextBig. */
   public static String continueTextBig = "core/assets/continue_new_big.png";
+  /** The constant waitingText. */
   public static String waitingText = "core/assets/waiting_big.png";
+  /** The constant selectDiseaseText. */
   public static String selectDiseaseText = "core/assets/selectdisease.png";
+  /** The constant selectOrganText. */
   public static String selectOrganText = "core/assets/selectorgan.png";
+  /** The constant waitingTextNew. */
   public static String waitingTextNew = "core/assets/waiting_big_new.png";
 
   /** Game Over Screen Assets */
