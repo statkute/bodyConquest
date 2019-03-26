@@ -1,6 +1,5 @@
 package main.com.bodyconquest.networking;
 
-import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.Disease;
 import main.com.bodyconquest.constants.Organ;
 import main.com.bodyconquest.constants.PlayerType;
@@ -12,7 +11,6 @@ import main.com.bodyconquest.networking.utilities.Serialization;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientLogic extends Thread {
 
@@ -199,6 +197,16 @@ public class ClientLogic extends Thread {
       String username = message.substring(pointer);
 
       communicator.setUsername(player,username);
+    }
+
+    else if(message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
+      Organ organ;
+      pointer = MessageMaker.SELECTED_ORGAN_HEADER.length();
+
+      String encodedOrgan = message.substring(pointer, pointer + Organ.getEncodedLength());
+      organ = Organ.decode(encodedOrgan);
+
+      communicator.setSelectedOrgan(organ);
     }
 
 
