@@ -41,6 +41,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   private Rectangle blueVirusBounds;
   private Rectangle blueDescriptionBounds;
   private Rectangle greenDescriptionBounds;
+  private Rectangle yellowDescriptionBounds;
   private Rectangle greenVirusBounds;
   private Rectangle yellowVirusBounds;
 
@@ -134,11 +135,11 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     game.batch.draw(
         blueDescription, (BodyConquest.V_WIDTH / 5.0f - blueDescription.getWidth() / 2.0f / 2.0f), 165, blueDescription.getWidth() / 2.0f, blueDescription.getHeight() / 2.0f);
     game.batch.draw(
-        greenDescription, (BodyConquest.V_WIDTH / 2.0f - greenDescription.getWidth() / 2.0f /2.0f), 170, greenDescription.getWidth() / 2.0f, greenDescription.getHeight() / 2.0f);
+        greenDescription, (BodyConquest.V_WIDTH / 2.0f - greenDescription.getWidth() / 2.0f /2.0f), 165, greenDescription.getWidth() / 2.0f, greenDescription.getHeight() / 2.0f);
     game.batch.draw(
         yellowDescription,
-        (BodyConquest.V_WIDTH / 5.0f * 4.0f - yellowDescription.getWidth() / 2.0f),
-        165);
+        (BodyConquest.V_WIDTH / 5.0f * 4.0f - yellowDescription.getWidth() / 2.0f / 2.0f),
+        165, yellowDescription.getWidth() / 2.0f, yellowDescription.getHeight() / 2.0f);
 
     if (selection != 0 && communicator.isPicker()) {
       game.batch.draw(
@@ -302,19 +303,19 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
             blueDescription.getWidth() / 2.0f,
             blueDescription.getHeight() / 2.0f);
 
-    greenDescriptionBounds =
-        new Rectangle(
-            BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2.0f / 2.0f,
-            170,
-            greenDescription.getWidth() / 2.0f,
-            greenDescription.getHeight() / 2.0f);
-
     greenVirusBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2,
             220,
             greenVirus.getWidth(),
             greenVirus.getHeight());
+
+    greenDescriptionBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2.0f / 2.0f,
+            165,
+            greenDescription.getWidth() / 2.0f,
+            greenDescription.getHeight() / 2.0f);
 
     yellowVirusBounds =
         new Rectangle(
@@ -323,12 +324,12 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
             yellowVirus.getWidth(),
             yellowVirus.getHeight());
 
-    //    backBounds =
-    //        new Rectangle(
-    //            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-    //            30,
-    //            backButton.getWidth(),
-    //            backButton.getHeight());
+    yellowDescriptionBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2.0f / 2.0f,
+            165,
+            yellowDescription.getWidth() / 2.0f,
+            yellowDescription.getHeight() / 2.0f);
   }
 
   /** Check selection of the virus of the user. */
@@ -375,7 +376,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       }
     }
 
-    if (yellowVirusBounds.contains(tmp.x, tmp.y)) {
+    if (yellowVirusBounds.contains(tmp.x, tmp.y) || yellowDescriptionBounds.contains(tmp.x, tmp.y)) {
       if (communicator.getOpponentDisease() == Disease.ROTAVIRUS) {
         return;
       }
