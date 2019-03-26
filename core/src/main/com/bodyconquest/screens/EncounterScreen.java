@@ -165,7 +165,7 @@ public class EncounterScreen implements Screen {
     healthTopBaseBefore = 100;
     healthBottomBaseBefore = 100;
 
-    poolHashMap = new ConcurrentHashMap<String, TexturePool>();
+    poolHashMap = new ConcurrentHashMap<>();
 
     value = new DecimalFormat("0");
 
@@ -314,14 +314,12 @@ public class EncounterScreen implements Screen {
       organNumber = communicator.getOpponentOrgans().size() + communicator.getPlayerOrgans().size();
       determineWinner();
 
-      if(screenMakingCounter == 1){
+      if (screenMakingCounter == 1) {
 
-        if(organNumber == 1){
+        if (organNumber == 1) {
 
-          switchScreen(game, new GameOverScreen(game,gameType));
-        }
-
-        else {
+          switchScreen(game, new GameOverScreen(game, gameType));
+        } else {
           switchScreen(game, new BodyScreen(game, gameType));
         }
       }
@@ -331,26 +329,26 @@ public class EncounterScreen implements Screen {
   private void checkInputs() {
     int i = 0;
     ClassOwner unit = null;
-    if(Gdx.input.isKeyPressed(Input.Keys.NUM_1)||Gdx.input.isKeyPressed(Input.Keys.Q)){
+    if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) || Gdx.input.isKeyPressed(Input.Keys.Q)) {
       unit = playerDisease.getSpawn1();
-    }else if(Gdx.input.isKeyPressed(Input.Keys.NUM_2)||Gdx.input.isKeyPressed(Input.Keys.W)){
+    } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) || Gdx.input.isKeyPressed(Input.Keys.W)) {
       unit = playerDisease.getSpawn2();
-    } else if(Gdx.input.isKeyPressed(Input.Keys.NUM_3)||Gdx.input.isKeyPressed(Input.Keys.E)){
+    } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_3) || Gdx.input.isKeyPressed(Input.Keys.E)) {
       unit = playerDisease.getSpawn3();
-    } else if(Gdx.input.isKeyPressed(Input.Keys.NUM_4)||Gdx.input.isKeyPressed(Input.Keys.R)){
+    } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_4) || Gdx.input.isKeyPressed(Input.Keys.R)) {
       unit = playerDisease.getSpawn4();
     }
 
     Lane lane = null;
-    if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+    if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
       lane = Lane.MIDDLE;
-    } else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
-  lane = Lane.BOTTOM;
-    } else if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
-  lane = Lane.TOP;
+    } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+      lane = Lane.BOTTOM;
+    } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+      lane = Lane.TOP;
     }
 
-    if(lane != null && unit != null) {
+    if (lane != null && unit != null) {
       spawnUnit((UnitType) unit, lane, playerType);
     }
   }
@@ -397,7 +395,10 @@ public class EncounterScreen implements Screen {
     game.timerFont.getData().setScale(1.25f, 1.25f);
     if (playerType == PlayerType.PLAYER_TOP) {
       game.timerFont.draw(
-          game.batch, Integer.toString(communicator.getScoreTop()), BodyConquest.V_WIDTH - 110.0f, 350.0f);
+          game.batch,
+          Integer.toString(communicator.getScoreTop()),
+          BodyConquest.V_WIDTH - 110.0f,
+          350.0f);
     } else {
       game.timerFont.draw(
           game.batch,
@@ -711,32 +712,43 @@ public class EncounterScreen implements Screen {
    * @param mapObjectType the type of the map object to get the texture
    */
   private TexturePool poolSetup(Enum mapObjectType, PlayerType playerType) {
-    
+
     float frameRate = 0.2f;
-      String path = "";
+    String path = "";
     Disease newPlayerDisease;
-    if(playerType == this.playerType){
-        newPlayerDisease = playerDisease;
-        System.out.println("same\n");
+    if (playerType == this.playerType) {
+      newPlayerDisease = playerDisease;
+      System.out.println("same\n");
     } else {
-        newPlayerDisease = communicator.getOpponentDisease();
-        System.out.println("different\n");
+      newPlayerDisease = communicator.getOpponentDisease();
+      System.out.println("different\n");
     }
 
-      System.out.println("this: " + newPlayerDisease + "\n");
+    System.out.println("this: " + newPlayerDisease + "\n");
 
     if (UnitType.VIRUS == mapObjectType) {
-        path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathFluFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;
-        System.out.println(path + "\n");
-        return new TexturePool(path, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
+      path =
+          newPlayerDisease == Disease.INFLUENZA
+              ? Assets.pathFluFlu
+              : newPlayerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;
+      System.out.println(path + "\n");
+      return new TexturePool(path, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
     } else if (UnitType.FUNGUS == mapObjectType) {
-        path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathVirusFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathVirusMes : Assets.pathVirusRvi;
-        System.out.println(path + "\n");
-        return new TexturePool(path, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
+      path =
+          newPlayerDisease == Disease.INFLUENZA
+              ? Assets.pathVirusFlu
+              : newPlayerDisease == Disease.MEASLES ? Assets.pathVirusMes : Assets.pathVirusRvi;
+      System.out.println(path + "\n");
+      return new TexturePool(path, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
     } else if (UnitType.BACTERIA == mapObjectType) {
-        path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathBacteriaFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathBacteriaMes : Assets.pathBacteriaRvi;
-        System.out.println(path + "\n");
-        return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
+      path =
+          newPlayerDisease == Disease.INFLUENZA
+              ? Assets.pathBacteriaFlu
+              : newPlayerDisease == Disease.MEASLES
+                  ? Assets.pathBacteriaMes
+                  : Assets.pathBacteriaRvi;
+      System.out.println(path + "\n");
+      return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
     } else if (BaseType.INFLUENZA_BASE == mapObjectType) {
       return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
     } else if (BaseType.ROTAVIRUS_BASE == mapObjectType) {
