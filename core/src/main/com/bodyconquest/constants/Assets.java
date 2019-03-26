@@ -83,6 +83,12 @@ public class Assets {
   public static String raceGreenVirusSelected = "core/assets/greenvirusselected.png";
   /** The constant raceYellowVirusSelected. */
   public static String raceYellowVirusSelected = "core/assets/yellowvirusselected.png";
+  /** The constant raceBlueVirusSelected. */
+  public static String raceBlueVirusOpponent = "core/assets/bluevirusopponent.png";
+  /** The constant raceGreenVirusSelected. */
+  public static String raceGreenVirusOpponent = "core/assets/greenvirusopponent.png";
+  /** The constant raceYellowVirusSelected. */
+  public static String raceYellowVirusOpponent = "core/assets/yellowvirusopponent.png";
   /** The constant raceBlueDescription. */
   public static String raceBlueDescription = "core/assets/bluevirus_characteristics.png";
   /** The constant raceGreenDescription. */
