@@ -70,8 +70,8 @@ public class ClientReceiver extends Thread {
         }
         //System.out.println(packet.getData().length);
         String received = new String(packet.getData()).trim();
-//        System.out.println(
-//            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
+        System.out.println(
+            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
         receivedMessages.put(received.trim());
       } catch (IOException | InterruptedException e) {
         e.printStackTrace();

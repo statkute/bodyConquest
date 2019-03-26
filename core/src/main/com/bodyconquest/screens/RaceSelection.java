@@ -139,7 +139,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     game.batch.draw(
         yellowDescription, (BodyConquest.V_WIDTH / 5.0f * 4.0f - yellowDescription.getWidth() / 2.0f), 160);
 
-    if (selection != 0)
+    if (selection != 0 && communicator.isPicker())
       game.batch.draw(continueText, BodyConquest.V_WIDTH / 2.0f - continueText.getWidth() / 2.0f, 60);
 
     if (!communicator.isPicker()) {
@@ -305,6 +305,9 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   public void checkSelection() {
 
     if (blueVirusBounds.contains(tmp.x, tmp.y)) {
+      if (communicator.getOpponentDisease() == Disease.INFLUENZA){
+        return;
+      }
       playButtonSound();
       if (selection != 0) {
         cleanSelections();
@@ -322,6 +325,9 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     }
 
     if (greenVirusBounds.contains(tmp.x, tmp.y)) {
+      if (communicator.getOpponentDisease() == Disease.MEASLES){
+        return;
+      }
       playButtonSound();
       if (selection != 0) {
         cleanSelections();
@@ -340,6 +346,9 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     }
 
     if (yellowVirusBounds.contains(tmp.x, tmp.y)) {
+      if (communicator.getOpponentDisease() == Disease.ROTAVIRUS){
+        return;
+      }
       playButtonSound();
       if (selection != 0) {
         cleanSelections();
