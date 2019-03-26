@@ -21,7 +21,7 @@ public class VirusProjectile extends Projectile {
   }
 
   private void init() {
-    maxSpeed = 1;
+    maxSpeed = 2.5;
     maxTravelDistance = 200;
     mapObjectType = ProjectileType.VIRUS_PROJECTILE;
     moveTowards(xDest, yDest);

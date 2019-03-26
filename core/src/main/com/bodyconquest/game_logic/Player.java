@@ -14,12 +14,14 @@ public class Player {
   private ArrayList<Organ> claimedOrgans;
   private final PlayerType playerType;
   private int score;
+  private float damageMult, speedMult, attackSpeedMult, healthMult;
 
   public Player(PlayerType playerType, Disease playerDisease) {
     this.playerType = playerType;
     this.disease = playerDisease;
     claimedOrgans = new ArrayList<Organ>();
     score = 0;
+    damageMult = speedMult = attackSpeedMult = healthMult = 1;
   }
 
   public Disease getDisease() {
@@ -55,5 +57,31 @@ public class Player {
 
   public void increaseScore(int score) {
     this.score += score;
+  }
+
+  public void refreshMultipliers() {
+    damageMult = speedMult = attackSpeedMult = healthMult = 1;
+    for(Organ o : claimedOrgans) {
+      damageMult *= o.getDamageMult();
+      speedMult  *= o.getSpeedMult();
+      attackSpeedMult *= o.getAttackSpeedMult();
+      healthMult *= o.getHealthMult();
+    }
+  }
+
+  public float getDamageMult() {
+    return damageMult;
+  }
+
+  public float getSpeedMult() {
+    return speedMult;
+  }
+
+  public float getAttackSpeedMult() {
+    return attackSpeedMult;
+  }
+
+  public float getHealthMult() {
+    return healthMult;
   }
 }

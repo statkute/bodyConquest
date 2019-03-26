@@ -33,11 +33,7 @@ public class RigorMortis extends Ability {
   @Override
   public void cast(EncounterState game) {
     CopyOnWriteArrayList<Troop> enemies;
-    if (playerType == PlayerType.PLAYER_TOP) {
-      enemies = game.getTroopsBottom();
-    } else {
-      enemies = game.getTroopsTop();
-    }
+    enemies = game.getEnemyTroops(playerType);
 
     for (Troop enemy : enemies) {
       if (enemy.getLane() == lane) {

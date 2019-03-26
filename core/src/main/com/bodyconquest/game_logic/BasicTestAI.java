@@ -64,11 +64,7 @@ public class BasicTestAI extends Thread {
       final Lane lane;
 
       CopyOnWriteArrayList<Troop> enemies = null;
-      if(playerType == PlayerType.PLAYER_TOP) {
-        enemies = game.getTroopsBottom();
-      } else if (playerType == PlayerType.PLAYER_BOTTOM) {
-        enemies = game.getTroopsTop();
-      }
+      enemies = game.getTroops(playerType);
 
       int noEnemiesTop = 0;
       int noEnemiesMiddle = 0;

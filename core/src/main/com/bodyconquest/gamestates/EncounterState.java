@@ -82,7 +82,9 @@ public class EncounterState {
     allMapObjects = new CopyOnWriteArrayList<>();
 
     topPlayer = game.getPlayerTop();
+    topPlayer.refreshMultipliers();
     bottomPlayer = game.getPlayerBottom();
+    bottomPlayer.refreshMultipliers();
 
     // Initialise unit arrays
     troopsBottom = new CopyOnWriteArrayList<>();
@@ -140,10 +142,9 @@ public class EncounterState {
     }
 
     for (Troop troop : deadTroops) {
-      if(troop.getPlayerType() == PlayerType.PLAYER_TOP){
+      if (troop.getPlayerType() == PlayerType.PLAYER_TOP) {
         totalScoreBottom += troop.getKillingPoints();
-      }
-      else if(troop.getPlayerType() == PlayerType.PLAYER_BOTTOM){
+      } else if (troop.getPlayerType() == PlayerType.PLAYER_BOTTOM) {
         totalScoreTop += troop.getKillingPoints();
       }
       troopsP1.remove(troop);
@@ -175,7 +176,7 @@ public class EncounterState {
 
   /** {@inheritDoc} */
   public void update() {
-    counter ++;
+    counter++;
 
     for (MapObject mo : allMapObjects) mo.update();
 
@@ -188,14 +189,12 @@ public class EncounterState {
     checkProjectiles(projectilesTop, troopsBottom);
     checkProjectiles(projectilesBottom, troopsTop);
 
-
-
     if (counter == 3) {
 
-      if(topBase.getHealth() <= 0) {
+      if (topBase.getHealth() <= 0) {
         endGame(PlayerType.PLAYER_BOTTOM);
       }
-      if(bottomBase.getHealth() <= 0) {
+      if (bottomBase.getHealth() <= 0) {
         endGame(PlayerType.PLAYER_TOP);
       }
 
@@ -208,14 +207,13 @@ public class EncounterState {
       sendPlayerScoreUpdates();
 
       counter = 0;
-
     }
-
   }
 
-  private void checkCollisions(CopyOnWriteArrayList<Troop> troops, CopyOnWriteArrayList<Troop> enemyTroops) {
-    for(Troop troop : troops) {
-        troop.checkCollisions(new CopyOnWriteArrayList<>(enemyTroops));
+  private void checkCollisions(
+      CopyOnWriteArrayList<Troop> troops, CopyOnWriteArrayList<Troop> enemyTroops) {
+    for (Troop troop : troops) {
+      troop.checkCollisions(new CopyOnWriteArrayList<>(enemyTroops));
     }
   }
 
@@ -228,71 +226,110 @@ public class EncounterState {
    */
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
     Troop troop = null;
-//    Disease disease;
-//    if (playerType == PlayerType.PLAYER_BOTTOM) {
-//      disease = bottomPlayer.getDisease();
-//    } else {
-//      disease = topPlayer.getDisease();
-//    }
-//    try {
-//      Troop troopInit = (Troop) unitType.getAssociatedClass().newInstance();
-//      if(!troopInit.isRanged()) {
-//         troopInit = (Troop) unitType.getAssociatedClass().getDeclaredConstructor(Lane.class, PlayerType.class, float.class, float.class, float.class, float.class).newInstance(lane, playerType, disease.getDamageMult(),disease.getSpeedMult(), disease.getHealthMult(), disease.getAttackSpeedMult());
-//        if(bottomResources.canAfford(troopInit.getLipidCost(),troopInit.getSugarCost(),troopInit.getProteinCost())){
-//          bottomResources.buy(troopInit.getLipidCost(),troopInit.getSugarCost(),troopInit.getProteinCost());
-//          troop = troopInit;
+    Disease disease = getPlayer(playerType).getDisease();
+    Resources resources = getResources(playerType);
+    Player player = getPlayer(playerType);
+    try {
+      Troop troopInit = (Troop) unitType.getAssociatedClass().newInstance();
+
+      float damageMult = disease.getDamageMult() * player.getDamageMult();
+      float speedMult = disease.getSpeedMult() * player.getSpeedMult();
+      float attackSpeedMult = disease.getAttackSpeedMult() * player.getAttackSpeedMult();
+      float healthMult = disease.getHealthMult() * player.getHealthMult();
+
+      if (!troopInit.isRanged()) {
+        troopInit =
+            (Troop)
+                unitType
+                    .getAssociatedClass()
+                    .getDeclaredConstructor(
+                        Lane.class,
+                        PlayerType.class,
+                        float.class,
+                        float.class,
+                        float.class,
+                        float.class)
+                    .newInstance(
+                        lane, playerType, damageMult, speedMult, healthMult, attackSpeedMult);
+      } else {
+        troopInit =
+            (Troop)
+                unitType
+                    .getAssociatedClass()
+                    .getDeclaredConstructor(
+                        EncounterState.class,
+                        Lane.class,
+                        PlayerType.class,
+                        float.class,
+                        float.class,
+                        float.class,
+                        float.class)
+                    .newInstance(
+                        this, lane, playerType, damageMult, speedMult, healthMult, attackSpeedMult);
+      }
+      if (resources.canAfford(
+          troopInit.getLipidCost(), troopInit.getSugarCost(), troopInit.getProteinCost())) {
+        resources.buy(
+            troopInit.getLipidCost(), troopInit.getSugarCost(), troopInit.getProteinCost());
+        troop = troopInit;
+      }
+
+    } catch (InstantiationException
+        | IllegalAccessException
+        | NoSuchMethodException
+        | InvocationTargetException e) {
+      e.printStackTrace();
+    }
+
+//    // Initialise troop type
+//    if (unitType.equals(UnitType.BACTERIA)) {
+//      if (playerType == PlayerType.PLAYER_BOTTOM) {
+//        if (bottomResources.canAfford(
+//            Bacteria.LIPIDS_COST, Bacteria.SUGARS_COST, Bacteria.PROTEINS_COST)) {
+//          bottomResources.buy(Bacteria.LIPIDS_COST, Bacteria.SUGARS_COST, Bacteria.PROTEINS_COST);
+//          troop =
+//              new Bacteria(
+//                  lane,
+//                  playerType,
+//                  disease.getDamageMult(),
+//                  disease.getSpeedMult(),
+//                  disease.getHealthMult(),
+//                  disease.getAttackSpeedMult());
 //        }
-//      } else {
-//
+//      } else if (playerType == PlayerType.PLAYER_TOP) {
+//        troop = new Bacteria(lane, playerType);
 //      }
-//
-//
-//    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-//      e.printStackTrace();
+//    } else if (unitType.equals(UnitType.VIRUS)) {
+//      if (playerType == PlayerType.PLAYER_BOTTOM) {
+//        if (bottomResources.canAfford(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST)) {
+//          bottomResources.buy(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST);
+//          troop =
+//              new Virus(
+//                  this,
+//                  lane,
+//                  playerType,
+//                  disease.getDamageMult(),
+//                  disease.getSpeedMult(),
+//                  disease.getHealthMult(),
+//                  disease.getAttackSpeedMult());
+//        }
+//      }
+//    } else if (unitType.equals(UnitType.FUNGUS)) {
+//      if (playerType == PlayerType.PLAYER_BOTTOM) {
+//        if (bottomResources.canAfford(
+//            Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST)) {
+//          bottomResources.buy(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST);
+//          troop =
+//              new Fungus(
+//                  lane,
+//                  playerType,
+//                  disease.getDamageMult(),
+//                  disease.getSpeedMult(),
+//                  disease.getHealthMult(),
+//                  disease.getAttackSpeedMult());
+//        }
+//      }
 //    }
-
-    Disease disease;
-    if (playerType == PlayerType.PLAYER_BOTTOM) {
-      disease = bottomPlayer.getDisease();
-    } else {
-      disease = topPlayer.getDisease();
-    }
-
-    // Initialise troop type
-    if (unitType.equals(UnitType.BACTERIA)) {
-      if(playerType == PlayerType.PLAYER_BOTTOM){
-        if(bottomResources.canAfford(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST)){
-          bottomResources.buy(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST);
-          troop = new Bacteria(lane, playerType,disease.getDamageMult(),disease.getSpeedMult(), disease.getHealthMult(), disease.getAttackSpeedMult());
-        } else{
-
-        }
-      } else if(playerType == PlayerType.PLAYER_TOP){
-        troop = new Bacteria(lane, playerType);
-      }
-    } else if (unitType.equals(UnitType.VIRUS)) {
-      if(playerType == PlayerType.PLAYER_BOTTOM){
-        if(bottomResources.canAfford(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST)){
-          bottomResources.buy(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST);
-          troop = new Virus(this, lane, playerType,disease.getDamageMult(),disease.getSpeedMult(), disease.getHealthMult(), disease.getAttackSpeedMult());
-        }else{
-
-        }
-      }else if(playerType == PlayerType.PLAYER_TOP){
-        troop = new Virus(this, playerType, lane);
-      }
-    } else if (unitType.equals(UnitType.FUNGUS)) {
-      if(playerType == PlayerType.PLAYER_BOTTOM){
-        if(bottomResources.canAfford(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST)){
-          bottomResources.buy(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST);
-          troop = new Fungus(lane, playerType, disease.getDamageMult(),disease.getSpeedMult(), disease.getHealthMult(), disease.getAttackSpeedMult());
-        }else{
-
-        }
-      }else if(playerType == PlayerType.PLAYER_TOP){
-        troop = new Fungus(lane, playerType);
-      }
-    }
 
     // Return if invalid troop, lane or player type is used
     if (troop == null || lane == null || playerType == null) return;
@@ -367,9 +404,9 @@ public class EncounterState {
   }
 
   private void endGame(PlayerType player) {
-    String endingMessage = MessageMaker.organClaimMessage(player,organ);
+    String endingMessage = MessageMaker.organClaimMessage(player, organ);
     serverSender.sendMessage(endingMessage);
-    if(player == PlayerType.PLAYER_BOTTOM) {
+    if (player == PlayerType.PLAYER_BOTTOM) {
       totalScoreBottom += organ.getOrganScore();
       bottomPlayer.claimOrgan(organ);
     } else {
@@ -413,14 +450,6 @@ public class EncounterState {
     serverSender.sendMessage(pointsMessage);
   }
 
-  public CopyOnWriteArrayList<Troop> getTroopsTop() {
-    return troopsTop;
-  }
-
-  public CopyOnWriteArrayList<Troop> getTroopsBottom() {
-    return troopsBottom;
-  }
-
   public void castAbility(AbilityType abilityType, PlayerType playerType, int xDest, int yDest) {
     // Implement functionality
   }
@@ -444,30 +473,22 @@ public class EncounterState {
   }
 
   public CopyOnWriteArrayList<Troop> getEnemyTroops(PlayerType player) {
-    if (player == PlayerType.PLAYER_BOTTOM) {
-      return getTroops(PlayerType.PLAYER_TOP);
-    } else {
-      return getTroops(PlayerType.PLAYER_BOTTOM);
-    }
+    return player != PlayerType.PLAYER_BOTTOM ? troopsBottom : troopsTop;
   }
 
   public CopyOnWriteArrayList<Troop> getTroops(PlayerType player) {
-    if(player == PlayerType.PLAYER_BOTTOM) {
-      return troopsBottom;
-    } else {
-      return troopsTop;
-    }
-  }
-
-  public Base getTopBase() {
-    return topBase;
+    return player == PlayerType.PLAYER_BOTTOM ? troopsBottom : troopsTop;
   }
 
   public Base getBase(PlayerType player) {
-    if(player == PlayerType.PLAYER_BOTTOM) {
-      return bottomBase;
-    } else {
-      return topBase;
-    }
+    return player == PlayerType.PLAYER_BOTTOM ? bottomBase : topBase;
+  }
+
+  private Player getPlayer(PlayerType playerType) {
+    return playerType == PlayerType.PLAYER_BOTTOM ? bottomPlayer : topPlayer;
+  }
+
+  private Resources getResources(PlayerType playerType) {
+    return playerType == PlayerType.PLAYER_BOTTOM ? bottomResources : topResources;
   }
 }
