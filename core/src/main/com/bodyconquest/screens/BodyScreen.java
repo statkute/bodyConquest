@@ -156,6 +156,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     stage.draw();
     game.batch.end();
     if (communicator.getStartEncounter()) game.setScreen(new EncounterScreen(game, gameType));
+    checkForOrganSelections();
   }
 
   /** {@inheritDoc} */
