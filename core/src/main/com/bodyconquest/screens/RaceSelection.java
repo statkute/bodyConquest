@@ -143,7 +143,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       game.batch.draw(continueText, BodyConquest.V_WIDTH / 2.0f - continueText.getWidth() / 2.0f, 60);
 
     if (!communicator.isPicker()) {
-      game.batch.draw(waitingText, BodyConquest.V_WIDTH / 2.0f - waitingText.getWidth() / 2.0f, 60);
+      game.batch.draw(waitingText, BodyConquest.V_WIDTH / 2 - waitingText.getWidth() / 2.2f / 2, 60, waitingText.getWidth()/ 2.2f, waitingText.getHeight() / 2.2f);
     }
 
     //game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
