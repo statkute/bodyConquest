@@ -216,7 +216,7 @@ public class ServerLogic extends Thread {
 
       String encodedPlayerType = message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
-
+      serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
       if(player == PlayerType.PLAYER_BOTTOM) {
         bottomPlayerReady = true;
       } else {
@@ -228,6 +228,8 @@ public class ServerLogic extends Thread {
         game.setLastPicker(PlayerType.PLAYER_BOTTOM);
         game.startBodyState();
         serverSender.sendMessage(MessageMaker.START_BODY);
+      } else {
+        serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
       }
     }
 

@@ -198,7 +198,7 @@ public class ClientLogic extends Thread {
           message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
 
-      if (player == communicator.getPlayerType()) communicator.setPicker(true);
+     communicator.setPicker(player == communicator.getPlayerType());
     } else if (message.equals(MessageMaker.START_BODY)) {
       communicator.setStartBodyScreen(true);
     } else if (message.startsWith(MessageMaker.USERNAME_)) {
