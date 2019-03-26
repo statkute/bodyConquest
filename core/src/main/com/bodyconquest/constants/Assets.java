@@ -117,6 +117,9 @@ public class Assets {
   /** The constant startLogin. */
   public static String startLogin = "core/assets/login_menu.png";
 
+  /** The constant startLogin. */
+  public static String loginHeader = "core/assets/login_header.png";
+
   /** Register Screen Assets */
 
   /** The constant registerUsername. */

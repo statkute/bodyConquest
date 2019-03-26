@@ -83,7 +83,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     @Override
     public void loadAssets() {
         super.loadAssets();
-        manager.load(Assets.startLogin, Texture.class);
+        manager.load(Assets.loginHeader, Texture.class);
         manager.finishLoading();
     }
 
@@ -93,7 +93,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     @Override
     public void getAssets() {
         super.getAssets();
-        login = manager.get(Assets.startLogin, Texture.class);
+        login = manager.get(Assets.loginHeader, Texture.class);
     }
 
     /**
