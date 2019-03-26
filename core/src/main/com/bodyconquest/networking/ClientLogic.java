@@ -45,11 +45,12 @@ public class ClientLogic extends Thread {
           continue;
         }
 
-        if(message.startsWith(MessageMaker.FIRST_PICKER_HEADER)) {
+        if (message.startsWith(MessageMaker.FIRST_PICKER_HEADER)) {
           PlayerType player;
           int pointer = MessageMaker.FIRST_PICKER_HEADER.length();
 
-          String encodedPlayerType = message.substring(pointer, pointer + PlayerType.getEncodedLength());
+          String encodedPlayerType =
+              message.substring(pointer, pointer + PlayerType.getEncodedLength());
           player = PlayerType.decode(encodedPlayerType);
 
           communicator.setPicker(communicator.getPlayerType() == player);
@@ -57,8 +58,8 @@ public class ClientLogic extends Thread {
         }
 
         if (currentLogic == Logic.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
-        if (currentLogic == Logic.ENCOUNTER_LOGIC)      encounterLogic(message);
-        if (currentLogic == Logic.BODY_LOGIC)           bodyLogic(message);
+        if (currentLogic == Logic.ENCOUNTER_LOGIC) encounterLogic(message);
+        if (currentLogic == Logic.BODY_LOGIC) bodyLogic(message);
         if (currentLogic == Logic.DATABASE_LOGIC) databaseLogic(message);
 
       } catch (IOException | InterruptedException e) {
@@ -96,7 +97,7 @@ public class ClientLogic extends Thread {
 
       message = message.substring(pointer + 1);
 
-      //System.out.println(message);
+      // System.out.println(message);
 
       Integer value = Integer.parseInt(message);
 
@@ -125,7 +126,6 @@ public class ClientLogic extends Thread {
       }
       communicator.setLoggedIsSet(true);
     }
-
   }
 
   private void bodyLogic(String message) {
@@ -141,6 +141,14 @@ public class ClientLogic extends Thread {
 
       communicator.setCurrentOrgan(organ);
       communicator.setStartEncounter(true);
+    } else if (message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
+      Organ organ;
+      pointer = MessageMaker.SELECTED_ORGAN_HEADER.length();
+
+      String encodedOrgan = message.substring(pointer, pointer + Organ.getEncodedLength());
+      organ = Organ.decode(encodedOrgan);
+
+      communicator.setSelectedOrgan(organ);
     }
     else if(message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
       Organ organ;
@@ -166,7 +174,7 @@ public class ClientLogic extends Thread {
       pointer += Disease.getEncodedLength() + 1;
 
       String encodedPlayerType =
-              message.substring(pointer, pointer + PlayerType.getEncodedLength());
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
 
       if (communicator.getPlayerType() != player) communicator.setOpponentDisease(disease);
@@ -176,7 +184,7 @@ public class ClientLogic extends Thread {
       pointer = MessageMaker.FIRST_PICKER_HEADER.length();
 
       String encodedPlayerType =
-              message.substring(pointer, pointer + PlayerType.getEncodedLength());
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
       firstPicker = PlayerType.decode(encodedPlayerType);
 
       communicator.setPicker(firstPicker == communicator.getPlayerType());
@@ -187,25 +195,24 @@ public class ClientLogic extends Thread {
       pointer = MessageMaker.CHOOSE_RACE_HEADER.length();
 
       String encodedPlayerType =
-              message.substring(pointer, pointer + PlayerType.getEncodedLength());
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
 
       if (player == communicator.getPlayerType()) communicator.setPicker(true);
     } else if (message.equals(MessageMaker.START_BODY)) {
       communicator.setStartBodyScreen(true);
-    }
-
-    else if(message.startsWith(MessageMaker.USERNAME_)) {
+    } else if (message.startsWith(MessageMaker.USERNAME_)) {
       PlayerType player;
       pointer = MessageMaker.USERNAME_.length();
 
-      String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
+      String encodedPlayerType =
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
-      pointer +=PlayerType.getEncodedLength() +1;
+      pointer += PlayerType.getEncodedLength() + 1;
 
       String username = message.substring(pointer);
 
-      communicator.setUsername(player,username);
+      communicator.setUsername(player, username);
     }
 
 
@@ -226,7 +233,7 @@ public class ClientLogic extends Thread {
       pointer = MessageMaker.HEALTH_HEADER.length();
 
       String encodedPlayerType =
-              message.substring(pointer, pointer + PlayerType.getEncodedLength());
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
       pointer += PlayerType.getEncodedLength() + 1;
 
@@ -239,7 +246,7 @@ public class ClientLogic extends Thread {
         communicator.setTopHealthPercentage(health);
       }
     } else if (message.startsWith(MessageMaker.RESOURCES_HEADER)) {
-      //System.out.println("THE MESSAGE: " + message);
+      // System.out.println("THE MESSAGE: " + message);
 
       PlayerType player;
       int lipids;
@@ -249,7 +256,7 @@ public class ClientLogic extends Thread {
       pointer = MessageMaker.RESOURCES_HEADER.length();
 
       String encodedPlayerType =
-              message.substring(pointer, pointer + PlayerType.getEncodedLength());
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
       pointer += PlayerType.getEncodedLength() + 1;
 
@@ -291,22 +298,18 @@ public class ClientLogic extends Thread {
       communicator.setScoreTop(topPlayerPoints);
       communicator.setScoreBottom(bottomPlayerPoints);
 
-    }
-
-    else if(message.startsWith(MessageMaker.ORGAN_CLAIMED)){
+    } else if (message.startsWith(MessageMaker.ORGAN_CLAIMED)) {
       pointer = MessageMaker.ORGAN_CLAIMED.length();
-      String playerString = message.substring(pointer,pointer + PlayerType.getEncodedLength());
-      pointer +=PlayerType.getEncodedLength() +1; // for underscore
-      String organString = message.substring(pointer,pointer+Organ.getEncodedLength());
+      String playerString = message.substring(pointer, pointer + PlayerType.getEncodedLength());
+      pointer += PlayerType.getEncodedLength() + 1; // for underscore
+      String organString = message.substring(pointer, pointer + Organ.getEncodedLength());
 
       PlayerType player = PlayerType.decode(playerString);
       Organ organ = Organ.decode(organString);
 
-      if(player == PlayerType.PLAYER_BOTTOM){
+      if (player == PlayerType.PLAYER_BOTTOM) {
         communicator.addOrgan(organ);
-      }
-
-      else{
+      } else {
         communicator.addOponentOrgan(organ);
       }
     }
@@ -316,7 +319,9 @@ public class ClientLogic extends Thread {
     currentLogic = Logic.RACE_SELECTION_LOGIC;
   }
 
-  public void setBodyLogic() { currentLogic = Logic.BODY_LOGIC; }
+  public void setBodyLogic() {
+    currentLogic = Logic.BODY_LOGIC;
+  }
 
   public void setEncounterLogic() {
     currentLogic = Logic.ENCOUNTER_LOGIC;
