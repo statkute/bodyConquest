@@ -40,6 +40,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   private Rectangle continueBounds;
   private Rectangle blueVirusBounds;
   private Rectangle blueDescriptionBounds;
+  private Rectangle greenDescriptionBounds;
   private Rectangle greenVirusBounds;
   private Rectangle yellowVirusBounds;
 
@@ -133,7 +134,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     game.batch.draw(
         blueDescription, (BodyConquest.V_WIDTH / 5.0f - blueDescription.getWidth() / 2.0f / 2.0f), 165, blueDescription.getWidth() / 2.0f, blueDescription.getHeight() / 2.0f);
     game.batch.draw(
-        greenDescription, (BodyConquest.V_WIDTH / 2.0f - greenDescription.getWidth() / 2.0f), 165);
+        greenDescription, (BodyConquest.V_WIDTH / 2.0f - greenDescription.getWidth() / 2.0f /2.0f), 170, greenDescription.getWidth() / 2.0f, greenDescription.getHeight() / 2.0f);
     game.batch.draw(
         yellowDescription,
         (BodyConquest.V_WIDTH / 5.0f * 4.0f - yellowDescription.getWidth() / 2.0f),
@@ -301,6 +302,13 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
             blueDescription.getWidth() / 2.0f,
             blueDescription.getHeight() / 2.0f);
 
+    greenDescriptionBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2.0f / 2.0f,
+            170,
+            greenDescription.getWidth() / 2.0f,
+            greenDescription.getHeight() / 2.0f);
+
     greenVirusBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2,
@@ -346,7 +354,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       }
     }
 
-    if (greenVirusBounds.contains(tmp.x, tmp.y)) {
+    if (greenVirusBounds.contains(tmp.x, tmp.y) || greenDescriptionBounds.contains(tmp.x, tmp.y)) {
       if (communicator.getOpponentDisease() == Disease.MEASLES) {
         return;
       }
