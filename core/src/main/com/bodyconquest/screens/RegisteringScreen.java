@@ -55,7 +55,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void loadAssets() {
         super.loadAssets();
-        manager.load(Assets.startRegister, Texture.class);
+        manager.load(Assets.registerHeader, Texture.class);
         manager.finishLoading();
     }
 
@@ -65,7 +65,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void getAssets() {
         super.getAssets();
-        register = manager.get(Assets.startRegister, Texture.class);
+        register = manager.get(Assets.registerHeader, Texture.class);
     }
 
 
