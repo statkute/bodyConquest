@@ -6,6 +6,7 @@ import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 
 import java.net.SocketException;
+import java.util.Random;
 
 public class Game extends Thread {
 
@@ -112,6 +113,9 @@ public class Game extends Thread {
     server.startRaceSelectionLogic(this);
     if (gameType == GameType.SINGLE_PLAYER) {
       setPlayerTop(Disease.INFLUENZA);
+    } else {
+      Random rnd = new Random();
+      server.getServerSender().sendMessage(MessageMaker.firstPickerMessage((rnd.nextInt(1) == 1 ? PlayerType.PLAYER_BOTTOM : PlayerType.PLAYER_TOP)));
     }
   }
 
