@@ -11,9 +11,7 @@ import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * The type Communicator.
- */
+/** The type Communicator. */
 public class Communicator {
 
   /** Variables */
@@ -65,11 +63,8 @@ public class Communicator {
   private String usernameBottom;
   private String usernameTop;
 
-<<<<<<< HEAD
   private Organ selectedOrgan;
-=======
-  private boolean playersSet;
->>>>>>> 9d379cc32beef3194a0fc8345acd9cccee205885
+  // private boolean playersSet;
 
   /** Instantiates a new Communicator. */
   public Communicator() {
@@ -451,7 +446,7 @@ public class Communicator {
   /**
    * Gets resource.
    *
-   * @param resource   the resource
+   * @param resource the resource
    * @param playerType the player type
    * @return the resource
    */
@@ -526,17 +521,16 @@ public class Communicator {
   }
 
   public String getUsername(PlayerType player) {
-    if(player == PlayerType.PLAYER_BOTTOM) {
+    if (player == PlayerType.PLAYER_BOTTOM) {
       return usernameBottom;
     } else {
       return usernameTop;
     }
-
   }
 
-//  public void setUsername(String username) {
-//    this.username = username;
-//  }
+  //  public void setUsername(String username) {
+  //    this.username = username;
+  //  }
 
   /**
    * was eye selected boolean.
@@ -592,36 +586,36 @@ public class Communicator {
     return heartSelected;
   }
 
-  public void addOponentOrgan(Organ organ){
+  public void addOponentOrgan(Organ organ) {
     opponentOrgans.add(organ);
   }
 
-  public void addOrgan(Organ organ){
+  public void addOrgan(Organ organ) {
     playerOrgans.add(organ);
   }
 
-  public void setUsername(PlayerType playerType, String username){
-    if(playerType == PlayerType.PLAYER_TOP){
+  public void setUsername(PlayerType playerType, String username) {
+    if (playerType == PlayerType.PLAYER_TOP) {
       usernameTop = username;
-    }
-    else if(playerType == PlayerType.PLAYER_BOTTOM){
+    } else if (playerType == PlayerType.PLAYER_BOTTOM) {
       usernameBottom = username;
     }
   }
 
-  public void setSelectedOrgan(Organ organ){
+  public void setSelectedOrgan(Organ organ) {
     selectedOrgan = organ;
   }
 
-  public Organ getSelectedOrgan(){
+  public Organ getSelectedOrgan() {
     return selectedOrgan;
 
-//  public void setPlayersSet(boolean playersSet){
-//    this.playersSet = playersSet;
-//  }
-//
-//  public boolean getPlayersSet(){
-//    return playersSet;
-//  }
+    //  public void setPlayersSet(boolean playersSet){
+    //    this.playersSet = playersSet;
+    //  }
+    //
+    //  public boolean getPlayersSet(){
+    //    return playersSet;
+    //  }
 
+  }
 }
