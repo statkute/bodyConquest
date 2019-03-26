@@ -39,7 +39,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         setRectangles();
         client = game.getClient();
         //setting database logic to send achievement to server
-        game.getGame().startDatabaseState();
+        if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startDatabaseState();
 
         client.setDatabaseLogic();
 

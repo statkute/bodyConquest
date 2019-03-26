@@ -115,8 +115,8 @@ public class EncounterState {
       BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
       ai.start();
     } else {
-      MultiplayerTestAI ai = new MultiplayerTestAI(this);
-      ai.start();
+//      MultiplayerTestAI ai = new MultiplayerTestAI(this);
+//      ai.start();
     }
   }
 
