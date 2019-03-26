@@ -108,7 +108,7 @@ public class ServerLogic extends Thread {
       String password = values[1];
 
       boolean response = dbManager.addUser(username, password);
-      //System.out.println(response);
+
       if (response == true) {
         serverSender.sendMessage(MessageMaker.registeredSuccessfullyMessage());
       } else {
