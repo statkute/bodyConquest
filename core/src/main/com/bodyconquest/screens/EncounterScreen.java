@@ -681,19 +681,15 @@ public class EncounterScreen implements Screen {
    * @param mapObjectType the type of the map object to get the texture
    */
   private TexturePool poolSetup(Enum mapObjectType, PlayerType playerType) {
-    
+
     float frameRate = 0.2f;
       String path = "";
     Disease newPlayerDisease;
     if(playerType == this.playerType){
         newPlayerDisease = playerDisease;
-        System.out.println("same\n");
     } else {
         newPlayerDisease = communicator.getOpponentDisease();
-        System.out.println("different\n");
     }
-
-      System.out.println("this: " + newPlayerDisease + "\n");
 
     if (UnitType.VIRUS == mapObjectType) {
         path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathFluFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;

@@ -31,7 +31,7 @@ public class BasicTestAI extends Thread {
     this.playerType = playerType;
     this.resources = resources;
     running = true;
-    units = new ArrayList<UnitType>(2);
+    units = new ArrayList<>(2);
     units.add(UnitType.BACTERIA);
     // units.add(UnitType.VIRUS);
     units.add(UnitType.FUNGUS);
@@ -52,6 +52,7 @@ public class BasicTestAI extends Thread {
   }
 
   private void summonWave() {
+    System.out.println("Tryina summon wave");
     Random rnd = new Random();
     int unitIndex = rnd.nextInt(2);
     try {
@@ -80,7 +81,7 @@ public class BasicTestAI extends Thread {
       int roll = rnd.nextInt(99) + 1;
       if(noEnemiesTop > noEnemiesBottom && noEnemiesTop > noEnemiesMiddle) {
         double x = (noEnemiesTop / totalNoEnemies) * 90;
-        if(roll > x) {
+        if(roll < x) {
           lane = Lane.TOP;
         } else {
           if((roll % 2) == 1) {
@@ -92,7 +93,7 @@ public class BasicTestAI extends Thread {
       } else {
         if (noEnemiesMiddle > noEnemiesBottom && noEnemiesMiddle > noEnemiesTop) {
           double x = (noEnemiesMiddle / totalNoEnemies) * 90;
-          if (roll > x) {
+          if (roll < x) {
             lane = Lane.MIDDLE;
           } else {
             if ((roll % 2) == 1) {
@@ -104,7 +105,7 @@ public class BasicTestAI extends Thread {
         } else {
           if(noEnemiesBottom > noEnemiesTop && noEnemiesBottom > noEnemiesMiddle) {
             double x = (noEnemiesBottom / totalNoEnemies) * 90;
-            if(roll > x) {
+            if(roll < x) {
               lane = Lane.BOTTOM;
             } else {
               if((roll % 2) == 1) {
@@ -123,9 +124,10 @@ public class BasicTestAI extends Thread {
           new Runnable() {
             @Override
             public void run() {
-              if (resources.canAfford(unit)){
-                resources.buy(unit);
-              }
+              //              if (resources.canAfford(unit)){
+              //                resources.buy(unit);
+              //              }
+              System.out.println("Tryina spawn unit");
               game.spawnUnit(unitType, lane, playerType);
             }
           });
