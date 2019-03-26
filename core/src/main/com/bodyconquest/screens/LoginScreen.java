@@ -106,7 +106,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                loginBtn.setText("You logged in!");
+                loginBtn.setText("Logged in!");
                 textPassword = txfPassword.getText();
                 textUsername = txfUsername.getText();
                 String message = MessageMaker.loginMessage(textUsername, textPassword);
