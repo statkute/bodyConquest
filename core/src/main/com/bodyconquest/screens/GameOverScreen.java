@@ -39,7 +39,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     getAssets();
     setRectangles();
     client = game.getClient();
-    
+
     if (gameType == GameType.MULTIPLAYER_JOIN){
       server = null;
     } else{
