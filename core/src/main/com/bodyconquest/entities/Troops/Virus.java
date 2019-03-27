@@ -112,6 +112,6 @@ public class Virus extends Troop {
 
   @Override
   public String getPortraitLocation() {
-    return "core/assets/flu_button.png";
+    return "core/assets/flu_button_new.png";
   }
 }
