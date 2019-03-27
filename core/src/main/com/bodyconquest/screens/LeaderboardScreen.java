@@ -84,13 +84,13 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     super.render(delta);
     sortLeaderboard();
     game.batch.begin();
-    game.batch.draw(header, BodyConquest.V_WIDTH / 2.0f - header.getWidth() / 2.0f, 470);
-    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2.0f - backButton.getWidth() / 2.0f, 10);
+    game.batch.draw(header, BodyConquest.V_WIDTH / 2.0f - header.getWidth() / 2.0f, 460);
+    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2.0f - backButton.getWidth() / 2.0f, 60);
     client.closeEverything();
     if (this.server != null) {
       this.server.closeEverything();
     }
-    game.usernameFont.getData().setScale(1.0f, 1.0f);
+    game.gameFont.getData().setScale(1.0f, 1.0f);
     drawLeaderboard();
     drawNumbers();
     checkPressed();
@@ -101,7 +101,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
   public void loadAssets() {
     super.loadAssets();
     manager.load(Assets.headerLeaderboard, Texture.class);
-    manager.load(Assets.backButton, Texture.class);
+    manager.load(Assets.hostBack, Texture.class);
     manager.finishLoading();
   }
 
@@ -109,7 +109,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
   public void getAssets() {
     super.getAssets();
     header = manager.get(Assets.headerLeaderboard, Texture.class);
-    backButton = manager.get(Assets.backButton, Texture.class);
+    backButton = manager.get(Assets.hostBack, Texture.class);
   }
 
   /**
@@ -147,74 +147,74 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
       place++;
       switch (place) {
         case 1:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
-              Integer.toString(place) + ".  \t " + s,
-              BodyConquest.V_WIDTH / 2.0f - 150.0f,
-              450.0f);
+              Integer.toString(place) + ".  " + s,
+              BodyConquest.V_WIDTH / 5.0f,
+              430.0f);
           break;
         case 2:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
-              Integer.toString(place) + ".  \t " + s,
-              BodyConquest.V_WIDTH / 2.0f - 150.0f,
-              410.0f);
+              Integer.toString(place) + ".  " + s,
+              BodyConquest.V_WIDTH / 5.0f,
+              395.0f);
           break;
         case 3:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
-              Integer.toString(place) + ".  \t " + s,
-              BodyConquest.V_WIDTH / 2.0f - 150.0f,
-              370.0f);
+              Integer.toString(place) + ".  " + s,
+              BodyConquest.V_WIDTH / 5.0f,
+              360.0f);
           break;
         case 4:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
-              Integer.toString(place) + ".  \t " + s,
-              BodyConquest.V_WIDTH / 2.0f - 150.0f,
-              330.0f);
+              Integer.toString(place) + ".  " + s,
+              BodyConquest.V_WIDTH / 5.0f,
+              325.0f);
           break;
         case 5:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
-              Integer.toString(place) + ".  \t " + s,
-              BodyConquest.V_WIDTH / 2.0f - 150.0f,
+              Integer.toString(place) + ".  " + s,
+              BodyConquest.V_WIDTH / 5.0f,
               290.0f);
           break;
         case 6:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
-              Integer.toString(place) + ".  \t " + s,
-              BodyConquest.V_WIDTH / 2.0f - 150.0f,
-              250.0f);
+              Integer.toString(place) + ".  " + s,
+              BodyConquest.V_WIDTH / 5.0f,
+              255.0f);
           break;
         case 7:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
-              Integer.toString(place) + ".  \t " + s,
-              BodyConquest.V_WIDTH / 2.0f - 150.0f,
-              210.0f);
+              Integer.toString(place) + ".  " + s,
+              BodyConquest.V_WIDTH / 5.0f,
+              220.0f);
           break;
         case 8:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
-              Integer.toString(place) + ".  \t " + s,
-              BodyConquest.V_WIDTH / 2.0f - 150.0f,
-              170.0f);
+              Integer.toString(place) + ".  " + s,
+              BodyConquest.V_WIDTH / 5.0f,
+              185.0f);
           break;
         case 9:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
-              Integer.toString(place) + ".  \t " + s,
-              BodyConquest.V_WIDTH / 2.0f - 150.0f,
-              130.0f);
+              Integer.toString(place) + ".  " + s,
+              BodyConquest.V_WIDTH / 5.0f,
+              150.0f);
           break;
         case 10:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(place) + ".\t " + s,
-              BodyConquest.V_WIDTH / 2.0f - 150.0f,
-              90.0f);
+              BodyConquest.V_WIDTH / 5.0f,
+              115.0f);
           break;
       }
     }
@@ -228,74 +228,74 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
       place++;
       switch (place) {
         case 1:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 2.0f + 180,
-              450.0f);
+              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              430.0f);
           break;
         case 2:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 2.0f + 180,
-              410.0f);
+              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              395.0f);
           break;
         case 3:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 2.0f + 180,
-              370.0f);
+              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              360.0f);
           break;
         case 4:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 2.0f + 180,
-              330.0f);
+              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              325.0f);
           break;
         case 5:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 2.0f + 180,
+              BodyConquest.V_WIDTH / 5.5f* 4.0f,
               290.0f);
           break;
         case 6:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 2.0f + 180,
-              250.0f);
+              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              255.0f);
           break;
         case 7:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 2.0f + 180,
-              210.0f);
+              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              220.0f);
           break;
         case 8:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 2.0f + 180,
-              170.0f);
+              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              185.0f);
           break;
         case 9:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 2.0f + 180,
-              130.0f);
+              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              150.0f);
           break;
         case 10:
-          game.usernameFont.draw(
+          game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 2.0f + 180,
-              90.0f);
+              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              115.0f);
           break;
       }
     }
@@ -308,7 +308,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     backBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-            10,
+            60,
             backButton.getWidth(),
             backButton.getHeight());
   }
