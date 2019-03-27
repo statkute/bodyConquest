@@ -70,6 +70,8 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   private Texture t_continueImage;
   private Image waitingImage;
   private Texture t_waiting;
+  private Image select;
+  private Texture t_select;
 
   private Disease myDiseaseType;
   private Disease opponentDiseaseType;
@@ -262,6 +264,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     if (picker) {
       manager.load(Assets.continueTextBig, Texture.class);
+      manager.load(Assets.selectOrganText, Texture.class);
     } else {
       manager.load(Assets.waitingText, Texture.class);
     }
@@ -336,6 +339,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
 
     if (picker) {
       t_continueImage = manager.get(Assets.continueTextBig, Texture.class);
+      t_select = manager.get(Assets.selectOrganText, Texture.class);
     } else {
       t_waiting = manager.get(Assets.waitingText, Texture.class);
     }
@@ -623,7 +627,15 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
           30,
           t_continueImage.getWidth() / 2.2f,
           t_continueImage.getHeight() / 2.2f);
-      allImages.add(continueImage);
+//      allImages.add(continueImage);
+
+      select = new Image(t_select);
+      select.setBounds(
+          BodyConquest.V_WIDTH / 2 - t_select.getWidth() / 2.2f / 2,
+          30,
+          t_select.getWidth() / 2.2f,
+          t_select.getHeight() / 2.2f);
+      allImages.add(select);
     } else {
       waitingImage = new Image(t_waiting);
       waitingImage.setBounds(
@@ -655,6 +667,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 selectedOrganImage = heartSelected;
                 stage.addActor(heartSelected);
                 selectedOrganType = Organ.HEART;
+                select.remove();
                 stage.addActor(continueImage);
               }
               game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
@@ -671,6 +684,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               if (selectedOrganType != null) {
                 selectedOrganImage.remove();
               } else {
+                select.remove();
                 stage.addActor(continueImage);
               }
               selectedOrganImage = eyeSelected;
@@ -696,6 +710,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 selectedOrganImage = lungsSelected;
                 stage.addActor(lungsSelected);
                 selectedOrganType = Organ.LUNGS;
+                select.remove();
                 stage.addActor(continueImage);
               }
               game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
@@ -718,6 +733,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 selectedOrganImage = brainSelected;
                 stage.addActor(brainSelected);
                 selectedOrganType = Organ.BRAIN;
+                select.remove();
                 stage.addActor(continueImage);
               }
               game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
@@ -740,6 +756,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 selectedOrganImage = teethSelected;
                 stage.addActor(teethSelected);
                 selectedOrganType = Organ.TEETH;
+                select.remove();
                 stage.addActor(continueImage);
               }
               game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
@@ -763,6 +780,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 selectedOrganImage = intestinesSelected;
                 stage.addActor(intestinesSelected);
                 selectedOrganType = Organ.INTESTINES;
+                select.remove();
                 stage.addActor(continueImage);
               }
               game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));

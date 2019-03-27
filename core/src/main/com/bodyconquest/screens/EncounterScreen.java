@@ -313,14 +313,12 @@ public class EncounterScreen implements Screen {
       organNumber = communicator.getOpponentOrgans().size() + communicator.getPlayerOrgans().size();
       determineWinner();
 
-      if(screenMakingCounter == 1){
+      if (screenMakingCounter == 1) {
 
-        if(organNumber == 1){
+        if (organNumber == 1) {
 
-          switchScreen(game, new GameOverScreen(game,gameType));
-        }
-
-        else {
+          switchScreen(game, new GameOverScreen(game, gameType));
+        } else {
           switchScreen(game, new BodyScreen(game, gameType));
         }
       }
@@ -329,16 +327,17 @@ public class EncounterScreen implements Screen {
 
   /** Draws a username of the player on the batch */
   private void drawUsername() {
-    game.usernameFont.getData().setScale(0.70f, 0.70f);
+    game.gameFont.getData().setScale(0.7f, 0.7f);
 
-    if (username.length() > 9) {
-      game.usernameFont.draw(
+    if (username.length() > 7) {
+      game.gameFont.getData().setScale(0.5f, 0.5f);
+      game.gameFont.draw(
           game.batch,
-          username.toLowerCase().substring(0, 9),
+          username.toLowerCase().substring(0, 7),
           BodyConquest.V_WIDTH - 105.0f,
           hud.getUnitBar().getImageHeight() + 24.0f);
     } else {
-      game.usernameFont.draw(
+      game.gameFont.draw(
           game.batch,
           username.toLowerCase(),
           BodyConquest.V_WIDTH - 105.0f,
@@ -352,26 +351,29 @@ public class EncounterScreen implements Screen {
     if (time < 0) {
       time = 0.0f;
     }
-    game.timerFont.getData().setScale(0.75f, 0.75f);
-    game.timerFont.draw(game.batch, "Time Left", BodyConquest.V_WIDTH - 110.0f, 550.0f);
-    game.timerFont.getData().setScale(1.25f, 1.25f);
-    game.timerFont.draw(
+    game.gameFont.getData().setScale(0.7f, 0.7f);
+    game.gameFont.draw(game.batch, "Timer", BodyConquest.V_WIDTH - 110.0f, 550.0f);
+    //    game.gameFont.getData().setScale(1f, 1f);
+    game.gameFont.draw(
         game.batch,
-        Double.toString(Double.valueOf(value.format(time))),
+        Integer.toString(Integer.valueOf(value.format(time))),
         BodyConquest.V_WIDTH - 110.0f,
         510.0f);
   }
 
   /** Draws score on the batch */
   private void drawScore() {
-    game.timerFont.getData().setScale(1.25f, 1.25f);
-    game.timerFont.draw(game.batch, "Score", BodyConquest.V_WIDTH - 110.0f, 400.0f);
-    game.timerFont.getData().setScale(1.25f, 1.25f);
+    game.gameFont.getData().setScale(0.7f, 0.7f);
+    game.gameFont.draw(game.batch, "Score", BodyConquest.V_WIDTH - 110.0f, 400.0f);
+    //    game.gameFont.getData().setScale(1.25f, 1.25f);
     if (playerType == PlayerType.PLAYER_TOP) {
-      game.timerFont.draw(
-          game.batch, Integer.toString(communicator.getScoreTop()), BodyConquest.V_WIDTH - 110.0f, 350.0f);
+      game.gameFont.draw(
+          game.batch,
+          Integer.toString(communicator.getScoreTop()),
+          BodyConquest.V_WIDTH - 110.0f,
+          350.0f);
     } else {
-      game.timerFont.draw(
+      game.gameFont.draw(
           game.batch,
           Integer.toString(communicator.getScoreBottom()),
           BodyConquest.V_WIDTH - 110.0f,
@@ -685,7 +687,7 @@ public class EncounterScreen implements Screen {
   private TexturePool poolSetup(Enum mapObjectType, PlayerType playerType) {
 
     float frameRate = 0.2f;
-      String path = "";
+    String path = "";
     Disease newPlayerDisease;
     if(playerType == this.playerType){
         newPlayerDisease = playerDisease;
@@ -694,21 +696,34 @@ public class EncounterScreen implements Screen {
     }
 
     if (UnitType.VIRUS == mapObjectType) {
-        path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathFluFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;
-        System.out.println(path + "\n");
-        return new TexturePool(path, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
+      path =
+          newPlayerDisease == Disease.INFLUENZA
+              ? Assets.pathFluFlu
+              : newPlayerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;
+      System.out.println(path + "\n");
+      return new TexturePool(path, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
     } else if (UnitType.FUNGUS == mapObjectType) {
-        path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathVirusFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathVirusMes : Assets.pathVirusRvi;
-        System.out.println(path + "\n");
-        return new TexturePool(path, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
+      path =
+          newPlayerDisease == Disease.INFLUENZA
+              ? Assets.pathVirusFlu
+              : newPlayerDisease == Disease.MEASLES ? Assets.pathVirusMes : Assets.pathVirusRvi;
+      System.out.println(path + "\n");
+      return new TexturePool(path, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
     } else if (UnitType.BACTERIA == mapObjectType) {
-        path = newPlayerDisease == Disease.INFLUENZA ? Assets.pathBacteriaFlu : newPlayerDisease == Disease.MEASLES ? Assets.pathBacteriaMes : Assets.pathBacteriaRvi;
-        System.out.println(path + "\n");
-        return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
+      path =
+          newPlayerDisease == Disease.INFLUENZA
+              ? Assets.pathBacteriaFlu
+              : newPlayerDisease == Disease.MEASLES
+                  ? Assets.pathBacteriaMes
+                  : Assets.pathBacteriaRvi;
+      System.out.println(path + "\n");
+      return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
     } else if (BaseType.INFLUENZA_BASE == mapObjectType) {
-      return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
+      return new TexturePool(Assets.pathBaseImageFlu, 5, 3, frameRate);
+    } else if (BaseType.MEASLES_BASE == mapObjectType) {
+      return new TexturePool(Assets.pathBaseImageMeasles, 5, 3, frameRate);
     } else if (BaseType.ROTAVIRUS_BASE == mapObjectType) {
-      return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
+      return new TexturePool(Assets.pathBaseImageRotavirus, 5, 3, frameRate);
     } else if (ProjectileType.VIRUS_PROJECTILE == mapObjectType) {
       return new TexturePool(
           Assets.pathProjectile, Assets.frameColsProjectile, Assets.frameRowsProjectile, frameRate);

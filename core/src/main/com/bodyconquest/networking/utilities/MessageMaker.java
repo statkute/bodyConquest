@@ -243,7 +243,7 @@ public class MessageMaker {
     String message = SET_LEADERBOARD_HEADER;
 
     for (String i : board.keySet()) {
-      message += " " + i + " " + board.get(i).toString();
+      message += i + " " + board.get(i).toString() + " ";
     }
 
     System.out.println(message);

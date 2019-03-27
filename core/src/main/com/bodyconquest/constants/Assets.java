@@ -22,7 +22,7 @@ public class Assets {
   /** The constant exitButton. */
   public static String exitButton = "core/assets/exit_new.png";
   /** The constant leadeboardButton. */
-  public static String leaderboardButton = "core/assets/LEADERBOARD.png";
+  public static String leaderboardButton = "core/assets/leaderboard_new.png";
 
   /** Credit Screen Assets */
 
@@ -69,6 +69,10 @@ public class Assets {
   /** The constant settingsSoundOn. */
   public static String settingsSoundOn = "core/assets/on.png";
 
+  public static String settingsSingleplayerDifficulty = "core/assets/settings_difficulty.png";
+  public static String settingsSingleplayerEasy = "core/assets/settings_easy.png";
+  public static String settingsSingleplayerHard = "core/assets/settings_hard.png";
+
   /** Race Selection Assets */
 
   /** The constant raceHeader. */
@@ -111,23 +115,31 @@ public class Assets {
   /** Starting Screen Assets */
 
   /** The constant startTitle. */
-  public static String startTitle = "core/assets/title_new.png";
+  public static String startTitle = "core/assets/signin_big.png";
   /** The constant startRegister. */
-  public static String startRegister = "core/assets/REGISTER_start.png";
+  public static String startRegister = "core/assets/register_menu.png";
   /** The constant startLogin. */
-  public static String startLogin = "core/assets/LOGIN_start.png";
+  public static String startLogin = "core/assets/login_menu.png";
+  /** The constant loginHeader. */
+  public static String loginHeader = "core/assets/login_header.png";
+  /** The constant registerHeader. */
+  public static String registerHeader = "core/assets/register_header.png";
 
-  /** Register Screen Assets */
+  /** Register and Login joint Screen Assets */
 
-  /** The constant registerUsername. */
-  public static String registerUsername = "core/assets/USERNAME_start.png";
-  /** The constant registerPassword. */
-  public static String registerPassword = "core/assets/PASSWORD_start.png";
+  /** The constant enterUsernameText. */
+  public static String enterUsernameText = "core/assets/enterusername.png";
+  /** The constant enterPasswordText. */
+  public static String enterPasswordText = "core/assets/enterpassword.png";
+  /** The constant registerButtonLow. */
+  public static String registerButtonLow = "core/assets/registerbutton_low.png";
+  /** The constant submitButtonLow. */
+  public static String submitButtonLow = "core/assets/submitbutton_low.png";
+  /** The constant loginButtonLow. */
+  public static String loginButtonLow = "core/assets/loginbutton_low.png";
 
   /** Leaderboard Screen Assets */
   public static String headerLeaderboard = "core/assets/topscores.png";
-
-
 
   /** Fonts */
 
@@ -214,11 +226,16 @@ public class Assets {
   public static String intestinespoints = "core/assets/intestinespoints.png";
   /** The constant continueTextBig. */
   public static String continueTextBig = "core/assets/continue_new_big.png";
+  /** The constant waitingText. */
   public static String waitingText = "core/assets/waiting_big.png";
+  /** The constant selectDiseaseText. */
+  public static String selectDiseaseText = "core/assets/selectdisease.png";
+  /** The constant selectOrganText. */
+  public static String selectOrganText = "core/assets/selectorgan.png";
+  /** The constant waitingTextNew. */
   public static String waitingTextNew = "core/assets/waiting_big_new.png";
 
   /** Game Over Screen Assets */
-
   public static String headerGameOver = "core/assets/GAMESCORES.png";
 
   /** Base Assets */
@@ -239,6 +256,12 @@ public class Assets {
 
   /** The constant pathBaseImage. */
   public static String pathBaseImage = pathAssets + "base_boi_ss.png";
+  /** The constant pathBaseImage Flu */
+  public static String pathBaseImageFlu = pathAssets + "base_blue.png";
+  /** The constant pathBaseImage Measles */
+  public static String pathBaseImageMeasles = pathAssets + "base_green.png";
+  /** The constant pathBaseImage Rotavirus*/
+  public static String pathBaseImageRotavirus = pathAssets + "base_yellow.png";
   /** The constant pathVirus. */
   public static String pathVirus = pathAssets + "virus_new.png";
   /** The constant pathVirus. */

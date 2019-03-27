@@ -21,7 +21,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   private Texture header;
   private Texture continueText;
   private Texture waitingText;
-  private Texture backButton;
+  private Texture selectText;
   private Texture blueVirus;
   private Texture greenVirus;
   private Texture yellowVirus;
@@ -38,8 +38,10 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   private int selection = 0;
 
   private Rectangle continueBounds;
-  private Rectangle backBounds;
   private Rectangle blueVirusBounds;
+  private Rectangle blueDescriptionBounds;
+  private Rectangle greenDescriptionBounds;
+  private Rectangle yellowDescriptionBounds;
   private Rectangle greenVirusBounds;
   private Rectangle yellowVirusBounds;
 
@@ -108,16 +110,16 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       game.batch.draw(
           blueVirusOpponent, (BodyConquest.V_WIDTH / 5 - blueVirusOpponent.getWidth() / 2), 220);
     } else {
-      game.batch.draw(
-          blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), 220);
+      game.batch.draw(blueVirus, (BodyConquest.V_WIDTH / 5 - blueVirus.getWidth() / 2), 220);
     }
 
     if (communicator.getOpponentDisease() == Disease.MEASLES) {
       game.batch.draw(
-          greenVirusOpponent, (BodyConquest.V_WIDTH / 2.0f - greenVirusOpponent.getWidth() / 2), 220);
+          greenVirusOpponent,
+          (BodyConquest.V_WIDTH / 2.0f - greenVirusOpponent.getWidth() / 2),
+          220);
     } else {
-      game.batch.draw(
-          greenVirus, (BodyConquest.V_WIDTH / 2.0f - greenVirus.getWidth() / 2), 220);
+      game.batch.draw(greenVirus, (BodyConquest.V_WIDTH / 2.0f - greenVirus.getWidth() / 2), 220);
     }
 
     if (communicator.getOpponentDisease() == Disease.ROTAVIRUS) {
@@ -127,26 +129,50 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
           220);
     } else {
       game.batch.draw(
-          yellowVirus,
-          (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2),
-          220);
+          yellowVirus, (BodyConquest.V_WIDTH / 5 * 4 - yellowVirus.getWidth() / 2), 220);
     }
 
     game.batch.draw(
-        blueDescription, (BodyConquest.V_WIDTH / 5.0f - blueDescription.getWidth() / 2.0f), 160);
+        blueDescription,
+        (BodyConquest.V_WIDTH / 5.0f - blueDescription.getWidth() / 2.0f / 2.0f),
+        165,
+        blueDescription.getWidth() / 2.0f,
+        blueDescription.getHeight() / 2.0f);
     game.batch.draw(
-        greenDescription, (BodyConquest.V_WIDTH / 2.0f - greenDescription.getWidth() / 2.0f), 160);
+        greenDescription,
+        (BodyConquest.V_WIDTH / 2.0f - greenDescription.getWidth() / 2.0f / 2.0f),
+        165,
+        greenDescription.getWidth() / 2.0f,
+        greenDescription.getHeight() / 2.0f);
     game.batch.draw(
-        yellowDescription, (BodyConquest.V_WIDTH / 5.0f * 4.0f - yellowDescription.getWidth() / 2.0f), 160);
+        yellowDescription,
+        (BodyConquest.V_WIDTH / 5.0f * 4.0f - yellowDescription.getWidth() / 2.0f / 2.0f),
+        165,
+        yellowDescription.getWidth() / 2.0f,
+        yellowDescription.getHeight() / 2.0f);
 
-    if (selection != 0 && communicator.isPicker())
-      game.batch.draw(continueText, BodyConquest.V_WIDTH / 2.0f - continueText.getWidth() / 2.0f, 60);
+    if (selection != 0 && communicator.isPicker()) {
+      game.batch.draw(
+          continueText, BodyConquest.V_WIDTH / 2.0f - continueText.getWidth() / 2.0f, 60);
+    } else if (selection == 0 && communicator.isPicker()) {
+      game.batch.draw(
+          selectText,
+          BodyConquest.V_WIDTH / 2.0f - selectText.getWidth() / 2.2f / 2.0f,
+          60,
+          selectText.getWidth() / 2.2f,
+          selectText.getHeight() / 2.2f);
+    }
 
     if (!communicator.isPicker()) {
-      game.batch.draw(waitingText, BodyConquest.V_WIDTH / 2 - waitingText.getWidth() / 2.2f / 2, 60, waitingText.getWidth()/ 2.2f, waitingText.getHeight() / 2.2f);
+      game.batch.draw(
+          waitingText,
+          BodyConquest.V_WIDTH / 2 - waitingText.getWidth() / 2.2f / 2,
+          60,
+          waitingText.getWidth() / 2.2f,
+          waitingText.getHeight() / 2.2f);
     }
 
-    //game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
+    // game.batch.draw(backButton, BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 30);
 
     if (communicator.getStartBodyScreen()) game.setScreen(new BodyScreen(game, gameType));
 
@@ -182,34 +208,34 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         checkSelection();
       }
 
-//      if (backBounds.contains(tmp.x, tmp.y)) {
-//        System.out.println("back pressed");
-//        playButtonSound();
-//        if (server != null) {
-//          server.closeEverything();
-//        }
-//        game.getClient().closeEverything();
-//        game.setScreen(new MenuScreen(game));
-//        dispose();
-//      }
+      //      if (backBounds.contains(tmp.x, tmp.y)) {
+      //        System.out.println("back pressed");
+      //        playButtonSound();
+      //        if (server != null) {
+      //          server.closeEverything();
+      //        }
+      //        game.getClient().closeEverything();
+      //        game.setScreen(new MenuScreen(game));
+      //        dispose();
+      //      }
     }
   }
 
   /** Clean selections of the user ( deletes the borders). */
   private void cleanSelections() {
-    if (communicator.getOpponentDisease() != Disease.INFLUENZA){
+    if (communicator.getOpponentDisease() != Disease.INFLUENZA) {
       blueVirus = manager.get(Assets.raceBlueVirus, Texture.class);
     } else {
       blueVirus = manager.get(Assets.raceBlueVirusOpponent, Texture.class);
     }
 
-    if (communicator.getOpponentDisease() != Disease.MEASLES){
+    if (communicator.getOpponentDisease() != Disease.MEASLES) {
       greenVirus = manager.get(Assets.raceGreenVirus, Texture.class);
     } else {
       greenVirus = manager.get(Assets.raceGreenVirusOpponent, Texture.class);
     }
 
-    if (communicator.getOpponentDisease() != Disease.MEASLES){
+    if (communicator.getOpponentDisease() != Disease.MEASLES) {
       yellowVirus = manager.get(Assets.raceYellowVirus, Texture.class);
     } else {
       yellowVirus = manager.get(Assets.raceYellowVirusOpponent, Texture.class);
@@ -235,6 +261,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     manager.load(Assets.raceYellowDescription, Texture.class);
     manager.load(Assets.raceContinueText, Texture.class);
     manager.load(Assets.waitingText, Texture.class);
+    manager.load(Assets.selectDiseaseText, Texture.class);
     manager.load(Assets.raceBackButton, Texture.class);
     manager.finishLoading();
   }
@@ -246,7 +273,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     header = manager.get(Assets.raceHeader, Texture.class);
     continueText = manager.get(Assets.raceContinueText, Texture.class);
     waitingText = manager.get(Assets.waitingText, Texture.class);
-    backButton = manager.get(Assets.raceBackButton, Texture.class);
+    selectText = manager.get(Assets.selectDiseaseText, Texture.class);
     blueVirus = manager.get(Assets.raceBlueVirus, Texture.class);
     greenVirus = manager.get(Assets.raceGreenVirus, Texture.class);
     yellowVirus = manager.get(Assets.raceYellowVirus, Texture.class);
@@ -279,12 +306,26 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
             blueVirus.getWidth(),
             blueVirus.getHeight());
 
+    blueDescriptionBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5 - blueDescription.getWidth() / 2.0f / 2.0f,
+            165,
+            blueDescription.getWidth() / 2.0f,
+            blueDescription.getHeight() / 2.0f);
+
     greenVirusBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - greenVirus.getWidth() / 2,
             220,
             greenVirus.getWidth(),
             greenVirus.getHeight());
+
+    greenDescriptionBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - greenDescription.getWidth() / 2.0f / 2.0f,
+            165,
+            greenDescription.getWidth() / 2.0f,
+            greenDescription.getHeight() / 2.0f);
 
     yellowVirusBounds =
         new Rectangle(
@@ -293,19 +334,19 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
             yellowVirus.getWidth(),
             yellowVirus.getHeight());
 
-//    backBounds =
-//        new Rectangle(
-//            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-//            30,
-//            backButton.getWidth(),
-//            backButton.getHeight());
+    yellowDescriptionBounds =
+        new Rectangle(
+            BodyConquest.V_WIDTH / 5 * 4 - yellowDescription.getWidth() / 2.0f / 2.0f,
+            165,
+            yellowDescription.getWidth() / 2.0f,
+            yellowDescription.getHeight() / 2.0f);
   }
 
   /** Check selection of the virus of the user. */
   public void checkSelection() {
 
-    if (blueVirusBounds.contains(tmp.x, tmp.y)) {
-      if (communicator.getOpponentDisease() == Disease.INFLUENZA){
+    if (blueVirusBounds.contains(tmp.x, tmp.y) || blueDescriptionBounds.contains(tmp.x, tmp.y)) {
+      if (communicator.getOpponentDisease() == Disease.INFLUENZA) {
         return;
       }
       playButtonSound();
@@ -324,8 +365,8 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       }
     }
 
-    if (greenVirusBounds.contains(tmp.x, tmp.y)) {
-      if (communicator.getOpponentDisease() == Disease.MEASLES){
+    if (greenVirusBounds.contains(tmp.x, tmp.y) || greenDescriptionBounds.contains(tmp.x, tmp.y)) {
+      if (communicator.getOpponentDisease() == Disease.MEASLES) {
         return;
       }
       playButtonSound();
@@ -345,8 +386,9 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       }
     }
 
-    if (yellowVirusBounds.contains(tmp.x, tmp.y)) {
-      if (communicator.getOpponentDisease() == Disease.ROTAVIRUS){
+    if (yellowVirusBounds.contains(tmp.x, tmp.y)
+        || yellowDescriptionBounds.contains(tmp.x, tmp.y)) {
+      if (communicator.getOpponentDisease() == Disease.ROTAVIRUS) {
         return;
       }
       playButtonSound();

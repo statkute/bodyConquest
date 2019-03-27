@@ -1,6 +1,7 @@
 package main.com.bodyconquest.game_logic;
 
 import main.com.bodyconquest.constants.*;
+import main.com.bodyconquest.game_logic.utils.Timer;
 import main.com.bodyconquest.gamestates.EncounterState;
 import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
@@ -117,6 +118,7 @@ public class Game extends Thread {
     if (gameType == GameType.SINGLE_PLAYER) {
       setPlayerTop(Disease.INFLUENZA);
       server.getServerSender().sendMessage(MessageMaker.firstPickerMessage(PlayerType.PLAYER_BOTTOM));
+      Timer.startTimer(2000);
     } else {
       Random rnd = new Random();
       server.getServerSender().sendMessage(MessageMaker.firstPickerMessage((rnd.nextInt(2) == 1 ? PlayerType.PLAYER_BOTTOM : PlayerType.PLAYER_TOP)));
@@ -139,6 +141,7 @@ public class Game extends Thread {
         setPlayerTop(Disease.ROTAVIRUS);
       server.getServerSender().sendMessage(MessageMaker.diseaseMessage(getPlayerTop().getDisease(), PlayerType.PLAYER_TOP));
       usernameTop = "AI";
+      Timer.startTimer(2000);
     }
 
     server.getServerSender().sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_BOTTOM, usernameBottom));
