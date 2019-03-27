@@ -139,7 +139,7 @@ public class Assets {
   public static String loginButtonLow = "core/assets/loginbutton_low.png";
 
   /** Leaderboard Screen Assets */
-  public static String headerLeaderboard = "core/assets/topscores.png";
+  public static String headerLeaderboard = "core/assets/leaderboard_header.png";
 
   /** Fonts */
 
