@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
+import main.com.bodyconquest.networking.utilities.Hasher;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
@@ -70,7 +71,9 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
             playButtonSound();
             textPassword = txfPassword.getText();
             textUsername = txfUsername.getText();
-            String message = MessageMaker.registerMessage(textUsername, textPassword);
+            Hasher hasher = new Hasher();
+            String hashedPassword = hasher.hash(textPassword);
+            String message = MessageMaker.loginMessage(textUsername, hashedPassword);
             game.getClient().clientSender.sendMessage(message);
             System.out.println(textUsername + " " + textPassword);
             processRegistration();
