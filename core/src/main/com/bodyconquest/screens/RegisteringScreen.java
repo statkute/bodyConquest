@@ -114,14 +114,14 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     submitImage = new Image(t_submit);
     submitImage.setBounds(
         BodyConquest.V_WIDTH / 2 - t_submit.getWidth() / 2,
-        80,
+        100,
         t_submit.getWidth(),
         t_submit.getHeight());
 
     loginImage = new Image(t_login);
     loginImage.setBounds(
         BodyConquest.V_WIDTH / 2 - t_login.getWidth() / 2,
-        30,
+        50,
         t_login.getWidth(),
         t_login.getHeight());
   }

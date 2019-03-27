@@ -111,9 +111,9 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
     usernameImage.setPosition(
         BodyConquest.V_WIDTH / 2.0f - usernameImage.getWidth() / 2.0f, 347.0f);
     passwordImage.setPosition(
-        BodyConquest.V_WIDTH / 2.0f - passwordImage.getWidth() / 2.0f, 207.0f);
+        BodyConquest.V_WIDTH / 2.0f - passwordImage.getWidth() / 2.0f, 237.0f);
     txfUsername.setPosition(BodyConquest.V_WIDTH / 2.0f - txfUsername.getWidth() / 2.0f, 310.0f);
-    txfPassword.setPosition(BodyConquest.V_WIDTH / 2.0f - txfPassword.getWidth() / 2.0f, 170.0f);
+    txfPassword.setPosition(BodyConquest.V_WIDTH / 2.0f - txfPassword.getWidth() / 2.0f, 200.0f);
   }
 
   /** Adding actors to Stage. */
