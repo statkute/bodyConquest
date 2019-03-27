@@ -136,7 +136,7 @@ public class HUD {
 
   private void setUpDragAndDrop() {
     dragAndDrop = new DragAndDrop();
-
+    //dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
     // Bottom player spawn points
     if (playerType == PlayerType.PLAYER_BOTTOM) {
       addSpawnPoint(475, 50, Lane.BOTTOM);
@@ -251,7 +251,11 @@ public class HUD {
               Payload payload = new Payload();
               payload.setObject(spawnableEnum);
 
-              payload.setDragActor(new Image(spawnableButton.getImage().getDrawable()));
+              final Image dragImage = new Image(spawnableButton.getImage().getDrawable());
+              dragImage.setScale(0.3f);
+
+              payload.setDragActor(dragImage);
+
 
               //            if(spawnableClass.getSuperclass().equals(Troop.class)) {
               //              payload.setDragActor(new
@@ -286,6 +290,7 @@ public class HUD {
     } catch (InstantiationException | IllegalAccessException e) {
       e.printStackTrace();
     }
+    //dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
   }
 
   public Stage getStage() {
