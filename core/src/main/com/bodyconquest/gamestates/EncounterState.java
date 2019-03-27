@@ -317,10 +317,10 @@ public class EncounterState {
 //    } else if (unitType.equals(UnitType.FUNGUS)) {
 //      if (playerType == PlayerType.PLAYER_BOTTOM) {
 //        if (bottomResources.canAfford(
-//            Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST)) {
-//          bottomResources.buy(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST);
+//            MeaslesFungus.LIPIDS_COST, MeaslesFungus.SUGARS_COST, MeaslesFungus.PROTEINS_COST)) {
+//          bottomResources.buy(MeaslesFungus.LIPIDS_COST, MeaslesFungus.SUGARS_COST, MeaslesFungus.PROTEINS_COST);
 //          troop =
-//              new Fungus(
+//              new MeaslesFungus(
 //                  lane,
 //                  playerType,
 //                  disease.getDamageMult(),
@@ -407,10 +407,13 @@ public class EncounterState {
     String endingMessage = MessageMaker.organClaimMessage(player, organ);
     serverSender.sendMessage(endingMessage);
     PlayerType picker;
-    if(game.getLastPicker() == PlayerType.PLAYER_BOTTOM) {
-      picker = PlayerType.PLAYER_TOP;
+    if (game.getGameType() != GameType.SINGLE_PLAYER) {
+      picker =
+          game.getLastPicker() == PlayerType.PLAYER_BOTTOM
+              ? PlayerType.PLAYER_TOP
+              : PlayerType.PLAYER_BOTTOM;
     } else {
-      picker = PlayerType.PLAYER_BOTTOM;
+      picker = game.getLastPicker();
     }
     serverSender.sendMessage(MessageMaker.firstPickerMessage(player));
     game.setLastPicker(picker);

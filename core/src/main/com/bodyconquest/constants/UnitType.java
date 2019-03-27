@@ -1,6 +1,7 @@
 package main.com.bodyconquest.constants;
 
 import main.com.bodyconquest.entities.Troops.Bacteria;
+import main.com.bodyconquest.entities.Troops.MeaslesFungus;
 import main.com.bodyconquest.entities.Troops.Virus;
 import main.com.bodyconquest.entities.Troops.Fungus;
 
@@ -19,13 +20,18 @@ public enum UnitType implements ClassOwner, Encodable, MapObjectType {
   /**
    * Fungus unit type.
    */
-  FUNGUS("FNG", Fungus.class);
+  FUNGUS("FNG", Fungus.class),
+  /**
+   * MeaslesFungus unit type.
+   */
+  MEASLES_FUNGUS("MNG", MeaslesFungus.class);
 
   private static final int ENCODED_LENGTH = 3;
 
   private static final String ENCODED_BACTERIA = "BAC";
   private static final String ENCODED_VIRUS = "VIR";
   private static final String ENCODED_FUNGUS = "FNG";
+  private static final String ENCODED__MEASLES_FUNGUS = "MNG";
 
 
   private String encodedUnit;
@@ -50,6 +56,7 @@ public enum UnitType implements ClassOwner, Encodable, MapObjectType {
     if (unitString.equals(ENCODED_BACTERIA)) unitType = BACTERIA;
     if (unitString.equals(ENCODED_VIRUS)) unitType = VIRUS;
     if (unitString.equals(ENCODED_FUNGUS)) unitType = FUNGUS;
+    if (unitString.equals(ENCODED__MEASLES_FUNGUS)) unitType = MEASLES_FUNGUS;
 
     return unitType;
   }
