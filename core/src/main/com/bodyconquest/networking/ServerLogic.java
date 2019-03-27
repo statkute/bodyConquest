@@ -1,9 +1,12 @@
 package main.com.bodyconquest.networking;
 
 import main.com.bodyconquest.constants.*;
+import main.com.bodyconquest.database.DatabaseManager;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.gamestates.EncounterState;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
+
+import java.util.HashMap;
 
 /** Server Thread responsible for dealing with game logic based on incoming messages */
 public class ServerLogic extends Thread {
@@ -12,7 +15,9 @@ public class ServerLogic extends Thread {
   public enum LogicType {
     RACE_SELECTION_LOGIC,
     BODY_LOGIC,
-    ENCOUNTER_LOGIC
+    ENCOUNTER_LOGIC,
+    DATABASE_LOGIC,
+    WAITING_LOGIC
   }
 
   private LogicType currentLogicType;
@@ -30,6 +35,8 @@ public class ServerLogic extends Thread {
   private boolean topPlayerReady;
   private boolean bottomPlayerReady;
 
+  private DatabaseManager dbManager;
+
   //private RaceSelectionLogic raceSelectionLogic;
 
   /**
@@ -44,6 +51,7 @@ public class ServerLogic extends Thread {
     topPlayerReady = false;
     bottomPlayerReady = false;
     init();
+    dbManager = new DatabaseManager();
   }
 
   private void init() {
@@ -57,19 +65,110 @@ public class ServerLogic extends Thread {
         String message = serverReceiver.receivedMessages.take();
 
         if (currentLogicType == null) {
-          System.err.println("[ERROR] No server logic has been set.");
+          System.err.println("[ERROR] No server logic has been set.\n\t" + message);
           // Right now we throw away messages we don't interpret
           // In future we may want to add them back to the received messages list
           continue;
         }
 
+         if(message.startsWith(MessageMaker.USERNAME_)){
+          PlayerType player;
+          int pointer = MessageMaker.USERNAME_.length();
+
+          String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
+          player = PlayerType.decode(encodedPlayerType);
+          pointer +=PlayerType.getEncodedLength() +1;
+
+          if(player == PlayerType.PLAYER_BOTTOM)
+            game.usernameBottom = message.substring(pointer);
+          else if(player == PlayerType.PLAYER_TOP){
+            game.usernameTop = message.substring(pointer);
+          }
+          serverSender.sendMessage(message);
+          continue;
+        }
+
+        if (currentLogicType == LogicType.WAITING_LOGIC) waitingLogic(message);
         if (currentLogicType == LogicType.RACE_SELECTION_LOGIC) raceSelectionLogic(message);
         if (currentLogicType == LogicType.ENCOUNTER_LOGIC) encounterLogic(message);
         if (currentLogicType == LogicType.BODY_LOGIC) bodyLogic(message);
+        if (currentLogicType == LogicType.DATABASE_LOGIC) databaseLogic(message);
 
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
+    }
+  }
+
+  private void waitingLogic(String message) {
+    int pointer;
+
+    if(message.startsWith(MessageMaker.JOINED_MESSAGE_HEADER)){
+      // Needs implementing
+    }
+  }
+
+  private void databaseLogic(String message) {
+    int pointer;
+
+    if (message.startsWith(MessageMaker.REGISTER_HEADER)) {
+      pointer = MessageMaker.REGISTER_HEADER.length();
+
+      message = message.substring(pointer + 1);
+
+      String[] values = message.split(" ");
+
+      String username = values[0];
+      String password = values[1];
+
+      boolean response = dbManager.addUser(username, password);
+
+      if (response == true) {
+        serverSender.sendMessage(MessageMaker.registeredSuccessfullyMessage());
+      } else {
+        serverSender.sendMessage(MessageMaker.unsuccessfulRegisterMessage());
+      }
+    } else if (message.startsWith(MessageMaker.LOGIN_HEADER)) {
+      pointer = MessageMaker.LOGIN_HEADER.length();
+
+      message = message.substring(pointer);
+
+      String[] values = message.split(" ");
+
+      String username = values[1];
+      String password = values[2];
+
+      boolean response = dbManager.checkUser(username, password);
+      if (response == true) {
+        serverSender.sendMessage(MessageMaker.loggedInSuccessfullyMessage(username));
+      } else {
+        serverSender.sendMessage(MessageMaker.unsuccessfulLoginMessage(username));
+      }
+    } else if (message.startsWith(MessageMaker.GET_LEADERBOARD_HEADER)) {
+      pointer = MessageMaker.GET_LEADERBOARD_HEADER.length();
+
+      HashMap<String, Integer> board = new HashMap<>();
+      board.putAll(dbManager.getLeaderboard());
+
+      serverSender.sendMessage(MessageMaker.sendLeaderboardMessage(board));
+    } else if (message.startsWith(MessageMaker.SET_ACHIEVEMENT_HEADER)) {
+      pointer = MessageMaker.GET_LEADERBOARD_HEADER.length();
+
+      message = message.substring(pointer);
+
+      String[] values = message.split(" ");
+
+      String username = values[1];
+      Integer points = Integer.parseInt(values[2]);
+
+      boolean response = dbManager.insertAchievement(username, points);
+
+      /*if (response == true) {
+        serverSender.sendMessage(MessageMaker.addedAchievementSuccessfullyMessage());
+      } else {
+        serverSender.sendMessage(MessageMaker.unsuccessfulMessage());
+      }*/
+
     }
   }
 
@@ -86,6 +185,15 @@ public class ServerLogic extends Thread {
 
       game.startEncounterState(organ);
       serverSender.sendMessage(MessageMaker.startEncounterMessage(organ));
+    }
+    else if(message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
+      Organ organ;
+      pointer = MessageMaker.SELECTED_ORGAN_HEADER.length();
+
+      String encodedOrgan = message.substring(pointer, pointer + Organ.getEncodedLength());
+      organ = Organ.decode(encodedOrgan);
+
+      serverSender.sendMessage(MessageMaker.selectedOrganMessage(organ));
     }
   }
 
@@ -122,30 +230,22 @@ public class ServerLogic extends Thread {
 
       String encodedPlayerType = message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
-
+      //serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
       if(player == PlayerType.PLAYER_BOTTOM) {
         bottomPlayerReady = true;
       } else {
         topPlayerReady = true;
       }
+      serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
 
       if(game.getGameType() == GameType.SINGLE_PLAYER || bottomPlayerReady && topPlayerReady) {
+        serverSender.sendMessage(MessageMaker.firstPickerMessage(PlayerType.PLAYER_BOTTOM));
+        game.setLastPicker(PlayerType.PLAYER_BOTTOM);
         game.startBodyState();
         serverSender.sendMessage(MessageMaker.START_BODY);
+      } else {
+//        serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
       }
-    }
-
-    else if(message.startsWith(MessageMaker.USERNAME_)){
-//      PlayerType player;
-//      pointer = MessageMaker.USERNAME_.length();
-//
-//      String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
-//      player = PlayerType.decode(encodedPlayerType);
-//      pointer +=PlayerType.getEncodedLength() +1;
-//
-//      String username = message.substring(pointer);
-
-      serverSender.sendMessage(message);
     }
 
     else {
@@ -242,6 +342,12 @@ public class ServerLogic extends Thread {
     currentLogicType = LogicType.BODY_LOGIC;
   }
 
+  public void setDatabaseLogic(Game game) {
+    currentLogicType = LogicType.DATABASE_LOGIC;
+    this.game = game;
+  }
+
+  public void setWaitingLogic() { currentLogicType = LogicType.WAITING_LOGIC; }
 
   public void stopRunning() {
     run = false;

@@ -10,9 +10,12 @@ public class Client {
   public ClientReceiver clientReceiver;
   public ClientSender clientSender;
   private ClientLogic clientLogic;
-  private String username;
 
   private Communicator communicator;
+
+  private boolean isStarted = false;
+
+
 
   /**
    * Starts the receiver and sender threads
@@ -29,6 +32,8 @@ public class Client {
     clientReceiver.start();
     clientSender.start();
     clientLogic.start();
+
+    isStarted = true;
 
     clientSender.sendMessage("connected");
     //clientSender.sendMessage(MessageMaker.usernameMessage(username));
@@ -72,11 +77,15 @@ public class Client {
     clientLogic.setBodyLogic();
   }
 
-    public void setUsername(String textUsername) {
-      this.username = username;
-    }
+  public void setDatabaseLogic() {
+    clientLogic.setDatabaseLogic();
+  }
 
-    //  public static void main(String argv[]) throws Exception {
+  public boolean getIsStarted() {
+    return isStarted;
+  }
+
+  //  public static void main(String argv[]) throws Exception {
   //    ClientReceiver clientReceiver = new ClientReceiver();
   //    ClientSender clientSender = new ClientSender(clientReceiver);
   //

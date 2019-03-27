@@ -3,9 +3,11 @@ package main.com.bodyconquest.database;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
+import java.util.*;
 
 public class DatabaseManager {
 
@@ -18,8 +20,13 @@ public class DatabaseManager {
 
     public DatabaseManager() {
         connect();
+        //resetDB();
+        //createTables();
     }
 
+    /**
+     * Attempts to connect to the DB
+     */
     public void connect() {
 
         /*
@@ -52,43 +59,202 @@ public class DatabaseManager {
         try {
             this.dbConn = DriverManager.getConnection(url, user, password);
             System.out.println("Database connection established.");
-            //System.out.println(this.dbConn);
+            System.out.println(this.dbConn);
 
-//            try {
-//                //Thread.sleep(100000);
-//            } catch (InterruptedException e) {
-//                System.out.println("Thread couldn't sleep.");
-//            }
         } catch (SQLException e) {
             System.out.println("Could not establish connection to database");
-            //if (dbConn == null) attemptReconnection();
+            if (dbConn == null) attemptReconnection();
         }
     }
 
+    /**
+     * @param username the username to be inserted in the database
+     * @param password the password paired with that username to be inserted
+     * @return true if the insertion was successful; false otherwise (if username is already taken)
+     */
     public boolean addUser(String username, String password) {
-        boolean successful = false;
 
-        //query
-        successful = true;
+        boolean exists = checkUser(username, password);
+        if (!exists) {
+            PreparedStatement insertUser;
+            try {
+                String insertUserString = "INSERT INTO Users (username, password) VALUES " +
+                        "(?, ?)";
+                insertUser = dbConn.prepareStatement(insertUserString);
+                insertUser.setString(1, username);
+                insertUser.setString(2, password);
 
-        return successful;
+                insertUser.executeUpdate();
+                return true;
+            } catch (SQLException e) {
+                System.out.println("SQL error in addUser method");
+            }
+        } else {
+
+        }
+
+        return false;
     }
 
+    /**
+     * @param username the username to be checked in the database
+     * @param password the password given by the user for that username to be checked
+     * @return true if the username password pair exists in the database; false otherwise
+     */
     public boolean checkUser(String username, String password) {
-        boolean successful = false;
 
-        //query
-        successful = true;
+        PreparedStatement getUser;
+        try {
+            String getUserString = "SELECT username, password " +
+                    "FROM Users " +
+                    "WHERE username = ?;";
+            getUser = dbConn.prepareStatement(getUserString);
+            getUser.setString(1, username);
+            ResultSet rs = getUser.executeQuery();
+            while (rs.next()) {
+                String dbPassword = rs.getString(2);
+                if (dbPassword.equals(password)) return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error in checkUser method");
+        }
 
-        return successful;
+        return false;
     }
 
-    public LinkedList<String> getUserAchievements(String username) {
-        LinkedList<String> resultList = new LinkedList<String>();
+    /**
+     * @return all username - points pairs from the leaderboard table in the database as a HashMap
+     */
+    public HashMap<String, Integer> getLeaderboard() {
+        HashMap<String, Integer> resultMap = new HashMap<String, Integer>();
 
-        //query
+        PreparedStatement getLeaderboard;
+        try {
+            String getLeaderboardString = "SELECT username, points " +
+                    "FROM Leaderboard;";
+            getLeaderboard = dbConn.prepareStatement(getLeaderboardString);
+            ResultSet rs = getLeaderboard.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString(1);
+                Integer points = rs.getInt(2);
+                resultMap.put(name, points);
+            }
+        } catch (SQLException e) {
+            System.out.println("Problems while getting leaderboard");
+            attemptReconnection();
+        }
 
-        return resultList;
+        return resultMap;
+    }
+
+    /**
+     * Tries to insert a new highscore for a user; In case the user already has a larger score in the DB, keep it
+     *
+     * @param username the user whose score is to be inserted
+     * @param points   the score to be inserted for that user
+     * @return
+     */
+    public boolean insertAchievement(String username, int points) {
+
+        PreparedStatement insertPoints;
+        try {
+            String insertPointsString = "INSERT INTO Leaderboard (username, points) " +
+                    "VALUES (?, ?) " +
+                    "ON CONFLICT (username) DO UPDATE " +
+                    "SET points =  GREATEST(Leaderboard.points, EXCLUDED.points)";
+            insertPoints = dbConn.prepareStatement(insertPointsString);
+            insertPoints.setString(1, username);
+            insertPoints.setInt(2, points);
+
+            insertPoints.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("SQL error in insertAchievement method");
+        }
+
+        return false;
+    }
+
+    /**
+     * Creates the Users table in the DB
+     *
+     * @return True if the users table was created successfully; False if not
+     */
+    private boolean createUsers() {
+        boolean created = true;
+        try {
+            Statement statement = dbConn.createStatement();
+            String createUsersTable = "CREATE TABLE Users (" +
+                    "	username			VARCHAR(50)		NOT NULL," +
+                    "	password			VARCHAR(50)		NOT NULL," +
+                    "	PRIMARY KEY (username)" +
+                    ");";
+            statement.execute(createUsersTable);
+        } catch (SQLException e) {
+            System.out.println("Users table was not created successfully");
+            created = false;
+            if (dbConn == null) attemptReconnection();
+        }
+        return created;
+    }
+
+    /**
+     * Creates the Leaderborad table in the DB
+     *
+     * @return True if the table was created successfully; False if not
+     */
+    private boolean createBoard() {
+        boolean created = true;
+        try {
+            Statement statement = dbConn.createStatement();
+            String createLeaderboardTable = "CREATE TABLE Leaderboard (\n" +
+                    "	aid					SERIAL," +
+                    "	username			VARCHAR(50)		NOT NULL," +
+                    "	points			    INTEGER		    NOT NULL," +
+                    "   UNIQUE(username)," +
+                    "	PRIMARY KEY (aid)," +
+                    "   FOREIGN KEY (username) REFERENCES Users(username)" +
+                    "	    ON UPDATE CASCADE" +
+                    ");";
+            statement.execute(createLeaderboardTable);
+        } catch (SQLException e) {
+            System.out.println("Leaderboard table was not created successfully");
+            created = false;
+            if (dbConn == null) attemptReconnection();
+        }
+        return created;
+    }
+
+    private boolean createTables() {
+        return createUsers() && createBoard();
+    }
+
+    /**
+     * Completely wipes the DB
+     */
+    private void resetDB() {
+        try {
+            Statement statement = dbConn.createStatement();
+            String dropTables = "DROP TABLE IF EXISTS Users, Leaderboard;";
+            statement.execute(dropTables);
+        } catch (SQLException e) {
+            System.out.println("Problems while clearing DB");
+            attemptReconnection();
+        }
+    }
+
+    /**
+     * Clears all data stored in the DB
+     */
+    private void emptyDB() {
+        try {
+            Statement statement = dbConn.createStatement();
+            String emptyTables = "TRUNCATE TABLE Users, Leaderboard;";
+            statement.execute(emptyTables);
+        } catch (SQLException e) {
+            System.out.println("Problems while emptying DB");
+            attemptReconnection();
+        }
     }
 
     private void attemptReconnection() {
@@ -106,21 +272,6 @@ public class DatabaseManager {
                 System.out.println("Could not establish connection to database");
                 if (dbConn == null) attemptReconnection();
             }
-    }
-
-    private void resetDB() {
-        try {
-            Statement statement = dbConn.createStatement();
-            String recreateSchema = "DROP SCHEMA public CASCADE;" +
-                    "CREATE SCHEMA public;" +
-                    "GRANT ALL ON SCHEMA public TO postgres;" +
-                    "GRANT ALL ON SCHEMA public TO public;" +
-                    "COMMENT ON SCHEMA public IS 'standard public schema';";
-            statement.execute(recreateSchema);
-        } catch (SQLException e) {
-            System.out.println("Problems while clearing DB");
-            attemptReconnection();
-        }
     }
 
 }

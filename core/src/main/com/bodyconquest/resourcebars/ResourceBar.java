@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import jdk.management.resource.ResourceType;
 import main.com.bodyconquest.constants.Resource;
 import main.com.bodyconquest.rendering.BodyConquest;
 

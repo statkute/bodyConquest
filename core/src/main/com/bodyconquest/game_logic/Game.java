@@ -6,6 +6,7 @@ import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 
 import java.net.SocketException;
+import java.util.Random;
 
 public class Game extends Thread {
 
@@ -23,6 +24,10 @@ public class Game extends Thread {
   private Player playerBottom;
   private Player playerTop;
   private boolean encounter;
+  private PlayerType lastPicker;
+
+  public String usernameTop;
+  public String usernameBottom;
 
   /**
    * Constructor
@@ -111,6 +116,10 @@ public class Game extends Thread {
     server.startRaceSelectionLogic(this);
     if (gameType == GameType.SINGLE_PLAYER) {
       setPlayerTop(Disease.INFLUENZA);
+      server.getServerSender().sendMessage(MessageMaker.firstPickerMessage(PlayerType.PLAYER_BOTTOM));
+    } else {
+      Random rnd = new Random();
+      server.getServerSender().sendMessage(MessageMaker.firstPickerMessage((rnd.nextInt(2) == 1 ? PlayerType.PLAYER_BOTTOM : PlayerType.PLAYER_TOP)));
     }
   }
 
@@ -124,13 +133,16 @@ public class Game extends Thread {
 
   public void startBodyState() {
     if (gameType == GameType.SINGLE_PLAYER){
-//      //setPlayerTop(Disease.INFLUENZA);
-////      if(getPlayerBottom().getDisease() != Disease.INFLUENZA)
-////        setPlayerTop(Disease.INFLUENZA);
-////      else if(getPlayerBottom().getDisease() != Disease.MEASLES)
-////        setPlayerTop(Disease.MEASLES);
-      server.getServerSender().sendMessage(MessageMaker.diseaseMessage(Disease.INFLUENZA, PlayerType.PLAYER_TOP));
+      if(getPlayerBottom().getDisease() != Disease.INFLUENZA)
+        setPlayerTop(Disease.INFLUENZA);
+      else if(getPlayerBottom().getDisease() != Disease.ROTAVIRUS)
+        setPlayerTop(Disease.ROTAVIRUS);
+      server.getServerSender().sendMessage(MessageMaker.diseaseMessage(getPlayerTop().getDisease(), PlayerType.PLAYER_TOP));
+      usernameTop = "AI";
     }
+
+    server.getServerSender().sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_BOTTOM, usernameBottom));
+    server.getServerSender().sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_TOP, usernameTop));
 
     server.startBodyLogic(); }
 
@@ -138,6 +150,17 @@ public class Game extends Thread {
     encounter = false;
     encounterState = null;
     startBodyState();
+  }
+
+    public void startDatabaseState() {
+        server.startDatabaseLogic(this);
+    }
+  public PlayerType getLastPicker() {
+    return lastPicker;
+  }
+
+  public void setLastPicker(PlayerType lastPicker) {
+    this.lastPicker = lastPicker;
   }
 
 }

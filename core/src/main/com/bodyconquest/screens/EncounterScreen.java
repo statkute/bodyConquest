@@ -131,11 +131,12 @@ public class EncounterScreen implements Screen {
     communicator = client.getCommunicator();
     communicator.setStartEncounter(false);
     playerDisease = communicator.getPlayerDisease();
+    playerType = communicator.getPlayerType();
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    this.username = game.getUsername();
+    this.username = game.getClient().getCommunicator().getUsername(playerType);
 
     if (gameType != GameType.MULTIPLAYER_JOIN) {
       playerType = PlayerType.PLAYER_BOTTOM;
@@ -168,6 +169,7 @@ public class EncounterScreen implements Screen {
     value = new DecimalFormat("0");
 
     organNumber = 0;
+    communicator.setSelectedOrgan(null);
   }
 
   public Communicator getCommunicator() {
@@ -313,7 +315,7 @@ public class EncounterScreen implements Screen {
 
       if(screenMakingCounter == 1){
 
-        if(organNumber == 6){
+        if(organNumber == 1){
 
           switchScreen(game, new GameOverScreen(game,gameType));
         }

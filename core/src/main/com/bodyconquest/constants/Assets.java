@@ -1,5 +1,7 @@
 package main.com.bodyconquest.constants;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 /** The type Assets. */
 public class Assets {
 
@@ -19,6 +21,8 @@ public class Assets {
   public static String creditsButton = "core/assets/credits_new.png";
   /** The constant exitButton. */
   public static String exitButton = "core/assets/exit_new.png";
+  /** The constant leadeboardButton. */
+  public static String leaderboardButton = "core/assets/LEADERBOARD.png";
 
   /** Credit Screen Assets */
 
@@ -81,6 +85,12 @@ public class Assets {
   public static String raceGreenVirusSelected = "core/assets/greenvirusselected.png";
   /** The constant raceYellowVirusSelected. */
   public static String raceYellowVirusSelected = "core/assets/yellowvirusselected.png";
+  /** The constant raceBlueVirusSelected. */
+  public static String raceBlueVirusOpponent = "core/assets/bluevirussopponent.png";
+  /** The constant raceGreenVirusSelected. */
+  public static String raceGreenVirusOpponent = "core/assets/greenvirusopponent.png";
+  /** The constant raceYellowVirusSelected. */
+  public static String raceYellowVirusOpponent = "core/assets/yellowvirusopponent.png";
   /** The constant raceBlueDescription. */
   public static String raceBlueDescription = "core/assets/bluevirus_characteristics.png";
   /** The constant raceGreenDescription. */
@@ -116,6 +126,7 @@ public class Assets {
 
   /** Leaderboard Screen Assets */
   public static String headerLeaderboard = "core/assets/topscores.png";
+
 
 
   /** Fonts */
@@ -203,7 +214,8 @@ public class Assets {
   public static String intestinespoints = "core/assets/intestinespoints.png";
   /** The constant continueTextBig. */
   public static String continueTextBig = "core/assets/continue_new_big.png";
-
+  public static String waitingText = "core/assets/waiting_big.png";
+  public static String waitingTextNew = "core/assets/waiting_big_new.png";
 
   /** Game Over Screen Assets */
 
@@ -221,8 +233,9 @@ public class Assets {
   /** The constant INCREASEACCUMULATORTILL. */
   public static final int INCREASEACCUMULATORTILL = 300;
 
+  public static String gameFont = "core/assets/ArcadePix.fnt";
 
-    private static String pathAssets = "core/assets/";
+  private static String pathAssets = "core/assets/";
 
   /** The constant pathBaseImage. */
   public static String pathBaseImage = pathAssets + "base_boi_ss.png";

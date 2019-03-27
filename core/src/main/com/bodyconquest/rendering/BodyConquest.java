@@ -12,10 +12,8 @@ import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.networking.Client;
 import main.com.bodyconquest.networking.Server;
-import main.com.bodyconquest.screens.LeaderboardScreen;
+import main.com.bodyconquest.screens.*;
 import main.com.bodyconquest.screens.MenuScreen;
-import main.com.bodyconquest.screens.RaceSelection;
-import main.com.bodyconquest.screens.StartScreen;
 
 import java.io.IOException;
 
@@ -47,7 +45,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
 
   private Game game;
   private Client client;
-  private String username;
+  public BitmapFont gameFont;
 
   @Override
   public void create() {
@@ -55,13 +53,15 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     font = new BitmapFont();
     timerFont = new BitmapFont(Gdx.files.internal(Assets.timerFont));
     usernameFont = new BitmapFont(Gdx.files.internal(Assets.usernameFont));
+    gameFont = new BitmapFont(Gdx.files.internal(Assets.gameFont));
     audioPlayer.loadSFX("button_click", Assets.buttonSoundPath);
     audioPlayer.loadMusic("music", Assets.music);
     audioPlayer.playMusicLoop("music");
     client = new Client();
     //setScreen(new MenuScreen(this, "GermBoi"));
-    setScreen(new StartScreen(this));
+    setScreen(new MenuScreen(this));
     //setScreen(new LeaderboardScreen(this));
+    //setScreen(new WaitingScreen(this,GameType.MULTIPLAYER_HOST));
 
   }
 
@@ -93,18 +93,13 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   }
 
   public Client getClient() {
-    return client;
+      return client;
+
   }
 
   public void setClient(Client client) {
     this.client = client;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
 
-  public String getUsername() {
-    return username;
-  }
 }

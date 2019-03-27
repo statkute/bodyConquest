@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.game_logic.Communicator;
 import main.com.bodyconquest.networking.Client;
+import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.awt.*;
@@ -25,7 +27,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     private Stage stage;
 
     private Client client;
-    private Communicator comms;
+    private Communicator communicator;
 
 
     public GameOverScreen(BodyConquest game,GameType gameType) {
@@ -36,17 +38,22 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         getAssets();
         setRectangles();
         client = game.getClient();
-        comms = client.getCommunicator();
-        scoreBottom = comms.getScoreBottom();
-        scoreTop = comms.getScoreTop();
+        //setting database logic to send achievement to server
+        if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startDatabaseState();
 
+        client.setDatabaseLogic();
+
+        communicator = client.getCommunicator();
+        scoreBottom = communicator.getScoreBottom();
+        scoreTop = communicator.getScoreTop();
+        communicator = game.getClient().getCommunicator();
         if(gameType == GameType.SINGLE_PLAYER){
-            usernameBottom = game.getUsername();
+            usernameBottom = communicator.getUsername(PlayerType.PLAYER_BOTTOM);
             usernameTop = "AI";
         }
         else{
-            usernameBottom = comms.getUsernameBottom();
-            usernameTop = comms.getUsernameTop();
+            usernameBottom = communicator.getUsername(PlayerType.PLAYER_BOTTOM);
+            usernameTop = communicator.getUsername(PlayerType.PLAYER_TOP);
         }
     }
 
@@ -55,7 +62,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     public void render(float delta) {
         super.render(delta);
         game.batch.begin();
-        game.usernameFont.getData().setScale(2.5f, 2.5f);
+        game.gameFont.getData().setScale(2.5f, 2.5f);
         game.batch.draw(header, BodyConquest.V_WIDTH / 2.0f - header.getWidth() / 2.0f, 450.0f);
         game.batch.draw(backButton,BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2, 60);
         drawUsername();
@@ -80,13 +87,13 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     }
 
     public void drawUsername(){
-        game.usernameFont.draw(game.batch, usernameBottom , BodyConquest.V_WIDTH / 2.0f - 250.0f, 400.0f);
-        game.usernameFont.draw(game.batch, usernameTop , BodyConquest.V_WIDTH / 2.0f - 250.0f, 200.0f);
+        game.gameFont.draw(game.batch, usernameBottom , BodyConquest.V_WIDTH / 2.0f - 250.0f, 400.0f);
+        game.gameFont.draw(game.batch, usernameTop , BodyConquest.V_WIDTH / 2.0f - 250.0f, 200.0f);
     }
 
     public void drawScore(){
-        game.usernameFont.draw(game.batch, Integer.toString(scoreBottom) , BodyConquest.V_WIDTH / 2.0f + 150.0f , 400.0f);
-        game.usernameFont.draw(game.batch, Integer.toString(scoreTop) , BodyConquest.V_WIDTH / 2.0f + 150.0f , 200.0f);
+        game.gameFont.draw(game.batch, Integer.toString(scoreBottom) , BodyConquest.V_WIDTH / 2.0f + 150.0f , 400.0f);
+        game.gameFont.draw(game.batch, Integer.toString(scoreTop) , BodyConquest.V_WIDTH / 2.0f + 150.0f , 200.0f);
     }
 
     @Override
@@ -105,6 +112,12 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         super.checkPressed();
         if (Gdx.input.justTouched()) {
             if (backBounds.contains(tmp.x, tmp.y)) {
+                if(gameType == GameType.SINGLE_PLAYER)
+                    client.clientSender.sendMessage(MessageMaker.sendAchievementMessage(usernameBottom,scoreBottom));
+                else if(gameType == GameType.MULTIPLAYER_HOST || gameType == GameType.MULTIPLAYER_JOIN){
+                    client.clientSender.sendMessage(MessageMaker.sendAchievementMessage(usernameBottom,scoreBottom));
+                    client.clientSender.sendMessage(MessageMaker.sendAchievementMessage(usernameTop,scoreTop));
+                }
                 playButtonSound();
                 dispose();
                 game.setScreen(new MenuScreen(game));

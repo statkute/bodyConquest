@@ -7,15 +7,17 @@ import main.com.bodyconquest.constants.Resource;
 import main.com.bodyconquest.entities.BasicObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * The type Communicator.
- */
+/** The type Communicator. */
 public class Communicator {
 
   /** Variables */
   private CopyOnWriteArrayList<BasicObject> objects;
+
+  private String username;
 
   private int bottomHealthPercentage;
   private int topHealthPercentage;
@@ -32,6 +34,7 @@ public class Communicator {
   private int proteinsTop;
   private int lipidsBottom;
   private int sugarsBottom;
+
   private int proteinsBottom;
 
   private int scoreBottom;
@@ -49,12 +52,21 @@ public class Communicator {
   private boolean startBodyScreen;
   private boolean startEncounter;
 
+  private HashMap<String, Integer> board;
+  private AtomicBoolean boardIsSet = new AtomicBoolean(false);
+
+  private AtomicBoolean logged = new AtomicBoolean(false);
+  private AtomicBoolean loggedIsSet = new AtomicBoolean(false);
+
+  private AtomicBoolean registered = new AtomicBoolean(false);
+  private AtomicBoolean registeredIsSet = new AtomicBoolean(false);
   private String usernameBottom;
   private String usernameTop;
 
-  /**
-   * Instantiates a new Communicator.
-   */
+  private Organ selectedOrgan;
+  // private boolean playersSet;
+
+  /** Instantiates a new Communicator. */
   public Communicator() {
     objects = new CopyOnWriteArrayList<BasicObject>();
     playerDisease = null;
@@ -434,7 +446,7 @@ public class Communicator {
   /**
    * Gets resource.
    *
-   * @param resource   the resource
+   * @param resource the resource
    * @param playerType the player type
    * @return the resource
    */
@@ -459,6 +471,66 @@ public class Communicator {
       }
     }
   }
+
+  public HashMap<String, Integer> getBoard() {
+    return board;
+  }
+
+  public void setBoard(HashMap<String, Integer> board) {
+    this.board = board;
+  }
+
+  public AtomicBoolean getBoardIsSet() {
+    return boardIsSet;
+  }
+
+  public void setBoardIsSet(boolean boardIsSet) {
+    this.boardIsSet.set(boardIsSet);
+  }
+
+  public AtomicBoolean getLogged() {
+    return logged;
+  }
+
+  public void setLogged(boolean logged) {
+    this.logged.set(logged);
+  }
+
+  public AtomicBoolean getLoggedIsSet() {
+    return loggedIsSet;
+  }
+
+  public void setLoggedIsSet(boolean loggedIsSet) {
+    this.loggedIsSet.set(loggedIsSet);
+  }
+
+  public AtomicBoolean getRegistered() {
+    return registered;
+  }
+
+  public void setRegistered(boolean registered) {
+    this.registered.set(registered);
+  }
+
+  public AtomicBoolean getRegisteredIsSet() {
+    return registeredIsSet;
+  }
+
+  public void setRegisteredIsSet(boolean registeredIsSet) {
+    this.registeredIsSet.set(registeredIsSet);
+  }
+
+  public String getUsername(PlayerType player) {
+    if (player == PlayerType.PLAYER_BOTTOM) {
+      return usernameBottom;
+    } else {
+      return usernameTop;
+    }
+  }
+
+  //  public void setUsername(String username) {
+  //    this.username = username;
+  //  }
 
   /**
    * was eye selected boolean.
@@ -514,28 +586,36 @@ public class Communicator {
     return heartSelected;
   }
 
-  public void addOponentOrgan(Organ organ){
+  public void addOponentOrgan(Organ organ) {
     opponentOrgans.add(organ);
   }
 
-  public void addOrgan(Organ organ){
+  public void addOrgan(Organ organ) {
     playerOrgans.add(organ);
   }
 
-  public void setUsername(PlayerType playerType, String username){
-    if(playerType == PlayerType.PLAYER_TOP){
+  public void setUsername(PlayerType playerType, String username) {
+    if (playerType == PlayerType.PLAYER_TOP) {
       usernameTop = username;
-    }
-    else if(playerType == PlayerType.PLAYER_BOTTOM){
+    } else if (playerType == PlayerType.PLAYER_BOTTOM) {
       usernameBottom = username;
     }
   }
 
-  public String getUsernameBottom(){
-    return usernameBottom;
+  public void setSelectedOrgan(Organ organ) {
+    selectedOrgan = organ;
   }
 
-  public String getUsernameTop(){
-    return usernameTop;
+  public Organ getSelectedOrgan() {
+    return selectedOrgan;
+
+    //  public void setPlayersSet(boolean playersSet){
+    //    this.playersSet = playersSet;
+    //  }
+    //
+    //  public boolean getPlayersSet(){
+    //    return playersSet;
+    //  }
+
   }
 }

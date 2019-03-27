@@ -2,11 +2,16 @@ package main.com.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import main.com.bodyconquest.constants.Assets;
+import main.com.bodyconquest.constants.GameType;
+import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
 /**
@@ -63,18 +68,22 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
      */
     protected Stage stage;
 
+    protected GameType gameType;
+
     /**
      * Instantiates a new Database screen.
      *
      * @param game the game
      */
-    public DatabasesScreen(BodyConquest game) {
+    public DatabasesScreen(BodyConquest game, GameType gameType) {
         super(game);
         loadAssets();
         getAssets();
+        this.gameType = gameType;
         passwordImage = new Image(password);
         usernameImage = new Image(username);
         skin = new Skin(Gdx.files.internal("uiskin.json"));
+        //backBtn = new TextButton("Back",skin);
         txfUsername = new TextField("", skin);
         txfPassword = new TextField("", skin);
         txfPassword.setPasswordMode(true);
