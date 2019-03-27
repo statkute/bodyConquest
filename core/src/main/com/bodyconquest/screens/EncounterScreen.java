@@ -333,7 +333,7 @@ public class EncounterScreen implements Screen {
       game.gameFont.getData().setScale(0.5f, 0.5f);
       game.gameFont.draw(
           game.batch,
-          username.toLowerCase().substring(0, 9),
+          username.toLowerCase().substring(0, 7),
           BodyConquest.V_WIDTH - 105.0f,
           hud.getUnitBar().getImageHeight() + 24.0f);
     } else {

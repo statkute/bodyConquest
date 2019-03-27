@@ -79,7 +79,6 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
   /** {@inheritDoc} */
   @Override
   public void checkPressed() {
-
     super.checkPressed();
 
     if (Gdx.input.justTouched()) {
