@@ -722,9 +722,11 @@ public class EncounterScreen implements Screen {
       System.out.println(path + "\n");
       return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
     } else if (BaseType.INFLUENZA_BASE == mapObjectType) {
-      return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
+      return new TexturePool(Assets.pathBaseImageFlu, 5, 3, frameRate);
+    } else if (BaseType.MEASLES_BASE == mapObjectType) {
+      return new TexturePool(Assets.pathBaseImageMeasles, 5, 3, frameRate);
     } else if (BaseType.ROTAVIRUS_BASE == mapObjectType) {
-      return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
+      return new TexturePool(Assets.pathBaseImageRotavirus, 5, 3, frameRate);
     } else if (ProjectileType.VIRUS_PROJECTILE == mapObjectType) {
       return new TexturePool(
           Assets.pathProjectile, Assets.frameColsProjectile, Assets.frameRowsProjectile, frameRate);
