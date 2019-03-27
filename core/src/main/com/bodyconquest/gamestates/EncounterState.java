@@ -413,9 +413,9 @@ public class EncounterState {
               ? PlayerType.PLAYER_TOP
               : PlayerType.PLAYER_BOTTOM;
     } else {
-      picker = game.getLastPicker();
+      picker = PlayerType.PLAYER_BOTTOM;
     }
-    serverSender.sendMessage(MessageMaker.firstPickerMessage(player));
+    serverSender.sendMessage(MessageMaker.firstPickerMessage(picker));
     game.setLastPicker(picker);
 
     if(player == PlayerType.PLAYER_BOTTOM) {
