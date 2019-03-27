@@ -37,6 +37,7 @@ public abstract class Troop extends MapObject implements Spawnable {
   // Attacking Attributes
   /** The amount of damage dealt by each attack by this Troop. */
   protected int damage;
+
   /** The time (in milliseconds) that the Troop must wait to attack again after attacking. */
   protected long cooldown;
   /** The time of the last attack (in milliseconds). (Initialised to 0) */
@@ -403,4 +404,8 @@ public abstract class Troop extends MapObject implements Spawnable {
   public boolean isRanged() {
     return ranged;
   }
+
+    public long getCooldown() {
+        return cooldown;
+    }
 }

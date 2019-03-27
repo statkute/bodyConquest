@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import main.com.bodyconquest.constants.Lane;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.constants.UnitType;
+import main.com.bodyconquest.entities.DifficultyLevel;
 import main.com.bodyconquest.entities.Spawnable;
 import main.com.bodyconquest.entities.Troops.Troop;
 import main.com.bodyconquest.entities.resources.Resources;
@@ -17,7 +18,7 @@ public class BasicTestAI extends Thread {
 
   private final int MAX_UNIT_SELECTION = 4;
 
-  private final long COOLDOWN = 1000;
+  private final long COOLDOWN = 2000;
   private boolean running;
 
   private EncounterState game;
@@ -25,11 +26,13 @@ public class BasicTestAI extends Thread {
   // Maybe make an interface for Spawnable units.
   private ArrayList<UnitType> units;
   private Resources resources;
+  private DifficultyLevel difficultyLevel;
 
-  public BasicTestAI(EncounterState game, PlayerType playerType, Resources resources) {
+  public BasicTestAI(EncounterState game, PlayerType playerType, Resources resources, DifficultyLevel difficultyLevel) {
     this.game = game;
     this.playerType = playerType;
     this.resources = resources;
+    this.difficultyLevel = difficultyLevel;
     running = true;
     units = new ArrayList<>(2);
     units.add(UnitType.BACTERIA);
@@ -45,13 +48,18 @@ public class BasicTestAI extends Thread {
     while (running) {
       time = System.currentTimeMillis();
       if (time > (lastWave + COOLDOWN)) {
-        summonWave();
+        if (difficultyLevel == DifficultyLevel.EASY) {
+          summonEasyWave();
+        }
         lastWave = time;
       }
     }
   }
 
-  private void summonWave() {
+  /**
+   * Method called when the AI settings are on easy
+   */
+  private void summonEasyWave() {
     Random rnd = new Random();
     int unitIndex = rnd.nextInt(2);
     try {
@@ -119,15 +127,25 @@ public class BasicTestAI extends Thread {
         }
       }
 
-      Gdx.app.postRunnable(
-              () -> {
-                //              if (resources.canAfford(unit)){
-                //                resources.buy(unit);
-                //              }
-                game.spawnUnit(unitType, lane, playerType);
-              });
+      summonUnit(unitType, lane, playerType);
+
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Method to spawn a unit
+   *
+   * @param lane       the lane in which the unit is spawned
+   * @param playerType the player with which the unit allies itself
+   */
+  private void summonUnit(UnitType unitType, Lane lane, PlayerType playerType) {
+    Gdx.app.postRunnable(new Runnable() {
+      @Override
+      public void run() {
+        game.spawnUnit(unitType, lane, playerType, false);
+      }
+    });
   }
 }

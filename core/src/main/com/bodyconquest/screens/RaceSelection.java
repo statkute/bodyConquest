@@ -6,6 +6,7 @@ import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.Disease;
 import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.constants.PlayerType;
+import main.com.bodyconquest.entities.DifficultyLevel;
 import main.com.bodyconquest.game_logic.Communicator;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
@@ -70,6 +71,13 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       game.getGame().startRaceSelectionState();
     }
     game.getClient().setRaceSelectionLogic();
+
+      //communicate the difficulty if in single player mode
+
+      if (gameType == GameType.SINGLE_PLAYER) {
+          DifficultyLevel difficultyLevel = game.getDifficultyLevel();
+          game.getClient().clientSender.sendMessage(MessageMaker.setDifficultyMessage(difficultyLevel));
+      }
 
     this.communicator = game.getClient().getCommunicator();
     this.playerType = communicator.getPlayerType();

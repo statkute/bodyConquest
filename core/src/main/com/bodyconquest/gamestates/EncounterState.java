@@ -2,6 +2,7 @@ package main.com.bodyconquest.gamestates;
 
 import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.entities.BasicObject;
+import main.com.bodyconquest.entities.DifficultyLevel;
 import main.com.bodyconquest.entities.Map;
 import main.com.bodyconquest.entities.MapObject;
 import main.com.bodyconquest.entities.Troops.Bacteria;
@@ -15,6 +16,7 @@ import main.com.bodyconquest.entities.resources.Resources;
 import main.com.bodyconquest.game_logic.BasicTestAI;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.game_logic.MultiplayerTestAI;
+import main.com.bodyconquest.game_logic.MultiplayerAI;
 import main.com.bodyconquest.game_logic.Player;
 import main.com.bodyconquest.networking.ServerSender;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
@@ -75,6 +77,7 @@ public class EncounterState {
     this.game = game;
     this.organ = organ;
 
+
     serverSender = game.getServer().getServerSender();
 
     game.startEncounterLogic(this);
@@ -114,11 +117,12 @@ public class EncounterState {
     topResources.start();
 
     if (game.getGameType() == GameType.SINGLE_PLAYER) {
-      BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
+      DifficultyLevel difficultyLevel = game.getDifficulty();
+      BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources, difficultyLevel);
       ai.start();
     } else {
-//      MultiplayerTestAI ai = new MultiplayerTestAI(this);
-//      ai.start();
+      MultiplayerAI ai = new MultiplayerAI(this);
+      ai.start();
     }
   }
 
@@ -224,33 +228,59 @@ public class EncounterState {
    * @param lane The lane the unit/troop will be assigned to.
    * @param playerType The player the unit/troop will be assigned to.
    */
-  public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
+  public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType, boolean isMultiplayerAI) {
     Troop troop = null;
     Disease disease = getPlayer(playerType).getDisease();
     Resources resources = getResources(playerType);
     Player player = getPlayer(playerType);
     try {
+
       Troop troopInit = (Troop) unitType.getAssociatedClass().newInstance();
 
-      float damageMult = disease.getDamageMult() * player.getDamageMult();
-      float speedMult = disease.getSpeedMult() * player.getSpeedMult();
-      float attackSpeedMult = disease.getAttackSpeedMult() * player.getAttackSpeedMult();
-      float healthMult = disease.getHealthMult() * player.getHealthMult();
+      //these attributes are only relevant for non AI players
+
+      float damageMult = 1;
+      float speedMult = 1;
+      float attackSpeedMult = 1;
+      float healthMult = 1;
+
+
+      if (!isMultiplayerAI) {
+        damageMult = disease.getDamageMult() * player.getDamageMult();
+        speedMult = disease.getSpeedMult() * player.getSpeedMult();
+        attackSpeedMult = disease.getAttackSpeedMult() * player.getAttackSpeedMult();
+        healthMult = disease.getHealthMult() * player.getHealthMult();
+      }
+
 
       if (!troopInit.isRanged()) {
-        troopInit =
-            (Troop)
-                unitType
-                    .getAssociatedClass()
-                    .getDeclaredConstructor(
-                        Lane.class,
-                        PlayerType.class,
-                        float.class,
-                        float.class,
-                        float.class,
-                        float.class)
-                    .newInstance(
-                        lane, playerType, damageMult, speedMult, healthMult, attackSpeedMult);
+        //multiplayer AI units cannot be ranged
+        if (!isMultiplayerAI) {
+          troopInit =
+                  (Troop)
+                          unitType
+                                  .getAssociatedClass()
+                                  .getDeclaredConstructor(
+                                          Lane.class,
+                                          PlayerType.class,
+                                          float.class,
+                                          float.class,
+                                          float.class,
+                                          float.class)
+                                  .newInstance(
+                                          lane, playerType, damageMult, speedMult, healthMult, attackSpeedMult);
+        } //multiplayer AI units don't get multipliers
+        else {
+          troopInit =
+                  (Troop)
+                          unitType
+                                  .getAssociatedClass()
+                                  .getDeclaredConstructor(
+                                          Lane.class,
+                                          PlayerType.class)
+                                  .newInstance(
+                                          lane, playerType);
+        }
       } else {
         troopInit =
             (Troop)
@@ -267,12 +297,17 @@ public class EncounterState {
                     .newInstance(
                         this, lane, playerType, damageMult, speedMult, healthMult, attackSpeedMult);
       }
-      if (resources.canAfford(
-          troopInit.getLipidCost(), troopInit.getSugarCost(), troopInit.getProteinCost())) {
-        resources.buy(
-            troopInit.getLipidCost(), troopInit.getSugarCost(), troopInit.getProteinCost());
-        troop = troopInit;
+
+      //multiplayer AI manages its own resources
+      if (!isMultiplayerAI) {
+        if (resources.canAfford(
+                troopInit.getLipidCost(), troopInit.getSugarCost(), troopInit.getProteinCost())) {
+          resources.buy(
+                  troopInit.getLipidCost(), troopInit.getSugarCost(), troopInit.getProteinCost());
+          troop = troopInit;
+        }
       }
+
 
     } catch (InstantiationException
         | IllegalAccessException
@@ -334,41 +369,71 @@ public class EncounterState {
     // Return if invalid troop, lane or player type is used
     if (troop == null || lane == null || playerType == null) return;
 
-    // Spawn units for bottom player
-    if (playerType.equals(PlayerType.PLAYER_BOTTOM)) {
+    if (!isMultiplayerAI) {
+      // Spawn units for bottom player
+      if (playerType.equals(PlayerType.PLAYER_BOTTOM)) {
+        if (lane == Lane.BOTTOM) {
+          troop.setPosition(
+                  Assets.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                  Assets.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+        } else if (lane == Lane.MIDDLE) {
+          troop.setPosition(
+                  Assets.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                  Assets.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+        } else if (lane == Lane.TOP) {
+          troop.setPosition(
+                  Assets.BP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                  Assets.BP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+        }
+
+        troopsBottom.add(troop);
+      }
+
+      // Spawn units for top player
+      if (playerType.equals(PlayerType.PLAYER_TOP)) {
+        //if this unit was actually spawned by the player, and not by the AI in its behalf
+        if (lane == Lane.BOTTOM) {
+          troop.setPosition(
+                  Assets.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                  Assets.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+        } else if (lane == Lane.MIDDLE) {
+          troop.setPosition(
+                  Assets.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                  Assets.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+        } else if (lane == Lane.TOP) {
+          troop.setPosition(
+                  Assets.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                  Assets.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+        }
+
+        troopsTop.add(troop);
+      }
+    } else {
+      //if it's a unit spawned by the AI on behalf of another player, put it in the AI's spawn points
       if (lane == Lane.BOTTOM) {
         troop.setPosition(
-            Assets.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Lane.MIDDLE) {
-        troop.setPosition(
-            Assets.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+                Assets.AI_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                Assets.AI_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
       } else if (lane == Lane.TOP) {
         troop.setPosition(
-            Assets.BP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.BP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+                Assets.AI_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                Assets.AI_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+      } /*else if (lane == Lane.MIDDLE) {
+      //there will be no AI spawn point in the MIDDLE lane
+        troop.setPosition(
+                Assets.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                Assets.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+      }*/
+
+      if (playerType.equals(PlayerType.PLAYER_BOTTOM)) {
+        //if AI spawns on behalf of the bottom player, add the troop to its *army*
+        troopsBottom.add(troop);
+      } else {
+        //if AI spawns on behalf of the top player, add the troop to its *army*
+        troopsTop.add(troop);
       }
-      troopsBottom.add(troop);
     }
 
-    // Spawn units for top player
-    if (playerType.equals(PlayerType.PLAYER_TOP)) {
-      if (lane == Lane.BOTTOM) {
-        troop.setPosition(
-            Assets.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Lane.MIDDLE) {
-        troop.setPosition(
-            Assets.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Lane.TOP) {
-        troop.setPosition(
-            Assets.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      }
-      troopsTop.add(troop);
-    }
     allMapObjects.add(troop);
   }
 
@@ -497,7 +562,7 @@ public class EncounterState {
     return playerType == PlayerType.PLAYER_BOTTOM ? bottomPlayer : topPlayer;
   }
 
-  private Resources getResources(PlayerType playerType) {
+  public Resources getResources(PlayerType playerType) {
     return playerType == PlayerType.PLAYER_BOTTOM ? bottomResources : topResources;
   }
 }

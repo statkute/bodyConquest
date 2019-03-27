@@ -1,10 +1,12 @@
 package main.com.bodyconquest.game_logic;
 
 import main.com.bodyconquest.constants.*;
+import main.com.bodyconquest.entities.DifficultyLevel;
 import main.com.bodyconquest.game_logic.utils.Timer;
 import main.com.bodyconquest.gamestates.EncounterState;
 import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
+import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.net.SocketException;
 import java.util.Random;
@@ -29,6 +31,9 @@ public class Game extends Thread {
 
   public String usernameTop;
   public String usernameBottom;
+
+    //difficulty of the game for single player
+    private DifficultyLevel difficulty;
 
   /**
    * Constructor
@@ -178,4 +183,12 @@ public class Game extends Thread {
   public void setLastPicker(PlayerType lastPicker) {
     this.lastPicker = lastPicker;
   }
+
+    public DifficultyLevel getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(DifficultyLevel difficulty) {
+        this.difficulty = difficulty;
+    }
 }

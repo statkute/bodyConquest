@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import main.com.bodyconquest.audio.AudioPlayer;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
+import main.com.bodyconquest.entities.DifficultyLevel;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.networking.Client;
 import main.com.bodyconquest.networking.Server;
@@ -26,10 +27,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
 
   // private static final Logger log = Logger.getLogger(MyGdxGame.class);
 
-  public enum DifficultyLevel {
-    EASY,
-    HARD
-  }
+
 
   public static final int V_WIDTH = 800;
   public static final int V_HEIGHT = 600;
@@ -51,7 +49,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
   private Game game;
   private Client client;
   public BitmapFont gameFont;
-  private DifficultyLevel difficultyLevel;
+  public DifficultyLevel difficultyLevel;
 
   @Override
   public void create() {

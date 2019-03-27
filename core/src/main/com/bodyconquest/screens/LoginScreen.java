@@ -122,7 +122,10 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         //
         // game.getClient().clientSender.sendMessage(MessageMaker.usernameMessage(playerType,textUsername));
 
-        if (gameType == GameType.SINGLE_PLAYER) game.setScreen(new RaceSelection(game, gameType));
+          if (gameType == GameType.SINGLE_PLAYER) {
+
+              game.setScreen(new RaceSelection(game, gameType));
+          }
         else if (gameType == GameType.MULTIPLAYER_HOST || gameType == GameType.MULTIPLAYER_JOIN) {
           //                    game.setScreen(new WaitingScreen(game, gameType));
           game.setScreen(new RaceSelection(game, gameType));
