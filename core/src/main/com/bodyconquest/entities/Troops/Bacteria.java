@@ -79,6 +79,6 @@ public class Bacteria extends Troop {
 
   @Override
   public String getPortraitLocation() {
-    return "core/assets/bacteria_button.png";
+    return "core/assets/bacteria_button_new.png";
   }
 }

@@ -77,6 +77,6 @@ public class Fungus extends Troop {
 
   @Override
   public String getPortraitLocation() {
-    return "core/assets/virus_button.png";
+    return "core/assets/virus_button_new.png";
   }
 }
