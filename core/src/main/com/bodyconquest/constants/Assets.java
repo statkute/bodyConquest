@@ -128,9 +128,9 @@ public class Assets {
   /** Register and Login joint Screen Assets */
 
   /** The constant enterUsernameText. */
-  public static String enterUsernameText = "core/assets/enterUsername.png";
+  public static String enterUsernameText = "core/assets/enterusername.png";
   /** The constant enterPasswordText. */
-  public static String enterPasswordText = "core/assets/enterPassword.png";
+  public static String enterPasswordText = "core/assets/enterpassword.png";
   /** The constant registerButtonLow. */
   public static String registerButtonLow = "core/assets/registerbutton_low.png";
   /** The constant submitButtonLow. */
@@ -256,6 +256,12 @@ public class Assets {
 
   /** The constant pathBaseImage. */
   public static String pathBaseImage = pathAssets + "base_boi_ss.png";
+  /** The constant pathBaseImage Flu */
+  public static String pathBaseImageFlu = pathAssets + "base_blue.png";
+  /** The constant pathBaseImage Measles */
+  public static String pathBaseImageMeasles = pathAssets + "base_green.png";
+  /** The constant pathBaseImage Rotavirus*/
+  public static String pathBaseImageRotavirus = pathAssets + "base_yellow.png";
   /** The constant pathVirus. */
   public static String pathVirus = pathAssets + "virus_new.png";
   /** The constant pathVirus. */
