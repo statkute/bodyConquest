@@ -143,7 +143,7 @@ public class ClientLogic extends Thread {
       organ = Organ.decode(encodedOrgan);
 
       communicator.setCurrentOrgan(organ);
-      Timer.startTimer(200);
+      Timer.startTimer(500);
       communicator.setStartEncounter(true);
     } else if (message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
       Organ organ;
