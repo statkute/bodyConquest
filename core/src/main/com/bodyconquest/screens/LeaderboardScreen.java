@@ -6,11 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.game_logic.Communicator;
+import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.networking.Client;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.SocketException;
 import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
@@ -51,9 +54,17 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
 //        leaderboard.put("Rose", 10);
         client = game.getClient();
         //setting database logic to get leaderboard from server
-        game.getGame().startDatabaseState();
+        try {
+            game.setGame(new Game(GameType.SINGLE_PLAYER));
+            game.getGame().startDatabaseState();
 
-        client.setDatabaseLogic();
+            client.startClient();
+            client.setDatabaseLogic();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
         client.clientSender.sendMessage(MessageMaker.getLeaderboardMessage());
         comms = client.getCommunicator();
