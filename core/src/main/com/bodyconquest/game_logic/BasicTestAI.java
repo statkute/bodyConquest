@@ -52,7 +52,6 @@ public class BasicTestAI extends Thread {
   }
 
   private void summonWave() {
-    System.out.println("Tryina summon wave");
     Random rnd = new Random();
     int unitIndex = rnd.nextInt(2);
     try {
@@ -121,16 +120,12 @@ public class BasicTestAI extends Thread {
       }
 
       Gdx.app.postRunnable(
-          new Runnable() {
-            @Override
-            public void run() {
-              //              if (resources.canAfford(unit)){
-              //                resources.buy(unit);
-              //              }
-              System.out.println("Tryina spawn unit");
-              game.spawnUnit(unitType, lane, playerType);
-            }
-          });
+              () -> {
+                //              if (resources.canAfford(unit)){
+                //                resources.buy(unit);
+                //              }
+                game.spawnUnit(unitType, lane, playerType);
+              });
     } catch (Exception e) {
       e.printStackTrace();
     }
