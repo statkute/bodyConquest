@@ -407,10 +407,13 @@ public class EncounterState {
     String endingMessage = MessageMaker.organClaimMessage(player, organ);
     serverSender.sendMessage(endingMessage);
     PlayerType picker;
-    if(game.getLastPicker() == PlayerType.PLAYER_BOTTOM) {
-      picker = PlayerType.PLAYER_TOP;
+    if (game.getGameType() != GameType.SINGLE_PLAYER) {
+      picker =
+          game.getLastPicker() == PlayerType.PLAYER_BOTTOM
+              ? PlayerType.PLAYER_TOP
+              : PlayerType.PLAYER_BOTTOM;
     } else {
-      picker = PlayerType.PLAYER_BOTTOM;
+      picker = game.getLastPicker();
     }
     serverSender.sendMessage(MessageMaker.firstPickerMessage(player));
     game.setLastPicker(picker);
