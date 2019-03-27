@@ -58,6 +58,14 @@ public class Map extends Actor {
       frameRate = 60f;
       points = 40;
     }
+
+    if(organ == Organ.INTESTINES)  {
+      texturePath = "core/assets/map_brain_ss.png";
+      frameCols = 4;
+      frameRows = 5;
+      frameRate = 60f;
+      points = 20;
+    }
     //animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal(texturePath).read());
     walkAnimation = AnimationWrapper.getSpriteSheet(frameCols, frameRows, frameRate, texturePath);
     stateTime = 0f;
@@ -70,7 +78,9 @@ public class Map extends Actor {
     stateTime += 10f; // Accumulate elapsed animation time
     // Get current frame of animation for the current stateTime
     //System.out.println(System.currentTimeMillis());
+
     TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+
     batch.draw(currentFrame, getX(), getY(), getWidth(), getHeight());
     super.draw(batch, parentAlpha);
   }

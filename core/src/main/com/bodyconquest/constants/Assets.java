@@ -1,5 +1,7 @@
 package main.com.bodyconquest.constants;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 /** The type Assets. */
 public class Assets {
 
@@ -19,6 +21,8 @@ public class Assets {
   public static String creditsButton = "core/assets/credits_new.png";
   /** The constant exitButton. */
   public static String exitButton = "core/assets/exit_new.png";
+  /** The constant leadeboardButton. */
+  public static String leaderboardButton = "core/assets/leaderboard_new.png";
 
   /** Credit Screen Assets */
 
@@ -65,6 +69,10 @@ public class Assets {
   /** The constant settingsSoundOn. */
   public static String settingsSoundOn = "core/assets/on.png";
 
+  public static String settingsSingleplayerDifficulty = "core/assets/settings_difficulty.png";
+  public static String settingsSingleplayerEasy = "core/assets/settings_easy.png";
+  public static String settingsSingleplayerHard = "core/assets/settings_hard.png";
+
   /** Race Selection Assets */
 
   /** The constant raceHeader. */
@@ -81,6 +89,12 @@ public class Assets {
   public static String raceGreenVirusSelected = "core/assets/greenvirusselected.png";
   /** The constant raceYellowVirusSelected. */
   public static String raceYellowVirusSelected = "core/assets/yellowvirusselected.png";
+  /** The constant raceBlueVirusSelected. */
+  public static String raceBlueVirusOpponent = "core/assets/bluevirussopponent.png";
+  /** The constant raceGreenVirusSelected. */
+  public static String raceGreenVirusOpponent = "core/assets/greenvirusopponent.png";
+  /** The constant raceYellowVirusSelected. */
+  public static String raceYellowVirusOpponent = "core/assets/yellowvirusopponent.png";
   /** The constant raceBlueDescription. */
   public static String raceBlueDescription = "core/assets/bluevirus_characteristics.png";
   /** The constant raceGreenDescription. */
@@ -101,22 +115,31 @@ public class Assets {
   /** Starting Screen Assets */
 
   /** The constant startTitle. */
-  public static String startTitle = "core/assets/title_new.png";
+  public static String startTitle = "core/assets/signin_big.png";
   /** The constant startRegister. */
-  public static String startRegister = "core/assets/REGISTER_start.png";
+  public static String startRegister = "core/assets/register_menu.png";
   /** The constant startLogin. */
-  public static String startLogin = "core/assets/LOGIN_start.png";
+  public static String startLogin = "core/assets/login_menu.png";
+  /** The constant loginHeader. */
+  public static String loginHeader = "core/assets/login_header.png";
+  /** The constant registerHeader. */
+  public static String registerHeader = "core/assets/register_header.png";
 
-  /** Register Screen Assets */
+  /** Register and Login joint Screen Assets */
 
-  /** The constant registerUsername. */
-  public static String registerUsername = "core/assets/USERNAME_start.png";
-  /** The constant registerPassword. */
-  public static String registerPassword = "core/assets/PASSWORD_start.png";
+  /** The constant enterUsernameText. */
+  public static String enterUsernameText = "core/assets/enterusername.png";
+  /** The constant enterPasswordText. */
+  public static String enterPasswordText = "core/assets/enterpassword.png";
+  /** The constant registerButtonLow. */
+  public static String registerButtonLow = "core/assets/registerbutton_low.png";
+  /** The constant submitButtonLow. */
+  public static String submitButtonLow = "core/assets/submitbutton_low.png";
+  /** The constant loginButtonLow. */
+  public static String loginButtonLow = "core/assets/loginbutton_low.png";
 
   /** Leaderboard Screen Assets */
   public static String headerLeaderboard = "core/assets/topscores.png";
-
 
   /** Fonts */
 
@@ -203,6 +226,17 @@ public class Assets {
   public static String intestinespoints = "core/assets/intestinespoints.png";
   /** The constant continueTextBig. */
   public static String continueTextBig = "core/assets/continue_new_big.png";
+  /** The constant waitingText. */
+  public static String waitingText = "core/assets/waiting_big.png";
+  /** The constant selectDiseaseText. */
+  public static String selectDiseaseText = "core/assets/selectdisease.png";
+  /** The constant selectOrganText. */
+  public static String selectOrganText = "core/assets/selectorgan.png";
+  /** The constant waitingTextNew. */
+  public static String waitingTextNew = "core/assets/waiting_big_new.png";
+
+  /** Game Over Screen Assets */
+  public static String headerGameOver = "core/assets/GAMESCORES.png";
 
   /** Base Assets */
 
@@ -216,16 +250,43 @@ public class Assets {
   /** The constant INCREASEACCUMULATORTILL. */
   public static final int INCREASEACCUMULATORTILL = 300;
 
+  public static String gameFont = "core/assets/ArcadePix.fnt";
+
   private static String pathAssets = "core/assets/";
 
   /** The constant pathBaseImage. */
   public static String pathBaseImage = pathAssets + "base_boi_ss.png";
+  /** The constant pathBaseImage Flu */
+  public static String pathBaseImageFlu = pathAssets + "base_blue.png";
+  /** The constant pathBaseImage Measles */
+  public static String pathBaseImageMeasles = pathAssets + "base_green.png";
+  /** The constant pathBaseImage Rotavirus*/
+  public static String pathBaseImageRotavirus = pathAssets + "base_yellow.png";
   /** The constant pathVirus. */
   public static String pathVirus = pathAssets + "virus_new.png";
+  /** The constant pathVirus. */
+  public static String pathVirusFlu = pathAssets + "virus_blue.png";
+  /** The constant pathVirus. */
+  public static String pathVirusMes = pathAssets + "virus_green.png";
+  /** The constant pathVirus. */
+  public static String pathVirusRvi = pathAssets + "virus_yellow.png";
   /** The constant pathBacteria. */
   public static String pathBacteria = pathAssets + "bacteria_new.png";
+  /** The constant pathBacteria. */
+  public static String pathBacteriaFlu = pathAssets + "bacteria_blue.png";
+  /** The constant pathBacteria. */
+  public static String pathBacteriaMes = pathAssets + "bacteria_green.png";
+  /** The constant pathBacteria. */
+  public static String pathBacteriaRvi = pathAssets + "bacteria_yellow.png";
   /** The constant pathFlu. */
   public static String pathFlu = pathAssets + "flu_new.png";
+  /** The constant pathFluFlu. */
+  public static String pathFluFlu = pathAssets + "flu_blue.png";
+  /** The constant pathFluMeeasles. */
+  public static String pathFluMes = pathAssets + "flu_green.png";
+  /** The constant pathFluRotavirus. */
+  public static String pathFluRvi = pathAssets + "flu_yellow.png";
+
   /** The constant pathProjectile. */
   public static String pathProjectile = pathAssets + "projectile_with_trail.png";
 
@@ -248,7 +309,7 @@ public class Assets {
 
   /** The constant BOT_TURNPOINT_X. */
   // Turnpoints coordinates on the two lanes that have corners: BOTTOM and TOP
-  public static final float BOT_TURNPOINT_X = 150;
+  public static final float BOT_TURNPOINT_X = 100;
   /** The constant BOT_TURNPOINT_Y. */
   public static final float BOT_TURNPOINT_Y = 100;
   /** The constant TOP_TURNPOINT_X. */
@@ -266,13 +327,13 @@ public class Assets {
   /** The constant BP_MID_LANE_SPAWN_Y. */
   public static final float BP_MID_LANE_SPAWN_Y = 230;
   /** The constant BP_TOP_LANE_SPAWN_X. */
-  public static final float BP_TOP_LANE_SPAWN_X = 625;
+  public static final float BP_TOP_LANE_SPAWN_X = 645;
   /** The constant BP_TOP_LANE_SPAWN_Y. */
   public static final float BP_TOP_LANE_SPAWN_Y = 225;
 
   /** The constant TP_BOT_LANE_SPAWN_X. */
   // Spawnpoint coords for TOP player
-  public static final float TP_BOT_LANE_SPAWN_X = 170; // 535;
+  public static final float TP_BOT_LANE_SPAWN_X = 160; // 535;
   /** The constant TP_BOT_LANE_SPAWN_Y. */
   public static final float TP_BOT_LANE_SPAWN_Y = 470; // 90;
   /** The constant TP_MID_LANE_SPAWN_X. */
@@ -282,7 +343,7 @@ public class Assets {
   /** The constant TP_TOP_LANE_SPAWN_X. */
   public static final float TP_TOP_LANE_SPAWN_X = 300;
   /** The constant TP_TOP_LANE_SPAWN_Y. */
-  public static final float TP_TOP_LANE_SPAWN_Y = 550;
+  public static final float TP_TOP_LANE_SPAWN_Y = 570;
 
   // private final float botLaneTPSpawnX = 170;
   // private final float botLaneTPSpawnY = 470;

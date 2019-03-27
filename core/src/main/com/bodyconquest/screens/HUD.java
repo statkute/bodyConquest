@@ -90,8 +90,6 @@ public class HUD {
     skin = new Skin();
     skin.add("default", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     skin.add("defaultWhite", new Texture("core/assets/Default Sprite.png"));
-    skin.add("badlogic", new Texture("core/assets/badlogic.jpg"));
-    skin.add("spawnpoint", new Texture("core/assets/droplet.png"));
   }
 
   private void setupUnitBar() {
@@ -204,7 +202,6 @@ public class HUD {
           }
 
           public void drop(Source source, Payload payload, float x, float y, int pointer) {
-            // System.out.println("SPAWN HERE");
             if (payload.getObject().getClass().equals(UnitType.class)) {
               screen.spawnUnit((UnitType) payload.getObject(), lane, playerType);
             } else {

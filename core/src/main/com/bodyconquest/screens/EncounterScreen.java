@@ -1,6 +1,7 @@
 package main.com.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
@@ -40,7 +41,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /** The type Encounter screen. */
 public class EncounterScreen implements Screen {
 
-  // private boolean updating;
+  private int organNumber;
 
   private int screenMakingCounter;
 
@@ -66,6 +67,8 @@ public class EncounterScreen implements Screen {
   /** The constant BLINK_TIME_AFTER_DMG. */
   public static final float BLINK_TIME_AFTER_DMG = 0.07f;
 
+  public static final float BLINK_TIME_AFTER_DMG_BACTERIAS = 200f;
+
   private final OrthographicCamera gameCamera;
 
   private final FitViewport gamePort;
@@ -83,6 +86,10 @@ public class EncounterScreen implements Screen {
   private PlayerType playerType;
 
   private DecimalFormat value;
+
+  // To get back to menu screen change this to another encounter screen
+
+  private Disease playerDisease;
 
   private boolean destroyed = false;
 
@@ -107,7 +114,7 @@ public class EncounterScreen implements Screen {
 
   private String username;
 
-  private ConcurrentHashMap<MapObjectType, TexturePool> poolHashMap;
+  private ConcurrentHashMap<String, TexturePool> poolHashMap;
 
   /**
    * Instantiates a new Encounter screen where all the battle takes place.
@@ -124,11 +131,13 @@ public class EncounterScreen implements Screen {
     clientSender = client.clientSender;
     communicator = client.getCommunicator();
     communicator.setStartEncounter(false);
+    playerDisease = communicator.getPlayerDisease();
+    playerType = communicator.getPlayerType();
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
     Gdx.input.setInputProcessor(stage);
-    this.username = game.getUsername();
+    this.username = game.getClient().getCommunicator().getUsername(playerType);
 
     if (gameType != GameType.MULTIPLAYER_JOIN) {
       playerType = PlayerType.PLAYER_BOTTOM;
@@ -159,6 +168,9 @@ public class EncounterScreen implements Screen {
     poolHashMap = new ConcurrentHashMap<>();
 
     value = new DecimalFormat("0");
+
+    organNumber = 0;
+    communicator.setSelectedOrgan(null);
   }
 
   public Communicator getCommunicator() {
@@ -206,6 +218,7 @@ public class EncounterScreen implements Screen {
   /** {@inheritDoc} */
   @Override
   public void render(float delta) {
+    checkInputs();
 
     updateResourceBars();
 
@@ -238,15 +251,15 @@ public class EncounterScreen implements Screen {
       for (BasicObject o : objects) {
 
         Enum i = o.getMapObjectType();
-
-        if (!poolHashMap.containsKey(i)) poolHashMap.put(o.getMapObjectType(), poolSetup(i));
+        String key = i.name() + o.getPlayerType().getEncoded();
+        if (!poolHashMap.containsKey(key)) poolHashMap.put(key, poolSetup(i, o.getPlayerType()));
 
         viewObjects.add(
             new ViewObject(
                 o,
                 elapsedSeconds,
                 game.getClient().getCommunicator().getPlayerType(),
-                poolHashMap.get(i).obtain()));
+                poolHashMap.get(key).obtain()));
       }
 
       for (ViewObject vo : viewObjects) {
@@ -279,7 +292,7 @@ public class EncounterScreen implements Screen {
       drawNumbersOnResourceBars();
 
       for (ViewObject vo : viewObjects) {
-        poolHashMap.get(vo.getMapObjectType()).free(vo.getWalkAnimation());
+        poolHashMap.get(vo.getKey()).free(vo.getWalkAnimation());
         vo.remove();
       }
 
@@ -298,25 +311,62 @@ public class EncounterScreen implements Screen {
     }
 
     if (destroyed) {
-      System.out.println("Hello");
       screenMakingCounter++;
+      organNumber = communicator.getOpponentOrgans().size() + communicator.getPlayerOrgans().size();
       determineWinner();
-      if (screenMakingCounter == 1) switchScreen(game, new BodyScreen(game, gameType));
+
+      if (screenMakingCounter == 1) {
+
+        if (organNumber == 1) {
+
+          switchScreen(game, new GameOverScreen(game, gameType));
+        } else {
+          switchScreen(game, new BodyScreen(game, gameType));
+        }
+      }
+    }
+  }
+
+  private void checkInputs() {
+    int i = 0;
+    ClassOwner unit = null;
+    if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) || Gdx.input.isKeyPressed(Input.Keys.Q)) {
+      unit = playerDisease.getSpawn1();
+    } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) || Gdx.input.isKeyPressed(Input.Keys.W)) {
+      unit = playerDisease.getSpawn2();
+    } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_3) || Gdx.input.isKeyPressed(Input.Keys.E)) {
+      unit = playerDisease.getSpawn3();
+    } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_4) || Gdx.input.isKeyPressed(Input.Keys.R)) {
+      unit = playerDisease.getSpawn4();
+    }
+
+    Lane lane = null;
+    if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+      lane = Lane.MIDDLE;
+    } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+      lane = Lane.BOTTOM;
+    } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+      lane = Lane.TOP;
+    }
+
+    if (lane != null && unit != null) {
+      spawnUnit((UnitType) unit, lane, playerType);
     }
   }
 
   /** Draws a username of the player on the batch */
   private void drawUsername() {
-    game.usernameFont.getData().setScale(0.70f, 0.70f);
+    game.gameFont.getData().setScale(0.7f, 0.7f);
 
-    if (username.length() > 9) {
-      game.usernameFont.draw(
+    if (username.length() > 7) {
+      game.gameFont.getData().setScale(0.5f, 0.5f);
+      game.gameFont.draw(
           game.batch,
-          username.toLowerCase().substring(0, 9),
+          username.toLowerCase().substring(0, 7),
           BodyConquest.V_WIDTH - 105.0f,
           hud.getUnitBar().getImageHeight() + 24.0f);
     } else {
-      game.usernameFont.draw(
+      game.gameFont.draw(
           game.batch,
           username.toLowerCase(),
           BodyConquest.V_WIDTH - 105.0f,
@@ -330,26 +380,29 @@ public class EncounterScreen implements Screen {
     if (time < 0) {
       time = 0.0f;
     }
-    game.timerFont.getData().setScale(0.75f, 0.75f);
-    game.timerFont.draw(game.batch, "Time Left", BodyConquest.V_WIDTH - 110.0f, 550.0f);
-    game.timerFont.getData().setScale(1.25f, 1.25f);
-    game.timerFont.draw(
+    game.gameFont.getData().setScale(0.7f, 0.7f);
+    game.gameFont.draw(game.batch, "Timer", BodyConquest.V_WIDTH - 110.0f, 550.0f);
+    //    game.gameFont.getData().setScale(1f, 1f);
+    game.gameFont.draw(
         game.batch,
-        Double.toString(Double.valueOf(value.format(time))),
+        Integer.toString(Integer.valueOf(value.format(time))),
         BodyConquest.V_WIDTH - 110.0f,
         510.0f);
   }
 
   /** Draws score on the batch */
   private void drawScore() {
-    game.timerFont.getData().setScale(1.25f, 1.25f);
-    game.timerFont.draw(game.batch, "Score", BodyConquest.V_WIDTH - 110.0f, 400.0f);
-    game.timerFont.getData().setScale(1.25f, 1.25f);
+    game.gameFont.getData().setScale(0.7f, 0.7f);
+    game.gameFont.draw(game.batch, "Score", BodyConquest.V_WIDTH - 110.0f, 400.0f);
+    //    game.gameFont.getData().setScale(1.25f, 1.25f);
     if (playerType == PlayerType.PLAYER_TOP) {
-      game.timerFont.draw(
-          game.batch, Integer.toString(communicator.getScoreTop()), BodyConquest.V_WIDTH - 110.0f, 350.0f);
+      game.gameFont.draw(
+          game.batch,
+          Integer.toString(communicator.getScoreTop()),
+          BodyConquest.V_WIDTH - 110.0f,
+          350.0f);
     } else {
-      game.timerFont.draw(
+      game.gameFont.draw(
           game.batch,
           Integer.toString(communicator.getScoreBottom()),
           BodyConquest.V_WIDTH - 110.0f,
@@ -660,22 +713,46 @@ public class EncounterScreen implements Screen {
    *
    * @param mapObjectType the type of the map object to get the texture
    */
-  private TexturePool poolSetup(Enum mapObjectType) {
+  private TexturePool poolSetup(Enum mapObjectType, PlayerType playerType) {
 
     float frameRate = 0.2f;
+    String path = "";
+    Disease newPlayerDisease;
+    if(playerType == this.playerType){
+        newPlayerDisease = playerDisease;
+    } else {
+        newPlayerDisease = communicator.getOpponentDisease();
+    }
 
     if (UnitType.VIRUS == mapObjectType) {
-      return new TexturePool(Assets.pathFlu, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
+      path =
+          newPlayerDisease == Disease.INFLUENZA
+              ? Assets.pathFluFlu
+              : newPlayerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;
+      System.out.println(path + "\n");
+      return new TexturePool(path, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
     } else if (UnitType.FUNGUS == mapObjectType) {
-      return new TexturePool(
-          Assets.pathVirus, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
+      path =
+          newPlayerDisease == Disease.INFLUENZA
+              ? Assets.pathVirusFlu
+              : newPlayerDisease == Disease.MEASLES ? Assets.pathVirusMes : Assets.pathVirusRvi;
+      System.out.println(path + "\n");
+      return new TexturePool(path, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
     } else if (UnitType.BACTERIA == mapObjectType) {
-      return new TexturePool(
-          Assets.pathBacteria, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
+      path =
+          newPlayerDisease == Disease.INFLUENZA
+              ? Assets.pathBacteriaFlu
+              : newPlayerDisease == Disease.MEASLES
+                  ? Assets.pathBacteriaMes
+                  : Assets.pathBacteriaRvi;
+      System.out.println(path + "\n");
+      return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
     } else if (BaseType.INFLUENZA_BASE == mapObjectType) {
-      return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
+      return new TexturePool(Assets.pathBaseImageFlu, 5, 3, frameRate);
+    } else if (BaseType.MEASLES_BASE == mapObjectType) {
+      return new TexturePool(Assets.pathBaseImageMeasles, 5, 3, frameRate);
     } else if (BaseType.ROTAVIRUS_BASE == mapObjectType) {
-      return new TexturePool(Assets.pathBaseImage, 3, 5, frameRate);
+      return new TexturePool(Assets.pathBaseImageRotavirus, 5, 3, frameRate);
     } else if (ProjectileType.VIRUS_PROJECTILE == mapObjectType) {
       return new TexturePool(
           Assets.pathProjectile, Assets.frameColsProjectile, Assets.frameRowsProjectile, frameRate);

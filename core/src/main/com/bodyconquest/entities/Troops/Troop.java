@@ -7,6 +7,7 @@ import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.MapObject;
 import main.com.bodyconquest.entities.Spawnable;
 
+import java.time.Instant;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /** The parent class for all spawn-able troops that can be spawned by each player (or the AI). */
@@ -24,7 +25,7 @@ public abstract class Troop extends MapObject implements Spawnable {
    * The {@link PlayerType} that this Troop is affiliated with. (Used to make decisions on who to
    * attack and how to move.
    */
-  protected final PlayerType playerType;
+  //protected final PlayerType playerType;
 
   /** Enumeration for each type of Unit/Troop that exists. */
 
@@ -63,6 +64,8 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   protected boolean slowed;
 
+  protected boolean ranged;
+
   // Effect Values
   protected long slowTimeEnd;
   protected int slowPercentage;
@@ -73,6 +76,9 @@ public abstract class Troop extends MapObject implements Spawnable {
 
   // Temporary implementation to get images for the HUD
   public Image sprite;
+  private int damageCounter;
+
+  private float timeAlive;
 
 
   /**
@@ -100,6 +106,8 @@ public abstract class Troop extends MapObject implements Spawnable {
     attacking = false;
     collidable = true;
     killingPoints = 0;
+    damageCounter = 0;
+    ranged = false;
   }
 
   /**
@@ -109,6 +117,8 @@ public abstract class Troop extends MapObject implements Spawnable {
    */
   public void hit(int damage) {
     setHealth(getHealth() - damage);
+    setWasHit(true);
+    setTimeOfDmgTaken(System.currentTimeMillis());
   }
 
   /**
@@ -132,7 +142,7 @@ public abstract class Troop extends MapObject implements Spawnable {
   public void checkAttack(CopyOnWriteArrayList<Troop> enemies) {
     Troop closestEnemy = null;
     for (Troop enemy : enemies) {
-      if (enemy.getLane() == this.getLane() || enemy.getLane() == Lane.ALL) {
+     if (enemy.getLane() == this.getLane() || enemy.getLane() == Lane.ALL) {
         if (closestEnemy == null) closestEnemy = enemy;
         // Attack closest enemy
         closestEnemy = distFrom(enemy) < distFrom(closestEnemy) ? enemy : closestEnemy;
@@ -155,6 +165,9 @@ public abstract class Troop extends MapObject implements Spawnable {
     updateMovement();
     checkEffects();
     move();
+    if(this.getWasHit()){
+      this.setWasHit(false);
+    }
   }
 
   private void checkEffects() {
@@ -385,5 +398,9 @@ public abstract class Troop extends MapObject implements Spawnable {
     slowed = true;
     this.slowPercentage = slowPercentage;
     slowTimeEnd = System.currentTimeMillis() + time;
+  }
+
+  public boolean isRanged() {
+    return ranged;
   }
 }

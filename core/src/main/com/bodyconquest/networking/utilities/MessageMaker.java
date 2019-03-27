@@ -2,6 +2,8 @@ package main.com.bodyconquest.networking.utilities;
 
 import main.com.bodyconquest.constants.*;
 
+import java.util.HashMap;
+
 public class MessageMaker {
 
   public static final String OBJECT_UPDATE_HEADER = "OBJECT_UPDATE_";
@@ -17,7 +19,14 @@ public class MessageMaker {
   public static final String CONFIRM_ORGAN_HEADER = "CONFIRM_ORGAN_";
   public static final String START_ENCOUNTER_HEADER = "START_ENCOUNTER_";
   public static final String POINTS_HEADER = "POINTS_HEADER_";
+  public static final String LOGIN_HEADER = "LOGIN_";
+  public static final String REGISTER_HEADER = "REGISTER_";
+  public static final String GET_LEADERBOARD_HEADER = "GET_LEADERBOARD_";
+  public static final String SET_LEADERBOARD_HEADER = "SET_LEADERBOARD_";
+  public static final String SET_ACHIEVEMENT_HEADER = "SET_ACHIEVEMENT_";
+  public static final String SELECTED_ORGAN_HEADER = "SELECT_ORGAN_";
   public static final String ORGAN_CLAIMED = "CLAIMED_";
+  public static final String USERNAME_ ="USERNAME_";
 
   public static final int RESOURCE_PADDING = 3;
   public static final int HEALTH_PADDING = 3;
@@ -27,6 +36,7 @@ public class MessageMaker {
   public static final String PAUSE_MESSAGE = "PAUSE";
   public static final String EXIT_MESSAGE = "EXIT";
   public static final String START_BODY = "START_BODY";
+  public static final String JOINED_MESSAGE_HEADER = "JOINED_";
 
   public static String spawnTroopsMessage(UnitType troopClass, Lane lane, PlayerType playerType) {
     String message = TROOP_SPAWN_HEADER;
@@ -128,6 +138,12 @@ public class MessageMaker {
     return EXIT_MESSAGE;
   }
 
+  public static String selectedOrganMessage(Organ organ) {
+    String message = SELECTED_ORGAN_HEADER;
+    message += organ.getEncoded();
+    return message;
+  }
+
   public static String confirmOrganMessage(Organ organ) {
     String message = CONFIRM_ORGAN_HEADER;
     message += organ.getEncoded();
@@ -158,4 +174,93 @@ public class MessageMaker {
     return message;
 
   }
+
+  public static String usernameMessage(PlayerType playerType, String username){
+    String message = USERNAME_;
+
+    message += playerType.getEncoded() + "_" + username;
+
+    return message;
+  }
+
+  public static String loginMessage(String username, String password) {
+    String message = LOGIN_HEADER;
+
+    message += " " + username;
+
+    message += " " + password;
+
+    return message;
+  }
+
+  public static String loggedInSuccessfullyMessage(String username) {
+    String message = LOGIN_HEADER;
+
+    message += " 1";
+
+    message += " " + username;
+    return message;
+  }
+
+  public static String unsuccessfulLoginMessage(String username) {
+    String message = LOGIN_HEADER;
+
+    message += " 0";
+
+    message += " " + username;
+    return message;
+  }
+
+  public static String registerMessage(String username, String password) {
+    String message = REGISTER_HEADER;
+
+    message += " " + username;
+
+    message += " " + password;
+
+    return message;
+  }
+
+  public static String registeredSuccessfullyMessage() {
+    String message = REGISTER_HEADER;
+
+    message += " 1";
+    return message;
+  }
+
+  public static String unsuccessfulRegisterMessage() {
+    String message = REGISTER_HEADER;
+
+    message += " 0";
+    return message;
+  }
+
+  public static String getLeaderboardMessage() {
+    return GET_LEADERBOARD_HEADER;
+  }
+
+  public static String sendLeaderboardMessage(HashMap<String, Integer> board) {
+    String message = SET_LEADERBOARD_HEADER;
+
+    for (String i : board.keySet()) {
+      message += i + " " + board.get(i).toString() + " ";
+    }
+
+    System.out.println(message);
+
+    return message;
+  }
+
+  public static String sendAchievementMessage(String username, int points) {
+    String message = SET_ACHIEVEMENT_HEADER;
+
+    message += " " + username;
+
+    message += " " + points;
+
+    return message;
+  }
+
+
+
 }

@@ -1,12 +1,17 @@
 package main.com.bodyconquest.entities;
 
 import main.com.bodyconquest.constants.MapObjectType;
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.gamestates.EncounterState;
 
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -20,6 +25,9 @@ public abstract class MapObject {
   private final double DOWN_DIRECTION = 270;
   private final double LEFT_DIRECTION = 180; // -90;
   private final double RIGHT_DIRECTION = 360; // 90;
+
+  protected long timeAlive;
+  protected long timeOfDmgTaken;
 
   // Type of the object
   protected MapObjectType mapObjectType;
@@ -36,6 +44,12 @@ public abstract class MapObject {
   // Collision box width and height
   private int cwidth;
   private int cheight;
+
+  protected boolean wasHit = false;
+
+
+
+  protected PlayerType playerType;
 
   // Movement attributes
   /**
@@ -73,6 +87,7 @@ public abstract class MapObject {
   public MapObject() {
     setWidth(0);
     setHeight(0);
+    timeAlive = System.currentTimeMillis();
   }
 
   /**
@@ -191,7 +206,7 @@ public abstract class MapObject {
    * @return The y co-ordinate at the centre of this MapObject.
    */
   public double getCentreY() {
-    return getY() + (getHeight() / 2.0f);
+    return getY() + (getHeight() / 2.0);
   }
 
   /**
@@ -490,6 +505,7 @@ public abstract class MapObject {
    */
   public void checkCollisions(CopyOnWriteArrayList<MapObject> mapObjects) {
     for(MapObject mo : mapObjects) {
+      // Should use to be location to check collisions
       if(this.checkCollision(mo)) return;
     }
     x = dx;
@@ -505,6 +521,35 @@ public abstract class MapObject {
     return new Rectangle(
             (int) dx + ((width - cwidth) / 2), (int) dy + ((height - cheight) / 2), cwidth, cheight);
   }
+
+  public boolean getWasHit() {
+    return wasHit;
+  }
+
+  public void setWasHit(boolean wasHit) {
+    this.wasHit = wasHit;
+  }
+
+  public long getTimeAlive() {
+    return timeAlive;
+  }
+
+  public void setTimeAlive(long timeAlive) {
+    this.timeAlive = timeAlive;
+  }
+
+  public long getTimeOfDmgTaken() {
+    return timeOfDmgTaken;
+  }
+
+  public void setTimeOfDmgTaken(long timeOfDmgTaken) {
+    this.timeOfDmgTaken = timeOfDmgTaken;
+  }
+//  public void setTimeOfDmgTaken(Date timeOfDmgTaken) {
+//    this.timeOfDmgTaken = timeOfDmgTaken;
+//  }
+
+
 
   /**
    * The simplified object that is sent to the client. Creates a {@link BasicObject} representation
@@ -524,6 +569,11 @@ public abstract class MapObject {
     bo.setCurrentSpeed(currentSpeed);
     bo.setMapObjectType(mapObjectType);
     bo.setRotation((direction + Math.PI) * (180 / Math.PI));
+    bo.setPlayerType(playerType);
+    bo.setWasHit(wasHit);
+    bo.setTimeOfDmgTaken(timeOfDmgTaken);
+    timeAlive = System.currentTimeMillis();
+    bo.setTimeAlive(timeAlive);
     //bo.setRotation(direction + Math.PI);
     return bo;
   }

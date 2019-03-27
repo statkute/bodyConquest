@@ -1,5 +1,6 @@
 package main.com.bodyconquest.entities.projectiles;
 
+import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.MapObject;
 import main.com.bodyconquest.entities.Troops.Troop;
 
@@ -35,6 +36,7 @@ public abstract class Projectile extends MapObject {
     moving = true;
     collidable = true;
     remove = false;
+    playerType = PlayerType.AI;
   }
 
   public void hit(Troop troop) {
@@ -68,7 +70,7 @@ public abstract class Projectile extends MapObject {
   @Override
   public void move() {
     super.move();
-    setX(dy);
+    setX(dx);
     setY(dy);
   }
 
