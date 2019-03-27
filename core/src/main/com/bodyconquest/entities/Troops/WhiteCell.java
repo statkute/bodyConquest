@@ -15,6 +15,11 @@ public class WhiteCell extends Troop {
 
     public static final int COST = 20;
 
+    public WhiteCell() {
+        super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
+        init();
+    }
+
     public WhiteCell(Lane lane, PlayerType playerType) {
         super(lane, playerType);
         init();

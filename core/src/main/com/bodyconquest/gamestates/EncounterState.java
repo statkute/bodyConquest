@@ -119,7 +119,9 @@ public class EncounterState {
     if (game.getGameType() == GameType.SINGLE_PLAYER) {
       DifficultyLevel difficultyLevel = game.getDifficulty();
       BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources, difficultyLevel);
+      MultiplayerAI ai2 = new MultiplayerAI(this);
       ai.start();
+      ai2.start();
     } else {
       MultiplayerAI ai = new MultiplayerAI(this);
       ai.start();

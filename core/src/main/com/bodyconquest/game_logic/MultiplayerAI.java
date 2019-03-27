@@ -72,6 +72,7 @@ public class MultiplayerAI extends Thread {
         while (running) {
             time = System.currentTimeMillis();
             if (time > (lastWave + COOLDOWN)) {
+                System.out.println("tries to spawn");
                 int losingPlayer = decideLoser();
                 if (losingPlayer == 0) {
                     attackBoth();
