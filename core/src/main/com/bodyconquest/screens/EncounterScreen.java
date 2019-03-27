@@ -1,6 +1,7 @@
 package main.com.bodyconquest.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
@@ -164,7 +165,7 @@ public class EncounterScreen implements Screen {
     healthTopBaseBefore = 100;
     healthBottomBaseBefore = 100;
 
-    poolHashMap = new ConcurrentHashMap<String, TexturePool>();
+    poolHashMap = new ConcurrentHashMap<>();
 
     value = new DecimalFormat("0");
 
@@ -217,6 +218,7 @@ public class EncounterScreen implements Screen {
   /** {@inheritDoc} */
   @Override
   public void render(float delta) {
+    checkInputs();
 
     updateResourceBars();
 
@@ -322,6 +324,33 @@ public class EncounterScreen implements Screen {
           switchScreen(game, new BodyScreen(game, gameType));
         }
       }
+    }
+  }
+
+  private void checkInputs() {
+    int i = 0;
+    ClassOwner unit = null;
+    if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) || Gdx.input.isKeyPressed(Input.Keys.Q)) {
+      unit = playerDisease.getSpawn1();
+    } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) || Gdx.input.isKeyPressed(Input.Keys.W)) {
+      unit = playerDisease.getSpawn2();
+    } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_3) || Gdx.input.isKeyPressed(Input.Keys.E)) {
+      unit = playerDisease.getSpawn3();
+    } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_4) || Gdx.input.isKeyPressed(Input.Keys.R)) {
+      unit = playerDisease.getSpawn4();
+    }
+
+    Lane lane = null;
+    if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+      lane = Lane.MIDDLE;
+    } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+      lane = Lane.BOTTOM;
+    } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+      lane = Lane.TOP;
+    }
+
+    if (lane != null && unit != null) {
+      spawnUnit((UnitType) unit, lane, playerType);
     }
   }
 

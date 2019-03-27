@@ -463,10 +463,10 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   public void addActors() {
     title = new Image(t_header);
     title.setBounds(
-        BodyConquest.V_WIDTH / 2 - t_header.getWidth() / 4,
-        460,
-        t_header.getWidth() / 2,
-        t_header.getHeight() / 2);
+            BodyConquest.V_WIDTH / 2 - t_header.getWidth() / 4,
+            460,
+            t_header.getWidth() / 2,
+            t_header.getHeight() / 2);
     allImages.add(title);
 
     // if(!communicator.wasHeartSelected()){
