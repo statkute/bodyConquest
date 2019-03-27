@@ -39,17 +39,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Note: As the multi player AI is not subject to the same resource constraints as the normal players,
  * it will calculate the number of units it spawns in each wave dependent on the case it is in:
  * <p>
- * 1. When it attacks both players, it will spawn one unit for each 150 ASI points of a player
+ * 1. When it attacks both players, it will spawn one unit for each 300 ASI points of a player
  * 2. When it attacks only one player, it will try and balance the game by spawning one unit (whose strength is 45)
- * for each 60 points multiple of the difference between the two ASIs (minimum 1 unit). Example:
+ * for each 100 points multiple of the difference between the two ASIs (minimum 1 unit). Example:
  * topASI = 250
  * botASI = 120
  * <p>
- * topASI - botASI = 130; 130/60 = 2 => the AI spawns 2 units against the top player
+ * topASI - botASI = 130; 130/100 = 1 => the AI spawns 2 units against the top player
  */
 public class MultiplayerAI extends Thread {
 
-    private final int COOLDOWN = 5000;
+    private final int COOLDOWN = 10000;
 
     private EncounterState game;
     private boolean running;
@@ -72,17 +72,21 @@ public class MultiplayerAI extends Thread {
         while (running) {
             time = System.currentTimeMillis();
             if (time > (lastWave + COOLDOWN)) {
-                int losingPlayer = decideLoser();
-                if (losingPlayer == 0) {
+                int winningPlayer = decideWinner();
+                if (winningPlayer == 0) {
                     attackBoth();
-                } else if (losingPlayer == 1) {
-                    attackPlayer(PlayerType.PLAYER_TOP);
+                } else if (winningPlayer == 1) {
+                    defendPlayer(PlayerType.PLAYER_TOP);
                 } else {
-                    attackPlayer(PlayerType.PLAYER_BOTTOM);
+                    defendPlayer(PlayerType.PLAYER_BOTTOM);
                 }
                 lastWave = time;
             }
         }
+    }
+
+    public void stopRunning() {
+        running = false;
     }
 
     //decides whom the AI sides with -- the losingPlayer
@@ -91,10 +95,10 @@ public class MultiplayerAI extends Thread {
      * It looks at the players' units strength, base health and current stockpile of resources
      * and computes an Absolute Strength Index (ASI);
      *
-     * @return 0 if the two players' ASIs are similar; 1 if the bottom player's ASI is lower; 2 is the top player's ASI is
+     * @return 0 if the two players' ASIs are similar; 1 if the bottom player's ASI is bigger; 2 is the top player's ASI is
      */
-    private int decideLoser() {
-        int losingPlayer = 0;
+    private int decideWinner() {
+        int winningPlayer = 0;
         topASI = 0.0;
         botASI = 0.0;
 
@@ -135,18 +139,23 @@ public class MultiplayerAI extends Thread {
         Resources botResources = game.getResources(PlayerType.PLAYER_BOTTOM);
         int totalBotResources = botResources.getLipids() + botResources.getProteins() + botResources.getSugars();
 
-        botASI += (double) totalTopResources / 5;
+        botASI += (double) totalBotResources / 5;
 
         //compare the two
 
-        if (topASI > 1.2 * botASI) {
-            losingPlayer = 1;
-        } else if (botASI > 1.2 * topASI) {
-            losingPlayer = 2;
+        System.out.println("botASI = " + botASI);
+        System.out.println("topASI = " + topASI);
+
+        if (botASI > 1.2 * topASI) {
+            winningPlayer = 1;
+            System.out.println("winning player is BOTTOM");
+        } else if (topASI > 1.2 * botASI) {
+            winningPlayer = 2;
+            System.out.println("winning player is TOP");
         }
 
         // else return 0
-        return losingPlayer;
+        return winningPlayer;
     }
 
     /**
@@ -155,7 +164,7 @@ public class MultiplayerAI extends Thread {
      * @return The lane that corresponds to the values of the parameters passed
      */
     private Lane getAttackingLane(PlayerType playerType, boolean mostDefended) {
-        Lane lane;
+        Lane lane = Lane.BOTTOM;
 
         CopyOnWriteArrayList<Troop> units = null;
         units = game.getTroops(playerType);
@@ -183,7 +192,7 @@ public class MultiplayerAI extends Thread {
             if (strengthTop <= strengthMid && strengthTop <= strengthBot) {
                 lane = Lane.TOP;
             } else if (strengthMid <= strengthBot && strengthMid <= strengthTop) {
-                lane = Lane.MIDDLE;
+                //lane = Lane.MIDDLE;
             } else {
                 lane = Lane.BOTTOM;
             }
@@ -191,7 +200,7 @@ public class MultiplayerAI extends Thread {
             if (strengthTop >= strengthMid && strengthTop >= strengthBot) {
                 lane = Lane.TOP;
             } else if (strengthMid >= strengthBot && strengthMid >= strengthTop) {
-                lane = Lane.MIDDLE;
+                //lane = Lane.MIDDLE;
             } else {
                 lane = Lane.BOTTOM;
             }
@@ -207,9 +216,17 @@ public class MultiplayerAI extends Thread {
         System.out.println("attacked both");
         Lane undefendedTop = getAttackingLane(PlayerType.PLAYER_TOP, false);
 
-        Lane undefendedBot = getAttackingLane(PlayerType.PLAYER_BOTTOM, false);
+        Lane undefendedBot;
 
-        int multiplierTop = (int) topASI / 150;
+        //undefendedBot = getAttackingLane(PlayerType.PLAYER_BOTTOM, false);
+
+        if (undefendedTop == Lane.TOP) {
+            undefendedBot = Lane.BOTTOM;
+        } else {
+            undefendedBot = Lane.TOP;
+        }
+
+        int multiplierTop = (int) topASI / 300;
         if (multiplierTop <= 1) multiplierTop = 1;
 
         //System.out.println("multiplier top: " + multiplierTop);
@@ -218,7 +235,7 @@ public class MultiplayerAI extends Thread {
             summonUnit(undefendedTop, PlayerType.PLAYER_BOTTOM);
         }
 
-        int multiplierBot = (int) botASI / 150;
+        int multiplierBot = (int) botASI / 300;
         if (multiplierBot <= 1) multiplierBot = 1;
 
         //System.out.println("multiplier bot: " + multiplierBot);
@@ -230,24 +247,31 @@ public class MultiplayerAI extends Thread {
     }
 
     /**
-     * Spawn units to attack the stronger player in the game, based on the difference between the players' ASIs
+     * Spawn units to defend the weaker player in the game, based on the difference between the players' ASIs
      *
-     * @param playerType The player to be attacked
+     * @param playerType The player to be defended
      */
-    private void attackPlayer(PlayerType playerType) {
+    private void defendPlayer(PlayerType playerType) {
 
         //System.out.println("attacked player");
 
         double relativeASI = Math.abs(topASI - botASI);
 
-        int multiplier = (int) relativeASI / 60;
+        int multiplier = (int) relativeASI / 100;
         if (multiplier <= 1) multiplier = 1;
 
-        Lane undefendedLane = getAttackingLane(playerType, true);
+        Lane defendedLane;
 
-        //summon all units against designated player on its undefended lane
+        if (playerType == PlayerType.PLAYER_BOTTOM) {
+            defendedLane = getAttackingLane(PlayerType.PLAYER_TOP, true);
+        } else {
+            defendedLane = getAttackingLane(PlayerType.PLAYER_BOTTOM, true);
+        }
+
+
+        //summon all units to protect the designated player on the other's most defended one
         for (int i = 0; i < multiplier; i++) {
-            summonUnit(undefendedLane, playerType);
+            summonUnit(defendedLane, playerType);
         }
     }
 
@@ -258,7 +282,7 @@ public class MultiplayerAI extends Thread {
      * @param playerType the player with which the unit allies itself
      */
     private void summonUnit(Lane lane, PlayerType playerType) {
-        //System.out.println("summoned a new AI");
+        System.out.println("summoned a new AI on lane " + lane + " for player " + playerType);
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {

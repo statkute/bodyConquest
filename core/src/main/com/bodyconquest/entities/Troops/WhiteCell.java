@@ -1,6 +1,5 @@
 package main.com.bodyconquest.entities.Troops;
 
-import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.Lane;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.constants.UnitType;
@@ -8,7 +7,7 @@ import main.com.bodyconquest.constants.UnitType;
 public class WhiteCell extends Troop {
 
     public static final int MAX_HEALTH = 150;
-    public static final double MAX_SPEED = 1.2;
+    public static final double MAX_SPEED = 0.6;
     public static final long COOLDOWN = 1500;
     public static final int RANGE = 50;
     public static final int DAMAGE = 45;

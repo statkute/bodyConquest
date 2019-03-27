@@ -72,11 +72,14 @@ public class EncounterState {
 
   private Organ organ;
 
+  private MultiplayerAI multiplayerAI;
+
+  private BasicTestAI singleplayerAI;
+
   /** Constructor. */
   public EncounterState(Game game, Organ organ) {
     this.game = game;
     this.organ = organ;
-
 
     serverSender = game.getServer().getServerSender();
 
@@ -118,13 +121,13 @@ public class EncounterState {
 
     if (game.getGameType() == GameType.SINGLE_PLAYER) {
       DifficultyLevel difficultyLevel = game.getDifficulty();
-      BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources, difficultyLevel);
-      MultiplayerAI ai2 = new MultiplayerAI(this);
-      ai.start();
-      ai2.start();
+      singleplayerAI = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources, difficultyLevel);
+      multiplayerAI = new MultiplayerAI(this);
+      singleplayerAI.start();
+      multiplayerAI.start();
     } else {
-      MultiplayerAI ai = new MultiplayerAI(this);
-      ai.start();
+      multiplayerAI = new MultiplayerAI(this);
+      multiplayerAI.start();
     }
   }
 
@@ -499,6 +502,13 @@ public class EncounterState {
 
     bottomPlayer.setScore(totalScoreBottom);
     topPlayer.setScore(totalScoreTop);
+
+    if (game.getGameType() == GameType.SINGLE_PLAYER) {
+      singleplayerAI.stopRunning();
+      multiplayerAI.stopRunning();
+    } else {
+      multiplayerAI.stopRunning();
+    }
 
     game.endEncounter();
   }

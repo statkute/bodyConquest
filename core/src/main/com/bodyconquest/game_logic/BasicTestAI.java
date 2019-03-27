@@ -56,6 +56,10 @@ public class BasicTestAI extends Thread {
     }
   }
 
+  public void stopRunning() {
+    running = false;
+  }
+
   /**
    * Method called when the AI settings are on easy
    */
