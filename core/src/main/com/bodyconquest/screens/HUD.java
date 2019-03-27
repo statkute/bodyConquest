@@ -251,7 +251,10 @@ public class HUD {
               Payload payload = new Payload();
               payload.setObject(spawnableEnum);
 
-              payload.setDragActor(new Image(spawnableButton.getImage().getDrawable()));
+              final Image dragImage = new Image(spawnableButton.getImage().getDrawable());
+              dragImage.setScale(0.3f);
+
+              payload.setDragActor(dragImage);
 
               //            if(spawnableClass.getSuperclass().equals(Troop.class)) {
               //              payload.setDragActor(new
