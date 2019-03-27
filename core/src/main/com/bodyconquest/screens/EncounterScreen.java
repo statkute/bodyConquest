@@ -329,7 +329,8 @@ public class EncounterScreen implements Screen {
   private void drawUsername() {
     game.gameFont.getData().setScale(0.7f, 0.7f);
 
-    if (username.length() > 9) {
+    if (username.length() > 7) {
+      game.gameFont.getData().setScale(0.5f, 0.5f);
       game.gameFont.draw(
           game.batch,
           username.toLowerCase().substring(0, 9),
