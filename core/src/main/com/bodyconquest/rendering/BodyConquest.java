@@ -65,10 +65,10 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     audioPlayer.playMusicLoop("music");
     difficultyLevel = DifficultyLevel.EASY;
     client = new Client();
-    //setScreen(new MenuScreen(this, "GermBoi"));
+    // setScreen(new MenuScreen(this, "GermBoi"));
     setScreen(new MenuScreen(this));
-    //setScreen(new LeaderboardScreen(this));
-    //setScreen(new WaitingScreen(this,GameType.MULTIPLAYER_HOST));
+    // setScreen(new LeaderboardScreen(this));
+    // setScreen(new WaitingScreen(this,GameType.MULTIPLAYER_HOST));
 
   }
 
@@ -77,7 +77,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     super.render();
     if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
     if (Gdx.input.isKeyJustPressed(Input.Keys.M)
-            && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
+        && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
             || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
       audioPlayer.toggleMuted();
     }
@@ -93,15 +93,16 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     return game;
   }
 
-  public Server getServer() { return game.getServer(); }
+  public Server getServer() {
+    return game.getServer();
+  }
 
   public void setGame(Game game) {
     this.game = game;
   }
 
   public Client getClient() {
-      return client;
-
+    return client;
   }
 
   public void setClient(Client client) {
@@ -112,8 +113,8 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     return difficultyLevel;
   }
 
-  public void changeDifficulty () {
-    if (difficultyLevel == DifficultyLevel.EASY){
+  public void changeDifficulty() {
+    if (difficultyLevel == DifficultyLevel.EASY) {
       difficultyLevel = DifficultyLevel.HARD;
     } else {
       difficultyLevel = DifficultyLevel.EASY;

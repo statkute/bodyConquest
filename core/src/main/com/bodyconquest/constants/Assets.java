@@ -68,6 +68,7 @@ public class Assets {
   public static String settingsMusicOn = "core/assets/on.png";
   /** The constant settingsSoundOn. */
   public static String settingsSoundOn = "core/assets/on.png";
+
   public static String settingsSingleplayerDifficulty = "core/assets/settings_difficulty.png";
   public static String settingsSingleplayerEasy = "core/assets/settings_easy.png";
   public static String settingsSingleplayerHard = "core/assets/settings_hard.png";
@@ -124,7 +125,6 @@ public class Assets {
   /** The constant registerHeader. */
   public static String registerHeader = "core/assets/register_header.png";
 
-
   /** Register and Login joint Screen Assets */
 
   /** The constant enterUsernameText. */
@@ -138,11 +138,8 @@ public class Assets {
   /** The constant loginButtonLow. */
   public static String loginButtonLow = "core/assets/loginbutton_low.png";
 
-
   /** Leaderboard Screen Assets */
   public static String headerLeaderboard = "core/assets/topscores.png";
-
-
 
   /** Fonts */
 
@@ -239,7 +236,6 @@ public class Assets {
   public static String waitingTextNew = "core/assets/waiting_big_new.png";
 
   /** Game Over Screen Assets */
-
   public static String headerGameOver = "core/assets/GAMESCORES.png";
 
   /** Base Assets */

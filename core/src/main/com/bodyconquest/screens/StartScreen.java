@@ -14,9 +14,7 @@ import main.com.bodyconquest.rendering.BodyConquest;
 import java.io.IOException;
 import java.net.SocketException;
 
-/**
- * The type Start screen.
- */
+/** The type Start screen. */
 public class StartScreen extends AbstractGameScreen implements Screen {
 
   private Texture title;
@@ -88,7 +86,12 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     super.render(delta);
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(title, BodyConquest.V_WIDTH / 2.0f - title.getWidth() / 1.7f / 2.0f, 450, title.getWidth() / 1.7f, title.getHeight() / 1.7f);
+    game.batch.draw(
+        title,
+        BodyConquest.V_WIDTH / 2.0f - title.getWidth() / 1.7f / 2.0f,
+        450,
+        title.getWidth() / 1.7f,
+        title.getHeight() / 1.7f);
     game.batch.draw(
         login,
         BodyConquest.V_WIDTH / 2.0f - login.getWidth() / 2.0f,
@@ -117,7 +120,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
         playButtonSound();
         // System.out.println("Login touched");
         dispose();
-        game.setScreen(new LoginScreen(game, gameType,0));
+        game.setScreen(new LoginScreen(game, gameType, 0));
       }
 
       if (registerBounds.contains(tmp.x, tmp.y)) {
@@ -127,12 +130,12 @@ public class StartScreen extends AbstractGameScreen implements Screen {
         game.setScreen(new RegisteringScreen(game, gameType));
       }
 
-        if (exitBounds.contains(tmp.x, tmp.y)) {
-            playButtonSound();
-            dispose();
-            Gdx.app.exit();
-            System.exit(0);
-        }
+      if (exitBounds.contains(tmp.x, tmp.y)) {
+        playButtonSound();
+        dispose();
+        Gdx.app.exit();
+        System.exit(0);
+      }
     }
   }
 
