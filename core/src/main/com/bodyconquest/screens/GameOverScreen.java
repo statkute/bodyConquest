@@ -39,7 +39,12 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     getAssets();
     setRectangles();
     client = game.getClient();
-    server = game.getServer();
+    
+    if (gameType == GameType.MULTIPLAYER_JOIN){
+      server = null;
+    } else{
+      server = game.getServer();
+    }
     // setting database logic to send achievement to server
     if (gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startDatabaseState();
 
@@ -134,7 +139,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
         if (this.server != null){
           this.server.closeEverything();
         }
-        
+
         playButtonSound();
         dispose();
         game.setScreen(new MenuScreen(game));
