@@ -317,10 +317,10 @@ public class EncounterState {
 //    } else if (unitType.equals(UnitType.FUNGUS)) {
 //      if (playerType == PlayerType.PLAYER_BOTTOM) {
 //        if (bottomResources.canAfford(
-//            Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST)) {
-//          bottomResources.buy(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST);
+//            MeaslesFungus.LIPIDS_COST, MeaslesFungus.SUGARS_COST, MeaslesFungus.PROTEINS_COST)) {
+//          bottomResources.buy(MeaslesFungus.LIPIDS_COST, MeaslesFungus.SUGARS_COST, MeaslesFungus.PROTEINS_COST);
 //          troop =
-//              new Fungus(
+//              new MeaslesFungus(
 //                  lane,
 //                  playerType,
 //                  disease.getDamageMult(),
