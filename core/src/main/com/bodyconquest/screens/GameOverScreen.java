@@ -9,6 +9,7 @@ import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.game_logic.Communicator;
 import main.com.bodyconquest.networking.Client;
+import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
@@ -27,6 +28,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
   private Stage stage;
 
   private Client client;
+  private Server server;
   private Communicator communicator;
 
   public GameOverScreen(BodyConquest game, GameType gameType) {
@@ -37,6 +39,7 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     getAssets();
     setRectangles();
     client = game.getClient();
+    server = game.getServer();
     // setting database logic to send achievement to server
     if (gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startDatabaseState();
 
@@ -116,15 +119,22 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     super.checkPressed();
     if (Gdx.input.justTouched()) {
       if (backBounds.contains(tmp.x, tmp.y)) {
-        if (gameType == GameType.SINGLE_PLAYER)
+        if (gameType == GameType.SINGLE_PLAYER){
           client.clientSender.sendMessage(
               MessageMaker.sendAchievementMessage(usernameBottom, scoreBottom));
+        }
         else if (gameType == GameType.MULTIPLAYER_HOST || gameType == GameType.MULTIPLAYER_JOIN) {
           client.clientSender.sendMessage(
               MessageMaker.sendAchievementMessage(usernameBottom, scoreBottom));
           client.clientSender.sendMessage(
               MessageMaker.sendAchievementMessage(usernameTop, scoreTop));
         }
+
+        client.closeEverything();
+        if (this.server != null){
+          this.server.closeEverything();
+        }
+        
         playButtonSound();
         dispose();
         game.setScreen(new MenuScreen(game));
