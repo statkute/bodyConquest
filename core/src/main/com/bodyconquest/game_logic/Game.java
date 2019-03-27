@@ -78,7 +78,7 @@ public class Game extends Thread {
   }
 
   private void update() {
-    if (encounter && encounterState != null){
+    if (encounter && encounterState != null) {
       encounterState.update();
     }
   }
@@ -117,11 +117,17 @@ public class Game extends Thread {
     server.startRaceSelectionLogic(this);
     if (gameType == GameType.SINGLE_PLAYER) {
       setPlayerTop(Disease.INFLUENZA);
-      server.getServerSender().sendMessage(MessageMaker.firstPickerMessage(PlayerType.PLAYER_BOTTOM));
+      server
+          .getServerSender()
+          .sendMessage(MessageMaker.firstPickerMessage(PlayerType.PLAYER_BOTTOM));
       Timer.startTimer(2000);
     } else {
       Random rnd = new Random();
-      server.getServerSender().sendMessage(MessageMaker.firstPickerMessage((rnd.nextInt(2) == 1 ? PlayerType.PLAYER_BOTTOM : PlayerType.PLAYER_TOP)));
+      server
+          .getServerSender()
+          .sendMessage(
+              MessageMaker.firstPickerMessage(
+                  (rnd.nextInt(2) == 1 ? PlayerType.PLAYER_BOTTOM : PlayerType.PLAYER_TOP)));
     }
   }
 
@@ -134,20 +140,26 @@ public class Game extends Thread {
   }
 
   public void startBodyState() {
-    if (gameType == GameType.SINGLE_PLAYER){
-      if(getPlayerBottom().getDisease() != Disease.INFLUENZA)
-        setPlayerTop(Disease.INFLUENZA);
-      else if(getPlayerBottom().getDisease() != Disease.ROTAVIRUS)
-        setPlayerTop(Disease.ROTAVIRUS);
-      server.getServerSender().sendMessage(MessageMaker.diseaseMessage(getPlayerTop().getDisease(), PlayerType.PLAYER_TOP));
+    if (gameType == GameType.SINGLE_PLAYER) {
+      if (getPlayerBottom().getDisease() != Disease.INFLUENZA) setPlayerTop(Disease.INFLUENZA);
+      else if (getPlayerBottom().getDisease() != Disease.ROTAVIRUS) setPlayerTop(Disease.ROTAVIRUS);
+      server
+          .getServerSender()
+          .sendMessage(
+              MessageMaker.diseaseMessage(getPlayerTop().getDisease(), PlayerType.PLAYER_TOP));
       usernameTop = "AI";
       Timer.startTimer(2000);
     }
 
-    server.getServerSender().sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_BOTTOM, usernameBottom));
-    server.getServerSender().sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_TOP, usernameTop));
+    server
+        .getServerSender()
+        .sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_BOTTOM, usernameBottom));
+    server
+        .getServerSender()
+        .sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_TOP, usernameTop));
 
-    server.startBodyLogic(); }
+    server.startBodyLogic();
+  }
 
   public void endEncounter() {
     encounter = false;
@@ -155,9 +167,10 @@ public class Game extends Thread {
     startBodyState();
   }
 
-    public void startDatabaseState() {
-        server.startDatabaseLogic(this);
-    }
+  public void startDatabaseState() {
+    server.startDatabaseLogic(this);
+  }
+
   public PlayerType getLastPicker() {
     return lastPicker;
   }
@@ -165,5 +178,4 @@ public class Game extends Thread {
   public void setLastPicker(PlayerType lastPicker) {
     this.lastPicker = lastPicker;
   }
-
 }

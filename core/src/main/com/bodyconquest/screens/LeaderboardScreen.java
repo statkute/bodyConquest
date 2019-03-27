@@ -8,6 +8,7 @@ import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.game_logic.Communicator;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.networking.Client;
+import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
@@ -29,39 +30,44 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
   private Texture header;
   private int place;
   private Client client;
+  private Server server;
   private Communicator comms;
 
-    /**
-     * Instantiates a new Leaderboard Screen.
-     *
-     * @param game the game
-     */
-    public LeaderboardScreen(BodyConquest game) {
-        super(game);
-        leaderboard = new HashMap<>();
-//        leaderboard.put("Alexandru", 20);
-//        leaderboard.put("Augustas", 16);
-//        leaderboard.put("Brandon", 30);
-//        leaderboard.put("Gintare", 15);
-//        leaderboard.put("Paul", 14);
-//        leaderboard.put("Anton", 14);
-//        leaderboard.put("Speed", 13);
-//        leaderboard.put("Tim", 12);
-//        leaderboard.put("Jack", 11);
-//        leaderboard.put("Rose", 10);
-        client = game.getClient();
-        //setting database logic to get leaderboard from server
-        try {
-            game.setGame(new Game(GameType.SINGLE_PLAYER));
-            game.getGame().startDatabaseState();
+  /**
+   * Instantiates a new Leaderboard Screen.
+   *
+   * @param game the game
+   */
+  public LeaderboardScreen(BodyConquest game) {
+    super(game);
+    leaderboard = new HashMap<>();
+    //        leaderboard.put("Alexandru", 20);
+    //        leaderboard.put("Augustas", 16);
+    //        leaderboard.put("Brandon", 30);
+    //        leaderboard.put("Gintare", 15);
+    //        leaderboard.put("Paul", 14);
+    //        leaderboard.put("Anton", 14);
+    //        leaderboard.put("Speed", 13);
+    //        leaderboard.put("Tim", 12);
+    //        leaderboard.put("Jack", 11);
+    //        leaderboard.put("Rose", 10);
+    client = game.getClient();
 
-            client.startClient();
-            client.setDatabaseLogic();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    // setting database logic to get leaderboard from server
+    try {
+      game.setGame(new Game(GameType.SINGLE_PLAYER));
+      game.getGame().startDatabaseState();
 
-
+      client.startClient();
+      client.setDatabaseLogic();
+      try {
+        server = game.getServer();
+      } catch (Exception e) {
+        server = null;
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     client.clientSender.sendMessage(MessageMaker.getLeaderboardMessage());
     comms = client.getCommunicator();
@@ -80,6 +86,10 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     game.batch.begin();
     game.batch.draw(header, BodyConquest.V_WIDTH / 2.0f - header.getWidth() / 2.0f, 470);
     game.batch.draw(backButton, BodyConquest.V_WIDTH / 2.0f - backButton.getWidth() / 2.0f, 10);
+    client.closeEverything();
+    if (this.server != null) {
+      this.server.closeEverything();
+    }
     game.usernameFont.getData().setScale(1.0f, 1.0f);
     drawLeaderboard();
     drawNumbers();
@@ -310,6 +320,10 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
       if (backBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
         dispose();
+        client.closeEverything();
+        if (this.server != null){
+          this.server.closeEverything();
+        }
         game.setScreen(new MenuScreen(game));
       }
     }
