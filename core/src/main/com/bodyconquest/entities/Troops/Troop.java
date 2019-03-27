@@ -183,7 +183,6 @@ public abstract class Troop extends MapObject implements Spawnable {
    * this Troop is assigned to.
    */
   protected void updateMovement() {
-    if (killingPoints == 1) System.out.println("AI unit moved");
     if (moving) {
       if (playerType == PlayerType.PLAYER_BOTTOM) {
         if (lane == Lane.BOTTOM) {

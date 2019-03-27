@@ -195,7 +195,7 @@ public class EncounterState {
     checkProjectiles(projectilesTop, troopsBottom);
     checkProjectiles(projectilesBottom, troopsTop);
 
-    if (counter == 3) {
+    if (counter == 2) {
 
       if (topBase.getHealth() <= 0) {
         endGame(PlayerType.PLAYER_BOTTOM);
@@ -308,6 +308,8 @@ public class EncounterState {
                   troopInit.getLipidCost(), troopInit.getSugarCost(), troopInit.getProteinCost());
           troop = troopInit;
         }
+      } else {
+        troop = troopInit;
       }
 
 
@@ -370,6 +372,11 @@ public class EncounterState {
 
     // Return if invalid troop, lane or player type is used
     if (troop == null || lane == null || playerType == null) return;
+
+    if (isMultiplayerAI) {
+
+
+    }
 
     if (!isMultiplayerAI) {
       // Spawn units for bottom player

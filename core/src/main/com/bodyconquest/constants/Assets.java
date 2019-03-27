@@ -354,19 +354,19 @@ public class Assets {
     /**
      * The constant AI_BOT_LANE_SPAWN_X.
      */
-    public static final float AI_BOT_LANE_SPAWN_X = BOT_TURNPOINT_X;
+    public static final float AI_BOT_LANE_SPAWN_X = 150;
     /**
      * The constant AI_BOT_LANE_SPAWN_Y.
      */
-    public static final float AI_BOT_LANE_SPAWN_Y = BOT_TURNPOINT_Y;
+    public static final float AI_BOT_LANE_SPAWN_Y = 100;
     /**
      * The constant AI_TOP_LANE_SPAWN_X.
      */
-    public static final float AI_TOP_LANE_SPAWN_X = TOP_TURNPOINT_X;
+    public static final float AI_TOP_LANE_SPAWN_X = 650;
     /**
      * The constant AI_TOP_LANE_SPAWN_Y.
      */
-    public static final float AI_TOP_LANE_SPAWN_Y = TOP_TURNPOINT_Y;
+    public static final float AI_TOP_LANE_SPAWN_Y = 550;
 
   // private final float botLaneTPSpawnX = 170;
   // private final float botLaneTPSpawnY = 470;
