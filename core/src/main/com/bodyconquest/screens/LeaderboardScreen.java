@@ -308,7 +308,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     backBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-            60,
+            35,
             backButton.getWidth(),
             backButton.getHeight());
   }
