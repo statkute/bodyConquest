@@ -10,16 +10,28 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /** An ability that slows all enemy units in a selected lane for a short time period. */
 public class RigorMortis extends Ability {
 
+  /** The constant SUGARS_COST. */
   public static final int SUGARS_COST = 60;
+
+  /** The constant PROTEINS_COST. */
   public static final int PROTEINS_COST = 20;
+
+  /** The constant LIPIDS_COST. */
   public static final int LIPIDS_COST = 0;
 
   private Lane lane;
 
+  /** Instantiates a new Rigor mortis. */
   public RigorMortis() {
     super(PlayerType.PLAYER_TOP);
   }
 
+  /**
+   * Instantiates a new Rigor mortis.
+   *
+   * @param lane the lane
+   * @param playerType the player type
+   */
   public RigorMortis(Lane lane, PlayerType playerType) {
     super(playerType);
     this.lane = lane;
