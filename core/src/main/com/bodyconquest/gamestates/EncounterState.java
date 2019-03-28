@@ -122,9 +122,9 @@ public class EncounterState {
     if (game.getGameType() == GameType.SINGLE_PLAYER) {
       DifficultyLevel difficultyLevel = game.getDifficulty();
       singleplayerAI = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources, difficultyLevel);
-      multiplayerAI = new MultiplayerAI(this);
+        //multiplayerAI = new MultiplayerAI(this);
       singleplayerAI.start();
-      multiplayerAI.start();
+        //multiplayerAI.start();
     } else {
       multiplayerAI = new MultiplayerAI(this);
       multiplayerAI.start();
@@ -576,9 +576,9 @@ public class EncounterState {
     return player == PlayerType.PLAYER_BOTTOM ? troopsBottom : troopsTop;
   }
 
-  public Base getBase(PlayerType player) {
-    return player == PlayerType.PLAYER_BOTTOM ? bottomBase : topBase;
-  }
+    public Base getBase(PlayerType player) {
+        return player == PlayerType.PLAYER_BOTTOM ? bottomBase : topBase;
+    }
 
   private Player getPlayer(PlayerType playerType) {
     return playerType == PlayerType.PLAYER_BOTTOM ? bottomPlayer : topPlayer;
