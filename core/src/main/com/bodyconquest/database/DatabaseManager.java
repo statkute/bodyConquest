@@ -161,7 +161,7 @@ public class DatabaseManager {
      *
      * @param username the user whose score is to be inserted
      * @param points   the score to be inserted for that user
-     * @return
+     * @return return whether the insertion was successful
      */
     public boolean insertAchievement(String username, int points) {
 

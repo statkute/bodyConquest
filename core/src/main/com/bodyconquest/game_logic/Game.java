@@ -39,7 +39,7 @@ public class Game extends Thread {
    * Constructor
    *
    * @param gameType The type of game that this server is running.
-   * @throws SocketException
+   * @throws SocketException the Socket Exception
    */
   public Game(GameType gameType) throws SocketException {
     this.gameType = gameType;

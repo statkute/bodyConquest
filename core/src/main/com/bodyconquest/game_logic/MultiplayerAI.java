@@ -20,32 +20,32 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * If the players are fairly similar in strength, it attacks both on their least defended lane to cause the most damage
  * Instead, if one player is clearly losing to the other, the AI aids the losing side and attacks the other player
  * on its most defended lane to protect the losing player
- * <p>
+ *
  * In order to decide the losing player, an ASI (Absolute Strength Index) is calculated for each player;
  * This index takes into account:
  * 1. The strength of its troops on the screen
  * 2. The remaining base health
  * 3. The stockpile of resources
- * <p>
+ *
  * To take into account all these things without making the formula too complicated, a heuristic is employed:
- * <p>
+ *
  * The strength of a unit is calculated as damage*(health/100)/(cooldown/1000)
  * 1 strength point = 1 point in the ASI
- * <p>
+ *
  * 10 base health point = 2 points in the ASI
- * <p>
+ *
  * 5 resources (of any type) = 1 point is the ASI
- * <p>
+ *
  * Note: As the multi player AI is not subject to the same resource constraints as the normal players,
  * it will calculate the number of units it spawns in each wave dependent on the case it is in:
- * <p>
+ *
  * 1. When it attacks both players, it will spawn one unit for each 300 ASI points of a player
  * 2. When it attacks only one player, it will try and balance the game by spawning one unit (whose strength is 45)
  * for each 100 points multiple of the difference between the two ASIs (minimum 1 unit). Example:
  * topASI = 250
  * botASI = 120
- * <p>
- * topASI - botASI = 130; 130/100 = 1 => the AI spawns 2 units against the top player
+ *
+ * topASI - botASI = 130; 130/100 = 1 therefore the AI spawns 2 units against the top player
  */
 public class MultiplayerAI extends Thread {
 

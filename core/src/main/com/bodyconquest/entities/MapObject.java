@@ -26,17 +26,32 @@ public abstract class MapObject {
   private final double LEFT_DIRECTION = 180; // -90;
   private final double RIGHT_DIRECTION = 360; // 90;
 
+  /**
+   * The Time alive.
+   */
   protected long timeAlive;
+  /**
+   * The Time of dmg taken.
+   */
   protected long timeOfDmgTaken;
 
-  // Type of the object
+  /**
+   * The Map object type.
+   */
+// Type of the object
   protected MapObjectType mapObjectType;
 
   // Current x and y
   private double x;
   private double y;
-  // Destination x and y
+  /**
+   * The Dx.
+   */
+// Destination x and y
   protected double dx;
+  /**
+   * The Dy.
+   */
   protected double dy;
   // Object width and height
   private int width;
@@ -45,10 +60,15 @@ public abstract class MapObject {
   private int cwidth;
   private int cheight;
 
+  /**
+   * The Was hit.
+   */
   protected boolean wasHit = false;
 
 
-
+  /**
+   * The Player type.
+   */
   protected PlayerType playerType;
 
   // Movement attributes
@@ -62,9 +82,13 @@ public abstract class MapObject {
    * by the direction variable.
    */
   protected double currentSpeed;
-  /** The maximum speed at which this MapObject can move. */
+  /**
+   * The maximum speed at which this MapObject can move.
+   */
   protected double maxSpeed;
-  /** The rate of deceleration applied to the currentSpeed when this MapObject stops moving. */
+  /**
+   * The rate of deceleration applied to the currentSpeed when this MapObject stops moving.
+   */
   protected double stopSpeed;
   /**
    * The direction the MapObject will move in Radians with up or north being 0 Radians and down or
@@ -73,7 +97,9 @@ public abstract class MapObject {
   private double direction;
 
   // Properties
-  /** Represents whether this MapObject can collide with other units. */
+  /**
+   * Represents whether this MapObject can collide with other units.
+   */
   protected boolean collidable;
 
   // States
@@ -83,7 +109,9 @@ public abstract class MapObject {
    */
   protected boolean moving;
 
-  /** Constructor. */
+  /**
+   * Constructor.
+   */
   public MapObject() {
     setWidth(0);
     setHeight(0);
@@ -162,10 +190,22 @@ public abstract class MapObject {
     }
     return minDist;
   }
+
+  /**
+   * Dist between double.
+   *
+   * @param mapObject the map object
+   * @return the double
+   */
   public double distBetween(MapObject mapObject) {
     return distFrom(mapObject.getCentreX(), mapObject.getCentreY());
   }
 
+  /**
+   * Gets corners.
+   *
+   * @return the corners
+   */
   protected ArrayList<Point2D> getCorners() {
     ArrayList<Point2D> corners = new ArrayList<>();
 
@@ -240,22 +280,30 @@ public abstract class MapObject {
     return !areaA.isEmpty();
   }
 
-  /** Set the movement direction of this MapObject to be upwards (+Y direction). */
+  /**
+   * Set the movement direction of this MapObject to be upwards (+Y direction).
+   */
   protected void setDirectionUp() {
     direction = Math.toRadians(UP_DIRECTION);
   }
 
-  /** Set the movement direction of this MapObject to be downwards (-Y direction). */
+  /**
+   * Set the movement direction of this MapObject to be downwards (-Y direction).
+   */
   protected void setDirectionDown() {
     direction = Math.toRadians(DOWN_DIRECTION);
   }
 
-  /** Set the movement direction of this MapObject to the left (-X direction). */
+  /**
+   * Set the movement direction of this MapObject to the left (-X direction).
+   */
   protected void setDirectionLeft() {
     direction = Math.toRadians(LEFT_DIRECTION);
   }
 
-  /** Set the movement direction of this MapObject to the right (+X direction). */
+  /**
+   * Set the movement direction of this MapObject to the right (+X direction).
+   */
   protected void setDirectionRight() {
     direction = Math.toRadians(RIGHT_DIRECTION);
   }
@@ -405,7 +453,7 @@ public abstract class MapObject {
   /**
    * Set the width and height of this MapObject.
    *
-   * @param width The width of this MapObject.
+   * @param width  The width of this MapObject.
    * @param height The height of this MapObject.
    */
   protected void setSize(int width, int height) {
@@ -416,7 +464,7 @@ public abstract class MapObject {
   /**
    * Set the width and height of the collision boundary of this MapObject.
    *
-   * @param cwidth The width of the collision boundary of this MapObject.
+   * @param cwidth  The width of the collision boundary of this MapObject.
    * @param cheight The height of the collision boundary of this Mapobject.
    */
   protected void setCSize(int cwidth, int cheight) {
@@ -487,7 +535,7 @@ public abstract class MapObject {
 
   /**
    * An abstract update method that is called by the {@link
-   * EncounterState} each tick. Usually contains move and check
+   * EncounterState}* each tick. Usually contains move and check
    * collisions method calls.
    */
   public abstract void update();
@@ -502,6 +550,8 @@ public abstract class MapObject {
   /**
    * Check if the MapObject will collide if it makes its next movement, if there are no collisions
    * the MapObject finalises the movement. (Currently no collisions are checked)
+   *
+   * @param mapObjects the map objects
    */
   public void checkCollisions(CopyOnWriteArrayList<MapObject> mapObjects) {
     for(MapObject mo : mapObjects) {
@@ -522,33 +572,62 @@ public abstract class MapObject {
             (int) dx + ((width - cwidth) / 2), (int) dy + ((height - cheight) / 2), cwidth, cheight);
   }
 
+  /**
+   * Gets was hit.
+   *
+   * @return the was hit
+   */
   public boolean getWasHit() {
     return wasHit;
   }
 
+  /**
+   * Sets was hit.
+   *
+   * @param wasHit the was hit
+   */
   public void setWasHit(boolean wasHit) {
     this.wasHit = wasHit;
   }
 
+  /**
+   * Gets time alive.
+   *
+   * @return the time alive
+   */
   public long getTimeAlive() {
     return timeAlive;
   }
 
+  /**
+   * Sets time alive.
+   *
+   * @param timeAlive the time alive
+   */
   public void setTimeAlive(long timeAlive) {
     this.timeAlive = timeAlive;
   }
 
+  /**
+   * Gets time of dmg taken.
+   *
+   * @return the time of dmg taken
+   */
   public long getTimeOfDmgTaken() {
     return timeOfDmgTaken;
   }
 
+  /**
+   * Sets time of dmg taken.
+   *
+   * @param timeOfDmgTaken the time of dmg taken
+   */
   public void setTimeOfDmgTaken(long timeOfDmgTaken) {
     this.timeOfDmgTaken = timeOfDmgTaken;
   }
 //  public void setTimeOfDmgTaken(Date timeOfDmgTaken) {
 //    this.timeOfDmgTaken = timeOfDmgTaken;
 //  }
-
 
 
   /**
