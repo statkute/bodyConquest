@@ -136,6 +136,7 @@ public class HUD {
 
   private void setUpDragAndDrop() {
     dragAndDrop = new DragAndDrop();
+    dragAndDrop.setDragActorPosition(128.0f , 0.0f);
 
     // Bottom player spawn points
     if (playerType == PlayerType.PLAYER_BOTTOM) {
@@ -209,27 +210,30 @@ public class HUD {
             }
           }
         });
+    System.out.println("HELLO");
   }
 
   @SuppressWarnings("unchecked")
   private void addDragAndDropSource(int index, ClassOwner spawnableEnum) {
     try {
       Class<Spawnable> spawnableClass = (Class<Spawnable>) spawnableEnum.getAssociatedClass();
-      final ImageButton spawnableButton;
+      ImageButton spawnableButton;
       spawnableButton =
           new ImageButton(
               new Image(new Texture(spawnableClass.newInstance().getPortraitLocation()))
                   .getDrawable());
 
       spawnableButton.setBounds(
-          unitBar.getWidth() / 4 + 25 * index,
-          unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
-          25,
-          25);
+          unitBar.getWidth() / 3 + 50 * index,
+          unitBar.getImageY() + (unitBar.getHeight() / 2) - (50 / 2),
+          50,
+          50);
+
       spawnableButton.addListener(
           new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+              System.out.println("SPAWNING");
               screen.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType);
             }
           });
@@ -238,10 +242,12 @@ public class HUD {
 
       Image mouseover = new Image();
       mouseover.setBounds(
-          unitBar.getWidth() / 4 + 23 * (index + 2),
-          unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
-          20,
-          25);
+          unitBar.getWidth() / 3 + 44 * (index + 1),
+          unitBar.getImageY() + (unitBar.getHeight() / 2) - (50 / 2),
+          30,
+          30);
+
+
       mouseover.setName("bucket" + index);
       stage.addActor(mouseover);
 
@@ -251,10 +257,12 @@ public class HUD {
               Payload payload = new Payload();
               payload.setObject(spawnableEnum);
 
-              final Image dragImage = new Image(spawnableButton.getImage().getDrawable());
+              Image dragImage = new Image(spawnableButton.getImage().getDrawable());
               dragImage.setScale(0.3f);
 
               payload.setDragActor(dragImage);
+              System.out.println("DRAGGING");
+
 
               //            if(spawnableClass.getSuperclass().equals(Troop.class)) {
               //              payload.setDragActor(new
@@ -289,6 +297,8 @@ public class HUD {
     } catch (InstantiationException | IllegalAccessException e) {
       e.printStackTrace();
     }
+    //    dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
+
   }
 
   public Stage getStage() {
@@ -314,7 +324,8 @@ public class HUD {
       healthBar =
           new HealthBar(
               Assets.healthBarWidth, Assets.healthBarHeight, screen, PlayerType.PLAYER_TOP);
-      healthBar.setPosition(Assets.baseTopX -5, Assets.baseTopY + Assets.healthYAdjustmentTop -18);
+      healthBar.setPosition(
+          Assets.baseTopX - 5, Assets.baseTopY + Assets.healthYAdjustmentTop - 18);
     }
 
     stage.addActor(healthBar);
