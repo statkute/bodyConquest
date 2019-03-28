@@ -48,11 +48,7 @@ public class BasicTestAI extends Thread {
     while (running) {
       time = System.currentTimeMillis();
       if (time > (lastWave + COOLDOWN)) {
-        if (difficultyLevel == DifficultyLevel.EASY) {
-          summonEasyWave();
-        } else {
-          summonEasyWave();
-        }
+          summonWave(difficultyLevel);
         lastWave = time;
       }
     }
@@ -63,9 +59,13 @@ public class BasicTestAI extends Thread {
   }
 
   /**
-   * Method called when the AI settings are on easy
+   * If the difficulty level is EASY, the heuristic to compute l;ane strength only count the number of units there
+   * If the difficulty level is HARD, the heuristic computes the lane strength by adding
+   * the strengths of all units in that lane, according to the formula:
+   * damage*(health/100)/(cooldown/1000)
+   * @param difficultyLevel The level of difficulty chosen for the AI
    */
-  private void summonEasyWave() {
+  private void summonWave(DifficultyLevel difficultyLevel) {
     Random rnd = new Random();
     int unitIndex = rnd.nextInt(2);
     try {
@@ -80,20 +80,30 @@ public class BasicTestAI extends Thread {
       CopyOnWriteArrayList<Troop> enemies = null;
       enemies = game.getEnemyTroops(playerType);
 
-      int noEnemiesTop = 0;
-      int noEnemiesMiddle = 0;
-      int noEnemiesBottom = 0;
+        double strengthEnemiesTop = 0.0;
+        double strengthEnemiesMiddle = 0.0;
+        double strengthEnemiesBottom = 0.0;
+        double strength = 0.0;
       for(Troop enemy : enemies) {
         Lane enemyLane = enemy.getLane();
-        if (enemyLane == Lane.TOP) noEnemiesTop++;
-        if (enemyLane == Lane.MIDDLE) noEnemiesMiddle++;
-        if (enemyLane == Lane.BOTTOM) noEnemiesBottom++;
+          //if difficulty is easy, just count troops to get lane strength
+          if (difficultyLevel == DifficultyLevel.EASY) {
+              if (enemyLane == Lane.TOP) strengthEnemiesTop++;
+              if (enemyLane == Lane.MIDDLE) strengthEnemiesMiddle++;
+              if (enemyLane == Lane.BOTTOM) strengthEnemiesBottom++;
+          } else {
+              //else approximate the strength using a better heuristic
+              strength = (double) enemy.getDamage() * ((double) enemy.getHealth() / 100) / ((double) enemy.getCooldown() / 1000);
+              if (enemyLane == Lane.TOP) strengthEnemiesTop += strength;
+              if (enemyLane == Lane.MIDDLE) strengthEnemiesMiddle += strength;
+              if (enemyLane == Lane.BOTTOM) strengthEnemiesBottom += strength;
+          }
       }
 
-      int totalNoEnemies = noEnemiesTop + noEnemiesBottom + noEnemiesMiddle;
+        double totalStrength = strengthEnemiesTop + strengthEnemiesBottom + strengthEnemiesMiddle;
       int roll = rnd.nextInt(99) + 1;
-      if(noEnemiesTop > noEnemiesBottom && noEnemiesTop > noEnemiesMiddle) {
-        double x = (noEnemiesTop / totalNoEnemies) * 90;
+        if (strengthEnemiesTop > strengthEnemiesBottom && strengthEnemiesTop > strengthEnemiesMiddle) {
+            double x = (strengthEnemiesTop / totalStrength) * 90;
         if(roll < x) {
           lane = Lane.TOP;
         } else {
@@ -104,8 +114,8 @@ public class BasicTestAI extends Thread {
           }
         }
       } else {
-        if (noEnemiesMiddle > noEnemiesBottom && noEnemiesMiddle > noEnemiesTop) {
-          double x = (noEnemiesMiddle / totalNoEnemies) * 90;
+            if (strengthEnemiesMiddle > strengthEnemiesBottom && strengthEnemiesMiddle > strengthEnemiesTop) {
+                double x = (strengthEnemiesMiddle / totalStrength) * 90;
           if (roll < x) {
             lane = Lane.MIDDLE;
           } else {
@@ -116,8 +126,8 @@ public class BasicTestAI extends Thread {
             }
           }
         } else {
-          if(noEnemiesBottom > noEnemiesTop && noEnemiesBottom > noEnemiesMiddle) {
-            double x = (noEnemiesBottom / totalNoEnemies) * 90;
+                if (strengthEnemiesBottom > strengthEnemiesTop && strengthEnemiesBottom > strengthEnemiesMiddle) {
+                    double x = (strengthEnemiesBottom / totalStrength) * 90;
             if(roll < x) {
               lane = Lane.BOTTOM;
             } else {
