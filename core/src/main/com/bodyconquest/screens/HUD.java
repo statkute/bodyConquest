@@ -228,6 +228,7 @@ public class HUD {
           unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
           25,
           25);
+
       spawnableButton.addListener(
           new ChangeListener() {
             @Override
@@ -241,10 +242,11 @@ public class HUD {
 
       Image mouseover = new Image();
       mouseover.setBounds(
-          unitBar.getWidth() / 4 + 60 * (index + 1) + 33,
-          unitBar.getImageY() + (unitBar.getHeight() / 2) - (43.0f / 2.0f),
+          unitBar.getWidth() / 4 + 23 * (index + 2),
+          unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
           20,
           25);
+
 
       mouseover.setName("bucket" + index);
       stage.addActor(mouseover);
