@@ -2,6 +2,7 @@ package main.com.bodyconquest.networking;
 
 import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.database.DatabaseManager;
+import main.com.bodyconquest.entities.DifficultyLevel;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.gamestates.EncounterState;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
@@ -246,8 +247,17 @@ public class ServerLogic extends Thread {
       } else {
 //        serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
       }
-    }
-    else {
+    } else if (message.startsWith(MessageMaker.SET_DIFFICULTY_HEADER)) {
+        pointer = MessageMaker.SET_DIFFICULTY_HEADER.length();
+
+        message = message.substring(pointer + 1);
+
+        if (message.equals("HARD")) {
+            game.setDifficulty(DifficultyLevel.HARD);
+        } else {
+            game.setDifficulty(DifficultyLevel.EASY);
+        }
+    } else {
       System.err.println("[ERROR] This message doesn't conform to the current logic.");
     }
   }
@@ -268,7 +278,7 @@ public class ServerLogic extends Thread {
       Lane lane = Lane.decode(message.substring(pointer, pointer + Lane.getEncodedLength()));
       //System.out.println("TRYING TO SPAWN NOW");
 
-      encounterState.spawnUnit(unit, lane, playerType);
+        encounterState.spawnUnit(unit, lane, playerType, false);
       //System.out.println("FINISHED SPAWNING");
 
     } else if (message.startsWith(MessageMaker.ABILITY_CAST_HEADER)) {

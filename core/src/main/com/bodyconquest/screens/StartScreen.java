@@ -68,6 +68,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
       e.printStackTrace();
     }
 
+
     if (gameType != GameType.MULTIPLAYER_JOIN) {
       playerType = PlayerType.PLAYER_BOTTOM;
     } else {

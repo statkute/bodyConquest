@@ -4,6 +4,7 @@ import main.com.bodyconquest.entities.Troops.Bacteria;
 import main.com.bodyconquest.entities.Troops.MeaslesFungus;
 import main.com.bodyconquest.entities.Troops.Virus;
 import main.com.bodyconquest.entities.Troops.Fungus;
+import main.com.bodyconquest.entities.Troops.WhiteCell;
 
 /**
  * The enum Unit type.
@@ -21,6 +22,10 @@ public enum UnitType implements ClassOwner, Encodable, MapObjectType {
    * Fungus unit type.
    */
   FUNGUS("FNG", Fungus.class),
+    /**
+     * WhiteCell unit type.
+     */
+    WHITE_CELL("WHC", WhiteCell.class),
   /**
    * MeaslesFungus unit type.
    */
@@ -32,7 +37,7 @@ public enum UnitType implements ClassOwner, Encodable, MapObjectType {
   private static final String ENCODED_VIRUS = "VIR";
   private static final String ENCODED_FUNGUS = "FNG";
   private static final String ENCODED__MEASLES_FUNGUS = "MNG";
-
+    private static final String ENCODED_WHITE_CELL = "WHC";
 
   private String encodedUnit;
   private Class associatedClass;
@@ -56,6 +61,7 @@ public enum UnitType implements ClassOwner, Encodable, MapObjectType {
     if (unitString.equals(ENCODED_BACTERIA)) unitType = BACTERIA;
     if (unitString.equals(ENCODED_VIRUS)) unitType = VIRUS;
     if (unitString.equals(ENCODED_FUNGUS)) unitType = FUNGUS;
+      if (unitString.equals(ENCODED_WHITE_CELL)) unitType = WHITE_CELL;
     if (unitString.equals(ENCODED__MEASLES_FUNGUS)) unitType = MEASLES_FUNGUS;
 
     return unitType;

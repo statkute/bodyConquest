@@ -12,7 +12,7 @@ public class MeaslesBase extends Base {
     }
 
     private void init(){
-        this.health = 75;
+        this.health = 750;
         this.damage = 8;
         this.maxHealth = health;
         mapObjectType = BaseType.MEASLES_BASE;

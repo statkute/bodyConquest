@@ -811,18 +811,21 @@ public class EncounterScreen implements Screen {
       System.out.println(path + "\n");
       return new TexturePool(path, Assets.frameColsVirus, Assets.frameRowsVirus, frameRate);
     } else if (UnitType.BACTERIA == mapObjectType) {
-      path =
-          newPlayerDisease == Disease.INFLUENZA
-              ? Assets.pathBacteriaFlu
-              : newPlayerDisease == Disease.MEASLES
-                  ? Assets.pathBacteriaMes
-                  : Assets.pathBacteriaRvi;
-      System.out.println(path + "\n");
-      return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
+        path =
+                newPlayerDisease == Disease.INFLUENZA
+                        ? Assets.pathBacteriaFlu
+                        : newPlayerDisease == Disease.MEASLES
+                        ? Assets.pathBacteriaMes
+                        : Assets.pathBacteriaRvi;
+        System.out.println(path + "\n");
+        return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
+    } else if (UnitType.WHITE_CELL == mapObjectType) {
+        path = Assets.pathAIUnit;
+        return new TexturePool(path, Assets.frameColsBacteria, Assets.frameRowsBacteria, frameRate);
     } else if (BaseType.INFLUENZA_BASE == mapObjectType) {
-      return new TexturePool(Assets.pathBaseImageFlu, 5, 3, frameRate);
+        return new TexturePool(Assets.pathBaseImageFlu, 5, 3, frameRate);
     } else if (BaseType.MEASLES_BASE == mapObjectType) {
-      return new TexturePool(Assets.pathBaseImageMeasles, 5, 3, frameRate);
+        return new TexturePool(Assets.pathBaseImageMeasles, 5, 3, frameRate);
     } else if (BaseType.ROTAVIRUS_BASE == mapObjectType) {
       return new TexturePool(Assets.pathBaseImageRotavirus, 5, 3, frameRate);
     } else if (ProjectileType.VIRUS_PROJECTILE == mapObjectType || ProjectileType.FUNGUS_PROJECTILE == mapObjectType) {

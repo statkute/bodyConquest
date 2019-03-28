@@ -287,6 +287,11 @@ public class Assets {
   /** The constant pathFluRotavirus. */
   public static String pathFluRvi = pathAssets + "flu_yellow.png";
 
+    /**
+     * The constant pathAIUnit.
+     */
+    public static String pathAIUnit = pathAssets + "bacteria_ai.png";
+
   /** The constant pathProjectile. */
   public static String pathProjectile = pathAssets + "projectile_with_trail.png";
 
@@ -344,6 +349,24 @@ public class Assets {
   public static final float TP_TOP_LANE_SPAWN_X = 300;
   /** The constant TP_TOP_LANE_SPAWN_Y. */
   public static final float TP_TOP_LANE_SPAWN_Y = 570;
+
+    // Spawnpoint coords for multiplayer AI
+    /**
+     * The constant AI_BOT_LANE_SPAWN_X.
+     */
+    public static final float AI_BOT_LANE_SPAWN_X = 150;
+    /**
+     * The constant AI_BOT_LANE_SPAWN_Y.
+     */
+    public static final float AI_BOT_LANE_SPAWN_Y = 100;
+    /**
+     * The constant AI_TOP_LANE_SPAWN_X.
+     */
+    public static final float AI_TOP_LANE_SPAWN_X = 650;
+    /**
+     * The constant AI_TOP_LANE_SPAWN_Y.
+     */
+    public static final float AI_TOP_LANE_SPAWN_Y = 550;
 
   // private final float botLaneTPSpawnX = 170;
   // private final float botLaneTPSpawnY = 470;
