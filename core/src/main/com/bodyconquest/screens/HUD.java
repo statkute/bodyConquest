@@ -297,8 +297,7 @@ public class HUD {
     } catch (InstantiationException | IllegalAccessException e) {
       e.printStackTrace();
     }
-    //    dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
-
+    //dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
   }
 
   public Stage getStage() {

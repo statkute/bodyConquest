@@ -11,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import main.com.bodyconquest.constants.Assets;
+import main.com.bodyconquest.entities.DifficultyLevel;
 import main.com.bodyconquest.rendering.BodyConquest;
+
 
 import java.util.ArrayList;
 
@@ -201,7 +203,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
         t_hard.getWidth(),
         t_hard.getHeight());
 
-    if (game.getDifficultyLevel() == BodyConquest.DifficultyLevel.EASY) {
+      if (game.getDifficultyLevel() == DifficultyLevel.EASY) {
       allImages.add(easy);
     } else {
       allImages.add(hard);
@@ -262,7 +264,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
           public void clicked(InputEvent event, float x, float y) {
             playButtonSound();
             game.changeDifficulty();
-            if (game.getDifficultyLevel() == BodyConquest.DifficultyLevel.EASY) {
+              if (game.getDifficultyLevel() == DifficultyLevel.EASY) {
               hard.remove();
               stage.addActor(easy);
             } else {

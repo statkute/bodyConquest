@@ -11,6 +11,7 @@ import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.database.DatabaseManager;
+import main.com.bodyconquest.networking.utilities.Hasher;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
@@ -90,7 +91,12 @@ public class LoginScreen extends DatabasesScreen implements Screen {
             playButtonSound();
             textPassword = txfPassword.getText();
             textUsername = txfUsername.getText();
-            String message = MessageMaker.loginMessage(textUsername, textPassword);
+            //String message = MessageMaker.loginMessage(textUsername, textPassword);
+
+            Hasher hasher = new Hasher();
+            String hashedPassword = hasher.hash(textPassword);
+            String message = MessageMaker.loginMessage(textUsername, hashedPassword);
+
             game.getClient().clientSender.sendMessage(message);
             System.out.println(textUsername + " " + textPassword);
             processRegistration();
@@ -122,7 +128,10 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         //
         // game.getClient().clientSender.sendMessage(MessageMaker.usernameMessage(playerType,textUsername));
 
-        if (gameType == GameType.SINGLE_PLAYER) game.setScreen(new RaceSelection(game, gameType));
+          if (gameType == GameType.SINGLE_PLAYER) {
+
+              game.setScreen(new RaceSelection(game, gameType));
+          }
         else if (gameType == GameType.MULTIPLAYER_HOST || gameType == GameType.MULTIPLAYER_JOIN) {
           //                    game.setScreen(new WaitingScreen(game, gameType));
           game.setScreen(new RaceSelection(game, gameType));

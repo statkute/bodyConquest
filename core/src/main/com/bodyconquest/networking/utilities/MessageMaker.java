@@ -1,6 +1,8 @@
 package main.com.bodyconquest.networking.utilities;
 
 import main.com.bodyconquest.constants.*;
+import main.com.bodyconquest.entities.DifficultyLevel;
+import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.util.HashMap;
 
@@ -14,6 +16,7 @@ public class MessageMaker {
   public static final String RESOURCES_HEADER = "RESOURCES_";
   public static final String RACE_HEADER = "RACE_";
   public static final String CHOOSE_RACE_HEADER = "CHOOSE_RACE_";
+    public static final String SET_DIFFICULTY_HEADER = "SET_DIFFICULTY_";
   public static final String FIRST_PICKER_HEADER = "FIRST_PICKER_";
   public static final String CONFIRM_RACE_HEADER = "CONFIRM_RACE_";
   public static final String CONFIRM_ORGAN_HEADER = "CONFIRM_ORGAN_";
@@ -117,6 +120,12 @@ public class MessageMaker {
     message += player.getEncoded();
     return message;
   }
+
+    public static String setDifficultyMessage(DifficultyLevel difficulty) {
+        String message = SET_DIFFICULTY_HEADER;
+        message += " " + difficulty.toString();
+        return message;
+    }
 
   public static String firstPickerMessage(PlayerType player) {
     String message = FIRST_PICKER_HEADER;

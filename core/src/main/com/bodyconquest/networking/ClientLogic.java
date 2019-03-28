@@ -219,7 +219,6 @@ public class ClientLogic extends Thread {
       communicator.setUsername(player, username);
     }
 
-
   }
 
   private void encounterLogic(String message) throws IOException {
