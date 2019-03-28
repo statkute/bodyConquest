@@ -4,17 +4,34 @@ import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.Spawnable;
 import main.com.bodyconquest.gamestates.EncounterState;
 
+/**
+ * The type Ability.
+ */
 public abstract class Ability implements Spawnable {
 
-  protected PlayerType playerType;
+    /**
+     * The Player type.
+     */
+    protected PlayerType playerType;
 
-  protected boolean laneEffect;
+    /**
+     * The Lane effect.
+     */
+    protected boolean laneEffect;
 
-  public Ability(PlayerType playerType) {
-    this.playerType = playerType;
-  }
+    /**
+     * Instantiates a new Ability.
+     *
+     * @param playerType the player type
+     */
+    public Ability(PlayerType playerType) {
+        this.playerType = playerType;
+    }
 
-  public abstract void cast(EncounterState game);
-
-  public abstract String damageAreaPath();
+    /**
+     * Casts the ability in the game.
+     *
+     * @param game the game to be casted
+     */
+    public abstract void cast(EncounterState game);
 }

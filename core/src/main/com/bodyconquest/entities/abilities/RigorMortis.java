@@ -7,78 +7,81 @@ import main.com.bodyconquest.gamestates.EncounterState;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/** An ability that slows all enemy units in a selected lane for a short time period. */
+/**
+ * An ability that slows all enemy units in a selected lane for a short time period.
+ */
 public class RigorMortis extends Ability {
 
-  /** The constant SUGARS_COST. */
-  public static final int SUGARS_COST = 60;
+    /**
+     * The amount of sugar needed to cast this ability.
+     */
+    public static final int SUGARS_COST = 60;
 
-  /** The constant PROTEINS_COST. */
-  public static final int PROTEINS_COST = 20;
+    /**
+     * The amount of sugar needed to cast this ability.
+     */
+    public static final int PROTEINS_COST = 20;
 
-  /** The constant LIPIDS_COST. */
-  public static final int LIPIDS_COST = 0;
+    /**
+     * The amount of sugar needed to cast this ability.
+     */
+    public static final int LIPIDS_COST = 0;
 
-  private Lane lane;
+    private Lane lane;
 
-  /** Instantiates a new Rigor mortis. */
-  public RigorMortis() {
-    super(PlayerType.PLAYER_TOP);
-  }
-
-  /**
-   * Instantiates a new Rigor mortis.
-   *
-   * @param lane the lane
-   * @param playerType the player type
-   */
-  public RigorMortis(Lane lane, PlayerType playerType) {
-    super(playerType);
-    this.lane = lane;
-    init();
-  }
-
-  private void init() {
-    laneEffect = true;
-  }
-
-  @Override
-  public void cast(EncounterState game) {
-    CopyOnWriteArrayList<Troop> enemies;
-    enemies = game.getEnemyTroops(playerType);
-
-    for (Troop enemy : enemies) {
-      if (enemy.getLane() == lane) {
-        System.out.println("Setting slowed");
-        enemy.setSlowed(5000, 80);
-      }
+    /**
+     * Instantiates a new Rigor mortis ability.
+     */
+    public RigorMortis() {
+        super(PlayerType.PLAYER_TOP);
     }
-  }
 
-  @Override
-  public int getSugarCost() {
-    return SUGARS_COST;
-  }
+    /**
+     * Instantiates a new Rigor mortis ability.
+     *
+     * @param lane       the lane
+     * @param playerType the player type
+     */
+    public RigorMortis(Lane lane, PlayerType playerType) {
+        super(playerType);
+        this.lane = lane;
+        init();
+    }
 
-  @Override
-  public int getLipidCost() {
-    return PROTEINS_COST;
-  }
+    private void init() {
+        laneEffect = true;
+    }
 
-  @Override
-  public int getProteinCost() {
-    return LIPIDS_COST;
-  }
+    @Override
+    public void cast(EncounterState game) {
+        CopyOnWriteArrayList<Troop> enemies;
+        enemies = game.getEnemyTroops(playerType);
 
-  @Override
-  public String getPortraitLocation() {
-    return "core/assets/rigor_mortis.png";
-  }
+        for (Troop enemy : enemies) {
+            if (enemy.getLane() == lane) {
+                System.out.println("Setting slowed");
+                enemy.setSlowed(5000, 80);
+            }
+        }
+    }
 
-  @Override
-  public String damageAreaPath() {
-    // Dont have anything made, and even if I did I don't know if I'd need an damage area for this
-    // kind of ability
-    return null;
-  }
+    @Override
+    public int getSugarCost() {
+        return SUGARS_COST;
+    }
+
+    @Override
+    public int getLipidCost() {
+        return PROTEINS_COST;
+    }
+
+    @Override
+    public int getProteinCost() {
+        return LIPIDS_COST;
+    }
+
+    @Override
+    public String getPortraitLocation() {
+        return "core/assets/rigor_mortis.png";
+    }
 }

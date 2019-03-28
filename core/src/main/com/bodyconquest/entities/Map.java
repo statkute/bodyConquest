@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import main.com.bodyconquest.constants.Organ;
 import main.com.bodyconquest.handlers.AnimationWrapper;
 
+/**
+ * The type Map.
+ */
 public class Map extends Actor {
 
   private final double MAP_HEIGHT = 516.0;
@@ -20,7 +23,12 @@ public class Map extends Actor {
   private Animation<TextureRegion> walkAnimation;
   private int points;
 
-  // Should have some sort of resource manager and system
+  /**
+   * Instantiates a new Map.
+   *
+   * @param organ the organ whose map is to be instantiated
+   */
+// Should have some sort of resource manager and system
   public Map(Organ organ) {
     String texturePath = null;
     if(organ == Organ.LUNGS){
@@ -77,7 +85,6 @@ public class Map extends Actor {
 //    TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
     stateTime += 10f; // Accumulate elapsed animation time
     // Get current frame of animation for the current stateTime
-    //System.out.println(System.currentTimeMillis());
 
     TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 
@@ -85,30 +92,15 @@ public class Map extends Actor {
     super.draw(batch, parentAlpha);
   }
 
-//    public double getMaxX() {
-//    return MAP_WIDTH;
-//  }
-//
-//  public double getMaxY() {
-//    return MAP_HEIGHT;
-//  }
-//
-//  public float getTop() {
-//    return (float) MAP_HEIGHT;
-//  }
-//
-//  public double getBottom() {
-//    return 0;
-//  }
-//
-//  public double getLeft() {
-//    return 0;
-//  }
-//
   public float getRight() {
     return (float) MAP_WIDTH;
   }
 
+  /**
+   * Get points.
+   *
+   * @return the points
+   */
   public int getPoints(){
     return points;
   }
