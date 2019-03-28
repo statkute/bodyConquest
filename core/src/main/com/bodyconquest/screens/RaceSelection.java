@@ -182,13 +182,10 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
     super.checkPressed();
 
     if (Gdx.input.justTouched()) {
-      System.out.println(continueBounds == null);
       if (game.getGame() == null && gameType != GameType.MULTIPLAYER_JOIN) {
-        System.err.println("Server not instantiated");
         return;
       }
       if (continueBounds.contains(tmp.x, tmp.y) && selection != 0) {
-        System.out.println("continue is pressed");
         playButtonSound();
 
 

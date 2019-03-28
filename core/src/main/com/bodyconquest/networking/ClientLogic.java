@@ -13,27 +13,17 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/**
- * The type Client logic.
- */
+/** The type Client logic. */
 public class ClientLogic extends Thread {
 
   private enum Logic {
-    /**
-     * Body logic logic.
-     */
+    /** Body logic logic. */
     BODY_LOGIC,
-    /**
-     * Race selection logic logic.
-     */
+    /** Race selection logic logic. */
     RACE_SELECTION_LOGIC,
-    /**
-     * Encounter logic logic.
-     */
+    /** Encounter logic logic. */
     ENCOUNTER_LOGIC,
-    /**
-     * Database logic logic.
-     */
+    /** Database logic logic. */
     DATABASE_LOGIC
   }
 
@@ -47,7 +37,7 @@ public class ClientLogic extends Thread {
    * Instantiates a new Client logic.
    *
    * @param clientReceiver the client receiver
-   * @param communicator   the communicator
+   * @param communicator the communicator
    */
   public ClientLogic(ClientReceiver clientReceiver, Communicator communicator) {
     this.clientReceiver = clientReceiver;
@@ -105,10 +95,8 @@ public class ClientLogic extends Thread {
       int i = 0;
       String username;
       Integer points;
-//      System.out.println("Message:\n\t" + message);
       while (i < values.length) {
         username = values[i];
-//        System.out.println("Username: " + username);
         points = Integer.parseInt(values[i + 1]);
         board.put(username, points);
         i += 2;
@@ -174,8 +162,7 @@ public class ClientLogic extends Thread {
       organ = Organ.decode(encodedOrgan);
 
       communicator.setSelectedOrgan(organ);
-    }
-    else if(message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
+    } else if (message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
       Organ organ;
       pointer = MessageMaker.SELECTED_ORGAN_HEADER.length();
 
@@ -223,7 +210,7 @@ public class ClientLogic extends Thread {
           message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
 
-     communicator.setPicker(player == communicator.getPlayerType());
+      communicator.setPicker(player == communicator.getPlayerType());
     } else if (message.equals(MessageMaker.START_BODY)) {
       communicator.setStartBodyScreen(true);
     } else if (message.startsWith(MessageMaker.USERNAME_)) {
@@ -239,7 +226,6 @@ public class ClientLogic extends Thread {
 
       communicator.setUsername(player, username);
     }
-
   }
 
   private void encounterLogic(String message) throws IOException {
@@ -339,37 +325,27 @@ public class ClientLogic extends Thread {
     }
   }
 
-  /**
-   * Sets race selection logic.
-   */
+  /** Sets race selection logic. */
   public void setRaceSelectionLogic() {
     currentLogic = Logic.RACE_SELECTION_LOGIC;
   }
 
-  /**
-   * Sets body logic.
-   */
+  /** Sets body logic. */
   public void setBodyLogic() {
     currentLogic = Logic.BODY_LOGIC;
   }
 
-  /**
-   * Sets encounter logic.
-   */
+  /** Sets encounter logic. */
   public void setEncounterLogic() {
     currentLogic = Logic.ENCOUNTER_LOGIC;
   }
 
-  /**
-   * Sets database logic.
-   */
+  /** Sets database logic. */
   public void setDatabaseLogic() {
     currentLogic = Logic.DATABASE_LOGIC;
   }
 
-  /**
-   * Stop running.
-   */
+  /** Stop running. */
   public void stopRunning() {
     run = false;
   }

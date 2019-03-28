@@ -19,9 +19,7 @@ import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
 
-/**
- * The type Leaderboard screen.
- */
+/** The type Leaderboard screen. */
 public class LeaderboardScreen extends AbstractGameScreen implements Screen {
 
   private Texture backButton;
@@ -77,8 +75,6 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     getAssets();
     setRectangles();
     receiveLeaderboard();
-    // System.out.println(leaderboard);
-    System.out.println(Arrays.asList(leaderboard));
   }
 
   @Override
@@ -133,9 +129,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     this.leaderboard = comms.getBoard();
   }
 
-  /**
-   * Sort leaderboard.
-   */
+  /** Sort leaderboard. */
   public void sortLeaderboard() {
     this.sorted =
         leaderboard.entrySet().stream()
@@ -144,9 +138,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
                 toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
   }
 
-  /**
-   * Draw leaderboard.
-   */
+  /** Draw leaderboard. */
   public void drawLeaderboard() {
 
     for (Object s : sorted.keySet()) {
@@ -154,82 +146,50 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
       switch (place) {
         case 1:
           game.gameFont.draw(
-              game.batch,
-              Integer.toString(place) + ".  " + s,
-              BodyConquest.V_WIDTH / 5.0f,
-              430.0f);
+              game.batch, Integer.toString(place) + ".  " + s, BodyConquest.V_WIDTH / 5.0f, 430.0f);
           break;
         case 2:
           game.gameFont.draw(
-              game.batch,
-              Integer.toString(place) + ".  " + s,
-              BodyConquest.V_WIDTH / 5.0f,
-              395.0f);
+              game.batch, Integer.toString(place) + ".  " + s, BodyConquest.V_WIDTH / 5.0f, 395.0f);
           break;
         case 3:
           game.gameFont.draw(
-              game.batch,
-              Integer.toString(place) + ".  " + s,
-              BodyConquest.V_WIDTH / 5.0f,
-              360.0f);
+              game.batch, Integer.toString(place) + ".  " + s, BodyConquest.V_WIDTH / 5.0f, 360.0f);
           break;
         case 4:
           game.gameFont.draw(
-              game.batch,
-              Integer.toString(place) + ".  " + s,
-              BodyConquest.V_WIDTH / 5.0f,
-              325.0f);
+              game.batch, Integer.toString(place) + ".  " + s, BodyConquest.V_WIDTH / 5.0f, 325.0f);
           break;
         case 5:
           game.gameFont.draw(
-              game.batch,
-              Integer.toString(place) + ".  " + s,
-              BodyConquest.V_WIDTH / 5.0f,
-              290.0f);
+              game.batch, Integer.toString(place) + ".  " + s, BodyConquest.V_WIDTH / 5.0f, 290.0f);
           break;
         case 6:
           game.gameFont.draw(
-              game.batch,
-              Integer.toString(place) + ".  " + s,
-              BodyConquest.V_WIDTH / 5.0f,
-              255.0f);
+              game.batch, Integer.toString(place) + ".  " + s, BodyConquest.V_WIDTH / 5.0f, 255.0f);
           break;
         case 7:
           game.gameFont.draw(
-              game.batch,
-              Integer.toString(place) + ".  " + s,
-              BodyConquest.V_WIDTH / 5.0f,
-              220.0f);
+              game.batch, Integer.toString(place) + ".  " + s, BodyConquest.V_WIDTH / 5.0f, 220.0f);
           break;
         case 8:
           game.gameFont.draw(
-              game.batch,
-              Integer.toString(place) + ".  " + s,
-              BodyConquest.V_WIDTH / 5.0f,
-              185.0f);
+              game.batch, Integer.toString(place) + ".  " + s, BodyConquest.V_WIDTH / 5.0f, 185.0f);
           break;
         case 9:
           game.gameFont.draw(
-              game.batch,
-              Integer.toString(place) + ".  " + s,
-              BodyConquest.V_WIDTH / 5.0f,
-              150.0f);
+              game.batch, Integer.toString(place) + ".  " + s, BodyConquest.V_WIDTH / 5.0f, 150.0f);
           break;
         case 10:
           game.gameFont.draw(
-              game.batch,
-              Integer.toString(place) + ".  " + s,
-              BodyConquest.V_WIDTH / 5.0f,
-              115.0f);
+              game.batch, Integer.toString(place) + ".  " + s, BodyConquest.V_WIDTH / 5.0f, 115.0f);
           break;
       }
     }
     place = 0;
   }
 
-  /**
-   * Draw scores.
-   */
+  /** Draw scores. */
   public void drawNumbers() {
 
     for (Object s : sorted.keySet()) {
@@ -239,70 +199,70 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
           game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              BodyConquest.V_WIDTH / 5.5f * 4.0f,
               430.0f);
           break;
         case 2:
           game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              BodyConquest.V_WIDTH / 5.5f * 4.0f,
               395.0f);
           break;
         case 3:
           game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              BodyConquest.V_WIDTH / 5.5f * 4.0f,
               360.0f);
           break;
         case 4:
           game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              BodyConquest.V_WIDTH / 5.5f * 4.0f,
               325.0f);
           break;
         case 5:
           game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              BodyConquest.V_WIDTH / 5.5f * 4.0f,
               290.0f);
           break;
         case 6:
           game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              BodyConquest.V_WIDTH / 5.5f * 4.0f,
               255.0f);
           break;
         case 7:
           game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              BodyConquest.V_WIDTH / 5.5f * 4.0f,
               220.0f);
           break;
         case 8:
           game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              BodyConquest.V_WIDTH / 5.5f * 4.0f,
               185.0f);
           break;
         case 9:
           game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              BodyConquest.V_WIDTH / 5.5f * 4.0f,
               150.0f);
           break;
         case 10:
           game.gameFont.draw(
               game.batch,
               Integer.toString(leaderboard.get(s)),
-              BodyConquest.V_WIDTH / 5.5f* 4.0f,
+              BodyConquest.V_WIDTH / 5.5f * 4.0f,
               115.0f);
           break;
       }
@@ -329,7 +289,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
         playButtonSound();
         dispose();
         client.closeEverything();
-        if (this.server != null){
+        if (this.server != null) {
           this.server.closeEverything();
         }
         game.setScreen(new MenuScreen(game));

@@ -1,141 +1,292 @@
 package main.com.bodyconquest.entities;
+
 import main.com.bodyconquest.constants.MapObjectType;
 import main.com.bodyconquest.constants.PlayerType;
 
 import java.time.Instant;
 import java.util.Date;
 
+/**
+ * The type Basic object.
+ */
 public class BasicObject {
 
-  private double x;
-  private double y;
-  private int width;
-  private int height;
-  private int cwidth;
-  private int cheight;
-  private double direction;
-  private double currentSpeed;
-  private double rotation;
-  private MapObjectType mapObjectType;
-  private boolean wasHit;
+    private double x;
+    private double y;
+    private int width;
+    private int height;
+    private int cwidth;
+    private int cheight;
+    private double direction;
+    private double currentSpeed;
+    private double rotation;
+    private MapObjectType mapObjectType;
+    private boolean wasHit;
 
-  protected long timeAlive;
+    /**
+     * The Time alive.
+     */
+    protected long timeAlive;
 
-  public long getTimeAlive() {
-    return timeAlive;
-  }
+    /**
+     * Gets time alive.
+     *
+     * @return the time alive
+     */
+    public long getTimeAlive() {
+        return timeAlive;
+    }
 
-  public void setTimeAlive(long timeAlive) {
-    this.timeAlive = timeAlive;
-  }
+    /**
+     * Sets time alive.
+     *
+     * @param timeAlive the time alive
+     */
+    public void setTimeAlive(long timeAlive) {
+        this.timeAlive = timeAlive;
+    }
 
-  public long getTimeOfDmgTaken() {
-    return timeOfDmgTaken;
-  }
+    /**
+     * Gets time of dmg taken.
+     *
+     * @return the time of dmg taken
+     */
+    public long getTimeOfDmgTaken() {
+        return timeOfDmgTaken;
+    }
 
-  public void setTimeOfDmgTaken(long timeOfDmgTaken) {
-    this.timeOfDmgTaken = timeOfDmgTaken;
-  }
+    /**
+     * Sets time of dmg taken.
+     *
+     * @param timeOfDmgTaken the time of dmg taken
+     */
+    public void setTimeOfDmgTaken(long timeOfDmgTaken) {
+        this.timeOfDmgTaken = timeOfDmgTaken;
+    }
 
-  protected long timeOfDmgTaken;
+    /**
+     * The Time of dmg taken.
+     */
+    protected long timeOfDmgTaken;
 
-  private PlayerType playerType;
+    private PlayerType playerType;
 
-  public void setX(double x) {
-    this.x = x;
-  }
+    /**
+     * Sets x.
+     *
+     * @param x the x
+     */
+    public void setX(double x) {
+        this.x = x;
+    }
 
-  public double getX() {
-    return x;
-  }
+    /**
+     * Gets x.
+     *
+     * @return the x
+     */
+    public double getX() {
+        return x;
+    }
 
-  public void setY(double y) {
-    this.y = y;
-  }
+    /**
+     * Sets y.
+     *
+     * @param y the y
+     */
+    public void setY(double y) {
+        this.y = y;
+    }
 
-  public double getY() {
-    return y;
-  }
+    /**
+     * Gets y.
+     *
+     * @return the y
+     */
+    public double getY() {
+        return y;
+    }
 
-  public void setWidth(int width) {
-    this.width = width;
-  }
+    /**
+     * Sets width.
+     *
+     * @param width the width
+     */
+    public void setWidth(int width) {
+        this.width = width;
+    }
 
-  public int getWidth() {
-    return width;
-  }
+    /**
+     * Gets width.
+     *
+     * @return the width
+     */
+    public int getWidth() {
+        return width;
+    }
 
-  public void setHeight(int height) {
-    this.height = height;
-  }
+    /**
+     * Sets height.
+     *
+     * @param height the height
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
-  public int getHeight() {
-    return height;
-  }
+    /**
+     * Gets height.
+     *
+     * @return the height
+     */
+    public int getHeight() {
+        return height;
+    }
 
-  public void setDirection(double direction) {
-    this.direction = direction;
-  }
+    /**
+     * Sets direction.
+     *
+     * @param direction the direction
+     */
+    public void setDirection(double direction) {
+        this.direction = direction;
+    }
 
-  public double getDirection() {
-    return direction;
-  }
+    /**
+     * Gets direction.
+     *
+     * @return the direction
+     */
+    public double getDirection() {
+        return direction;
+    }
 
-  public void setCurrentSpeed(double currentSpeed) {
-    this.currentSpeed = currentSpeed;
-  }
+    /**
+     * Sets current speed.
+     *
+     * @param currentSpeed the current speed
+     */
+    public void setCurrentSpeed(double currentSpeed) {
+        this.currentSpeed = currentSpeed;
+    }
 
-  public double getCurrentSpeed() {
-    return currentSpeed;
-  }
+    /**
+     * Gets current speed.
+     *
+     * @return the current speed
+     */
+    public double getCurrentSpeed() {
+        return currentSpeed;
+    }
 
-  public void setMapObjectType(MapObjectType ut) {
-    this.mapObjectType = ut;
-  }
+    /**
+     * Sets map object type.
+     *
+     * @param ut the ut
+     */
+    public void setMapObjectType(MapObjectType ut) {
+        this.mapObjectType = ut;
+    }
 
-  @SuppressWarnings("unchecked")
-  public <T extends Enum & MapObjectType> T getMapObjectType() {
-    return mapObjectType.getMapObjectType();
-  }
+    /**
+     * Gets map object type.
+     *
+     * @param <T> the type parameter
+     * @return the map object type
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Enum & MapObjectType> T getMapObjectType() {
+        return mapObjectType.getMapObjectType();
+    }
 
-  public double getRotation() {
-    return rotation;
-  }
+    /**
+     * Gets rotation.
+     *
+     * @return the rotation
+     */
+    public double getRotation() {
+        return rotation;
+    }
 
-  public void setRotation(double rotation) {
-    this.rotation = rotation;
-  }
+    /**
+     * Sets rotation.
+     *
+     * @param rotation the rotation
+     */
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
+    }
 
-  public int getCwidth() {
-    return cwidth;
-  }
+    /**
+     * Gets cwidth.
+     *
+     * @return the cwidth
+     */
+    public int getCwidth() {
+        return cwidth;
+    }
 
-  public void setCwidth(int cwidth) {
-    this.cwidth = cwidth;
-  }
+    /**
+     * Sets cwidth.
+     *
+     * @param cwidth the cwidth
+     */
+    public void setCwidth(int cwidth) {
+        this.cwidth = cwidth;
+    }
 
-  public int getCheight() {
-    return cheight;
-  }
+    /**
+     * Gets cheight.
+     *
+     * @return the cheight
+     */
+    public int getCheight() {
+        return cheight;
+    }
 
-  public void setCheight(int cheight) {
-    this.cheight = cheight;
-  }
+    /**
+     * Sets cheight.
+     *
+     * @param cheight the cheight
+     */
+    public void setCheight(int cheight) {
+        this.cheight = cheight;
+    }
 
-  public boolean getWasHit(){
-    return wasHit;
-  }
+    /**
+     * Method that checks whether the BasicObject was hit
+     *
+     * @return true if it was hit; false otherwise
+     */
+    public boolean getWasHit() {
+        return wasHit;
+    }
 
-  public void setWasHit(boolean wasHit){
-    this.wasHit = wasHit;
-  }
+    /**
+     * Method that sets the current state of the BasicObject as hit or not hit
+     *
+     * @param wasHit true if it was hit; false otherwise
+     */
+    public void setWasHit(boolean wasHit) {
+        this.wasHit = wasHit;
+    }
 
-  public PlayerType getPlayerType() {
-    return playerType;
-  }
+    /**
+     * Gets player type.
+     *
+     * @return the player type
+     */
+    public PlayerType getPlayerType() {
+        return playerType;
+    }
 
-  public void setPlayerType(PlayerType playerType) {
-    this.playerType = playerType;
-  }
+    /**
+     * Sets player type.
+     *
+     * @param playerType the player type
+     */
+    public void setPlayerType(PlayerType playerType) {
+        this.playerType = playerType;
+    }
 
 }

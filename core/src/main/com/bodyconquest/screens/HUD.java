@@ -33,9 +33,7 @@ import main.com.bodyconquest.resourcebars.ResourceBar;
 
 import java.lang.reflect.InvocationTargetException;
 
-/**
- * The type HUD.
- */
+/** The type HUD. */
 public class HUD {
 
   private Texture blueVirus;
@@ -63,10 +61,10 @@ public class HUD {
   /**
    * Instantiates a new Hud.
    *
-   * @param screen     the screen
+   * @param screen the screen
    * @param playerType the player type
-   * @param disease    the disease
-   * @param stage      the stage
+   * @param disease the disease
+   * @param stage the stage
    */
   public HUD(
       final EncounterScreen screen, final PlayerType playerType, Disease disease, Stage stage) {
@@ -126,10 +124,10 @@ public class HUD {
   /**
    * Update resource bars.
    *
-   * @param lipids   the lipids
+   * @param lipids the lipids
    * @param proteins the proteins
-   * @param carbs    the carbs
-   * @param s        the s
+   * @param carbs the carbs
+   * @param s the s
    */
   public void updateResourceBars(int lipids, int proteins, int carbs, float s) {
     int mappedLipids = mapResource(lipids);
@@ -152,7 +150,7 @@ public class HUD {
 
   private void setUpDragAndDrop() {
     dragAndDrop = new DragAndDrop();
-    dragAndDrop.setDragActorPosition(128.0f , 0.0f);
+    dragAndDrop.setDragActorPosition(128.0f, 0.0f);
 
     // Bottom player spawn points
     if (playerType == PlayerType.PLAYER_BOTTOM) {
@@ -226,7 +224,6 @@ public class HUD {
             }
           }
         });
-    System.out.println("HELLO");
   }
 
   @SuppressWarnings("unchecked")
@@ -249,7 +246,6 @@ public class HUD {
           new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-              System.out.println("SPAWNING");
               screen.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType);
             }
           });
@@ -262,7 +258,6 @@ public class HUD {
           unitBar.getImageY() + (unitBar.getHeight() / 2) - (50 / 2),
           30,
           30);
-
 
       mouseover.setName("bucket" + index);
       stage.addActor(mouseover);
@@ -277,7 +272,6 @@ public class HUD {
               dragImage.setScale(0.3f);
 
               payload.setDragActor(dragImage);
-              System.out.println("DRAGGING");
 
               Label validLabel =
                   new Label("Release to drop " + spawnableClass.getSimpleName() + "!", skin);
@@ -296,7 +290,7 @@ public class HUD {
     } catch (InstantiationException | IllegalAccessException e) {
       e.printStackTrace();
     }
-    //dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
+    // dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
   }
 
   /**
@@ -320,7 +314,7 @@ public class HUD {
   /**
    * Sets up health bar.
    *
-   * @param healthBar  the health bar
+   * @param healthBar the health bar
    * @param playerType the player type
    * @return the up health bar
    */
@@ -424,9 +418,7 @@ public class HUD {
     stage.addActor(imageDisease);
   }
 
-  /**
-   * Load assets.
-   */
+  /** Load assets. */
   public void loadAssets() {
     manager.load(Assets.raceBlueVirusNoBorder, Texture.class);
     manager.load(Assets.raceGreenVirusNoBorder, Texture.class);
@@ -434,9 +426,7 @@ public class HUD {
     manager.finishLoading();
   }
 
-  /**
-   * Gets assets.
-   */
+  /** Gets assets. */
   public void getAssets() {
     blueVirus = manager.get(Assets.raceBlueVirusNoBorder, Texture.class);
     greenVirus = manager.get(Assets.raceGreenVirusNoBorder, Texture.class);
@@ -446,7 +436,5 @@ public class HUD {
   // private Image bucket;
   private Image bucketDown;
 
-  private void setupBucket() {
-  }
-
+  private void setupBucket() {}
 }

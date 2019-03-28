@@ -13,85 +13,81 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Necrosis extends Ability {
 
-  /**
-   * The constant SUGARS_COST.
-   */
-  public static final int SUGARS_COST = 60;
-  /**
-   * The constant PROTEINS_COST.
-   */
-  public static final int PROTEINS_COST = 40;
-  /**
-   * The constant LIPIDS_COST.
-   */
-  public static final int LIPIDS_COST = 80;
+    /**
+     * The amount of sugar needed to cast this ability.
+     */
+    public static final int SUGARS_COST = 60;
 
-  private Lane lane;
+    /**
+     * The amount of sugar needed to cast this ability.
+     */
+    public static final int PROTEINS_COST = 40;
 
-  private int damage;
+    /**
+     * The amount of sugar needed to cast this ability.
+     */
+    public static final int LIPIDS_COST = 80;
 
-  /**
-   * Instantiates a new Necrosis.
-   */
-  public Necrosis() {
-    super(PlayerType.PLAYER_TOP);
-  }
 
-  /**
-   * Instantiates a new Necrosis.
-   *
-   * @param lane       the lane
-   * @param playerType the player type
-   */
-  public Necrosis(Lane lane, PlayerType playerType) {
-    super(playerType);
-    this.lane = lane; // Should always be Lane.ALL
-    this.lane = Lane.ALL;
-    init();
-  }
+    private Lane lane;
 
-  private void init() {
-    laneEffect = true;
-    damage = 1000000;
-  }
+    private int damage;
 
-  @Override
-  public void cast(EncounterState game) {
-    CopyOnWriteArrayList<Troop> enemies = game.getEnemyTroops(playerType);
-    Base myBase = game.getBase(playerType);
-
-    for (Troop enemy : enemies) {
-      if (myBase.distBetween(enemy) <= 300) {
-        enemy.hit(damage);
-      }
+    /**
+     * Instantiates a new Necrosis.
+     */
+    public Necrosis() {
+        super(PlayerType.PLAYER_TOP);
     }
-  }
 
-  @Override
-  public int getSugarCost() {
-    return SUGARS_COST;
-  }
+    /**
+     * Instantiates a new Necrosis ability.
+     *
+     * @param lane       the lane
+     * @param playerType the player type
+     */
+    public Necrosis(Lane lane, PlayerType playerType) {
+        super(playerType);
+        this.lane = lane; // Should always be Lane.ALL
+        this.lane = Lane.ALL;
+        init();
+    }
 
-  @Override
-  public int getLipidCost() {
-    return PROTEINS_COST;
-  }
+    private void init() {
+        laneEffect = true;
+        damage = 1000000;
+    }
 
-  @Override
-  public int getProteinCost() {
-    return LIPIDS_COST;
-  }
+    @Override
+    public void cast(EncounterState game) {
+        CopyOnWriteArrayList<Troop> enemies = game.getEnemyTroops(playerType);
+        Base myBase = game.getBase(playerType);
 
-  @Override
-  public String getPortraitLocation() {
-    return "core/assets/necrosis.png";
-  }
+        for (Troop enemy : enemies) {
+            if (myBase.distBetween(enemy) <= 300) {
+                enemy.hit(damage);
+            }
+        }
+    }
 
-  @Override
-  public String damageAreaPath() {
-    // Dont have anything made, and even if I did I don't know if I'd need an damage area for this
-    // kind of ability
-    return null;
-  }
+    @Override
+    public int getSugarCost() {
+        return SUGARS_COST;
+    }
+
+    @Override
+    public int getLipidCost() {
+        return PROTEINS_COST;
+    }
+
+    @Override
+    public int getProteinCost() {
+        return LIPIDS_COST;
+    }
+
+    @Override
+    public String getPortraitLocation() {
+        return "core/assets/necrosis.png";
+    }
 
 }

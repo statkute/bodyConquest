@@ -135,7 +135,6 @@ public class AudioPlayer {
      */
     public void playSFX(String name) {
         if (muted || mutedSFX) {
-            System.out.println(soundFX.get(name));
             soundFX.get(name).play(MUTED_VOLUME * MASTER_VOLUME * 0.3f);
         } else {
             soundFX.get(name).play(SFX_VOLUME * MASTER_VOLUME * 0.3f);

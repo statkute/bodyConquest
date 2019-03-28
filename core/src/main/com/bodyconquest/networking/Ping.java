@@ -41,7 +41,6 @@ public class Ping extends Thread {
             InetAddress addr = addresses.nextElement();
             socket.setInterface(addr);
             socket.send(sending);
-            // System.out.println("Sent message");
           }
         }
         Thread.sleep(100);

@@ -17,9 +17,7 @@ import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.io.IOException;
 
-/**
- * The type Login screen.
- */
+/** The type Login screen. */
 public class LoginScreen extends DatabasesScreen implements Screen {
 
   private Texture login;
@@ -28,10 +26,9 @@ public class LoginScreen extends DatabasesScreen implements Screen {
   // private GameType gameType;
   private int counter;
 
-  /**
-   * The Player type.
-   */
+  /** The Player type. */
   protected PlayerType playerType;
+
   private Texture t_submit;
   private Image submitImage;
   private Texture t_register;
@@ -40,9 +37,9 @@ public class LoginScreen extends DatabasesScreen implements Screen {
   /**
    * Instantiates a new Login screen.
    *
-   * @param game     the game
+   * @param game the game
    * @param gameType the game type
-   * @param counter  the counter
+   * @param counter the counter
    */
   public LoginScreen(BodyConquest game, GameType gameType, int counter) {
     super(game, gameType);
@@ -91,9 +88,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     t_register = manager.get(Assets.registerButtonLow, Texture.class);
   }
 
-  /**
-   * Add buttons.
-   */
+  /** Add buttons. */
   /** Add buttons. */
   public void addButtons() {
     submitImage.addListener(
@@ -102,14 +97,12 @@ public class LoginScreen extends DatabasesScreen implements Screen {
             playButtonSound();
             textPassword = txfPassword.getText();
             textUsername = txfUsername.getText();
-            //String message = MessageMaker.loginMessage(textUsername, textPassword);
 
             Hasher hasher = new Hasher();
             String hashedPassword = hasher.hash(textPassword);
             String message = MessageMaker.loginMessage(textUsername, hashedPassword);
 
             game.getClient().clientSender.sendMessage(message);
-            //System.out.println(textUsername + " " + textPassword);
             processRegistration();
           }
         });
@@ -139,11 +132,10 @@ public class LoginScreen extends DatabasesScreen implements Screen {
         //
         // game.getClient().clientSender.sendMessage(MessageMaker.usernameMessage(playerType,textUsername));
 
-          if (gameType == GameType.SINGLE_PLAYER) {
+        if (gameType == GameType.SINGLE_PLAYER) {
 
-              game.setScreen(new RaceSelection(game, gameType));
-          }
-        else if (gameType == GameType.MULTIPLAYER_HOST || gameType == GameType.MULTIPLAYER_JOIN) {
+          game.setScreen(new RaceSelection(game, gameType));
+        } else if (gameType == GameType.MULTIPLAYER_HOST || gameType == GameType.MULTIPLAYER_JOIN) {
           //                    game.setScreen(new WaitingScreen(game, gameType));
           game.setScreen(new RaceSelection(game, gameType));
         }

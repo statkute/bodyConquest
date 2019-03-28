@@ -83,7 +83,6 @@ public class ClientReceiver extends Thread {
         if (run){
           socket.receive(packet);
         }
-        //System.out.println(packet.getData().length);
         String received = new String(packet.getData()).trim();
 //        System.out.println(
 //            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());

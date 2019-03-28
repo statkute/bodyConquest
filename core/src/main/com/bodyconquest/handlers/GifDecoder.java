@@ -240,16 +240,17 @@ public class GifDecoder {
     // Pixmap.createPixmap(dest, width, height, Config.ARGB_4444);
   }
 
-  /**
-   * Gets the image contents of frame n.
-   *
-   * @return BufferedPixmap representation of frame, or null if n is invalid.
-   */
-  public DixieMap getFrame(int n) {
-    if (frameCount <= 0) return null;
-    n = n % frameCount;
-    return ((GifFrame) frames.elementAt(n)).image;
-  }
+    /**
+     * Gets the image contents of frame n.
+     * @param n frame number
+     * @return BufferedPixmap representation of frame, or null if n is invalid.
+     */
+    public DixieMap getFrame(int n) {
+        if (frameCount <= 0)
+            return null;
+        n = n % frameCount;
+        return ((GifFrame) frames.elementAt(n)).image;
+    }
 
   /**
    * Reads GIF image from stream
@@ -399,10 +400,14 @@ public class GifDecoder {
     }
   }
 
-  /** Returns true if an error was encountered during reading/decoding */
-  protected boolean err() {
-    return status != STATUS_OK;
-  }
+    /**
+     * Returns true if an error was encountered during reading/decoding
+     *
+     * @return the status
+     */
+    protected boolean err() {
+        return status != STATUS_OK;
+    }
 
   /** Initializes or re-initializes reader */
   protected void init() {
@@ -413,16 +418,20 @@ public class GifDecoder {
     lct = null;
   }
 
-  /** Reads a single byte from the input stream. */
-  protected int read() {
-    int curByte = 0;
-    try {
-      curByte = in.read();
-    } catch (Exception e) {
-      status = STATUS_FORMAT_ERROR;
+    /**
+     * Reads a single byte from the input stream.
+     *
+     * @return the byte
+     */
+    protected int read() {
+        int curByte = 0;
+        try {
+            curByte = in.read();
+        } catch (Exception e) {
+            status = STATUS_FORMAT_ERROR;
+        }
+        return curByte;
     }
-    return curByte;
-  }
 
   /**
    * Reads next variable length block from input.
@@ -641,11 +650,15 @@ public class GifDecoder {
     } while ((blockSize > 0) && !err());
   }
 
-  /** Reads next 16-bit value, LSB first */
-  protected int readShort() {
-    // read 16-bit value, LSB first
-    return read() | (read() << 8);
-  }
+    /**
+     * Reads next 16-bit value, LSB first
+     *
+     * @return the 16-bit value
+     */
+    protected int readShort() {
+        // read 16-bit value, LSB first
+        return read() | (read() << 8);
+    }
 
   /** Resets frame state for reading next image. */
   protected void resetFrame() {

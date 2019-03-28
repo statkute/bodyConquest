@@ -9,34 +9,20 @@ import main.com.bodyconquest.networking.utilities.MessageMaker;
 
 import java.util.HashMap;
 
-/**
- * Server Thread responsible for dealing with game logic based on incoming messages
- */
+/** Server Thread responsible for dealing with game logic based on incoming messages */
 public class ServerLogic extends Thread {
 
-  /**
-   * Possible Server Logics.
-   */
+  /** Possible Server Logics. */
   public enum LogicType {
-    /**
-     * Race selection logic logic type.
-     */
+    /** Race selection logic logic type. */
     RACE_SELECTION_LOGIC,
-    /**
-     * Body logic logic type.
-     */
+    /** Body logic logic type. */
     BODY_LOGIC,
-    /**
-     * Encounter logic logic type.
-     */
+    /** Encounter logic logic type. */
     ENCOUNTER_LOGIC,
-    /**
-     * Database logic logic type.
-     */
+    /** Database logic logic type. */
     DATABASE_LOGIC,
-    /**
-     * Waiting logic logic type.
-     */
+    /** Waiting logic logic type. */
     WAITING_LOGIC
   }
 
@@ -57,13 +43,13 @@ public class ServerLogic extends Thread {
 
   private DatabaseManager dbManager;
 
-  //private RaceSelectionLogic raceSelectionLogic;
+  // private RaceSelectionLogic raceSelectionLogic;
 
   /**
    * Constructor.
    *
    * @param serverReceiver The ServerReceiver thread of the same Server.
-   * @param serverSender   the server sender
+   * @param serverSender the server sender
    */
   public ServerLogic(ServerReceiver serverReceiver, ServerSender serverSender) {
     this.serverReceiver = serverReceiver;
@@ -92,17 +78,17 @@ public class ServerLogic extends Thread {
           continue;
         }
 
-         if(message.startsWith(MessageMaker.USERNAME_)){
+        if (message.startsWith(MessageMaker.USERNAME_)) {
           PlayerType player;
           int pointer = MessageMaker.USERNAME_.length();
 
-          String encodedPlayerType = message.substring(pointer,pointer + PlayerType.getEncodedLength());
+          String encodedPlayerType =
+              message.substring(pointer, pointer + PlayerType.getEncodedLength());
           player = PlayerType.decode(encodedPlayerType);
-          pointer +=PlayerType.getEncodedLength() +1;
+          pointer += PlayerType.getEncodedLength() + 1;
 
-          if(player == PlayerType.PLAYER_BOTTOM)
-            game.usernameBottom = message.substring(pointer);
-          else if(player == PlayerType.PLAYER_TOP){
+          if (player == PlayerType.PLAYER_BOTTOM) game.usernameBottom = message.substring(pointer);
+          else if (player == PlayerType.PLAYER_TOP) {
             game.usernameTop = message.substring(pointer);
           }
           serverSender.sendMessage(message);
@@ -124,7 +110,7 @@ public class ServerLogic extends Thread {
   private void waitingLogic(String message) {
     int pointer;
 
-    if(message.startsWith(MessageMaker.JOINED_MESSAGE_HEADER)){
+    if (message.startsWith(MessageMaker.JOINED_MESSAGE_HEADER)) {
       // Needs implementing
     }
   }
@@ -196,7 +182,7 @@ public class ServerLogic extends Thread {
   private void bodyLogic(String message) {
     int pointer;
 
-    if(message.startsWith(MessageMaker.CONFIRM_ORGAN_HEADER)) {
+    if (message.startsWith(MessageMaker.CONFIRM_ORGAN_HEADER)) {
       Organ organ;
 
       pointer = MessageMaker.CONFIRM_ORGAN_HEADER.length();
@@ -206,8 +192,7 @@ public class ServerLogic extends Thread {
 
       game.startEncounterState(organ);
       serverSender.sendMessage(MessageMaker.startEncounterMessage(organ));
-    }
-    else if(message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
+    } else if (message.startsWith(MessageMaker.SELECTED_ORGAN_HEADER)) {
       Organ organ;
       pointer = MessageMaker.SELECTED_ORGAN_HEADER.length();
 
@@ -231,7 +216,7 @@ public class ServerLogic extends Thread {
       pointer += Disease.getEncodedLength() + 1;
 
       String encodedPlayerType =
-              message.substring(pointer, pointer + PlayerType.getEncodedLength());
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
       playerType = PlayerType.decode(encodedPlayerType);
 
       if (playerType == PlayerType.PLAYER_TOP) game.setPlayerTop(disease);
@@ -249,34 +234,41 @@ public class ServerLogic extends Thread {
 
       pointer = MessageMaker.CONFIRM_RACE_HEADER.length();
 
-      String encodedPlayerType = message.substring(pointer, pointer + PlayerType.getEncodedLength());
+      String encodedPlayerType =
+          message.substring(pointer, pointer + PlayerType.getEncodedLength());
       player = PlayerType.decode(encodedPlayerType);
-      //serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
-      if(player == PlayerType.PLAYER_BOTTOM) {
+      // serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM
+      // ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
+      if (player == PlayerType.PLAYER_BOTTOM) {
         bottomPlayerReady = true;
       } else {
         topPlayerReady = true;
       }
-      serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
+      serverSender.sendMessage(
+          MessageMaker.chooseRaceMessage(
+              player == PlayerType.PLAYER_BOTTOM
+                  ? PlayerType.PLAYER_TOP
+                  : PlayerType.PLAYER_BOTTOM));
 
-      if(game.getGameType() == GameType.SINGLE_PLAYER || bottomPlayerReady && topPlayerReady) {
+      if (game.getGameType() == GameType.SINGLE_PLAYER || bottomPlayerReady && topPlayerReady) {
         serverSender.sendMessage(MessageMaker.firstPickerMessage(PlayerType.PLAYER_BOTTOM));
         game.setLastPicker(PlayerType.PLAYER_BOTTOM);
         game.startBodyState();
         serverSender.sendMessage(MessageMaker.START_BODY);
       } else {
-//        serverSender.sendMessage(MessageMaker.chooseRaceMessage(player == PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
+        //        serverSender.sendMessage(MessageMaker.chooseRaceMessage(player ==
+        // PlayerType.PLAYER_BOTTOM ? PlayerType.PLAYER_TOP : PlayerType.PLAYER_BOTTOM));
       }
     } else if (message.startsWith(MessageMaker.SET_DIFFICULTY_HEADER)) {
-        pointer = MessageMaker.SET_DIFFICULTY_HEADER.length();
+      pointer = MessageMaker.SET_DIFFICULTY_HEADER.length();
 
-        message = message.substring(pointer + 1);
+      message = message.substring(pointer + 1);
 
-        if (message.equals("HARD")) {
-            game.setDifficulty(DifficultyLevel.HARD);
-        } else {
-            game.setDifficulty(DifficultyLevel.EASY);
-        }
+      if (message.equals("HARD")) {
+        game.setDifficulty(DifficultyLevel.HARD);
+      } else {
+        game.setDifficulty(DifficultyLevel.EASY);
+      }
     } else {
       System.err.println("[ERROR] This message doesn't conform to the current logic.");
     }
@@ -296,10 +288,8 @@ public class ServerLogic extends Thread {
       pointer += PlayerType.getEncodedLength() + 1;
 
       Lane lane = Lane.decode(message.substring(pointer, pointer + Lane.getEncodedLength()));
-      //System.out.println("TRYING TO SPAWN NOW");
 
-        encounterState.spawnUnit(unit, lane, playerType, false);
-      //System.out.println("FINISHED SPAWNING");
+      encounterState.spawnUnit(unit, lane, playerType, false);
 
     } else if (message.startsWith(MessageMaker.ABILITY_CAST_HEADER)) {
 
@@ -377,9 +367,7 @@ public class ServerLogic extends Thread {
     currentLogicType = LogicType.RACE_SELECTION_LOGIC;
   }
 
-  /**
-   * Sets body logic.
-   */
+  /** Sets body logic. */
   public void setBodyLogic() {
     currentLogicType = LogicType.BODY_LOGIC;
   }
@@ -394,16 +382,13 @@ public class ServerLogic extends Thread {
     this.game = game;
   }
 
-  /**
-   * Sets waiting logic.
-   */
-  public void setWaitingLogic() { currentLogicType = LogicType.WAITING_LOGIC; }
+  /** Sets waiting logic. */
+  public void setWaitingLogic() {
+    currentLogicType = LogicType.WAITING_LOGIC;
+  }
 
-  /**
-   * Stop running.
-   */
+  /** Stop running. */
   public void stopRunning() {
     run = false;
   }
-
 }

@@ -12,9 +12,7 @@ import main.com.bodyconquest.networking.utilities.Hasher;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
-/**
- * The type Registering screen.
- */
+/** The type Registering screen. */
 public class RegisteringScreen extends DatabasesScreen implements Screen {
 
   private Texture register;
@@ -29,7 +27,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
   /**
    * Instantiates a new Registering screen.
    *
-   * @param game     the game
+   * @param game the game
    * @param gameType the game type
    */
   public RegisteringScreen(BodyConquest game, GameType gameType) {
@@ -67,9 +65,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     t_login = manager.get(Assets.loginButtonLow, Texture.class);
   }
 
-  /**
-   * Add buttons.
-   */
+  /** Add buttons. */
   public void addButtons() {
     submitImage.addListener(
         new ClickListener() {
@@ -77,14 +73,12 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
             playButtonSound();
             textPassword = txfPassword.getText();
             textUsername = txfUsername.getText();
-            //String message = MessageMaker.registerMessage(textUsername, textPassword);
 
             Hasher hasher = new Hasher();
             String hashedPassword = hasher.hash(textPassword);
             String message = MessageMaker.registerMessage(textUsername, hashedPassword);
 
             game.getClient().clientSender.sendMessage(message);
-              //System.out.println(textUsername + " " + textPassword);
             processRegistration();
           }
         });
@@ -104,9 +98,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     super.processRegistration();
     // wait till the register answer is received from server
     while (!game.getClient().getCommunicator().getRegisteredIsSet().get()) {}
-    //    System.out.println("Got after registered is set");
-    //     System.out.println(game.getClient().getCommunicator().getRegistered());
-    //     System.out.println(game.getClient().getCommunicator().getRegisteredIsSet());
+
     if (game.getClient().getCommunicator().getRegistered().get()) {
       // if successfully registered, go to login screen
       game.setScreen(new LoginScreen(game, gameType, 0));

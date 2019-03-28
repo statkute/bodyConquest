@@ -14,9 +14,7 @@ import main.com.bodyconquest.rendering.BodyConquest;
 import java.io.IOException;
 import java.net.SocketException;
 
-/**
- * The type Start screen.
- */
+/** The type Start screen. */
 public class StartScreen extends AbstractGameScreen implements Screen {
 
   private Texture title;
@@ -44,7 +42,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
   /**
    * Instantiates a new Start screen.
    *
-   * @param game     the game
+   * @param game the game
    * @param gameType the game type
    */
   public StartScreen(BodyConquest game, GameType gameType) {
@@ -70,7 +68,6 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
 
     if (gameType != GameType.MULTIPLAYER_JOIN) {
       playerType = PlayerType.PLAYER_BOTTOM;
@@ -122,14 +119,12 @@ public class StartScreen extends AbstractGameScreen implements Screen {
 
       if (loginBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        // System.out.println("Login touched");
         dispose();
         game.setScreen(new LoginScreen(game, gameType, 0));
       }
 
       if (registerBounds.contains(tmp.x, tmp.y)) {
         playButtonSound();
-        // System.out.println("register touched");
         dispose();
         game.setScreen(new RegisteringScreen(game, gameType));
       }
@@ -147,10 +142,10 @@ public class StartScreen extends AbstractGameScreen implements Screen {
   @Override
   public void loadAssets() {
     super.loadAssets();
-    manager.load(Assets.startTitle,    Texture.class);
-    manager.load(Assets.startLogin,    Texture.class);
+    manager.load(Assets.startTitle, Texture.class);
+    manager.load(Assets.startLogin, Texture.class);
     manager.load(Assets.startRegister, Texture.class);
-    manager.load(Assets.exitButton,    Texture.class);
+    manager.load(Assets.exitButton, Texture.class);
     manager.finishLoading();
   }
 
@@ -158,10 +153,10 @@ public class StartScreen extends AbstractGameScreen implements Screen {
   @Override
   public void getAssets() {
     super.getAssets();
-    title = manager.get(Assets.startTitle,       Texture.class);
-    login = manager.get(Assets.startLogin,       Texture.class);
+    title = manager.get(Assets.startTitle, Texture.class);
+    login = manager.get(Assets.startLogin, Texture.class);
     register = manager.get(Assets.startRegister, Texture.class);
-    exitButton = manager.get(Assets.exitButton,  Texture.class);
+    exitButton = manager.get(Assets.exitButton, Texture.class);
   }
 
   /** {@inheritDoc} */

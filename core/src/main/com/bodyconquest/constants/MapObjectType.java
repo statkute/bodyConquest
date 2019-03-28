@@ -1,7 +1,16 @@
 package main.com.bodyconquest.constants;
 
+/**
+ * The interface Map object type.
+ */
 public interface MapObjectType {
 
-  <T extends Enum & MapObjectType> T getMapObjectType();
+    /**
+     * Gets the map object type.
+     *
+     * @param <T> the type parameter
+     * @return the map object type
+     */
+    <T extends Enum & MapObjectType> T getMapObjectType();
 
 }

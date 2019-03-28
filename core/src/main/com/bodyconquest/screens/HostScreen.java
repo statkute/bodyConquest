@@ -68,16 +68,13 @@ public class HostScreen extends AbstractGameScreen implements Screen {
 
         if (Gdx.input.justTouched()) {
             if (hostBounds.contains(tmp.x, tmp.y)) {
-                System.out.println("host pressed");
                 game.setScreen(new StartScreen(game, GameType.MULTIPLAYER_HOST));
             }
             if (joinBounds.contains(tmp.x, tmp.y)) {
-                System.out.println("join pressed");
                 game.setScreen(new StartScreen(game, GameType.MULTIPLAYER_JOIN));
             }
 
             if (backBounds.contains(tmp.x, tmp.y)) {
-                System.out.println("back pressed");
                 playButtonSound();
                 dispose();
                 game.setScreen(new MenuScreen(game));
