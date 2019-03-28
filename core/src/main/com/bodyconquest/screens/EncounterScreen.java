@@ -317,7 +317,7 @@ public class EncounterScreen implements Screen {
 
       if (screenMakingCounter == 1) {
 
-        if (organNumber == 1) {
+        if (organNumber == 6) {
 
           switchScreen(game, new GameOverScreen(game, gameType));
         } else {
@@ -731,7 +731,7 @@ public class EncounterScreen implements Screen {
               : newPlayerDisease == Disease.MEASLES ? Assets.pathFluMes : Assets.pathFluRvi;
       System.out.println(path + "\n");
       return new TexturePool(path, Assets.frameColsFlu, Assets.frameRowsFlu, frameRate);
-    } else if (UnitType.FUNGUS == mapObjectType) {
+    } else if (UnitType.FUNGUS == mapObjectType || UnitType.MEASLES_FUNGUS == mapObjectType) {
       path =
           newPlayerDisease == Disease.INFLUENZA
               ? Assets.pathVirusFlu
@@ -755,10 +755,10 @@ public class EncounterScreen implements Screen {
     } else if (BaseType.MEASLES_BASE == mapObjectType) {
         return new TexturePool(Assets.pathBaseImageMeasles, 5, 3, frameRate);
     } else if (BaseType.ROTAVIRUS_BASE == mapObjectType) {
-        return new TexturePool(Assets.pathBaseImageRotavirus, 5, 3, frameRate);
-    } else if (ProjectileType.VIRUS_PROJECTILE == mapObjectType) {
-        return new TexturePool(
-                Assets.pathProjectile, Assets.frameColsProjectile, Assets.frameRowsProjectile, frameRate);
+      return new TexturePool(Assets.pathBaseImageRotavirus, 5, 3, frameRate);
+    } else if (ProjectileType.VIRUS_PROJECTILE == mapObjectType || ProjectileType.FUNGUS_PROJECTILE == mapObjectType) {
+      return new TexturePool(
+          Assets.pathProjectile, Assets.frameColsProjectile, Assets.frameRowsProjectile, frameRate);
     }
     return null;
   }
