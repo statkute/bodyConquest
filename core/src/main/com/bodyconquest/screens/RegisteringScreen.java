@@ -78,7 +78,7 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
             String message = MessageMaker.registerMessage(textUsername, hashedPassword);
 
             game.getClient().clientSender.sendMessage(message);
-            System.out.println(textUsername + " " + textPassword);
+              //System.out.println(textUsername + " " + textPassword);
             processRegistration();
           }
         });
