@@ -281,7 +281,6 @@ public class EncounterScreen implements Screen {
               game.audioPlayer.changeMusicVolume(0.0f);
 
             }
-            System.out.println(game.audioPlayer.getMusicVolume());
             game.audioPlayer.changeMusicVolume(game.audioPlayer.getMusicVolume()-MUSIC_FADE_STEP);
           }
 
