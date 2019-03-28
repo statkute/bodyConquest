@@ -150,6 +150,17 @@ public class ViewObject extends Actor {
                 t = t * t;
                 setColor(1, 0, 0, t);
             }
+
+        }
+
+        // new if
+        if (playerType == PlayerType.PLAYER_BOTTOM && bo.getY() == Assets.baseTopY) {
+            if (EncounterScreen.getTimeAlive() < EncounterScreen.getTimeOfDmgTakenTop() + EncounterScreen.BLINK_TIME_AFTER_DMG) {
+                float t = (EncounterScreen.getTimeAlive() - EncounterScreen.getTimeOfDmgTakenTop()) / EncounterScreen.BLINK_TIME_AFTER_DMG;
+                t = t * t;
+                setColor(1, 0, 0, t);
+            }
+
         }
 
     }
