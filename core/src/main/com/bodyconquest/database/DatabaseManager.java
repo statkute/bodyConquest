@@ -22,6 +22,15 @@ public class DatabaseManager {
         connect();
         //resetDB();
         //createTables();
+
+        /*
+        insertAchievement("Infectonator", 666);
+        insertAchievement("John", 20);
+        insertAchievement("Chris", 40);
+        insertAchievement("Bob", 60);
+        insertAchievement("Mark", 32);
+        insertAchievement("NotAI", 99);
+        */
     }
 
     /**

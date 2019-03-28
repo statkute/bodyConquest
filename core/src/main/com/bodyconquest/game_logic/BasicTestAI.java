@@ -50,6 +50,8 @@ public class BasicTestAI extends Thread {
       if (time > (lastWave + COOLDOWN)) {
         if (difficultyLevel == DifficultyLevel.EASY) {
           summonEasyWave();
+        } else {
+          summonEasyWave();
         }
         lastWave = time;
       }
