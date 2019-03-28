@@ -361,7 +361,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
       case ROTAVIRUS:
         t_heart = manager.get(Assets.heart_yellow, Texture.class);
         break;
-    }
+      default:
+        t_heart = manager.get(Assets.heart, Texture.class);
+//    }
   }
 
   /**
@@ -463,10 +465,10 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   public void addActors() {
     title = new Image(t_header);
     title.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_header.getWidth() / 4,
-            460,
-            t_header.getWidth() / 2,
-            t_header.getHeight() / 2);
+        BodyConquest.V_WIDTH / 2 - t_header.getWidth() / 4,
+        460,
+        t_header.getWidth() / 2,
+        t_header.getHeight() / 2);
     allImages.add(title);
 
     // if(!communicator.wasHeartSelected()){
@@ -627,7 +629,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
           30,
           t_continueImage.getWidth() / 2.2f,
           t_continueImage.getHeight() / 2.2f);
-//      allImages.add(continueImage);
+      //      allImages.add(continueImage);
 
       select = new Image(t_select);
       select.setBounds(
@@ -670,7 +672,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 select.remove();
                 stage.addActor(continueImage);
               }
-              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+              game.getClient()
+                  .clientSender
+                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
       heartpoints.addListener(heart.getListeners().peek());
@@ -690,7 +694,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               selectedOrganImage = eyeSelected;
               stage.addActor(eyeSelected);
               selectedOrganType = Organ.EYES;
-              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+              game.getClient()
+                  .clientSender
+                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
       eyepoints.addListener(eye.getListeners().peek());
@@ -713,7 +719,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 select.remove();
                 stage.addActor(continueImage);
               }
-              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+              game.getClient()
+                  .clientSender
+                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
       lungspoints.addListener(lungs.getListeners().peek());
@@ -736,7 +744,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 select.remove();
                 stage.addActor(continueImage);
               }
-              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+              game.getClient()
+                  .clientSender
+                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
       brainpoints.addListener(brain.getListeners().peek());
@@ -759,7 +769,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 select.remove();
                 stage.addActor(continueImage);
               }
-              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+              game.getClient()
+                  .clientSender
+                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
 
@@ -783,7 +795,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
                 select.remove();
                 stage.addActor(continueImage);
               }
-              game.getClient().clientSender.sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+              game.getClient()
+                  .clientSender
+                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
             }
           });
 

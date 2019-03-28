@@ -311,7 +311,7 @@ public class ClientLogic extends Thread {
       PlayerType player = PlayerType.decode(playerString);
       Organ organ = Organ.decode(organString);
 
-      if (player == PlayerType.PLAYER_BOTTOM) {
+      if (player == communicator.getPlayerType()) {
         communicator.addOrgan(organ);
       } else {
         communicator.addOponentOrgan(organ);
