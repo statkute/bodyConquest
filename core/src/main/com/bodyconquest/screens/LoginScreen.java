@@ -26,7 +26,9 @@ public class LoginScreen extends DatabasesScreen implements Screen {
   // private GameType gameType;
   private int counter;
 
+  /** The Player type. */
   protected PlayerType playerType;
+
   private Texture t_submit;
   private Image submitImage;
   private Texture t_register;
@@ -36,6 +38,8 @@ public class LoginScreen extends DatabasesScreen implements Screen {
    * Instantiates a new Login screen.
    *
    * @param game the game
+   * @param gameType the game type
+   * @param counter the counter
    */
   public LoginScreen(BodyConquest game, GameType gameType, int counter) {
     super(game, gameType);
@@ -84,6 +88,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     t_register = manager.get(Assets.registerButtonLow, Texture.class);
   }
 
+  /** Add buttons. */
   public void addButtons() {
     submitImage.addListener(
         new ClickListener() {

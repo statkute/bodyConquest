@@ -64,6 +64,7 @@ public class EncounterState {
   private int totalScoreTop;
   private int totalScoreBottom;
 
+  /** The Counter. */
   int counter = 0;
 
   // Move resources in side of player
@@ -76,7 +77,12 @@ public class EncounterState {
 
   private BasicTestAI singleplayerAI;
 
-  /** Constructor. */
+  /**
+   * Constructor. @param game the game
+   *
+   * @param game the game
+   * @param organ the organ
+   */
   public EncounterState(Game game, Organ organ) {
     this.game = game;
     this.organ = organ;
@@ -232,8 +238,10 @@ public class EncounterState {
    * @param unitType The unit/troop to be spawned.
    * @param lane The lane the unit/troop will be assigned to.
    * @param playerType The player the unit/troop will be assigned to.
+   * @param isMultiplayerAI the is multiplayer ai
    */
-  public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType, boolean isMultiplayerAI) {
+  public void spawnUnit(
+      UnitType unitType, Lane lane, PlayerType playerType, boolean isMultiplayerAI) {
     Troop troop = null;
     Disease disease = getPlayer(playerType).getDisease();
     Resources resources = getResources(playerType);
@@ -546,10 +554,25 @@ public class EncounterState {
     serverSender.sendMessage(pointsMessage);
   }
 
+  /**
+   * Cast ability.
+   *
+   * @param abilityType the ability type
+   * @param playerType the player type
+   * @param xDest the x dest
+   * @param yDest the y dest
+   */
   public void castAbility(AbilityType abilityType, PlayerType playerType, int xDest, int yDest) {
     // Implement functionality
   }
 
+  /**
+   * Cast ability.
+   *
+   * @param abilityType the ability type
+   * @param playerType the player type
+   * @param lane the lane
+   */
   public void castAbility(AbilityType abilityType, PlayerType playerType, Lane lane) {
     try {
       @SuppressWarnings("unchecked")
@@ -568,14 +591,32 @@ public class EncounterState {
     }
   }
 
+  /**
+   * Gets enemy troops.
+   *
+   * @param player the player
+   * @return the enemy troops
+   */
   public CopyOnWriteArrayList<Troop> getEnemyTroops(PlayerType player) {
     return player != PlayerType.PLAYER_BOTTOM ? troopsBottom : troopsTop;
   }
 
+  /**
+   * Gets troops.
+   *
+   * @param player the player
+   * @return the troops
+   */
   public CopyOnWriteArrayList<Troop> getTroops(PlayerType player) {
     return player == PlayerType.PLAYER_BOTTOM ? troopsBottom : troopsTop;
   }
 
+  /**
+   * Gets base.
+   *
+   * @param player the player
+   * @return the base
+   */
   public Base getBase(PlayerType player) {
     return player == PlayerType.PLAYER_BOTTOM ? bottomBase : topBase;
   }
@@ -584,6 +625,12 @@ public class EncounterState {
     return playerType == PlayerType.PLAYER_BOTTOM ? bottomPlayer : topPlayer;
   }
 
+  /**
+   * Gets resources.
+   *
+   * @param playerType the player type
+   * @return the resources
+   */
   public Resources getResources(PlayerType playerType) {
     return playerType == PlayerType.PLAYER_BOTTOM ? bottomResources : topResources;
   }

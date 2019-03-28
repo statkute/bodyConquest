@@ -71,6 +71,7 @@ public class EncounterScreen implements Screen {
   /** The constant BLINK_TIME_AFTER_DMG. */
   public static final float BLINK_TIME_AFTER_DMG = 0.07f;
 
+  /** The constant BLINK_TIME_AFTER_DMG_BACTERIAS. */
   public static final float BLINK_TIME_AFTER_DMG_BACTERIAS = 200f;
 
   private final OrthographicCamera gameCamera;
@@ -186,6 +187,11 @@ public class EncounterScreen implements Screen {
     communicator.setSelectedOrgan(null);
   }
 
+  /**
+   * Gets communicator.
+   *
+   * @return the communicator
+   */
   public Communicator getCommunicator() {
     return communicator;
   }
