@@ -26,7 +26,7 @@ public class HostScreen extends AbstractGameScreen implements Screen {
     /**
      * Instantiates a new Host screen.
      *
-     * @param game     the game
+     * @param game the game
      */
     public HostScreen(BodyConquest game) {
         super(game);

@@ -19,7 +19,9 @@ import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
 
-/** The type Leaderboard screen. */
+/**
+ * The type Leaderboard screen.
+ */
 public class LeaderboardScreen extends AbstractGameScreen implements Screen {
 
   private Texture backButton;
@@ -131,7 +133,9 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     this.leaderboard = comms.getBoard();
   }
 
-  /** Sort leaderboard. */
+  /**
+   * Sort leaderboard.
+   */
   public void sortLeaderboard() {
     this.sorted =
         leaderboard.entrySet().stream()
@@ -140,7 +144,9 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
                 toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
   }
 
-  /** Draw leaderboard. */
+  /**
+   * Draw leaderboard.
+   */
   public void drawLeaderboard() {
 
     for (Object s : sorted.keySet()) {
@@ -221,7 +227,9 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     place = 0;
   }
 
-  /** Draw scores. */
+  /**
+   * Draw scores.
+   */
   public void drawNumbers() {
 
     for (Object s : sorted.keySet()) {

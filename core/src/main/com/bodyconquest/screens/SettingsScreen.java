@@ -17,7 +17,9 @@ import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
 
-/** The Settings screen. */
+/**
+ * The Settings screen.
+ */
 public class SettingsScreen extends AbstractGameScreen implements Screen {
 
   private final OrthographicCamera gameCamera;
@@ -53,7 +55,7 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
   /**
    * Instantiates a new Settings screen.
    *
-   * @param game the game
+   * @param game     the game
    * @param username the username
    */
   public SettingsScreen(BodyConquest game, String username) {
@@ -88,17 +90,17 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
   @Override
   public void loadAssets() {
     super.loadAssets();
-    manager.load(Assets.settingsHeader, Texture.class);
-    manager.load(Assets.settingsSoundHeader, Texture.class);
-    manager.load(Assets.settingsSoundOff, Texture.class);
-    manager.load(Assets.settingsSoundOn, Texture.class);
-    manager.load(Assets.settingsMusicHeader, Texture.class);
-    manager.load(Assets.settingsMusicOff, Texture.class);
-    manager.load(Assets.settingsMusicOn, Texture.class);
+    manager.load(Assets.settingsHeader,                 Texture.class);
+    manager.load(Assets.settingsSoundHeader,            Texture.class);
+    manager.load(Assets.settingsSoundOff,               Texture.class);
+    manager.load(Assets.settingsSoundOn,                Texture.class);
+    manager.load(Assets.settingsMusicHeader,            Texture.class);
+    manager.load(Assets.settingsMusicOff,               Texture.class);
+    manager.load(Assets.settingsMusicOn,                Texture.class);
     manager.load(Assets.settingsSingleplayerDifficulty, Texture.class);
-    manager.load(Assets.settingsSingleplayerEasy, Texture.class);
-    manager.load(Assets.settingsSingleplayerHard, Texture.class);
-    manager.load(Assets.hostBack, Texture.class);
+    manager.load(Assets.settingsSingleplayerEasy,       Texture.class);
+    manager.load(Assets.settingsSingleplayerHard,       Texture.class);
+    manager.load(Assets.hostBack,                       Texture.class);
     manager.finishLoading();
   }
 
@@ -106,17 +108,17 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
   @Override
   public void getAssets() {
     super.getAssets();
-    t_header = manager.get(Assets.settingsHeader, Texture.class);
-    t_soundText = manager.get(Assets.settingsSoundHeader, Texture.class);
-    t_musicText = manager.get(Assets.settingsMusicHeader, Texture.class);
-    t_soundOn = manager.get(Assets.settingsSoundOn, Texture.class);
-    t_soundOff = manager.get(Assets.settingsSoundOff, Texture.class);
-    t_musicOn = manager.get(Assets.settingsMusicOn, Texture.class);
-    t_musicOff = manager.get(Assets.settingsMusicOff, Texture.class);
+    t_header = manager.get(Assets.settingsHeader,                         Texture.class);
+    t_soundText = manager.get(Assets.settingsSoundHeader,                 Texture.class);
+    t_musicText = manager.get(Assets.settingsMusicHeader,                 Texture.class);
+    t_soundOn = manager.get(Assets.settingsSoundOn,                       Texture.class);
+    t_soundOff = manager.get(Assets.settingsSoundOff,                     Texture.class);
+    t_musicOn = manager.get(Assets.settingsMusicOn,                       Texture.class);
+    t_musicOff = manager.get(Assets.settingsMusicOff,                     Texture.class);
     t_difficultyText = manager.get(Assets.settingsSingleplayerDifficulty, Texture.class);
-    t_easy = manager.get(Assets.settingsSingleplayerEasy, Texture.class);
-    t_hard = manager.get(Assets.settingsSingleplayerHard, Texture.class);
-    t_back = manager.get(Assets.hostBack, Texture.class);
+    t_easy = manager.get(Assets.settingsSingleplayerEasy,                 Texture.class);
+    t_hard = manager.get(Assets.settingsSingleplayerHard,                 Texture.class);
+    t_back = manager.get(Assets.hostBack,                                 Texture.class);
   }
 
   /**
@@ -222,7 +224,9 @@ public class SettingsScreen extends AbstractGameScreen implements Screen {
     }
   }
 
-  /** Adds buttons to the stage. */
+  /**
+   * Adds buttons to the stage.
+   */
   public void addButtons() {
     soundText.addListener(
         new ClickListener() {

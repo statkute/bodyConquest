@@ -91,12 +91,12 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
   public void loadAssets() {
     super.loadAssets();
     manager.load(Assets.creditsHeader, Texture.class);
-    manager.load(Assets.alexandru, Texture.class);
-    manager.load(Assets.augustas, Texture.class);
-    manager.load(Assets.brandon, Texture.class);
-    manager.load(Assets.gintare, Texture.class);
-    manager.load(Assets.paul, Texture.class);
-    manager.load(Assets.backButton, Texture.class);
+    manager.load(Assets.alexandru,     Texture.class);
+    manager.load(Assets.augustas,      Texture.class);
+    manager.load(Assets.brandon,       Texture.class);
+    manager.load(Assets.gintare,       Texture.class);
+    manager.load(Assets.paul,          Texture.class);
+    manager.load(Assets.backButton,    Texture.class);
     manager.finishLoading();
   }
 
@@ -104,12 +104,12 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
   @Override
   public void getAssets() {
     super.getAssets();
-    header = manager.get(Assets.creditsHeader, Texture.class);
-    alexandru = manager.get(Assets.alexandru, Texture.class);
-    augustas = manager.get(Assets.augustas, Texture.class);
-    brandon = manager.get(Assets.brandon, Texture.class);
-    gintare = manager.get(Assets.gintare, Texture.class);
-    paul = manager.get(Assets.paul,Texture.class);
+    header = manager.get(Assets.creditsHeader,  Texture.class);
+    alexandru = manager.get(Assets.alexandru,   Texture.class);
+    augustas = manager.get(Assets.augustas,     Texture.class);
+    brandon = manager.get(Assets.brandon,       Texture.class);
+    gintare = manager.get(Assets.gintare,       Texture.class);
+    paul = manager.get(Assets.paul,             Texture.class);
     backButton = manager.get(Assets.backButton, Texture.class);
 
   }

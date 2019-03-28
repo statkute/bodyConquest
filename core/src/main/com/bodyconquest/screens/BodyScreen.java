@@ -20,7 +20,9 @@ import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
 
-/** The type Body screen. */
+/**
+ * The type Body screen.
+ */
 public class BodyScreen extends AbstractGameScreen implements Screen {
   private GameType gameType;
 
@@ -85,34 +87,10 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   private boolean picker;
 
   private Communicator communicator;
-
-  //  public BodyScreen(BodyConquest game, GameType gameType, Disease myDiseaseType, Disease
-  // opponentDiseaseType, ArrayList<Organ> myOrgans, ArrayList<Organ> opponentOrgans) {
-  //    super(game);
-  //    this.gameType = gameType;
-  //
-  //    this.myDiseaseType = myDiseaseType;
-  //    this.opponentDiseaseType = opponentDiseaseType;
-  //    this.myOrgans = myOrgans;
-  //    this.opponentOrgans = opponentOrgans;
-  //
-  //    selectedOrganType = null;
-  //
-  //    gameCamera = new OrthographicCamera();
-  //    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
-  //    stage = new Stage(gamePort);
-  //    Gdx.input.setInputProcessor(stage);
-  //
-  //    loadAssets();
-  //    getAssets();
-  //    addActors();
-  //    addButtons();
-  //  }
-
   /**
    * Instantiates a new Body screen.
    *
-   * @param game the game
+   * @param game     the game
    * @param gameType the game type
    */
   public BodyScreen(BodyConquest game, GameType gameType) {
@@ -131,11 +109,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     this.opponentDiseaseType = communicator.getOpponentDisease();
     this.myOrgans = communicator.getPlayerOrgans();
     this.opponentOrgans = communicator.getOpponentOrgans();
-
-    // selectedOrganType = null;
-
-    //    gameCamera = new OrthographicCamera();
-    //    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(viewport);
     Gdx.input.setInputProcessor(stage);
 
@@ -461,7 +434,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     }
   }
 
-  /** Add actors to the stage. */
+  /**
+   * Add actors to the stage.
+   */
   public void addActors() {
     title = new Image(t_header);
     title.setBounds(
@@ -653,7 +628,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     }
   }
 
-  /** Add buttons to the stage. */
+  /**
+   * Add buttons to the stage.
+   */
   public void addButtons() {
     if (!(opponentOrgans.contains(Organ.HEART) || myOrgans.contains(Organ.HEART))) {
       heart.addListener(
@@ -819,6 +796,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         });
   }
 
+  /**
+   * Check for organ selections.
+   */
   void checkForOrganSelections() {
     if (communicator.getSelectedOrgan() != null) {
       if (communicator.getSelectedOrgan() == selectedOrganType) {

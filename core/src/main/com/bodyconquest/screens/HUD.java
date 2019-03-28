@@ -33,6 +33,9 @@ import main.com.bodyconquest.resourcebars.ResourceBar;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * The type HUD.
+ */
 public class HUD {
 
   private Texture blueVirus;
@@ -57,6 +60,14 @@ public class HUD {
 
   private Disease disease;
 
+  /**
+   * Instantiates a new Hud.
+   *
+   * @param screen     the screen
+   * @param playerType the player type
+   * @param disease    the disease
+   * @param stage      the stage
+   */
   public HUD(
       final EncounterScreen screen, final PlayerType playerType, Disease disease, Stage stage) {
     this.screen = screen;
@@ -112,6 +123,14 @@ public class HUD {
     stage.addActor(lipidsResourceBar);
   }
 
+  /**
+   * Update resource bars.
+   *
+   * @param lipids   the lipids
+   * @param proteins the proteins
+   * @param carbs    the carbs
+   * @param s        the s
+   */
   public void updateResourceBars(int lipids, int proteins, int carbs, float s) {
     int mappedLipids = mapResource(lipids);
     int mappedProteins = mapResource(proteins);
@@ -120,9 +139,6 @@ public class HUD {
     lipidsResourceBar.setInsideY(mappedLipids);
     proteinResourceBar.setInsideY(mappedProteins);
     carbsResourceBar.setInsideY(mappedCarbs);
-    //    lipidsResourceBar.setInsideY(0);
-    //    proteinResourceBar.setInsideY(0);
-    //    carbsResourceBar.setInsideY(0);
 
     lipidsResourceBar.updateTime(s);
     carbsResourceBar.updateTime(s);
@@ -263,23 +279,6 @@ public class HUD {
               payload.setDragActor(dragImage);
               System.out.println("DRAGGING");
 
-
-              //            if(spawnableClass.getSuperclass().equals(Troop.class)) {
-              //              payload.setDragActor(new
-              // Image(spawnableButton.getImage().getDrawable()));
-              //            } else {
-              //              // It's an ability it may have a unique drag actor.
-              //
-              //              try {
-              //                Ability abilityInstance = (Ability) spawnableClass.newInstance();
-              //                Image dragActor = new Image(new
-              // Texture(abilityInstance.damageAreaPath()));
-              //              } catch (InstantiationException | IllegalAccessException e) {
-              //                e.printStackTrace();
-              //              }
-              //
-              //            }
-
               Label validLabel =
                   new Label("Release to drop " + spawnableClass.getSimpleName() + "!", skin);
               validLabel.setColor(0, 1, 0, 1);
@@ -300,14 +299,31 @@ public class HUD {
     //dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
   }
 
+  /**
+   * Gets stage.
+   *
+   * @return the stage
+   */
   public Stage getStage() {
     return stage;
   }
 
+  /**
+   * Gets unit bar.
+   *
+   * @return the unit bar
+   */
   public Image getUnitBar() {
     return unitBar;
   }
 
+  /**
+   * Sets up health bar.
+   *
+   * @param healthBar  the health bar
+   * @param playerType the player type
+   * @return the up health bar
+   */
   public HealthBar setUpHealthBar(HealthBar healthBar, PlayerType playerType) {
 
     if (playerType == PlayerType.PLAYER_BOTTOM) {
@@ -331,30 +347,65 @@ public class HUD {
     return healthBar;
   }
 
+  /**
+   * Gets protein resource bar.
+   *
+   * @return the protein resource bar
+   */
   public ResourceBar getProteinResourceBar() {
     return proteinResourceBar;
   }
 
+  /**
+   * Sets protein resource bar.
+   *
+   * @param proteinResourceBar the protein resource bar
+   */
   public void setProteinResourceBar(ResourceBar proteinResourceBar) {
     this.proteinResourceBar = proteinResourceBar;
   }
 
+  /**
+   * Gets lipids resource bar.
+   *
+   * @return the lipids resource bar
+   */
   public ResourceBar getLipidsResourceBar() {
     return lipidsResourceBar;
   }
 
+  /**
+   * Sets lipids resource bar.
+   *
+   * @param lipidsResourceBar the lipids resource bar
+   */
   public void setLipidsResourceBar(ResourceBar lipidsResourceBar) {
     this.lipidsResourceBar = lipidsResourceBar;
   }
 
+  /**
+   * Gets carbs resource bar.
+   *
+   * @return the carbs resource bar
+   */
   public ResourceBar getCarbsResourceBar() {
     return carbsResourceBar;
   }
 
+  /**
+   * Sets carbs resource bar.
+   *
+   * @param carbsResourceBar the carbs resource bar
+   */
   public void setCarbsResourceBar(ResourceBar carbsResourceBar) {
     this.carbsResourceBar = carbsResourceBar;
   }
 
+  /**
+   * Sets up disease.
+   *
+   * @param disease the disease
+   */
   public void setUpDisease(Disease disease) {
 
     switch (disease) {
@@ -373,6 +424,9 @@ public class HUD {
     stage.addActor(imageDisease);
   }
 
+  /**
+   * Load assets.
+   */
   public void loadAssets() {
     manager.load(Assets.raceBlueVirusNoBorder, Texture.class);
     manager.load(Assets.raceGreenVirusNoBorder, Texture.class);
@@ -380,6 +434,9 @@ public class HUD {
     manager.finishLoading();
   }
 
+  /**
+   * Gets assets.
+   */
   public void getAssets() {
     blueVirus = manager.get(Assets.raceBlueVirusNoBorder, Texture.class);
     greenVirus = manager.get(Assets.raceGreenVirusNoBorder, Texture.class);
@@ -390,28 +447,6 @@ public class HUD {
   private Image bucketDown;
 
   private void setupBucket() {
-    //    bucket = new Image(new Texture(Assets.pathBacteria));
-    //    bucket.setPosition(unitBar.getWidth() / 6 + 25 * 0,
-    //            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2) + 50);
-    //    bucketDown = new Image(new Texture(Assets.pathFlu));
-    //    bucketDown.setColor(1,1,1,0);
-    //    bucketDown.setBounds(
-    //            unitBar.getWidth() / 4 + 25 * 2,
-    //            unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
-    //            25,
-    //            25);
-    //    bucketDown.setName("bucket");
-    //    //stage.addActor(bucket);
-    //    stage.addActor(bucketDown);
-
   }
-
-  //  public void setBucketInvisible(){
-  //    bucket.setColor(1,1,1,0);
-  //  }
-  //
-  //  public void makeBucketVisible(){
-  //    bucket.setColor(1,1,1,1);
-  //  }
 
 }

@@ -6,11 +6,16 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
-/** Server Pinging thread that deals with notifying newly connected clients of the Server's IP */
+/**
+ * Server Pinging thread that deals with notifying newly connected clients of the Server's IP
+ */
 public class Ping extends Thread {
   private MulticastSocket socket;
   private boolean run;
 
+  /**
+   * Instantiates a new Ping.
+   */
   public Ping(){
     run = true;
   }
@@ -47,6 +52,9 @@ public class Ping extends Thread {
     }
   }
 
+  /**
+   * Stop running.
+   */
   public void stopRunning() {
     run = false;
     socket.close();

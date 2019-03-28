@@ -42,7 +42,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static main.com.bodyconquest.audio.AudioPlayer.MUSIC_FADE_RATE;
 import static main.com.bodyconquest.audio.AudioPlayer.MUSIC_FADE_STEP;
 
-/** The type Encounter screen. */
+/**
+ * The type Encounter screen.
+ */
 public class EncounterScreen implements Screen {
 
   private int organNumber;
@@ -65,12 +67,17 @@ public class EncounterScreen implements Screen {
 
   private static final float SHAKE_DIST = 9.0f;
 
-  /** The constant gameType. */
+  /**
+   * The constant gameType.
+   */
   public static GameType gameType;
 
   /** The constant BLINK_TIME_AFTER_DMG. */
   public static final float BLINK_TIME_AFTER_DMG = 0.07f;
 
+  /**
+   * The constant BLINK_TIME_AFTER_DMG_BACTERIAS.
+   */
   /** The constant BLINK_TIME_AFTER_DMG_BACTERIAS. */
   public static final float BLINK_TIME_AFTER_DMG_BACTERIAS = 200f;
 
@@ -108,13 +115,19 @@ public class EncounterScreen implements Screen {
   private int healthBottomBaseBefore;
   private int healthTopBaseBefore;
 
-  /** The Accumulator after base conquered. */
+  /**
+   * The Accumulator after base conquered.
+   */
   int accumulatorAfterBaseConquered = 0;
 
-  /** The Elapsed seconds. */
+  /**
+   * The Elapsed seconds.
+   */
   float elapsedSeconds;
 
-  /** The Time of the encounter. */
+  /**
+   * The Time of the encounter.
+   */
   float time = 120;
 
   private boolean played;
@@ -128,7 +141,7 @@ public class EncounterScreen implements Screen {
   /**
    * Instantiates a new Encounter screen where all the battle takes place.
    *
-   * @param game the game
+   * @param game     the game
    * @param gameType the game type
    */
   public EncounterScreen(BodyConquest game, GameType gameType) {
@@ -207,9 +220,9 @@ public class EncounterScreen implements Screen {
      * Instantiates a new Texture pool.
      *
      * @param pathTexture the path to the texture
-     * @param frameCols the frame cols
-     * @param frameRows the frame rows
-     * @param frameRate the frame rate for sprite sheet
+     * @param frameCols   the frame cols
+     * @param frameRows   the frame rows
+     * @param frameRate   the frame rate for sprite sheet
      */
     public TexturePool(String pathTexture, int frameCols, int frameRows, float frameRate) {
       super();
@@ -277,16 +290,6 @@ public class EncounterScreen implements Screen {
       }, 0f, MUSIC_FADE_RATE);
 
     }
-
-//    if(healthTopBase < 35 && playerType == PlayerType.PLAYER_TOP&& !played){
-//      game.audioPlayer.changeMusicVolume(1.0f);
-//      played = true;
-////      for(float i =10; i >= 0; i--){
-////        game.audioPlayer.changeMusicVolume(i/10);
-////        //game.audioPlayer.playSFX("heartbeat");
-////      }
-//      game.audioPlayer.playMusicLoop("heartbeat");
-//    }
 
     if(played && changeMusic){
       game.audioPlayer.playMusicLoop("heartbeat");
@@ -562,8 +565,8 @@ public class EncounterScreen implements Screen {
   /**
    * Spawn units onto the map.
    *
-   * @param unitType the unit type
-   * @param lane the lane
+   * @param unitType   the unit type
+   * @param lane       the lane
    * @param playerType the player type
    */
   public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
@@ -575,8 +578,8 @@ public class EncounterScreen implements Screen {
    * Use ability on the lane and send the message to server.
    *
    * @param abilityType the ability type
-   * @param lane the lane
-   * @param playerType the player type
+   * @param lane        the lane
+   * @param playerType  the player type
    */
   public void useAbility(AbilityType abilityType, Lane lane, PlayerType playerType) {
     String message = MessageMaker.castAbilityMessage(abilityType, lane, playerType);
@@ -587,9 +590,9 @@ public class EncounterScreen implements Screen {
    * Use ability on particular point and send the message to the server.
    *
    * @param abilityType the ability type
-   * @param xAxis the x axis
-   * @param yAxis the y axis
-   * @param playerType the player type
+   * @param xAxis       the x axis
+   * @param yAxis       the y axis
+   * @param playerType  the player type
    */
   public void useAbility(AbilityType abilityType, int xAxis, int yAxis, PlayerType playerType) {
     String message = MessageMaker.castAbilityMessage(abilityType, xAxis, yAxis, playerType);
@@ -640,9 +643,9 @@ public class EncounterScreen implements Screen {
   /**
    * Makes a font to be with a shadow.
    *
-   * @param str the str
-   * @param x the x
-   * @param y the y
+   * @param str   the str
+   * @param x     the x
+   * @param y     the y
    * @param width the width
    * @param align the align
    * @param color the color

@@ -6,7 +6,9 @@ import main.com.bodyconquest.gamestates.EncounterState;
 
 import java.net.SocketException;
 
-/** Server class */
+/**
+ * Server class
+ */
 public class Server {
   private ServerSender serverSender;
   private ServerReceiver serverReceiver;
@@ -19,7 +21,7 @@ public class Server {
    * Server initialization: receiver, sender and logic threads are started
    *
    * @param type game type: either "singleplayer" or "mutliplayer"
-   * @throws SocketException
+   * @throws SocketException the socket exception
    */
   public void startServer(GameType type) throws SocketException {
     gameEnded = false;
@@ -35,14 +37,30 @@ public class Server {
     serverLogic.start();
   }
 
+  /**
+   * Gets server sender.
+   *
+   * @return the server sender
+   */
   public ServerSender getServerSender() {
     return serverSender;
   }
 
+  /**
+   * Start encounter logic.
+   *
+   * @param encounterState the encounter state
+   */
   public void startEncounterLogic(EncounterState encounterState) {
     serverLogic.setEncounterLogic(encounterState);
   }
 
+  /**
+   * Main.
+   *
+   * @param args the args
+   * @throws Exception the exception
+   */
   public static void main(String args[]) throws Exception {
     Ping ping = new Ping();
     ping.start();
@@ -57,6 +75,9 @@ public class Server {
         "This is a message from the server sent just after the game has started");
   }
 
+  /**
+   * Close everything.
+   */
   public void closeEverything() {
     if (serverSender != null) serverSender.stopRunning();
     if (serverReceiver != null) serverReceiver.stopRunning();
@@ -66,17 +87,35 @@ public class Server {
     gameEnded = true;
   }
 
+  /**
+   * Is game ended boolean.
+   *
+   * @return the boolean
+   */
   public boolean isGameEnded() {
     return gameEnded;
   }
 
+  /**
+   * Start race selection logic.
+   *
+   * @param game the game
+   */
   public void startRaceSelectionLogic(Game game) {
     serverLogic.setRaceSelectionLogic(game);
   }
 
+  /**
+   * Start body logic.
+   */
   public void startBodyLogic() { serverLogic.setBodyLogic(); }
 
-    public void startDatabaseLogic(Game game) {
+  /**
+   * Start database logic.
+   *
+   * @param game the game
+   */
+  public void startDatabaseLogic(Game game) {
         serverLogic.setDatabaseLogic(game);
     }
 
