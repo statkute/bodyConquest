@@ -123,7 +123,7 @@ public class ViewObject extends Actor {
     }
 
     public void preDrawObject() {
-        long timeAlive = bo.getTimeAlive();;
+        long timeAlive = bo.getTimeAlive();
         long timeOfDmgTaken = bo.getTimeOfDmgTaken();
         long timeElapsed = timeAlive - timeOfDmgTaken;
 
@@ -150,6 +150,26 @@ public class ViewObject extends Actor {
                 t = t * t;
                 setColor(1, 0, 0, t);
             }
+
+        }
+
+        // new if
+        if (playerType == PlayerType.PLAYER_BOTTOM && bo.getY() == Assets.baseTopY) {
+            if (EncounterScreen.getTimeAlive() < EncounterScreen.getTimeOfDmgTakenTop() + EncounterScreen.BLINK_TIME_AFTER_DMG) {
+                float t = (EncounterScreen.getTimeAlive() - EncounterScreen.getTimeOfDmgTakenTop()) / EncounterScreen.BLINK_TIME_AFTER_DMG;
+                t = t * t;
+                setColor(1, 0, 0, t);
+            }
+
+        }
+
+        if (playerType == PlayerType.PLAYER_TOP && bo.getY() == Assets.baseBottomY) {
+            if (EncounterScreen.getTimeAlive() < EncounterScreen.getTimeOfDmgTakenBottom() + EncounterScreen.BLINK_TIME_AFTER_DMG) {
+                float t = (EncounterScreen.getTimeAlive() - EncounterScreen.getTimeOfDmgTakenBottom()) / EncounterScreen.BLINK_TIME_AFTER_DMG;
+                t = t * t;
+                setColor(1, 0, 0, t);
+            }
+
         }
 
     }

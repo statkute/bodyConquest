@@ -1,5 +1,19 @@
 package main.com.bodyconquest.constants;
 
+/**
+ * The enum Game type.
+ */
 public enum GameType {
-  SINGLE_PLAYER, MULTIPLAYER_HOST, MULTIPLAYER_JOIN
+    /**
+     * Single player game type.
+     */
+    SINGLE_PLAYER,
+    /**
+     * Multiplayer host game type.
+     */
+    MULTIPLAYER_HOST,
+    /**
+     * Multiplayer join game type.
+     */
+    MULTIPLAYER_JOIN
 }

@@ -57,7 +57,6 @@ public abstract class AbstractGameScreen implements Screen {
         init(game);
     }
 
-
     /**
      * Init.
      *
@@ -75,17 +74,18 @@ public abstract class AbstractGameScreen implements Screen {
         }
         viewport.apply();
         manager = new AssetManager();
-
     }
 
-
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void show() {
-
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void render(float delta) {
 
@@ -94,38 +94,44 @@ public abstract class AbstractGameScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         viewport.apply();
-
     }
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resize(int width, int height) {
 
         viewport.update(width, height, true);
-
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void pause() {
-
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resume() {
-
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void hide() {
-
     }
-    /** {@inheritDoc} */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         manager.dispose();
-
     }
 
     /**
@@ -161,7 +167,5 @@ public abstract class AbstractGameScreen implements Screen {
      * Sets rectangles to get the bounds of the textures or images.
      */
     public void setRectangles() {
-
     }
-
 }

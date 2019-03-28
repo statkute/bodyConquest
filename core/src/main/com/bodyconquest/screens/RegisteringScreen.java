@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
-import main.com.bodyconquest.database.DatabaseManager;
+import main.com.bodyconquest.networking.utilities.Hasher;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
@@ -18,25 +18,28 @@ import main.com.bodyconquest.rendering.BodyConquest;
 public class RegisteringScreen extends DatabasesScreen implements Screen {
 
     private Texture register;
-    private TextButton registerBtn;
     private Image registerImage;
+    private Texture t_submit;
+    private Image submitImage;
+    private Texture t_login;
+    private Image loginImage;
 
-    private GameType gameType;
+    //    private GameType gameType;
 
     /**
      * Instantiates a new Registering screen.
      *
-     * @param game the game
+     * @param game     the game
+     * @param gameType the game type
      */
     public RegisteringScreen(BodyConquest game, GameType gameType) {
-        super(game);
+        super(game, gameType);
         registerImage = new Image(register);
-        registerBtn = new TextButton("Register", skin);
-        listenButton(registerBtn);
         settingSizes();
         settingPositions();
         adding();
-        this.gameType = gameType;
+        addButtons();
+        // this.gameType = gameType;
     }
 
     /**
@@ -53,7 +56,9 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void loadAssets() {
         super.loadAssets();
-        manager.load(Assets.startRegister, Texture.class);
+        manager.load(Assets.registerHeader, Texture.class);
+        manager.load(Assets.submitButtonLow, Texture.class);
+        manager.load(Assets.loginButtonLow, Texture.class);
         manager.finishLoading();
     }
 
@@ -63,30 +68,40 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void getAssets() {
         super.getAssets();
-        register = manager.get(Assets.startRegister, Texture.class);
+        register = manager.get(Assets.registerHeader, Texture.class);
+        t_submit = manager.get(Assets.submitButtonLow, Texture.class);
+        t_login = manager.get(Assets.loginButtonLow, Texture.class);
     }
 
-
     /**
-     * Listen button for a click.
-     *
-     * @param registerBtn the register btn
+     * Add buttons.
      */
+    public void addButtons() {
+        submitImage.addListener(
+                new ClickListener() {
+                    public void clicked(InputEvent event, float x, float y) {
+                        playButtonSound();
+                        textPassword = txfPassword.getText();
+                        textUsername = txfUsername.getText();
+                        //String message = MessageMaker.registerMessage(textUsername, textPassword);
 
-    public void listenButton(TextButton registerBtn) {
-        registerBtn.addListener(new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                registerBtn.setText("You registered!");
-                textPassword = txfPassword.getText();
-                textUsername = txfUsername.getText();
-                String message = MessageMaker.registerMessage(textUsername, textPassword);
-                game.getClient().clientSender.sendMessage(message);
-                System.out.println(textUsername + " " + textPassword);
-                processRegistration();
-            }
-        });
+                        Hasher hasher = new Hasher();
+                        String hashedPassword = hasher.hash(textPassword);
+                        String message = MessageMaker.registerMessage(textUsername, hashedPassword);
+
+                        game.getClient().clientSender.sendMessage(message);
+                        //System.out.println(textUsername + " " + textPassword);
+                        processRegistration();
+                    }
+                });
+
+        loginImage.addListener(
+                new ClickListener() {
+                    public void clicked(InputEvent event, float x, float y) {
+                        playButtonSound();
+                        game.setScreen(new LoginScreen(game, gameType, 0));
+                    }
+                });
     }
 
     /**
@@ -95,17 +110,18 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void processRegistration() {
         super.processRegistration();
-        //wait till the register answer is received from server
-        while (game.getClient().getCommunicator().getRegisteredIsSet().get() == false) {
+        // wait till the register answer is received from server
+        while (!game.getClient().getCommunicator().getRegisteredIsSet().get()) {
         }
-        //System.out.println("Got after registered is set");
-        //System.out.println(game.getClient().getCommunicator().getRegistered());
-        //System.out.println(game.getClient().getCommunicator().getRegisteredIsSet());
-        if (game.getClient().getCommunicator().getRegistered().get() == true) {
-            //if successfully registered, go to login screen
-            game.setScreen(new LoginScreen(game, gameType));
+        //    System.out.println("Got after registered is set");
+        //     System.out.println(game.getClient().getCommunicator().getRegistered());
+        //     System.out.println(game.getClient().getCommunicator().getRegisteredIsSet());
+        if (game.getClient().getCommunicator().getRegistered().get()) {
+            // if successfully registered, go to login screen
+            game.setScreen(new LoginScreen(game, gameType, 0));
         } else {
-            //else go back to registering screen
+            // else go back to registering screen
+            txfUsername.setMessageText("Username already in use; Try again");
             game.setScreen(new RegisteringScreen(game, gameType));
         }
     }
@@ -116,8 +132,21 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void settingPositions() {
         super.settingPositions();
-        registerImage.setPosition(BodyConquest.V_WIDTH / 2.0f - registerImage.getWidth() / 2.0f, 450.0f);
-        registerBtn.setPosition(BodyConquest.V_WIDTH / 2.0f - registerBtn.getWidth() / 2.0f, 50.0f);
+        registerImage.setPosition(
+                BodyConquest.V_WIDTH / 2.0f - registerImage.getWidth() / 2.0f, 450.0f);
+        submitImage = new Image(t_submit);
+        submitImage.setBounds(
+                BodyConquest.V_WIDTH / 2 - t_submit.getWidth() / 2,
+                100,
+                t_submit.getWidth(),
+                t_submit.getHeight());
+
+        loginImage = new Image(t_login);
+        loginImage.setBounds(
+                BodyConquest.V_WIDTH / 2 - t_login.getWidth() / 2,
+                50,
+                t_login.getWidth(),
+                t_login.getHeight());
     }
 
     /**
@@ -127,7 +156,8 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     public void adding() {
         super.adding();
         stage.addActor(registerImage);
-        stage.addActor(registerBtn);
+        stage.addActor(submitImage);
+        stage.addActor(loginImage);
     }
 
     /**
@@ -136,7 +166,6 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     @Override
     public void settingSizes() {
         super.settingSizes();
-        registerBtn.setSize(250, 50);
         registerImage.setSize(register.getWidth(), register.getHeight());
-    }
+  }
 }

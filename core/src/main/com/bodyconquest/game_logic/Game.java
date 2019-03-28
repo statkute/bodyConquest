@@ -1,11 +1,15 @@
 package main.com.bodyconquest.game_logic;
 
 import main.com.bodyconquest.constants.*;
+import main.com.bodyconquest.entities.DifficultyLevel;
+import main.com.bodyconquest.game_logic.utils.Timer;
 import main.com.bodyconquest.gamestates.EncounterState;
 import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
+import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.net.SocketException;
+import java.util.Random;
 
 public class Game extends Thread {
 
@@ -23,12 +27,19 @@ public class Game extends Thread {
   private Player playerBottom;
   private Player playerTop;
   private boolean encounter;
+    private PlayerType lastPicker;
+
+    public String usernameTop;
+    public String usernameBottom;
+
+    //difficulty of the game for single player
+    private DifficultyLevel difficulty;
 
   /**
    * Constructor
    *
    * @param gameType The type of game that this server is running.
-   * @throws SocketException
+   * @throws SocketException the Socket Exception
    */
   public Game(GameType gameType) throws SocketException {
     this.gameType = gameType;
@@ -72,7 +83,7 @@ public class Game extends Thread {
   }
 
   private void update() {
-    if (encounter && encounterState != null){
+      if (encounter && encounterState != null) {
       encounterState.update();
     }
   }
@@ -109,9 +120,20 @@ public class Game extends Thread {
 
   public void startRaceSelectionState() {
     server.startRaceSelectionLogic(this);
-    if (gameType == GameType.SINGLE_PLAYER) {
-      setPlayerTop(Disease.INFLUENZA);
-    }
+      if (gameType == GameType.SINGLE_PLAYER) {
+          setPlayerTop(Disease.INFLUENZA);
+          server
+                  .getServerSender()
+                  .sendMessage(MessageMaker.firstPickerMessage(PlayerType.PLAYER_BOTTOM));
+          Timer.startTimer(2000);
+      } else {
+          Random rnd = new Random();
+          server
+                  .getServerSender()
+                  .sendMessage(
+                          MessageMaker.firstPickerMessage(
+                                  (rnd.nextInt(2) == 1 ? PlayerType.PLAYER_BOTTOM : PlayerType.PLAYER_TOP)));
+      }
   }
 
   public GameType getGameType() {
@@ -123,16 +145,26 @@ public class Game extends Thread {
   }
 
   public void startBodyState() {
-    if (gameType == GameType.SINGLE_PLAYER){
-//      //setPlayerTop(Disease.INFLUENZA);
-////      if(getPlayerBottom().getDisease() != Disease.INFLUENZA)
-////        setPlayerTop(Disease.INFLUENZA);
-////      else if(getPlayerBottom().getDisease() != Disease.MEASLES)
-////        setPlayerTop(Disease.MEASLES);
-      server.getServerSender().sendMessage(MessageMaker.diseaseMessage(Disease.INFLUENZA, PlayerType.PLAYER_TOP));
+      if (gameType == GameType.SINGLE_PLAYER) {
+          if (getPlayerBottom().getDisease() != Disease.INFLUENZA) setPlayerTop(Disease.INFLUENZA);
+          else if (getPlayerBottom().getDisease() != Disease.ROTAVIRUS) setPlayerTop(Disease.ROTAVIRUS);
+          server
+                  .getServerSender()
+                  .sendMessage(
+                          MessageMaker.diseaseMessage(getPlayerTop().getDisease(), PlayerType.PLAYER_TOP));
+          usernameTop = "AI";
+          Timer.startTimer(2000);
     }
 
-    server.startBodyLogic(); }
+      server
+              .getServerSender()
+              .sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_BOTTOM, usernameBottom));
+      server
+              .getServerSender()
+              .sendMessage(MessageMaker.usernameMessage(PlayerType.PLAYER_TOP, usernameTop));
+
+      server.startBodyLogic();
+  }
 
   public void endEncounter() {
     encounter = false;
@@ -141,7 +173,22 @@ public class Game extends Thread {
   }
 
     public void startDatabaseState() {
-        server.startDatabaseLogic();
+        server.startDatabaseLogic(this);
     }
 
+    public PlayerType getLastPicker() {
+        return lastPicker;
+    }
+
+    public void setLastPicker(PlayerType lastPicker) {
+        this.lastPicker = lastPicker;
+    }
+
+    public DifficultyLevel getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(DifficultyLevel difficulty) {
+        this.difficulty = difficulty;
+    }
 }

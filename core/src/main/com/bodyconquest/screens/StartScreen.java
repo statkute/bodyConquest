@@ -44,7 +44,8 @@ public class StartScreen extends AbstractGameScreen implements Screen {
   /**
    * Instantiates a new Start screen.
    *
-   * @param game the game
+   * @param game     the game
+   * @param gameType the game type
    */
   public StartScreen(BodyConquest game, GameType gameType) {
     super(game);
@@ -70,6 +71,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
       e.printStackTrace();
     }
 
+
     if (gameType != GameType.MULTIPLAYER_JOIN) {
       playerType = PlayerType.PLAYER_BOTTOM;
     } else {
@@ -88,19 +90,24 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     super.render(delta);
     game.batch.begin();
     game.batch.draw(background, 0, 0, BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT);
-    game.batch.draw(title, BodyConquest.V_WIDTH / 2.0f - title.getWidth() / 2.0f, 450);
+      game.batch.draw(
+              title,
+              BodyConquest.V_WIDTH / 2.0f - title.getWidth() / 1.7f / 2.0f,
+              450,
+              title.getWidth() / 1.7f,
+              title.getHeight() / 1.7f);
     game.batch.draw(
         login,
-        BodyConquest.V_WIDTH / 2.0f - login.getWidth() / 1.77f / 2.0f,
+            BodyConquest.V_WIDTH / 2.0f - login.getWidth() / 2.0f,
         300,
-        login.getWidth() / 1.77f,
-        login.getHeight() / 1.77f);
+            login.getWidth(),
+            login.getHeight());
     game.batch.draw(
         register,
-        BodyConquest.V_WIDTH / 2.0f - register.getWidth() / 1.77f / 2.0f,
+            BodyConquest.V_WIDTH / 2.0f - register.getWidth() / 2.0f,
         240,
-        register.getWidth() / 1.77f,
-        register.getHeight() / 1.77f);
+            register.getWidth(),
+            register.getHeight());
     game.batch.draw(exitButton, BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2, 60);
     checkPressed();
     game.batch.end();
@@ -117,7 +124,7 @@ public class StartScreen extends AbstractGameScreen implements Screen {
         playButtonSound();
         // System.out.println("Login touched");
         dispose();
-        game.setScreen(new LoginScreen(game, gameType));
+          game.setScreen(new LoginScreen(game, gameType, 0));
       }
 
       if (registerBounds.contains(tmp.x, tmp.y)) {
@@ -140,10 +147,10 @@ public class StartScreen extends AbstractGameScreen implements Screen {
   @Override
   public void loadAssets() {
     super.loadAssets();
-    manager.load(Assets.startTitle, Texture.class);
-    manager.load(Assets.startLogin, Texture.class);
+      manager.load(Assets.startTitle, Texture.class);
+      manager.load(Assets.startLogin, Texture.class);
     manager.load(Assets.startRegister, Texture.class);
-    manager.load(Assets.exitButton, Texture.class);
+      manager.load(Assets.exitButton, Texture.class);
     manager.finishLoading();
   }
 
@@ -151,10 +158,10 @@ public class StartScreen extends AbstractGameScreen implements Screen {
   @Override
   public void getAssets() {
     super.getAssets();
-    title = manager.get(Assets.startTitle, Texture.class);
-    login = manager.get(Assets.startLogin, Texture.class);
+      title = manager.get(Assets.startTitle, Texture.class);
+      login = manager.get(Assets.startLogin, Texture.class);
     register = manager.get(Assets.startRegister, Texture.class);
-    exitButton = manager.get(Assets.exitButton, Texture.class);
+      exitButton = manager.get(Assets.exitButton, Texture.class);
   }
 
   /** {@inheritDoc} */
@@ -163,16 +170,16 @@ public class StartScreen extends AbstractGameScreen implements Screen {
     super.setRectangles();
     loginBounds =
         new Rectangle(
-            BodyConquest.V_WIDTH / 2.0f - login.getWidth() / 1.77f / 2.0f,
+                BodyConquest.V_WIDTH / 2.0f - login.getWidth() / 2.0f,
             300,
-            login.getWidth() / 1.77f,
-            login.getHeight() / 1.77f);
+                login.getWidth(),
+                login.getHeight());
     registerBounds =
         new Rectangle(
-            BodyConquest.V_WIDTH / 2.0f - register.getWidth() / 1.77f / 2.0f,
+                BodyConquest.V_WIDTH / 2.0f - register.getWidth() / 2.0f,
             240,
-            register.getWidth() / 1.77f,
-            register.getHeight() / 1.77f);
+                register.getWidth(),
+                register.getHeight());
     exitBounds =
         new Rectangle(
             BodyConquest.V_WIDTH / 2 - exitButton.getWidth() / 2,

@@ -8,21 +8,38 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.concurrent.LinkedBlockingQueue;
 
-/** Server thread that is responsible for receiving messages from all connected clients */
+/**
+ * Server thread that is responsible for receiving messages from all connected clients
+ */
 public class ServerReceiver extends Thread {
-  public DatagramSocket socket;
-  public ServerSender serverSender;
-  public LinkedBlockingQueue<String> receivedMessages;
-  public GameType type;
-  public int numberOfClients;
+    /**
+     * The Socket.
+     */
+    public DatagramSocket socket;
+    /**
+     * The Server sender.
+     */
+    public ServerSender serverSender;
+    /**
+     * The Received messages.
+     */
+    public LinkedBlockingQueue<String> receivedMessages;
+    /**
+     * The Type.
+     */
+    public GameType type;
+    /**
+     * The Number of clients.
+     */
+    public int numberOfClients;
   private boolean run;
 
   /**
    * ServerReceiver initialization
    *
    * @param serverSender the ServerSender thread of the same Server
-   * @param type the type of the game: either "singleplayer" or "multiplayer"
-   * @throws SocketException
+   * @param type         the type of the game: either "singleplayer" or "multiplayer"
+   * @throws SocketException the socket exception
    */
   public ServerReceiver(ServerSender serverSender, GameType type) throws SocketException {
     socket = new DatagramSocket(3000);
@@ -57,7 +74,9 @@ public class ServerReceiver extends Thread {
     }
   }
 
-  /** A method that deals with receiving and storing client ID and waiting for the game to start */
+    /**
+     * A method that deals with receiving and storing client ID and waiting for the game to start
+     */
   public void gameSetup() {
     while (run) {
       try {
@@ -99,11 +118,12 @@ public class ServerReceiver extends Thread {
       }
     }
   }
-  public void stopRunning(){
-    run = false;
-//    Timer.startTimer(100);
-//    if (socket != null){
-      socket.close();
-//    }
-  }
+
+    /**
+     * Stop running.
+     */
+    public void stopRunning(){
+        run = false;
+        socket.close();
+    }
 }

@@ -20,12 +20,14 @@ import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.util.ArrayList;
 
-/** The type Body screen. */
+/**
+ * The type Body screen.
+ */
 public class BodyScreen extends AbstractGameScreen implements Screen {
   private GameType gameType;
 
-//  private final OrthographicCamera gameCamera;
-//  private final FitViewport gamePort;
+    //  private final OrthographicCamera gameCamera;
+    //  private final FitViewport gamePort;
   private final Stage stage;
 
   private Image title;
@@ -68,6 +70,10 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   private Texture t_intestinespoints;
   private Image continueImage;
   private Texture t_continueImage;
+    private Image waitingImage;
+    private Texture t_waiting;
+    private Image select;
+    private Texture t_select;
 
   private Disease myDiseaseType;
   private Disease opponentDiseaseType;
@@ -78,35 +84,13 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
   private Organ selectedOrganType;
   private Image selectedOrganImage;
 
+    private boolean picker;
+
   private Communicator communicator;
-
-  //  public BodyScreen(BodyConquest game, GameType gameType, Disease myDiseaseType, Disease
-  // opponentDiseaseType, ArrayList<Organ> myOrgans, ArrayList<Organ> opponentOrgans) {
-  //    super(game);
-  //    this.gameType = gameType;
-  //
-  //    this.myDiseaseType = myDiseaseType;
-  //    this.opponentDiseaseType = opponentDiseaseType;
-  //    this.myOrgans = myOrgans;
-  //    this.opponentOrgans = opponentOrgans;
-  //
-  //    selectedOrganType = null;
-  //
-  //    gameCamera = new OrthographicCamera();
-  //    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
-  //    stage = new Stage(gamePort);
-  //    Gdx.input.setInputProcessor(stage);
-  //
-  //    loadAssets();
-  //    getAssets();
-  //    addActors();
-  //    addButtons();
-  //  }
-
   /**
    * Instantiates a new Body screen.
    *
-   * @param game the game
+   * @param game     the game
    * @param gameType the game type
    */
   public BodyScreen(BodyConquest game, GameType gameType) {
@@ -119,22 +103,21 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     communicator = game.getClient().getCommunicator();
     communicator.setStartBodyScreen(false);
 
+      picker = communicator.isPicker();
+
     this.myDiseaseType = communicator.getPlayerDisease();
     this.opponentDiseaseType = communicator.getOpponentDisease();
     this.myOrgans = communicator.getPlayerOrgans();
     this.opponentOrgans = communicator.getOpponentOrgans();
-
-    //selectedOrganType = null;
-
-//    gameCamera = new OrthographicCamera();
-//    gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(viewport);
     Gdx.input.setInputProcessor(stage);
 
     loadAssets();
     getAssets();
     addActors();
-    addButtons();
+      if (picker) {
+          addButtons();
+      }
   }
 
   /** {@inheritDoc} */
@@ -148,6 +131,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     stage.draw();
     game.batch.end();
     if (communicator.getStartEncounter()) game.setScreen(new EncounterScreen(game, gameType));
+      checkForOrganSelections();
   }
 
   /** {@inheritDoc} */
@@ -251,7 +235,12 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
       manager.load(Assets.intestines, Texture.class);
     }
 
-    manager.load(Assets.continueTextBig, Texture.class);
+      if (picker) {
+          manager.load(Assets.continueTextBig, Texture.class);
+          manager.load(Assets.selectOrganText, Texture.class);
+      } else {
+          manager.load(Assets.waitingText, Texture.class);
+      }
     manager.finishLoading();
   }
 
@@ -321,7 +310,12 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
       t_intestines = manager.get(Assets.intestines, Texture.class);
     }
 
-    t_continueImage = manager.get(Assets.continueTextBig, Texture.class);
+      if (picker) {
+          t_continueImage = manager.get(Assets.continueTextBig, Texture.class);
+          t_select = manager.get(Assets.selectOrganText, Texture.class);
+      } else {
+          t_waiting = manager.get(Assets.waitingText, Texture.class);
+      }
   }
 
   /**
@@ -340,6 +334,8 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
       case ROTAVIRUS:
         t_heart = manager.get(Assets.heart_yellow, Texture.class);
         break;
+        default:
+            t_heart = manager.get(Assets.heart, Texture.class);
     }
   }
 
@@ -438,7 +434,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
     }
   }
 
-  /** Add actors to the stage. */
+    /**
+     * Add actors to the stage.
+     */
   public void addActors() {
     title = new Image(t_header);
     title.setBounds(
@@ -448,8 +446,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
             t_header.getHeight() / 2);
     allImages.add(title);
 
-
-    //if(!communicator.wasHeartSelected()){
+      // if(!communicator.wasHeartSelected()){
       heart = new Image(t_heart);
       heart.setBounds(
               BodyConquest.V_WIDTH / 5 - t_heart.getWidth() * 1.5f / 2,
@@ -473,10 +470,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               t_heartpoints.getWidth() / 3f,
               t_heartpoints.getHeight() / 3f);
       allImages.add(heartpoints);
-    //}
+      // }
 
-
-//    if(!communicator.wasEyeSelected()){
+      //    if(!communicator.wasEyeSelected()){
       eye = new Image(t_eye);
       eye.setBounds(
               BodyConquest.V_WIDTH / 2 - t_eye.getWidth() * 1.5f / 2,
@@ -499,9 +495,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               t_eyepoints.getWidth() / 3f,
               t_eyepoints.getHeight() / 3f);
       allImages.add(eyepoints);
-    //}
+      // }
 
-    //if(!communicator.wasLungsSelected()){
+      // if(!communicator.wasLungsSelected()){
       lungs = new Image(t_lungs);
       lungs.setBounds(
               BodyConquest.V_WIDTH / 5 * 4 - t_lungs.getWidth() * 1.5f / 2,
@@ -524,10 +520,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               t_lungspoints.getWidth() / 3f,
               t_lungspoints.getHeight() / 3f);
       allImages.add(lungspoints);
-    //}
+      // }
 
-
-    //if(!communicator.wasBrainSelected()){
+      // if(!communicator.wasBrainSelected()){
       brain = new Image(t_brain);
       brain.setBounds(
               BodyConquest.V_WIDTH / 5 - t_brain.getWidth() * 1.5f / 2,
@@ -550,9 +545,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               t_brainpoints.getWidth() / 3f,
               t_brainpoints.getHeight() / 3f);
       allImages.add(brainpoints);
-   // }
+      // }
 
-   // if(!communicator.wasTeethSelected()){
+      // if(!communicator.wasTeethSelected()){
       teeth = new Image(t_teeth);
       teeth.setBounds(
               BodyConquest.V_WIDTH / 2 - t_teeth.getWidth() * 1.5f / 2,
@@ -575,9 +570,9 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               t_teethpoints.getWidth() / 3f,
               t_teethpoints.getHeight() / 3f);
       allImages.add(teethpoints);
-    //}
+      // }
 
-    //if(!communicator.wasIntestinesSelected()){
+      // if(!communicator.wasIntestinesSelected()){
       intestines = new Image(t_intestines);
       intestines.setBounds(
               BodyConquest.V_WIDTH / 5 * 4 - t_intestines.getWidth() * 1.5f / 2,
@@ -600,152 +595,287 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
               t_intestinespoints.getWidth() / 3f,
               t_intestinespoints.getHeight() / 3f);
       allImages.add(intestinespoints);
-    //}
+      // }
 
-    continueImage = new Image(t_continueImage);
-    continueImage.setBounds(
-            BodyConquest.V_WIDTH / 2 - t_continueImage.getWidth() / 2.2f / 2,
-            30,
-            t_continueImage.getWidth() / 2.2f,
-            t_continueImage.getHeight() / 2.2f);
+      if (picker) {
+          continueImage = new Image(t_continueImage);
+          continueImage.setBounds(
+                  BodyConquest.V_WIDTH / 2 - t_continueImage.getWidth() / 2.2f / 2,
+                  30,
+                  t_continueImage.getWidth() / 2.2f,
+                  t_continueImage.getHeight() / 2.2f);
+          //      allImages.add(continueImage);
+
+          select = new Image(t_select);
+          select.setBounds(
+                  BodyConquest.V_WIDTH / 2 - t_select.getWidth() / 2.2f / 2,
+                  30,
+                  t_select.getWidth() / 2.2f,
+                  t_select.getHeight() / 2.2f);
+          allImages.add(select);
+      } else {
+          waitingImage = new Image(t_waiting);
+          waitingImage.setBounds(
+                  BodyConquest.V_WIDTH / 2 - t_waiting.getWidth() / 2.2f / 2,
+                  30,
+                  t_waiting.getWidth() / 2.2f,
+                  t_waiting.getHeight() / 2.2f);
+          allImages.add(waitingImage);
+      }
 
     for (Image i : allImages) {
       stage.addActor(i);
     }
-
-    heart.remove(); // THIS IS HOW TO REMOVE AN ACTOR
-    stage.addActor(heart);
   }
 
-  /** Add buttons to the stage. */
+    /**
+     * Add buttons to the stage.
+     */
   public void addButtons() {
-    heart.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                  selectedOrganType = Organ.HEART;
-                  selectedOrganImage = heartSelected;
-                  stage.addActor(heartSelected);
-                } else {
-                  selectedOrganImage = heartSelected;
-                  stage.addActor(heartSelected);
-                  selectedOrganType = Organ.HEART;
-                  stage.addActor(continueImage);
-                }
+      if (!(opponentOrgans.contains(Organ.HEART) || myOrgans.contains(Organ.HEART))) {
+          heart.addListener(
+                  new ClickListener() {
+                      public void clicked(InputEvent event, float x, float y) {
+                          playButtonSound();
+                          if (selectedOrganType != null) {
+                              selectedOrganImage.remove();
+                              selectedOrganType = Organ.HEART;
+                              selectedOrganImage = heartSelected;
+                              stage.addActor(heartSelected);
+                          } else {
+                              selectedOrganImage = heartSelected;
+                              stage.addActor(heartSelected);
+                              selectedOrganType = Organ.HEART;
+                              select.remove();
+                              stage.addActor(continueImage);
+                          }
+                          game.getClient()
+                                  .clientSender
+                                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+                      }
+                  });
+          heartpoints.addListener(heart.getListeners().peek());
+      }
 
-              }
-            });
-    heartpoints.addListener(heart.getListeners().peek());
+      if (!(opponentOrgans.contains(Organ.EYES) || myOrgans.contains(Organ.EYES))) {
+          eye.addListener(
+                  new ClickListener() {
+                      public void clicked(InputEvent event, float x, float y) {
+                          playButtonSound();
+                          if (selectedOrganType != null) {
+                              selectedOrganImage.remove();
+                          } else {
+                              select.remove();
+                              stage.addActor(continueImage);
+                          }
+                          selectedOrganImage = eyeSelected;
+                          stage.addActor(eyeSelected);
+                          selectedOrganType = Organ.EYES;
+                          game.getClient()
+                                  .clientSender
+                                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+                      }
+                  });
+          eyepoints.addListener(eye.getListeners().peek());
+      }
 
-    eye.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                } else {
-                  stage.addActor(continueImage);
-                }
-                selectedOrganImage = eyeSelected;
-                stage.addActor(eyeSelected);
-                selectedOrganType = Organ.EYES;
-              }
-            });
-    eyepoints.addListener(eye.getListeners().peek());
+      if (!(opponentOrgans.contains(Organ.LUNGS) || myOrgans.contains(Organ.LUNGS))) {
+          lungs.addListener(
+                  new ClickListener() {
+                      public void clicked(InputEvent event, float x, float y) {
+                          playButtonSound();
+                          if (selectedOrganType != null) {
+                              selectedOrganImage.remove();
+                              selectedOrganImage = lungsSelected;
+                              stage.addActor(lungsSelected);
+                              selectedOrganType = Organ.LUNGS;
+                          } else {
+                              selectedOrganImage = lungsSelected;
+                              stage.addActor(lungsSelected);
+                              selectedOrganType = Organ.LUNGS;
+                              select.remove();
+                              stage.addActor(continueImage);
+                          }
+                          game.getClient()
+                                  .clientSender
+                                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+                      }
+                  });
+          lungspoints.addListener(lungs.getListeners().peek());
+      }
 
-    lungs.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                  selectedOrganImage = lungsSelected;
-                  stage.addActor(lungsSelected);
-                  selectedOrganType = Organ.LUNGS;
-                } else {
-                  selectedOrganImage = lungsSelected;
-                  stage.addActor(lungsSelected);
-                  selectedOrganType = Organ.LUNGS;
-                  stage.addActor(continueImage);
-                }
-              }
-            });
-    lungspoints.addListener(lungs.getListeners().peek());
+      if (!(opponentOrgans.contains(Organ.BRAIN) || myOrgans.contains(Organ.BRAIN))) {
+          brain.addListener(
+                  new ClickListener() {
+                      public void clicked(InputEvent event, float x, float y) {
+                          playButtonSound();
+                          if (selectedOrganType != null) {
+                              selectedOrganImage.remove();
+                              selectedOrganImage = brainSelected;
+                              stage.addActor(brainSelected);
+                              selectedOrganType = Organ.BRAIN;
+                          } else {
+                              selectedOrganImage = brainSelected;
+                              stage.addActor(brainSelected);
+                              selectedOrganType = Organ.BRAIN;
+                              select.remove();
+                              stage.addActor(continueImage);
+                          }
+                          game.getClient()
+                                  .clientSender
+                                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+                      }
+                  });
+          brainpoints.addListener(brain.getListeners().peek());
+      }
 
-    brain.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                  selectedOrganImage = brainSelected;
-                  stage.addActor(brainSelected);
-                  selectedOrganType = Organ.BRAIN;
-                } else {
-                  selectedOrganImage = brainSelected;
-                  stage.addActor(brainSelected);
-                  selectedOrganType = Organ.BRAIN;
-                  stage.addActor(continueImage);
-                }
-              }
-            });
-    brainpoints.addListener(brain.getListeners().peek());
+      if (!(opponentOrgans.contains(Organ.TEETH) || myOrgans.contains(Organ.TEETH))) {
+          teeth.addListener(
+                  new ClickListener() {
+                      public void clicked(InputEvent event, float x, float y) {
+                          playButtonSound();
+                          if (selectedOrganType != null) {
+                              selectedOrganImage.remove();
+                              selectedOrganImage = teethSelected;
+                              stage.addActor(teethSelected);
+                              selectedOrganType = Organ.TEETH;
+                          } else {
+                              selectedOrganImage = teethSelected;
+                              stage.addActor(teethSelected);
+                              selectedOrganType = Organ.TEETH;
+                              select.remove();
+                              stage.addActor(continueImage);
+                          }
+                          game.getClient()
+                                  .clientSender
+                                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+                      }
+                  });
 
-    teeth.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                  selectedOrganImage = teethSelected;
-                  stage.addActor(teethSelected);
-                  selectedOrganType = Organ.TEETH;
-                } else {
-                  selectedOrganImage = teethSelected;
-                  stage.addActor(teethSelected);
-                  selectedOrganType = Organ.TEETH;
-                  stage.addActor(continueImage);
-                }
-              }
-            });
+          teethpoints.addListener(teeth.getListeners().peek());
+      }
 
-    teethpoints.addListener(teeth.getListeners().peek());
+      if (!(opponentOrgans.contains(Organ.INTESTINES) || myOrgans.contains(Organ.INTESTINES))) {
+          intestines.addListener(
+                  new ClickListener() {
+                      public void clicked(InputEvent event, float x, float y) {
+                          playButtonSound();
+                          if (selectedOrganType != null) {
+                              selectedOrganImage.remove();
+                              selectedOrganImage = intestinesSelected;
+                              stage.addActor(intestinesSelected);
+                              selectedOrganType = Organ.INTESTINES;
+                          } else {
+                              selectedOrganImage = intestinesSelected;
+                              stage.addActor(intestinesSelected);
+                              selectedOrganType = Organ.INTESTINES;
+                              select.remove();
+                              stage.addActor(continueImage);
+                          }
+                          game.getClient()
+                                  .clientSender
+                                  .sendMessage(MessageMaker.selectedOrganMessage(selectedOrganType));
+                      }
+                  });
 
-    intestines.addListener(
-            new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                playButtonSound();
-                if (selectedOrganType != null) {
-                  selectedOrganImage.remove();
-                  selectedOrganImage = intestinesSelected;
-                  stage.addActor(intestinesSelected);
-                  selectedOrganType = Organ.INTESTINES;
-                } else {
-                  selectedOrganImage = intestinesSelected;
-                  stage.addActor(intestinesSelected);
-                  selectedOrganType = Organ.INTESTINES;
-                  stage.addActor(continueImage);
-                }
-              }
-            });
-
-    intestinespoints.addListener(intestines.getListeners().peek());
+          intestinespoints.addListener(intestines.getListeners().peek());
+      }
 
     continueImage.addListener(
             new ClickListener() {
-              public void clicked(InputEvent event, float x, float y) {
-                dispose();
-                game.getClient()
-                        .clientSender
-                        .sendMessage(MessageMaker.confirmOrganMessage(selectedOrganType));
-                // if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startEncounterState();
-                // We should probably have some sort of loading screen? Or at least a loading symbol?
-                // game.setScreen(new EncounterScreen(game, gameType));
-
-                playButtonSound();
-              }
+                public void clicked(InputEvent event, float x, float y) {
+                    dispose();
+                    game.getClient()
+                            .clientSender
+                            .sendMessage(MessageMaker.confirmOrganMessage(selectedOrganType));
+                    // if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startEncounterState();
+                    // We should probably have some sort of loading screen? Or at least a loading symbol?
+                    // game.setScreen(new EncounterScreen(game, gameType));
+                    playButtonSound();
+                }
             });
   }
+
+    /**
+     * Check for organ selections.
+     */
+    void checkForOrganSelections() {
+        if (communicator.getSelectedOrgan() != null) {
+            if (communicator.getSelectedOrgan() == selectedOrganType) {
+                return;
+            }
+            switch (communicator.getSelectedOrgan()) {
+                case HEART:
+                    if (selectedOrganType != null) {
+                        selectedOrganImage.remove();
+                        selectedOrganType = Organ.HEART;
+                        selectedOrganImage = heartSelected;
+                        stage.addActor(heartSelected);
+                    } else {
+                        selectedOrganImage = heartSelected;
+                        stage.addActor(heartSelected);
+                        selectedOrganType = Organ.HEART;
+                    }
+                    break;
+                case EYES:
+                    if (selectedOrganType != null) {
+                        selectedOrganImage.remove();
+                    }
+                    selectedOrganImage = eyeSelected;
+                    stage.addActor(eyeSelected);
+                    selectedOrganType = Organ.EYES;
+                    break;
+                case LUNGS:
+                    if (selectedOrganType != null) {
+                        selectedOrganImage.remove();
+                        selectedOrganImage = lungsSelected;
+                        stage.addActor(lungsSelected);
+                        selectedOrganType = Organ.LUNGS;
+                    } else {
+                        selectedOrganImage = lungsSelected;
+                        stage.addActor(lungsSelected);
+                        selectedOrganType = Organ.LUNGS;
+                    }
+                    break;
+                case BRAIN:
+                    if (selectedOrganType != null) {
+                        selectedOrganImage.remove();
+                        selectedOrganImage = brainSelected;
+                        stage.addActor(brainSelected);
+                        selectedOrganType = Organ.BRAIN;
+                    } else {
+                        selectedOrganImage = brainSelected;
+                        stage.addActor(brainSelected);
+                        selectedOrganType = Organ.BRAIN;
+                    }
+                    break;
+                case TEETH:
+                    if (selectedOrganType != null) {
+                        selectedOrganImage.remove();
+                        selectedOrganImage = teethSelected;
+                        stage.addActor(teethSelected);
+                        selectedOrganType = Organ.TEETH;
+                    } else {
+                        selectedOrganImage = teethSelected;
+                        stage.addActor(teethSelected);
+                        selectedOrganType = Organ.TEETH;
+                    }
+                    break;
+                case INTESTINES:
+                    if (selectedOrganType != null) {
+                        selectedOrganImage.remove();
+                        selectedOrganImage = intestinesSelected;
+                        stage.addActor(intestinesSelected);
+                        selectedOrganType = Organ.INTESTINES;
+                    } else {
+                        selectedOrganImage = intestinesSelected;
+                        stage.addActor(intestinesSelected);
+                        selectedOrganType = Organ.INTESTINES;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

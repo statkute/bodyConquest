@@ -5,39 +5,24 @@ import main.com.bodyconquest.constants.Lane;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.Troops.Troop;
 
+/**
+ * The type Base.
+ */
 public abstract class Base extends Troop {
 
-//    private float timeAlive;
-//    private float timeOfDmgTaken;
-//
-//    public static final float BLINK_TIME_AFTER_DMG = 0.25f;
-
-
+    /**
+     * Instantiates a new Base.
+     *
+     * @param playerType the player type it is assigned to
+     */
     public Base(PlayerType playerType) {
-      super(Lane.ALL, playerType);
-      this.attackable = true;
-      this.moving = false;
-      this.attacking = false;
-      this.cooldown = 1500;
-//      setTimeAlive(0.0f);
-//      setTimeOfDmgTaken(-1.0f);
-      this.setSize(Assets.baseWidth, Assets.baseHeight);
-      this.setCSize(Assets.baseWidth, Assets.baseHeight);
+        super(Lane.ALL, playerType);
+        this.attackable = true;
+        this.moving = false;
+        this.attacking = false;
+        this.cooldown = 1500;
+        ranged = true;
+        this.setSize(Assets.baseWidth, Assets.baseHeight);
+        this.setCSize(Assets.baseWidth, Assets.baseHeight);
     }
-
-//    public float getTimeAlive() {
-//        return timeAlive;
-//    }
-//
-//    public void setTimeAlive(float timeAlive) {
-//        this.timeAlive = timeAlive;
-//    }
-//
-//    public float getTimeOfDmgTaken() {
-//        return timeOfDmgTaken;
-//    }
-//
-//    public void setTimeOfDmgTaken(float timeOfDmgTaken) {
-//        this.timeOfDmgTaken = timeOfDmgTaken;
-//    }
 }

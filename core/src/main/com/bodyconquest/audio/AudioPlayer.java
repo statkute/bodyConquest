@@ -20,9 +20,9 @@ public class AudioPlayer {
      */
     private static float SFX_VOLUME = 1.0f;
     /**
-     * The volume for all the music inside the game. (Initialised to {@value MUSIC_VOLUME})
+     * The volume for all the music inside the game. (Initialised to )
      */
-    private static float MUSIC_VOLUME = 1.0f;
+    private float MUSIC_VOLUME = 1.0f;
 
     /**
      * The volume to set for muted sounds.
@@ -87,11 +87,7 @@ public class AudioPlayer {
      * Toggle if sound FX are muted.
      */
     public void toggleMutedSFX() {
-        if (mutedSFX) {
-            mutedSFX = false;
-        } else {
-            mutedSFX = true;
-        }
+        mutedSFX = !mutedSFX;
     }
 
     /**
@@ -135,6 +131,7 @@ public class AudioPlayer {
      */
     public void playSFX(String name) {
         if (muted || mutedSFX) {
+            System.out.println(soundFX.get(name));
             soundFX.get(name).play(MUTED_VOLUME * MASTER_VOLUME * 0.3f);
         } else {
             soundFX.get(name).play(SFX_VOLUME * MASTER_VOLUME * 0.3f);
@@ -231,4 +228,28 @@ public class AudioPlayer {
     public boolean getMutedMusic() {
         return mutedMusic;
     }
+
+    /**
+     * Gets music volume.
+     *
+     * @return the music volume
+     */
+    public float getMusicVolume() {
+        return MUSIC_VOLUME;
+    }
+
+    /**
+     * The constant MUSIC_FADE_STEP.
+     */
+    public final static float MUSIC_FADE_STEP = 0.001f;
+
+    /**
+     * The constant MUSIC_FADE_STEP_UP.
+     */
+    public final static float MUSIC_FADE_STEP_UP = 0.0008f;
+
+    /**
+     * The constant MUSIC_FADE_RATE.
+     */
+    public final static float MUSIC_FADE_RATE = 0.005f;
 }

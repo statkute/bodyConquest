@@ -56,9 +56,9 @@ public class MultiplayerTestAI extends Thread {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                game.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType);
-                game.spawnUnit(UnitType.BACTERIA, Lane.MIDDLE, playerType);
-                game.spawnUnit(UnitType.VIRUS, Lane.TOP, playerType);
+                game.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType, true);
+                game.spawnUnit(UnitType.BACTERIA, Lane.MIDDLE, playerType, true);
+                game.spawnUnit(UnitType.VIRUS, Lane.TOP, playerType, true);
             }
         });
     }

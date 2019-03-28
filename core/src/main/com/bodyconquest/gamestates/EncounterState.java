@@ -2,6 +2,7 @@ package main.com.bodyconquest.gamestates;
 
 import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.entities.BasicObject;
+import main.com.bodyconquest.entities.DifficultyLevel;
 import main.com.bodyconquest.entities.Map;
 import main.com.bodyconquest.entities.MapObject;
 import main.com.bodyconquest.entities.Troops.Bacteria;
@@ -15,6 +16,7 @@ import main.com.bodyconquest.entities.resources.Resources;
 import main.com.bodyconquest.game_logic.BasicTestAI;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.game_logic.MultiplayerTestAI;
+import main.com.bodyconquest.game_logic.MultiplayerAI;
 import main.com.bodyconquest.game_logic.Player;
 import main.com.bodyconquest.networking.ServerSender;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
@@ -62,7 +64,10 @@ public class EncounterState {
   private int totalScoreTop;
   private int totalScoreBottom;
 
-  int counter = 0;
+    /**
+     * The Counter.
+     */
+    int counter = 0;
 
   // Move resources in side of player
   private Resources topResources;
@@ -70,7 +75,16 @@ public class EncounterState {
 
   private Organ organ;
 
-  /** Constructor. */
+    private MultiplayerAI multiplayerAI;
+
+    private BasicTestAI singleplayerAI;
+
+    /**
+     * Constructor. @param game the game
+     *
+     * @param game the game
+     * @param organ the organ
+   */
   public EncounterState(Game game, Organ organ) {
     this.game = game;
     this.organ = organ;
@@ -82,7 +96,9 @@ public class EncounterState {
     allMapObjects = new CopyOnWriteArrayList<>();
 
     topPlayer = game.getPlayerTop();
+      topPlayer.refreshMultipliers();
     bottomPlayer = game.getPlayerBottom();
+      bottomPlayer.refreshMultipliers();
 
     // Initialise unit arrays
     troopsBottom = new CopyOnWriteArrayList<>();
@@ -112,11 +128,14 @@ public class EncounterState {
     topResources.start();
 
     if (game.getGameType() == GameType.SINGLE_PLAYER) {
-      BasicTestAI ai = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources);
-      ai.start();
+        DifficultyLevel difficultyLevel = game.getDifficulty();
+        singleplayerAI = new BasicTestAI(this, PlayerType.PLAYER_TOP, topResources, difficultyLevel);
+        //multiplayerAI = new MultiplayerAI(this);
+        singleplayerAI.start();
+        //multiplayerAI.start();
     } else {
-      MultiplayerTestAI ai = new MultiplayerTestAI(this);
-      ai.start();
+        multiplayerAI = new MultiplayerAI(this);
+        multiplayerAI.start();
     }
   }
 
@@ -140,10 +159,9 @@ public class EncounterState {
     }
 
     for (Troop troop : deadTroops) {
-      if(troop.getPlayerType() == PlayerType.PLAYER_TOP){
+        if (troop.getPlayerType() == PlayerType.PLAYER_TOP) {
         totalScoreBottom += troop.getKillingPoints();
-      }
-      else if(troop.getPlayerType() == PlayerType.PLAYER_BOTTOM){
+        } else if (troop.getPlayerType() == PlayerType.PLAYER_BOTTOM) {
         totalScoreTop += troop.getKillingPoints();
       }
       troopsP1.remove(troop);
@@ -175,7 +193,7 @@ public class EncounterState {
 
   /** {@inheritDoc} */
   public void update() {
-    counter ++;
+      counter++;
 
     for (MapObject mo : allMapObjects) mo.update();
 
@@ -188,14 +206,12 @@ public class EncounterState {
     checkProjectiles(projectilesTop, troopsBottom);
     checkProjectiles(projectilesBottom, troopsTop);
 
+      if (counter == 2) {
 
-
-    if (counter == 3) {
-
-      if(topBase.getHealth() <= 0) {
+          if (topBase.getHealth() <= 0) {
         endGame(PlayerType.PLAYER_BOTTOM);
-      }
-      if(bottomBase.getHealth() <= 0) {
+          }
+          if (bottomBase.getHealth() <= 0) {
         endGame(PlayerType.PLAYER_TOP);
       }
 
@@ -208,14 +224,13 @@ public class EncounterState {
       sendPlayerScoreUpdates();
 
       counter = 0;
-
-    }
-
+      }
   }
 
-  private void checkCollisions(CopyOnWriteArrayList<Troop> troops, CopyOnWriteArrayList<Troop> enemyTroops) {
-    for(Troop troop : troops) {
-        troop.checkCollisions(new CopyOnWriteArrayList<>(enemyTroops));
+    private void checkCollisions(
+            CopyOnWriteArrayList<Troop> troops, CopyOnWriteArrayList<Troop> enemyTroops) {
+        for (Troop troop : troops) {
+            troop.checkCollisions(new CopyOnWriteArrayList<>(enemyTroops));
     }
   }
 
@@ -225,84 +240,222 @@ public class EncounterState {
    * @param unitType The unit/troop to be spawned.
    * @param lane The lane the unit/troop will be assigned to.
    * @param playerType The player the unit/troop will be assigned to.
+   * @param isMultiplayerAI the is multiplayer ai
    */
-  public void spawnUnit(UnitType unitType, Lane lane, PlayerType playerType) {
+  public void spawnUnit(
+          UnitType unitType, Lane lane, PlayerType playerType, boolean isMultiplayerAI) {
     Troop troop = null;
+      Disease disease = getPlayer(playerType).getDisease();
+      Resources resources = getResources(playerType);
+      Player player = getPlayer(playerType);
+      try {
 
-    // Initialise troop type
-    if (unitType.equals(UnitType.BACTERIA)) {
-      if(playerType == PlayerType.PLAYER_BOTTOM){
-        if(bottomResources.canAfford(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST)){
-          bottomResources.buy(Bacteria.LIPIDS_COST,Bacteria.SUGARS_COST,Bacteria.PROTEINS_COST);
-          troop = new Bacteria(lane, playerType);
-        } else{
+          Troop troopInit = (Troop) unitType.getAssociatedClass().newInstance();
 
-        }
-      } else if(playerType == PlayerType.PLAYER_TOP){
-        troop = new Bacteria(lane, playerType);
+          //these attributes are only relevant for non AI players
+
+          float damageMult = 1;
+          float speedMult = 1;
+          float attackSpeedMult = 1;
+          float healthMult = 1;
+
+
+          if (!isMultiplayerAI) {
+              damageMult = disease.getDamageMult() * player.getDamageMult();
+              speedMult = disease.getSpeedMult() * player.getSpeedMult();
+              attackSpeedMult = disease.getAttackSpeedMult() * player.getAttackSpeedMult();
+              healthMult = disease.getHealthMult() * player.getHealthMult();
+          }
+
+
+          if (!troopInit.isRanged()) {
+              //multiplayer AI units cannot be ranged
+              if (!isMultiplayerAI) {
+                  troopInit =
+                          (Troop)
+                                  unitType
+                                          .getAssociatedClass()
+                                          .getDeclaredConstructor(
+                                                  Lane.class,
+                                                  PlayerType.class,
+                                                  float.class,
+                                                  float.class,
+                                                  float.class,
+                                                  float.class)
+                                          .newInstance(
+                                                  lane, playerType, damageMult, speedMult, healthMult, attackSpeedMult);
+              } //multiplayer AI units don't get multipliers
+              else {
+                  troopInit =
+                          (Troop)
+                                  unitType
+                                          .getAssociatedClass()
+                                          .getDeclaredConstructor(
+                                                  Lane.class,
+                                                  PlayerType.class)
+                                          .newInstance(
+                                                  lane, playerType);
+              }
+          } else {
+              troopInit =
+                      (Troop)
+                              unitType
+                                      .getAssociatedClass()
+                                      .getDeclaredConstructor(
+                                              EncounterState.class,
+                                              Lane.class,
+                                              PlayerType.class,
+                                              float.class,
+                                              float.class,
+                                              float.class,
+                                              float.class)
+                                      .newInstance(
+                                              this, lane, playerType, damageMult, speedMult, healthMult, attackSpeedMult);
+          }
+
+          //multiplayer AI manages its own resources
+          if (!isMultiplayerAI) {
+              if (resources.canAfford(
+                      troopInit.getLipidCost(), troopInit.getSugarCost(), troopInit.getProteinCost())) {
+                  resources.buy(
+                          troopInit.getLipidCost(), troopInit.getSugarCost(), troopInit.getProteinCost());
+                  troop = troopInit;
+              }
+          } else {
+              troop = troopInit;
+          }
+
+
+      } catch (InstantiationException
+              | IllegalAccessException
+              | NoSuchMethodException
+              | InvocationTargetException e) {
+          e.printStackTrace();
       }
-    } else if (unitType.equals(UnitType.VIRUS)) {
-      if(playerType == PlayerType.PLAYER_BOTTOM){
-        if(bottomResources.canAfford(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST)){
-          bottomResources.buy(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST);
-          troop = new Virus(this, playerType, lane);
-        }else{
 
-        }
-      }else if(playerType == PlayerType.PLAYER_TOP){
-        troop = new Virus(this, playerType, lane);
-      }
-    } else if (unitType.equals(UnitType.FUNGUS)) {
-      if(playerType == PlayerType.PLAYER_BOTTOM){
-        if(bottomResources.canAfford(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST)){
-          bottomResources.buy(Fungus.LIPIDS_COST, Fungus.SUGARS_COST, Fungus.PROTEINS_COST);
-          troop = new Fungus(lane, playerType);
-        }else{
-
-        }
-      }else if(playerType == PlayerType.PLAYER_TOP){
-        troop = new Fungus(lane, playerType);
-      }
-    }
+//    // Initialise troop type
+//    if (unitType.equals(UnitType.BACTERIA)) {
+//      if (playerType == PlayerType.PLAYER_BOTTOM) {
+//        if (bottomResources.canAfford(
+//            Bacteria.LIPIDS_COST, Bacteria.SUGARS_COST, Bacteria.PROTEINS_COST)) {
+//          bottomResources.buy(Bacteria.LIPIDS_COST, Bacteria.SUGARS_COST, Bacteria.PROTEINS_COST);
+//          troop =
+//              new Bacteria(
+//                  lane,
+//                  playerType,
+//                  disease.getDamageMult(),
+//                  disease.getSpeedMult(),
+//                  disease.getHealthMult(),
+//                  disease.getAttackSpeedMult());
+//        }
+//      } else if (playerType == PlayerType.PLAYER_TOP) {
+//        troop = new Bacteria(lane, playerType);
+//      }
+//    } else if (unitType.equals(UnitType.VIRUS)) {
+//      if (playerType == PlayerType.PLAYER_BOTTOM) {
+//        if (bottomResources.canAfford(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST)) {
+//          bottomResources.buy(Virus.LIPIDS_COST, Virus.SUGARS_COST, Virus.PROTEINS_COST);
+//          troop =
+//              new Virus(
+//                  this,
+//                  lane,
+//                  playerType,
+//                  disease.getDamageMult(),
+//                  disease.getSpeedMult(),
+//                  disease.getHealthMult(),
+//                  disease.getAttackSpeedMult());
+//        }
+//      }
+//    } else if (unitType.equals(UnitType.FUNGUS)) {
+//      if (playerType == PlayerType.PLAYER_BOTTOM) {
+//        if (bottomResources.canAfford(
+//            MeaslesFungus.LIPIDS_COST, MeaslesFungus.SUGARS_COST, MeaslesFungus.PROTEINS_COST)) {
+//          bottomResources.buy(MeaslesFungus.LIPIDS_COST, MeaslesFungus.SUGARS_COST, MeaslesFungus.PROTEINS_COST);
+//          troop =
+//              new MeaslesFungus(
+//                  lane,
+//                  playerType,
+//                  disease.getDamageMult(),
+//                  disease.getSpeedMult(),
+//                  disease.getHealthMult(),
+//                  disease.getAttackSpeedMult());
+//        }
+//      }
+//    }
 
     // Return if invalid troop, lane or player type is used
     if (troop == null || lane == null || playerType == null) return;
 
-    // Spawn units for bottom player
-    if (playerType.equals(PlayerType.PLAYER_BOTTOM)) {
-      if (lane == Lane.BOTTOM) {
-        troop.setPosition(
-            Assets.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Lane.MIDDLE) {
-        troop.setPosition(
-            Assets.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Lane.TOP) {
-        troop.setPosition(
-            Assets.BP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.BP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+      if (isMultiplayerAI) {
+
+
       }
-      troopsBottom.add(troop);
+
+      if (!isMultiplayerAI) {
+          // Spawn units for bottom player
+          if (playerType.equals(PlayerType.PLAYER_BOTTOM)) {
+              if (lane == Lane.BOTTOM) {
+                  troop.setPosition(
+                          Assets.BP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                          Assets.BP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+              } else if (lane == Lane.MIDDLE) {
+                  troop.setPosition(
+                          Assets.BP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                          Assets.BP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+              } else if (lane == Lane.TOP) {
+                  troop.setPosition(
+                          Assets.BP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                          Assets.BP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+              }
+
+              troopsBottom.add(troop);
+          }
+
+          // Spawn units for top player
+          if (playerType.equals(PlayerType.PLAYER_TOP)) {
+              //if this unit was actually spawned by the player, and not by the AI in its behalf
+              if (lane == Lane.BOTTOM) {
+                  troop.setPosition(
+                          Assets.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                          Assets.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+              } else if (lane == Lane.MIDDLE) {
+                  troop.setPosition(
+                          Assets.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                          Assets.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+              } else if (lane == Lane.TOP) {
+                  troop.setPosition(
+                          Assets.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                          Assets.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+              }
+
+              troopsTop.add(troop);
+          }
+      } else {
+          //if it's a unit spawned by the AI on behalf of another player, put it in the AI's spawn points
+          if (lane == Lane.BOTTOM) {
+              troop.setPosition(
+                      Assets.AI_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                      Assets.AI_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+          } else if (lane == Lane.TOP) {
+              troop.setPosition(
+                      Assets.AI_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                      Assets.AI_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+          } /*else if (lane == Lane.MIDDLE) {
+      //there will be no AI spawn point in the MIDDLE lane
+        troop.setPosition(
+                Assets.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
+                Assets.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
+      }*/
+
+          if (playerType.equals(PlayerType.PLAYER_BOTTOM)) {
+              //if AI spawns on behalf of the bottom player, add the troop to its *army*
+              troopsBottom.add(troop);
+          } else {
+              //if AI spawns on behalf of the top player, add the troop to its *army*
+              troopsTop.add(troop);
+          }
     }
 
-    // Spawn units for top player
-    if (playerType.equals(PlayerType.PLAYER_TOP)) {
-      if (lane == Lane.BOTTOM) {
-        troop.setPosition(
-            Assets.TP_BOT_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.TP_BOT_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Lane.MIDDLE) {
-        troop.setPosition(
-            Assets.TP_MID_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.TP_MID_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      } else if (lane == Lane.TOP) {
-        troop.setPosition(
-            Assets.TP_TOP_LANE_SPAWN_X - (troop.getWidth() / 2.0),
-            Assets.TP_TOP_LANE_SPAWN_Y - (troop.getHeight() / 2.0));
-      }
-      troopsTop.add(troop);
-    }
     allMapObjects.add(troop);
   }
 
@@ -338,8 +491,20 @@ public class EncounterState {
   }
 
   private void endGame(PlayerType player) {
-    String endingMessage = MessageMaker.organClaimMessage(player,organ);
+      String endingMessage = MessageMaker.organClaimMessage(player, organ);
     serverSender.sendMessage(endingMessage);
+      PlayerType picker;
+      if (game.getGameType() != GameType.SINGLE_PLAYER) {
+          picker =
+                  game.getLastPicker() == PlayerType.PLAYER_BOTTOM
+                          ? PlayerType.PLAYER_TOP
+                          : PlayerType.PLAYER_BOTTOM;
+      } else {
+          picker = PlayerType.PLAYER_BOTTOM;
+      }
+      serverSender.sendMessage(MessageMaker.firstPickerMessage(picker));
+      game.setLastPicker(picker);
+
     if(player == PlayerType.PLAYER_BOTTOM) {
       totalScoreBottom += organ.getOrganScore();
       bottomPlayer.claimOrgan(organ);
@@ -350,6 +515,13 @@ public class EncounterState {
 
     bottomPlayer.setScore(totalScoreBottom);
     topPlayer.setScore(totalScoreTop);
+
+      if (game.getGameType() == GameType.SINGLE_PLAYER) {
+          singleplayerAI.stopRunning();
+          multiplayerAI.stopRunning();
+      } else {
+          multiplayerAI.stopRunning();
+      }
 
     game.endEncounter();
   }
@@ -384,61 +556,84 @@ public class EncounterState {
     serverSender.sendMessage(pointsMessage);
   }
 
-  public CopyOnWriteArrayList<Troop> getTroopsTop() {
-    return troopsTop;
-  }
-
-  public CopyOnWriteArrayList<Troop> getTroopsBottom() {
-    return troopsBottom;
-  }
-
-  public void castAbility(AbilityType abilityType, PlayerType playerType, int xDest, int yDest) {
-    // Implement functionality
-  }
-
-  public void castAbility(AbilityType abilityType, PlayerType playerType, Lane lane) {
-    try {
-      @SuppressWarnings("unchecked")
-      Ability ability =
-          (Ability)
-              abilityType
-                  .getAssociatedClass()
-                  .getDeclaredConstructor(Lane.class, PlayerType.class)
-                  .newInstance(lane, playerType);
-      ability.cast(this);
-    } catch (InstantiationException
-        | IllegalAccessException
-        | NoSuchMethodException
-        | InvocationTargetException e) {
-      e.printStackTrace();
+    /**
+     * Cast ability.
+     *
+     * @param abilityType the ability type
+     * @param playerType the player type
+     * @param xDest the x dest
+     * @param yDest the y dest
+   */
+    public void castAbility(AbilityType abilityType, PlayerType playerType, int xDest, int yDest) {
+        // Implement functionality
     }
-  }
 
-  public CopyOnWriteArrayList<Troop> getEnemyTroops(PlayerType player) {
-    if (player == PlayerType.PLAYER_BOTTOM) {
-      return getTroops(PlayerType.PLAYER_TOP);
-    } else {
-      return getTroops(PlayerType.PLAYER_BOTTOM);
+    /**
+     * Cast ability.
+     *
+     * @param abilityType the ability type
+     * @param playerType the player type
+     * @param lane the lane
+     */
+    public void castAbility(AbilityType abilityType, PlayerType playerType, Lane lane) {
+        try {
+            @SuppressWarnings("unchecked")
+            Ability ability =
+                    (Ability)
+                            abilityType
+                                    .getAssociatedClass()
+                                    .getDeclaredConstructor(Lane.class, PlayerType.class)
+                                    .newInstance(lane, playerType);
+            ability.cast(this);
+        } catch (InstantiationException
+                | IllegalAccessException
+                | NoSuchMethodException
+                | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
-  }
 
-  public CopyOnWriteArrayList<Troop> getTroops(PlayerType player) {
-    if(player == PlayerType.PLAYER_BOTTOM) {
-      return troopsBottom;
-    } else {
-      return troopsTop;
+    /**
+     * Gets enemy troops.
+     *
+     * @param player the player
+     * @return the enemy troops
+     */
+    public CopyOnWriteArrayList<Troop> getEnemyTroops(PlayerType player) {
+        return player != PlayerType.PLAYER_BOTTOM ? troopsBottom : troopsTop;
     }
-  }
 
-  public Base getTopBase() {
-    return topBase;
-  }
+    /**
+     * Gets troops.
+     *
+     * @param player the player
+     * @return the troops
+     */
+    public CopyOnWriteArrayList<Troop> getTroops(PlayerType player) {
+        return player == PlayerType.PLAYER_BOTTOM ? troopsBottom : troopsTop;
+    }
 
+    /**
+     * Gets base.
+     *
+     * @param player the player
+     * @return the base
+   */
   public Base getBase(PlayerType player) {
-    if(player == PlayerType.PLAYER_BOTTOM) {
-      return bottomBase;
-    } else {
-      return topBase;
+      return player == PlayerType.PLAYER_BOTTOM ? bottomBase : topBase;
+  }
+
+    private Player getPlayer(PlayerType playerType) {
+        return playerType == PlayerType.PLAYER_BOTTOM ? bottomPlayer : topPlayer;
     }
+
+    /**
+     * Gets resources.
+     *
+     * @param playerType the player type
+     * @return the resources
+     */
+    public Resources getResources(PlayerType playerType) {
+        return playerType == PlayerType.PLAYER_BOTTOM ? bottomResources : topResources;
   }
 }

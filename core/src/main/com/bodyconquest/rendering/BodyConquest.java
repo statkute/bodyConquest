@@ -9,95 +9,172 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import main.com.bodyconquest.audio.AudioPlayer;
 import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
+import main.com.bodyconquest.entities.DifficultyLevel;
 import main.com.bodyconquest.game_logic.Game;
 import main.com.bodyconquest.networking.Client;
 import main.com.bodyconquest.networking.Server;
-import main.com.bodyconquest.screens.LeaderboardScreen;
+import main.com.bodyconquest.screens.*;
 import main.com.bodyconquest.screens.MenuScreen;
-import main.com.bodyconquest.screens.RaceSelection;
-import main.com.bodyconquest.screens.MenuScreen;
-import main.com.bodyconquest.screens.StartScreen;
 
 import java.io.IOException;
 
+/**
+ * The type Body conquest.
+ */
 /*
 The core of the rendering engine, hosts the sprite batch for the current screen,
 calls all act methods for actors in stages of children and calls all render functions
 for implementing screens.
  */
 public class BodyConquest extends com.badlogic.gdx.Game {
+    /**
+     * The constant V_WIDTH.
+     */
+    public static final int V_WIDTH = 800;
+    /**
+     * The constant V_HEIGHT.
+     */
+    public static final int V_HEIGHT = 600;
 
-  // private static final Logger log = Logger.getLogger(MyGdxGame.class);
+    /**
+     * The Audio player.
+     */
+    public final AudioPlayer audioPlayer = new AudioPlayer();
 
-  public static final int V_WIDTH = 800;
-  public static final int V_HEIGHT = 600;
+    private FPSLogger fpsLogger = new FPSLogger();
+    /**
+     * The Batch.
+     */
+    public SpriteBatch batch;
 
-  public final AudioPlayer audioPlayer = new AudioPlayer();
+    private Stage stage;
 
-  private FPSLogger fpsLogger = new FPSLogger();
-  public SpriteBatch batch;
+    private boolean loaded = false;
 
-  private Stage stage;
+    /**
+     * The Font.
+     */
+// so that we could add text
+    public BitmapFont font;
+    /**
+     * The Timer font.
+     */
+    public BitmapFont timerFont;
+    /**
+     * The Username font.
+     */
+    public BitmapFont usernameFont;
 
-  private boolean loaded = false;
+    private Game game;
+    private Client client;
+    /**
+     * The Game font.
+     */
+    public BitmapFont gameFont;
+    /**
+     * The Difficulty level.
+     */
+    public DifficultyLevel difficultyLevel;
 
-  // so that we could add text
-  public BitmapFont font;
-  public BitmapFont timerFont;
-  public BitmapFont usernameFont;
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        timerFont = new BitmapFont(Gdx.files.internal(Assets.timerFont));
+        usernameFont = new BitmapFont(Gdx.files.internal(Assets.usernameFont));
+        gameFont = new BitmapFont(Gdx.files.internal(Assets.gameFont));
+        audioPlayer.loadSFX("button_click", Assets.buttonSoundPath);
+        audioPlayer.loadMusic("music", Assets.music);
+        audioPlayer.loadMusic("heartbeat", Assets.heartbeat);
+        audioPlayer.playMusicLoop("music");
+        difficultyLevel = DifficultyLevel.EASY;
+        client = new Client();
+        // setScreen(new MenuScreen(this, "GermBoi"));
+        setScreen(new MenuScreen(this));
+        // setScreen(new LeaderboardScreen(this));
+        // setScreen(new WaitingScreen(this,GameType.MULTIPLAYER_HOST));
 
-  private Game game;
-  private Client client;
-
-  @Override
-  public void create() {
-    batch = new SpriteBatch();
-    font = new BitmapFont();
-    timerFont = new BitmapFont(Gdx.files.internal(Assets.timerFont));
-    usernameFont = new BitmapFont(Gdx.files.internal(Assets.usernameFont));
-    audioPlayer.loadSFX("button_click", Assets.buttonSoundPath);
-    audioPlayer.loadMusic("music", Assets.music);
-    audioPlayer.playMusicLoop("music");
-    client = new Client();
-    //setScreen(new MenuScreen(this, "GermBoi"));
-    setScreen(new MenuScreen(this));
-    //setScreen(new LeaderboardScreen(this));
-
-  }
-
-  @Override
-  public void render() {
-    super.render();
-    if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
-    if (Gdx.input.isKeyJustPressed(Input.Keys.M)
-            && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
-            || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
-      audioPlayer.toggleMuted();
     }
-  }
 
-  @Override
-  public void dispose() {
-    batch.dispose();
-    font.dispose();
-  }
+    @Override
+    public void render() {
+        super.render();
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)
+                && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)
+                || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+            audioPlayer.toggleMuted();
+        }
+    }
 
-  public Game getGame() {
-    return game;
-  }
+    @Override
+    public void dispose() {
+        batch.dispose();
+        font.dispose();
+    }
 
-  public Server getServer() { return game.getServer(); }
+    /**
+     * Gets game.
+     *
+     * @return the game
+     */
+    public Game getGame() {
+        return game;
+    }
 
-  public void setGame(Game game) {
-    this.game = game;
-  }
+    /**
+     * Gets server.
+     *
+     * @return the server
+     */
+    public Server getServer() {
+        return game.getServer();
+    }
 
-  public Client getClient() {
-    return client;
-  }
+    /**
+     * Sets game.
+     *
+     * @param game the game
+     */
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
-  public void setClient(Client client) {
-    this.client = client;
-  }
+    /**
+     * Gets client.
+     *
+     * @return the client
+     */
+    public Client getClient() {
+        return client;
+    }
 
+    /**
+     * Sets client.
+     *
+     * @param client the client
+     */
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    /**
+     * Gets difficulty level.
+     *
+     * @return the difficulty level
+     */
+    public DifficultyLevel getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    /**
+     * Change difficulty.
+     */
+    public void changeDifficulty() {
+        if (difficultyLevel == DifficultyLevel.EASY) {
+            difficultyLevel = DifficultyLevel.HARD;
+        } else {
+            difficultyLevel = DifficultyLevel.EASY;
+        }
+    }
 }

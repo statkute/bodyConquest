@@ -3,16 +3,23 @@ package main.com.bodyconquest.entities.Troops.Bases;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.entities.Troops.Troop;
 import main.com.bodyconquest.constants.BaseType;
-import main.com.bodyconquest.constants.Assets;
 
+/**
+ * The type Influenza base.
+ */
 public class InfluenzaBase extends Base {
 
-    public InfluenzaBase(PlayerType pt){
+    /**
+     * Instantiates a new Influenza base.
+     *
+     * @param pt the player type it is assigned to
+     */
+    public InfluenzaBase(PlayerType pt) {
         super(pt);
         init();
     }
 
-    private void init(){
+    private void init() {
         this.health = 1000;
         this.damage = 3;
         this.range = 130;

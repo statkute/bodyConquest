@@ -9,16 +9,24 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/** Server thread responsible for sending out messages */
+/**
+ * Server thread responsible for sending out messages
+ */
 public class ServerSender extends Thread {
-  public CopyOnWriteArrayList<InetAddress> connectedClients;
-  public DatagramSocket socket;
+    /**
+     * The Connected clients.
+     */
+    public CopyOnWriteArrayList<InetAddress> connectedClients;
+    /**
+     * The Socket.
+     */
+    public DatagramSocket socket;
   private boolean run;
 
   /**
    * ServerSender initialization
    *
-   * @throws SocketException
+   * @throws SocketException the socket exception
    */
   public ServerSender() throws SocketException {
     connectedClients = new CopyOnWriteArrayList<InetAddress>();
@@ -33,6 +41,7 @@ public class ServerSender extends Thread {
    */
   public void sendMessage(String message) {
     try {
+//      System.out.println("SERVERSENDER - SENT MESSAGE: " + message);
       for (InetAddress address : connectedClients) {
         DatagramPacket packet =
             new DatagramPacket(message.getBytes(), message.length(), address, 3001);
@@ -47,18 +56,26 @@ public class ServerSender extends Thread {
     }
   }
 
-  public void sendObjectUpdates(String message){
-    String header = MessageMaker.OBJECT_UPDATE_HEADER;
-    String fullMessage = header + message;
-    sendMessage(fullMessage);
-  }
+    /**
+     * Send object updates.
+     *
+     * @param message the message
+     */
+    public void sendObjectUpdates(String message){
+        String header = MessageMaker.OBJECT_UPDATE_HEADER;
+        String fullMessage = header + message;
+        sendMessage(fullMessage);
+    }
 
   public void run() {
     while (run) {}
   }
 
-  public void stopRunning(){
-    run = false;
-    socket.close();
-  }
+    /**
+     * Stop running.
+     */
+    public void stopRunning(){
+        run = false;
+        socket.close();
+    }
 }

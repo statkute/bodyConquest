@@ -247,14 +247,14 @@ public class GifDecoder {
 
     /**
      * Gets the image contents of frame n.
-     *
+     * @param n frame number
      * @return BufferedPixmap representation of frame, or null if n is invalid.
      */
     public DixieMap getFrame(int n) {
         if (frameCount <= 0)
             return null;
         n = n % frameCount;
-        return ((GifFrame) frames.elementAt(n)).image;
+        return frames.elementAt(n).image;
     }
 
     /**
@@ -394,6 +394,8 @@ public class GifDecoder {
 
     /**
      * Returns true if an error was encountered during reading/decoding
+     *
+     * @return the status
      */
     protected boolean err() {
         return status != STATUS_OK;
@@ -412,6 +414,8 @@ public class GifDecoder {
 
     /**
      * Reads a single byte from the input stream.
+     *
+     * @return the byte
      */
     protected int read() {
         int curByte = 0;
@@ -655,6 +659,8 @@ public class GifDecoder {
 
     /**
      * Reads next 16-bit value, LSB first
+     *
+     * @return the 16-bit value
      */
     protected int readShort() {
         // read 16-bit value, LSB first

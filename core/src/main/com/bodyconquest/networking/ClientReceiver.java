@@ -6,20 +6,37 @@ import java.util.Enumeration;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Client thread responsible for receiving messages from the server */
+/**
+ * Client thread responsible for receiving messages from the server
+ */
 public class ClientReceiver extends Thread {
 
-  public InetAddress address;
-  public DatagramSocket socket;
-  public InetAddress group;
-  public AtomicInteger id;
-  public LinkedBlockingQueue<String> receivedMessages;
+    /**
+     * The Address.
+     */
+    public InetAddress address;
+    /**
+     * The Socket.
+     */
+    public DatagramSocket socket;
+    /**
+     * The Group.
+     */
+    public InetAddress group;
+    /**
+     * The Id.
+     */
+    public AtomicInteger id;
+    /**
+     * The Received messages.
+     */
+    public LinkedBlockingQueue<String> receivedMessages;
   private boolean run;
 
   /**
    * ClientReceiver initialization
    *
-   * @throws IOException
+   * @throws IOException the io exception
    */
   public ClientReceiver() throws IOException {
     address = getIpAddress();
@@ -42,9 +59,7 @@ public class ClientReceiver extends Thread {
       joinGroup(mSocket, group);
       byte[] buf = new byte[256];
       DatagramPacket packet = new DatagramPacket(buf, buf.length);
-      //System.out.println("before rec packet");
       mSocket.receive(packet);
-      //System.out.println("after rec packet");
       address = packet.getAddress();
       mSocket.close();
       return address;
@@ -79,7 +94,9 @@ public class ClientReceiver extends Thread {
     }
   }
 
-  /** Receives and assigns this client an ID from the server and waits for the game to start */
+    /**
+     * Receives and assigns this client an ID from the server and waits for the game to start
+     */
   public void gameSetup() {
     String received = "";
     while (!received.equals("start game")) {
@@ -126,8 +143,11 @@ public class ClientReceiver extends Thread {
     }
   }
 
-  public void stopRunning(){
-    run = false;
-    socket.close();
-  }
+    /**
+     * Stop running.
+     */
+    public void stopRunning(){
+        run = false;
+        socket.close();
+    }
 }
