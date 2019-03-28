@@ -435,7 +435,7 @@ public class EncounterScreen implements Screen {
           game.batch,
           "P:" + Virus.PROTEINS_COST + " | C: " + Virus.SUGARS_COST + " | L: " + Virus.LIPIDS_COST,
           r0.x - 40,
-          r0.y + 60);
+          r0.y + 80);
     } else if (r1.contains(tmp.x, tmp.y)) {
       game.font.draw(
           game.batch,
@@ -446,7 +446,7 @@ public class EncounterScreen implements Screen {
               + " | L: "
               + Bacteria.LIPIDS_COST,
           r1.x - 40,
-          r1.y + 60);
+          r1.y + 80);
     } else if (r2.contains(tmp.x, tmp.y)) {
       game.font.draw(
           game.batch,
@@ -457,7 +457,7 @@ public class EncounterScreen implements Screen {
               + " | L: "
               + Fungus.LIPIDS_COST,
           r2.x - 40,
-          r2.y + 60);
+          r2.y + 80);
     }
   }
 

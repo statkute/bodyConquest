@@ -224,10 +224,10 @@ public class HUD {
                   .getDrawable());
 
       spawnableButton.setBounds(
-          unitBar.getWidth() / 4 + 25 * index,
-          unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
-          25,
-          25);
+          unitBar.getWidth() / 3 + 50 * index,
+          unitBar.getImageY() + (unitBar.getHeight() / 2) - (50 / 2),
+          50,
+          50);
 
       spawnableButton.addListener(
           new ChangeListener() {
@@ -242,10 +242,10 @@ public class HUD {
 
       Image mouseover = new Image();
       mouseover.setBounds(
-          unitBar.getWidth() / 4 + 23 * (index + 2),
-          unitBar.getImageY() + (unitBar.getHeight() / 2) - (25 / 2),
-          20,
-          25);
+          unitBar.getWidth() / 3 + 44 * (index + 1),
+          unitBar.getImageY() + (unitBar.getHeight() / 2) - (50 / 2),
+          30,
+          30);
 
 
       mouseover.setName("bucket" + index);
