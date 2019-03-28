@@ -38,7 +38,7 @@ public class RigorMortis extends Ability {
     for (Troop enemy : enemies) {
       if (enemy.getLane() == lane) {
         System.out.println("Setting slowed");
-        enemy.setSlowed(5000, 40);
+        enemy.setSlowed(5000, 80);
       }
     }
   }

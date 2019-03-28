@@ -62,6 +62,7 @@ public abstract class Projectile extends MapObject {
   public void checkHit(CopyOnWriteArrayList<Troop> enemies) {
     for(Troop enemy : enemies) {
       if(checkCollision(enemy)/*getBounds().intersects(enemy.getBounds())*/) {
+        System.out.println("Wanting to hit");
         hit(enemy);
       }
     }

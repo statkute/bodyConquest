@@ -98,7 +98,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
             String message = MessageMaker.loginMessage(textUsername, hashedPassword);
 
             game.getClient().clientSender.sendMessage(message);
-            System.out.println(textUsername + " " + textPassword);
+            //System.out.println(textUsername + " " + textPassword);
             processRegistration();
           }
         });
