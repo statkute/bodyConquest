@@ -85,7 +85,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
     sortLeaderboard();
     game.batch.begin();
     game.batch.draw(header, BodyConquest.V_WIDTH / 2.0f - header.getWidth() / 2.0f, 460);
-    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2.0f - backButton.getWidth() / 2.0f, 60);
+    game.batch.draw(backButton, BodyConquest.V_WIDTH / 2.0f - backButton.getWidth() / 2.0f, 35);
     client.closeEverything();
     if (this.server != null) {
       this.server.closeEverything();
@@ -212,7 +212,7 @@ public class LeaderboardScreen extends AbstractGameScreen implements Screen {
         case 10:
           game.gameFont.draw(
               game.batch,
-              Integer.toString(place) + ".\t " + s,
+              Integer.toString(place) + ".  " + s,
               BodyConquest.V_WIDTH / 5.0f,
               115.0f);
           break;
