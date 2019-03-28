@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import main.com.bodyconquest.constants.*;
 import main.com.bodyconquest.entities.BasicObject;
@@ -37,6 +38,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static main.com.bodyconquest.audio.AudioPlayer.MUSIC_FADE_RATE;
+import static main.com.bodyconquest.audio.AudioPlayer.MUSIC_FADE_STEP;
 
 /** The type Encounter screen. */
 public class EncounterScreen implements Screen {
@@ -112,6 +116,10 @@ public class EncounterScreen implements Screen {
   /** The Time of the encounter. */
   float time = 120;
 
+  private boolean played;
+  private boolean finished;
+  private boolean changeMusic;
+
   private String username;
 
   private ConcurrentHashMap<String, TexturePool> poolHashMap;
@@ -136,8 +144,13 @@ public class EncounterScreen implements Screen {
     gameCamera = new OrthographicCamera();
     gamePort = new FitViewport(BodyConquest.V_WIDTH, BodyConquest.V_HEIGHT, gameCamera);
     stage = new Stage(gamePort);
+    played = false;
+    finished = false;
+    changeMusic = false;
+    //game.audioPlayer.changeMusicVolume(1f);
     Gdx.input.setInputProcessor(stage);
     this.username = game.getClient().getCommunicator().getUsername(playerType);
+    game.audioPlayer.changeMusicVolume(0.3f);
 
     if (gameType != GameType.MULTIPLAYER_JOIN) {
       playerType = PlayerType.PLAYER_BOTTOM;
@@ -235,6 +248,61 @@ public class EncounterScreen implements Screen {
 
     healthBottomBaseBefore = healthBottomBase;
     healthTopBaseBefore = healthTopBase;
+
+
+    if((healthBottomBase < 35 && playerType == PlayerType.PLAYER_BOTTOM)||(healthTopBase < 35 && playerType == PlayerType.PLAYER_TOP) && !played){
+      //played = true;
+      Timer.schedule(new Timer.Task() {
+        @Override
+        public void run() {
+          if (game.audioPlayer.getMusicVolume() >= 0.08f){
+            if(game.audioPlayer.getMusicVolume() < 0.10f){
+              played = true;
+              changeMusic = true;
+              game.audioPlayer.changeMusicVolume(0.0f);
+
+            }
+            System.out.println(game.audioPlayer.getMusicVolume());
+            game.audioPlayer.changeMusicVolume(game.audioPlayer.getMusicVolume()-MUSIC_FADE_STEP);
+          }
+
+            this.cancel();
+        }
+      }, 0f, MUSIC_FADE_RATE);
+
+    }
+
+//    if(healthTopBase < 35 && playerType == PlayerType.PLAYER_TOP&& !played){
+//      game.audioPlayer.changeMusicVolume(1.0f);
+//      played = true;
+////      for(float i =10; i >= 0; i--){
+////        game.audioPlayer.changeMusicVolume(i/10);
+////        //game.audioPlayer.playSFX("heartbeat");
+////      }
+//      game.audioPlayer.playMusicLoop("heartbeat");
+//    }
+
+    if(played && changeMusic){
+      game.audioPlayer.playMusicLoop("heartbeat");
+      finished = true;
+      changeMusic = false;
+    }
+
+    if(finished){
+
+      Timer.schedule(new Timer.Task() {
+        @Override
+        public void run() {
+          if (game.audioPlayer.getMusicVolume() <= 1.0f){
+            game.audioPlayer.changeMusicVolume(game.audioPlayer.getMusicVolume()+ game.audioPlayer.MUSIC_FADE_STEP_UP);
+          }
+
+          this.cancel();
+        }
+      }, 0f, MUSIC_FADE_RATE);
+
+    }
+
 
     timeAlive += delta;
 
@@ -547,6 +615,8 @@ public class EncounterScreen implements Screen {
    * @param newScreen the new screen
    */
   private void switchScreen(final BodyConquest game, Screen newScreen) {
+//    game.audioPlayer.changeMusicVolume(0.5f);
+//    game.audioPlayer.playMusicLoop("music");
     stage.getRoot().getColor().a = 1;
     SequenceAction sequenceAction = new SequenceAction();
     sequenceAction.addAction(Actions.fadeOut(2.0f));
@@ -557,6 +627,8 @@ public class EncounterScreen implements Screen {
               game.setScreen(newScreen);
             }));
     stage.getRoot().addAction(sequenceAction);
+    game.audioPlayer.changeMusicVolume(0.3f);
+    game.audioPlayer.playMusicLoop("music");
   }
 
   /**
