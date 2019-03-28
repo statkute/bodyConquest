@@ -14,11 +14,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/** The type Basic test ai. */
 public class BasicTestAI extends Thread {
 
-  private final int MAX_UNIT_SELECTION = 4;
-
-  private final long COOLDOWN = 2000;
   private boolean running;
 
   private EncounterState game;
@@ -28,7 +26,19 @@ public class BasicTestAI extends Thread {
   private Resources resources;
   private DifficultyLevel difficultyLevel;
 
-  public BasicTestAI(EncounterState game, PlayerType playerType, Resources resources, DifficultyLevel difficultyLevel) {
+  /**
+   * Instantiates a new Basic test ai.
+   *
+   * @param game the game
+   * @param playerType the player type
+   * @param resources the resources
+   * @param difficultyLevel the difficulty level
+   */
+  public BasicTestAI(
+      EncounterState game,
+      PlayerType playerType,
+      Resources resources,
+      DifficultyLevel difficultyLevel) {
     this.game = game;
     this.playerType = playerType;
     this.resources = resources;
@@ -36,7 +46,6 @@ public class BasicTestAI extends Thread {
     running = true;
     units = new ArrayList<>(2);
     units.add(UnitType.BACTERIA);
-    // units.add(UnitType.VIRUS);
     units.add(UnitType.FUNGUS);
   }
 
@@ -47,22 +56,25 @@ public class BasicTestAI extends Thread {
     long lastWave = 0;
     while (running) {
       time = System.currentTimeMillis();
+      long COOLDOWN = 2000;
       if (time > (lastWave + COOLDOWN)) {
-          summonWave(difficultyLevel);
+        summonWave(difficultyLevel);
         lastWave = time;
       }
     }
   }
 
+  /** Stop running. */
   public void stopRunning() {
     running = false;
   }
 
   /**
-   * If the difficulty level is EASY, the heuristic to compute l;ane strength only count the number of units there
-   * If the difficulty level is HARD, the heuristic computes the lane strength by adding
-   * the strengths of all units in that lane, according to the formula:
+   * If the difficulty level is EASY, the heuristic to compute l;ane strength only count the number
+   * of units there If the difficulty level is HARD, the heuristic computes the lane strength by
+   * adding the strengths of all units in that lane, according to the formula:
    * damage*(health/100)/(cooldown/1000)
+   *
    * @param difficultyLevel The level of difficulty chosen for the AI
    */
   private void summonWave(DifficultyLevel difficultyLevel) {
@@ -77,45 +89,49 @@ public class BasicTestAI extends Thread {
 
       final Lane lane;
 
-      CopyOnWriteArrayList<Troop> enemies = null;
-      enemies = game.getEnemyTroops(playerType);
+      CopyOnWriteArrayList<Troop> enemies = game.getEnemyTroops(playerType);
 
-        double strengthEnemiesTop = 0.0;
-        double strengthEnemiesMiddle = 0.0;
-        double strengthEnemiesBottom = 0.0;
-        double strength = 0.0;
-      for(Troop enemy : enemies) {
+      double strengthEnemiesTop = 0.0;
+      double strengthEnemiesMiddle = 0.0;
+      double strengthEnemiesBottom = 0.0;
+      double strength = 0.0;
+      for (Troop enemy : enemies) {
         Lane enemyLane = enemy.getLane();
-          //if difficulty is easy, just count troops to get lane strength
-          if (difficultyLevel == DifficultyLevel.EASY) {
-              if (enemyLane == Lane.TOP) strengthEnemiesTop++;
-              if (enemyLane == Lane.MIDDLE) strengthEnemiesMiddle++;
-              if (enemyLane == Lane.BOTTOM) strengthEnemiesBottom++;
-          } else {
-              //else approximate the strength using a better heuristic
-              strength = (double) enemy.getDamage() * ((double) enemy.getHealth() / 100) / ((double) enemy.getCooldown() / 1000);
-              if (enemyLane == Lane.TOP) strengthEnemiesTop += strength;
-              if (enemyLane == Lane.MIDDLE) strengthEnemiesMiddle += strength;
-              if (enemyLane == Lane.BOTTOM) strengthEnemiesBottom += strength;
-          }
+        // if difficulty is easy, just count troops to get lane strength
+        if (difficultyLevel == DifficultyLevel.EASY) {
+          if (enemyLane == Lane.TOP) strengthEnemiesTop++;
+          if (enemyLane == Lane.MIDDLE) strengthEnemiesMiddle++;
+          if (enemyLane == Lane.BOTTOM) strengthEnemiesBottom++;
+        } else {
+          // else approximate the strength using a better heuristic
+          strength =
+              (double) enemy.getDamage()
+                  * ((double) enemy.getHealth() / 100)
+                  / ((double) enemy.getCooldown() / 1000);
+          if (enemyLane == Lane.TOP) strengthEnemiesTop += strength;
+          if (enemyLane == Lane.MIDDLE) strengthEnemiesMiddle += strength;
+          if (enemyLane == Lane.BOTTOM) strengthEnemiesBottom += strength;
+        }
       }
 
-        double totalStrength = strengthEnemiesTop + strengthEnemiesBottom + strengthEnemiesMiddle;
+      double totalStrength = strengthEnemiesTop + strengthEnemiesBottom + strengthEnemiesMiddle;
       int roll = rnd.nextInt(99) + 1;
-        if (strengthEnemiesTop > strengthEnemiesBottom && strengthEnemiesTop > strengthEnemiesMiddle) {
-            double x = (strengthEnemiesTop / totalStrength) * 90;
-        if(roll < x) {
+      if (strengthEnemiesTop > strengthEnemiesBottom
+          && strengthEnemiesTop > strengthEnemiesMiddle) {
+        double x = (strengthEnemiesTop / totalStrength) * 90;
+        if (roll < x) {
           lane = Lane.TOP;
         } else {
-          if((roll % 2) == 1) {
+          if ((roll % 2) == 1) {
             lane = Lane.MIDDLE;
           } else {
             lane = Lane.BOTTOM;
           }
         }
       } else {
-            if (strengthEnemiesMiddle > strengthEnemiesBottom && strengthEnemiesMiddle > strengthEnemiesTop) {
-                double x = (strengthEnemiesMiddle / totalStrength) * 90;
+        if (strengthEnemiesMiddle > strengthEnemiesBottom
+            && strengthEnemiesMiddle > strengthEnemiesTop) {
+          double x = (strengthEnemiesMiddle / totalStrength) * 90;
           if (roll < x) {
             lane = Lane.MIDDLE;
           } else {
@@ -126,12 +142,13 @@ public class BasicTestAI extends Thread {
             }
           }
         } else {
-                if (strengthEnemiesBottom > strengthEnemiesTop && strengthEnemiesBottom > strengthEnemiesMiddle) {
-                    double x = (strengthEnemiesBottom / totalStrength) * 90;
-            if(roll < x) {
+          if (strengthEnemiesBottom > strengthEnemiesTop
+              && strengthEnemiesBottom > strengthEnemiesMiddle) {
+            double x = (strengthEnemiesBottom / totalStrength) * 90;
+            if (roll < x) {
               lane = Lane.BOTTOM;
             } else {
-              if((roll % 2) == 1) {
+              if ((roll % 2) == 1) {
                 lane = Lane.MIDDLE;
               } else {
                 lane = Lane.TOP;
@@ -153,15 +170,11 @@ public class BasicTestAI extends Thread {
   /**
    * Method to spawn a unit
    *
-   * @param lane       the lane in which the unit is spawned
+   * @param lane the lane in which the unit is spawned
    * @param playerType the player with which the unit allies itself
    */
   private void summonUnit(UnitType unitType, Lane lane, PlayerType playerType) {
-    Gdx.app.postRunnable(new Runnable() {
-      @Override
-      public void run() {
-        game.spawnUnit(unitType, lane, playerType, false);
-      }
-    });
+    Gdx.app.postRunnable(
+            () -> game.spawnUnit(unitType, lane, playerType, false));
   }
 }

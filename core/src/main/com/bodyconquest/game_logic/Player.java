@@ -19,7 +19,7 @@ public class Player {
   public Player(PlayerType playerType, Disease playerDisease) {
     this.playerType = playerType;
     this.disease = playerDisease;
-    claimedOrgans = new ArrayList<Organ>();
+    claimedOrgans = new ArrayList<>();
     score = 0;
     damageMult = speedMult = attackSpeedMult = healthMult = 1;
   }
@@ -39,8 +39,16 @@ public class Player {
   @SuppressWarnings("unchecked")
   public Base getNewBase() {
     try {
-      return (Base) disease.getBaseType().getAssociatedClass().getDeclaredConstructor(PlayerType.class).newInstance(playerType);
-    } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+      return (Base)
+          disease
+              .getBaseType()
+              .getAssociatedClass()
+              .getDeclaredConstructor(PlayerType.class)
+              .newInstance(playerType);
+    } catch (IllegalAccessException
+        | InstantiationException
+        | NoSuchMethodException
+        | InvocationTargetException e) {
       System.err.println("[ERROR] Base has peculiar constructor");
       e.printStackTrace();
       return null;
@@ -55,15 +63,11 @@ public class Player {
     this.score = score;
   }
 
-  public void increaseScore(int score) {
-    this.score += score;
-  }
-
   public void refreshMultipliers() {
     damageMult = speedMult = attackSpeedMult = healthMult = 1;
-    for(Organ o : claimedOrgans) {
+    for (Organ o : claimedOrgans) {
       damageMult *= o.getDamageMult();
-      speedMult  *= o.getSpeedMult();
+      speedMult *= o.getSpeedMult();
       attackSpeedMult *= o.getAttackSpeedMult();
       healthMult *= o.getHealthMult();
     }

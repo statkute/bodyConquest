@@ -11,6 +11,7 @@ import main.com.bodyconquest.rendering.BodyConquest;
 import java.net.SocketException;
 import java.util.Random;
 
+/** The type Game. */
 public class Game extends Thread {
 
   private boolean running;
@@ -29,17 +30,20 @@ public class Game extends Thread {
   private boolean encounter;
   private PlayerType lastPicker;
 
+  /** The Username top. */
   public String usernameTop;
+
+  /** The Username bottom. */
   public String usernameBottom;
 
-    //difficulty of the game for single player
-    private DifficultyLevel difficulty;
+  // difficulty of the game for single player
+  private DifficultyLevel difficulty;
 
   /**
    * Constructor
    *
    * @param gameType The type of game that this server is running.
-   * @throws SocketException
+   * @throws SocketException the socket exception
    */
   public Game(GameType gameType) throws SocketException {
     this.gameType = gameType;
@@ -88,36 +92,71 @@ public class Game extends Thread {
     }
   }
 
+  /**
+   * Gets server.
+   *
+   * @return the server
+   */
   public Server getServer() {
     return server;
   }
 
+  /**
+   * Sets player bottom.
+   *
+   * @param disease the disease
+   */
   public void setPlayerBottom(Disease disease) {
     playerBottom = new Player(PlayerType.PLAYER_BOTTOM, disease);
   }
 
+  /**
+   * Sets player top.
+   *
+   * @param disease the disease
+   */
   public void setPlayerTop(Disease disease) {
     playerTop = new Player(PlayerType.PLAYER_TOP, disease);
   }
 
+  /**
+   * Gets player bottom.
+   *
+   * @return the player bottom
+   */
   public Player getPlayerBottom() {
     return playerBottom;
   }
 
+  /**
+   * Gets player top.
+   *
+   * @return the player top
+   */
   public Player getPlayerTop() {
     return playerTop;
   }
 
+  /**
+   * Start encounter state.
+   *
+   * @param organ the organ
+   */
   public void startEncounterState(Organ organ) {
     encounterState = new EncounterState(this, organ);
     encounter = true;
-    // gsm.setCurrentGameState(encounterState);
   }
 
+  /**
+   * Start encounter logic.
+   *
+   * @param encounterState the encounter state
+   */
   public void startEncounterLogic(EncounterState encounterState) {
     server.startEncounterLogic(encounterState);
   }
 
+  /** Start race selection state. */
   public void startRaceSelectionState() {
     server.startRaceSelectionLogic(this);
     if (gameType == GameType.SINGLE_PLAYER) {
@@ -136,14 +175,21 @@ public class Game extends Thread {
     }
   }
 
+  /**
+   * Gets game type.
+   *
+   * @return the game type
+   */
   public GameType getGameType() {
     return gameType;
   }
 
+  /** Close everything. */
   public void closeEverything() {
     server.closeEverything();
   }
 
+  /** Start body state. */
   public void startBodyState() {
     if (gameType == GameType.SINGLE_PLAYER) {
       if (getPlayerBottom().getDisease() != Disease.INFLUENZA) setPlayerTop(Disease.INFLUENZA);
@@ -166,29 +212,51 @@ public class Game extends Thread {
     server.startBodyLogic();
   }
 
+  /** End encounter. */
   public void endEncounter() {
     encounter = false;
     encounterState = null;
     startBodyState();
   }
 
+  /** Start database state. */
   public void startDatabaseState() {
     server.startDatabaseLogic(this);
   }
 
+  /**
+   * Gets last picker.
+   *
+   * @return the last picker
+   */
   public PlayerType getLastPicker() {
     return lastPicker;
   }
 
+  /**
+   * Sets last picker.
+   *
+   * @param lastPicker the last picker
+   */
   public void setLastPicker(PlayerType lastPicker) {
     this.lastPicker = lastPicker;
   }
 
-    public DifficultyLevel getDifficulty() {
-        return difficulty;
-    }
+  /**
+   * Gets difficulty.
+   *
+   * @return the difficulty
+   */
+  public DifficultyLevel getDifficulty() {
+    return difficulty;
+  }
 
-    public void setDifficulty(DifficultyLevel difficulty) {
-        this.difficulty = difficulty;
-    }
+  /**
+   * Sets difficulty.
+   *
+   * @param difficulty the difficulty
+   */
+  public void setDifficulty(DifficultyLevel difficulty) {
+    this.difficulty = difficulty;
+  }
 }

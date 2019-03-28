@@ -44,7 +44,7 @@ public abstract class AbstractGameScreen implements Screen {
   /**
    * Init.
    *
-   * @param game the game
+   * @param game The game.
    */
   public void init(BodyConquest game) {
 

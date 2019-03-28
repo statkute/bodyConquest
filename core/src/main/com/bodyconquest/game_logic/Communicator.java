@@ -17,17 +17,8 @@ public class Communicator {
   /** Variables */
   private CopyOnWriteArrayList<BasicObject> objects;
 
-  private String username;
-
   private int bottomHealthPercentage;
   private int topHealthPercentage;
-
-  private boolean eyeSelected;
-  private boolean lungsSelected;
-  private boolean brainSelected;
-  private boolean intestinesSelected;
-  private boolean teethSelected;
-  private boolean heartSelected;
 
   private int lipidsTop;
   private int sugarsTop;
@@ -68,19 +59,13 @@ public class Communicator {
 
   /** Instantiates a new Communicator. */
   public Communicator() {
-    objects = new CopyOnWriteArrayList<BasicObject>();
+    objects = new CopyOnWriteArrayList<>();
     playerDisease = null;
     opponentDisease = null;
-    playerOrgans = new ArrayList<Organ>();
-    opponentOrgans = new ArrayList<Organ>();
+    playerOrgans = new ArrayList<>();
+    opponentOrgans = new ArrayList<>();
     startBodyScreen = false;
     startEncounter = false;
-    heartSelected = false;
-    eyeSelected = false;
-    brainSelected = false;
-    teethSelected = false;
-    intestinesSelected = false;
-    lungsSelected = false;
   }
 
   /**
@@ -472,54 +457,120 @@ public class Communicator {
     }
   }
 
+  /**
+   * Gets board.
+   *
+   * @return the board
+   */
   public HashMap<String, Integer> getBoard() {
     return board;
   }
 
+  /**
+   * Sets board.
+   *
+   * @param board the board
+   */
   public void setBoard(HashMap<String, Integer> board) {
     this.board = board;
   }
 
+  /**
+   * Gets board is set.
+   *
+   * @return the board is set
+   */
   public AtomicBoolean getBoardIsSet() {
     return boardIsSet;
   }
 
+  /**
+   * Sets board is set.
+   *
+   * @param boardIsSet the board is set
+   */
   public void setBoardIsSet(boolean boardIsSet) {
     this.boardIsSet.set(boardIsSet);
   }
 
+  /**
+   * Gets logged.
+   *
+   * @return the logged
+   */
   public AtomicBoolean getLogged() {
     return logged;
   }
 
+  /**
+   * Sets logged.
+   *
+   * @param logged the logged
+   */
   public void setLogged(boolean logged) {
     this.logged.set(logged);
   }
 
+  /**
+   * Gets logged is set.
+   *
+   * @return the logged is set
+   */
   public AtomicBoolean getLoggedIsSet() {
     return loggedIsSet;
   }
 
+  /**
+   * Sets logged is set.
+   *
+   * @param loggedIsSet the logged is set
+   */
   public void setLoggedIsSet(boolean loggedIsSet) {
     this.loggedIsSet.set(loggedIsSet);
   }
 
+  /**
+   * Gets registered.
+   *
+   * @return the registered
+   */
   public AtomicBoolean getRegistered() {
     return registered;
   }
 
+  /**
+   * Sets registered.
+   *
+   * @param registered the registered
+   */
   public void setRegistered(boolean registered) {
     this.registered.set(registered);
   }
 
+  /**
+   * Gets registered is set.
+   *
+   * @return the registered is set
+   */
   public AtomicBoolean getRegisteredIsSet() {
     return registeredIsSet;
   }
 
+  /**
+   * Sets registered is set.
+   *
+   * @param registeredIsSet the registered is set
+   */
   public void setRegisteredIsSet(boolean registeredIsSet) {
     this.registeredIsSet.set(registeredIsSet);
   }
 
+  /**
+   * Gets username.
+   *
+   * @param player the player
+   * @return the username
+   */
   public String getUsername(PlayerType player) {
     if (player == PlayerType.PLAYER_BOTTOM) {
       return usernameBottom;
@@ -528,72 +579,30 @@ public class Communicator {
     }
   }
 
-  //  public void setUsername(String username) {
-  //    this.username = username;
-  //  }
-
   /**
-   * was eye selected boolean.
+   * Add oponent organ.
    *
-   * @return the boolean
+   * @param organ the organ
    */
-  public boolean wasEyeSelected() {
-    return eyeSelected;
-  }
-
-  /**
-   * was lungs selected boolean.
-   *
-   * @return the boolean
-   */
-  public boolean wasLungsSelected() {
-    return lungsSelected;
-  }
-
-  /**
-   * was brain selected boolean.
-   *
-   * @return the boolean
-   */
-  public boolean wasBrainSelected() {
-    return brainSelected;
-  }
-
-  /**
-   * was intestines selected boolean.
-   *
-   * @return the boolean
-   */
-  public boolean wasIntestinesSelected() {
-    return intestinesSelected;
-  }
-
-  /**
-   * was teeth selected boolean.
-   *
-   * @return the boolean
-   */
-  public boolean wasTeethSelected() {
-    return teethSelected;
-  }
-
-  /**
-   * was heart selected boolean.
-   *
-   * @return the boolean
-   */
-  public boolean wasHeartSelected() {
-    return heartSelected;
-  }
-
   public void addOponentOrgan(Organ organ) {
     opponentOrgans.add(organ);
   }
 
+  /**
+   * Add organ.
+   *
+   * @param organ the organ
+   */
   public void addOrgan(Organ organ) {
     playerOrgans.add(organ);
   }
 
+  /**
+   * Sets username.
+   *
+   * @param playerType the player type
+   * @param username the username
+   */
   public void setUsername(PlayerType playerType, String username) {
     if (playerType == PlayerType.PLAYER_TOP) {
       usernameTop = username;
@@ -602,20 +611,21 @@ public class Communicator {
     }
   }
 
+  /**
+   * Sets selected organ.
+   *
+   * @param organ the organ
+   */
   public void setSelectedOrgan(Organ organ) {
     selectedOrgan = organ;
   }
 
+  /**
+   * Gets selected organ.
+   *
+   * @return the selected organ
+   */
   public Organ getSelectedOrgan() {
     return selectedOrgan;
-
-    //  public void setPlayersSet(boolean playersSet){
-    //    this.playersSet = playersSet;
-    //  }
-    //
-    //  public boolean getPlayersSet(){
-    //    return playersSet;
-    //  }
-
   }
 }

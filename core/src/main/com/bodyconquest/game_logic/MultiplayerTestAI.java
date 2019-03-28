@@ -8,58 +8,61 @@ import main.com.bodyconquest.gamestates.EncounterState;
 
 import java.util.Random;
 
-//for now the AI only acts as extra units spawned at the losingPlayer base
+/** The type Multiplayer test ai. */
 public class MultiplayerTestAI extends Thread {
 
-    private final int COOLDOWN = 5000;
+  private final int COOLDOWN = 5000;
 
-    private EncounterState game;
-    private boolean running;
-    private PlayerType playerType;
+  private EncounterState game;
+  private boolean running;
+  private PlayerType playerType;
 
-    public MultiplayerTestAI(EncounterState game) {
-        this.game = game;
-        running = true;
+  /**
+   * Instantiates a new Multiplayer test ai.
+   *
+   * @param game the game
+   */
+  public MultiplayerTestAI(EncounterState game) {
+    this.game = game;
+    running = true;
+  }
+
+  @Override
+  public void run() {
+    super.run();
+    long time;
+    long lastWave = 0;
+    while (running) {
+      time = System.currentTimeMillis();
+      if (time > (lastWave + COOLDOWN)) {
+        this.playerType = decidePlayer();
+        summonWave();
+        lastWave = time;
+      }
+    }
+  }
+
+  // decides whom the AI sides with -- the losingPlayer
+  private PlayerType decidePlayer() {
+    PlayerType losingPlayer;
+    Random rand = new Random();
+    int player = rand.nextInt(2);
+
+    if (player == 1) {
+      losingPlayer = PlayerType.PLAYER_TOP;
+    } else {
+      losingPlayer = PlayerType.PLAYER_BOTTOM;
     }
 
-    @Override
-    public void run() {
-        super.run();
-        long time;
-        long lastWave = 0;
-        while (running) {
-            time = System.currentTimeMillis();
-            if (time > (lastWave + COOLDOWN)) {
-                this.playerType = decidePlayer();
-                summonWave();
-                lastWave = time;
-            }
-        }
-    }
+    return losingPlayer;
+  }
 
-    //decides whom the AI sides with -- the losingPlayer
-    private PlayerType decidePlayer() {
-        PlayerType losingPlayer;
-        Random rand = new Random();
-        int player = rand.nextInt(2);
-
-        if (player == 1) {
-            losingPlayer = PlayerType.PLAYER_TOP;
-        } else {
-            losingPlayer = PlayerType.PLAYER_BOTTOM;
-        }
-
-        return losingPlayer;
-    }
-
-    private void summonWave() {
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                game.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType, true);
-                game.spawnUnit(UnitType.BACTERIA, Lane.MIDDLE, playerType, true);
-                game.spawnUnit(UnitType.VIRUS, Lane.TOP, playerType, true);
-            }
+  private void summonWave() {
+    Gdx.app.postRunnable(
+        () -> {
+          game.spawnUnit(UnitType.BACTERIA, Lane.BOTTOM, playerType, true);
+          game.spawnUnit(UnitType.BACTERIA, Lane.MIDDLE, playerType, true);
+          game.spawnUnit(UnitType.VIRUS, Lane.TOP, playerType, true);
         });
-    }
+  }
 }

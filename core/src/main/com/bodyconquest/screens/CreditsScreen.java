@@ -7,9 +7,7 @@ import main.com.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
-/**
- * The type Credits screen.
- */
+/** The type Credits screen. */
 public class CreditsScreen extends AbstractGameScreen implements Screen {
 
   private Texture backButton;
@@ -22,11 +20,10 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
   private Rectangle backBounds;
   private String username;
 
-
   /**
    * Instantiates a new Credits screen.
    *
-   * @param game     the game
+   * @param game the game
    * @param username the username
    */
   public CreditsScreen(BodyConquest game, String username) {
@@ -35,13 +32,11 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
     loadAssets();
     getAssets();
     setRectangles();
-
   }
 
   /** {@inheritDoc} */
   @Override
-  public void show() {
-  }
+  public void show() {}
 
   /** {@inheritDoc} */
   @Override
@@ -83,7 +78,7 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
   /** {@inheritDoc} */
   @Override
   public void resize(int width, int height) {
-    super.resize(width,height);
+    super.resize(width, height);
   }
 
   /** {@inheritDoc} */
@@ -109,9 +104,8 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
     augustas = manager.get(Assets.augustas, Texture.class);
     brandon = manager.get(Assets.brandon, Texture.class);
     gintare = manager.get(Assets.gintare, Texture.class);
-    paul = manager.get(Assets.paul,Texture.class);
+    paul = manager.get(Assets.paul, Texture.class);
     backButton = manager.get(Assets.backButton, Texture.class);
-
   }
 
   /** {@inheritDoc} */
@@ -119,11 +113,10 @@ public class CreditsScreen extends AbstractGameScreen implements Screen {
   public void setRectangles() {
     super.setRectangles();
     backBounds =
-            new Rectangle(
-                    BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
-                    60,
-                    backButton.getWidth(),
-                    backButton.getHeight());
-
+        new Rectangle(
+            BodyConquest.V_WIDTH / 2 - backButton.getWidth() / 2,
+            60,
+            backButton.getWidth(),
+            backButton.getHeight());
   }
 }

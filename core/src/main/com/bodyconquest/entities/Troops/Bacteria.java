@@ -1,6 +1,5 @@
 package main.com.bodyconquest.entities.Troops;
 
-import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.Lane;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.constants.UnitType;

@@ -278,16 +278,6 @@ public class EncounterScreen implements Screen {
 
     }
 
-//    if(healthTopBase < 35 && playerType == PlayerType.PLAYER_TOP&& !played){
-//      game.audioPlayer.changeMusicVolume(1.0f);
-//      played = true;
-////      for(float i =10; i >= 0; i--){
-////        game.audioPlayer.changeMusicVolume(i/10);
-////        //game.audioPlayer.playSFX("heartbeat");
-////      }
-//      game.audioPlayer.playMusicLoop("heartbeat");
-//    }
-
     if(played && changeMusic){
       game.audioPlayer.playMusicLoop("heartbeat");
       finished = true;
@@ -726,7 +716,6 @@ public class EncounterScreen implements Screen {
 
       stage.getCamera().position.set(stage.getWidth() / 2, stage.getHeight() / 2, 0);
 
-      // game.getClient().getCommunicator().getPlayerType();
       if (healthTopBase > 0 && getTimeAlive() - getTimeOfDmgTakenTop() < SHAKE_TIME_ON_DMG) {
 
         stage

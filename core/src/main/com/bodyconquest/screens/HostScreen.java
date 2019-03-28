@@ -70,22 +70,10 @@ public class HostScreen extends AbstractGameScreen implements Screen {
             if (hostBounds.contains(tmp.x, tmp.y)) {
                 System.out.println("host pressed");
                 game.setScreen(new StartScreen(game, GameType.MULTIPLAYER_HOST));
-                /*
-                try {
-                    startGame(GameType.MULTIPLAYER_HOST);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
             }
             if (joinBounds.contains(tmp.x, tmp.y)) {
                 System.out.println("join pressed");
                 game.setScreen(new StartScreen(game, GameType.MULTIPLAYER_JOIN));
-                /*
-                try {
-                    startGame(GameType.MULTIPLAYER_JOIN);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
             }
 
             if (backBounds.contains(tmp.x, tmp.y)) {

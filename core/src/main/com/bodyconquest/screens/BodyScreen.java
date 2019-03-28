@@ -471,7 +471,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         t_header.getHeight() / 2);
     allImages.add(title);
 
-    // if(!communicator.wasHeartSelected()){
     heart = new Image(t_heart);
     heart.setBounds(
         BodyConquest.V_WIDTH / 5 - t_heart.getWidth() * 1.5f / 2,
@@ -495,9 +494,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         t_heartpoints.getWidth() / 3f,
         t_heartpoints.getHeight() / 3f);
     allImages.add(heartpoints);
-    // }
 
-    //    if(!communicator.wasEyeSelected()){
     eye = new Image(t_eye);
     eye.setBounds(
         BodyConquest.V_WIDTH / 2 - t_eye.getWidth() * 1.5f / 2,
@@ -520,9 +517,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         t_eyepoints.getWidth() / 3f,
         t_eyepoints.getHeight() / 3f);
     allImages.add(eyepoints);
-    // }
 
-    // if(!communicator.wasLungsSelected()){
     lungs = new Image(t_lungs);
     lungs.setBounds(
         BodyConquest.V_WIDTH / 5 * 4 - t_lungs.getWidth() * 1.5f / 2,
@@ -545,9 +540,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         t_lungspoints.getWidth() / 3f,
         t_lungspoints.getHeight() / 3f);
     allImages.add(lungspoints);
-    // }
 
-    // if(!communicator.wasBrainSelected()){
     brain = new Image(t_brain);
     brain.setBounds(
         BodyConquest.V_WIDTH / 5 - t_brain.getWidth() * 1.5f / 2,
@@ -570,9 +563,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         t_brainpoints.getWidth() / 3f,
         t_brainpoints.getHeight() / 3f);
     allImages.add(brainpoints);
-    // }
 
-    // if(!communicator.wasTeethSelected()){
     teeth = new Image(t_teeth);
     teeth.setBounds(
         BodyConquest.V_WIDTH / 2 - t_teeth.getWidth() * 1.5f / 2,
@@ -595,9 +586,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         t_teethpoints.getWidth() / 3f,
         t_teethpoints.getHeight() / 3f);
     allImages.add(teethpoints);
-    // }
 
-    // if(!communicator.wasIntestinesSelected()){
     intestines = new Image(t_intestines);
     intestines.setBounds(
         BodyConquest.V_WIDTH / 5 * 4 - t_intestines.getWidth() * 1.5f / 2,
@@ -620,7 +609,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         t_intestinespoints.getWidth() / 3f,
         t_intestinespoints.getHeight() / 3f);
     allImages.add(intestinespoints);
-    // }
 
     if (picker) {
       continueImage = new Image(t_continueImage);
@@ -629,7 +617,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
           30,
           t_continueImage.getWidth() / 2.2f,
           t_continueImage.getHeight() / 2.2f);
-      //      allImages.add(continueImage);
 
       select = new Image(t_select);
       select.setBounds(
@@ -811,9 +798,6 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
             game.getClient()
                 .clientSender
                 .sendMessage(MessageMaker.confirmOrganMessage(selectedOrganType));
-            // if(gameType != GameType.MULTIPLAYER_JOIN) game.getGame().startEncounterState();
-            // We should probably have some sort of loading screen? Or at least a loading symbol?
-            // game.setScreen(new EncounterScreen(game, gameType));
             playButtonSound();
           }
         });
