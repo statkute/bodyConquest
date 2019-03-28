@@ -363,7 +363,7 @@ public class BodyScreen extends AbstractGameScreen implements Screen {
         break;
       default:
         t_heart = manager.get(Assets.heart, Texture.class);
-//    }
+    }
   }
 
   /**
