@@ -6,20 +6,37 @@ import java.util.Enumeration;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Client thread responsible for receiving messages from the server */
+/**
+ * Client thread responsible for receiving messages from the server
+ */
 public class ClientReceiver extends Thread {
 
+  /**
+   * The Address.
+   */
   public InetAddress address;
+  /**
+   * The Socket.
+   */
   public DatagramSocket socket;
+  /**
+   * The Group.
+   */
   public InetAddress group;
+  /**
+   * The Id.
+   */
   public AtomicInteger id;
+  /**
+   * The Received messages.
+   */
   public LinkedBlockingQueue<String> receivedMessages;
   private boolean run;
 
   /**
    * ClientReceiver initialization
    *
-   * @throws IOException
+   * @throws IOException the io exception
    */
   public ClientReceiver() throws IOException {
     address = getIpAddress();
@@ -77,7 +94,9 @@ public class ClientReceiver extends Thread {
     }
   }
 
-  /** Receives and assigns this client an ID from the server and waits for the game to start */
+  /**
+   * Receives and assigns this client an ID from the server and waits for the game to start
+   */
   public void gameSetup() {
     String received = "";
     while (!received.equals("start game")) {
@@ -124,6 +143,9 @@ public class ClientReceiver extends Thread {
     }
   }
 
+  /**
+   * Stop running.
+   */
   public void stopRunning(){
     run = false;
     socket.close();

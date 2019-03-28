@@ -5,9 +5,17 @@ import main.com.bodyconquest.networking.utilities.MessageMaker;
 
 import java.io.IOException;
 
-/** The Client thread */
+/**
+ * The Client thread
+ */
 public class Client {
+  /**
+   * The Client receiver.
+   */
   public ClientReceiver clientReceiver;
+  /**
+   * The Client sender.
+   */
   public ClientSender clientSender;
   private ClientLogic clientLogic;
 
@@ -16,11 +24,10 @@ public class Client {
   private boolean isStarted = false;
 
 
-
   /**
    * Starts the receiver and sender threads
    *
-   * @throws IOException
+   * @throws IOException the io exception
    */
   public void startClient() throws IOException {
     communicator = new Communicator();
@@ -39,6 +46,12 @@ public class Client {
     //clientSender.sendMessage(MessageMaker.usernameMessage(username));
   }
 
+  /**
+   * Main.
+   *
+   * @param args the args
+   * @throws IOException the io exception
+   */
   public static void main(String args[]) throws IOException {
     ClientReceiver clientReceiver = new ClientReceiver();
     ClientSender clientSender = new ClientSender(clientReceiver);
@@ -49,10 +62,18 @@ public class Client {
     clientSender.sendMessage("connected");
   }
 
+  /**
+   * Gets communicator.
+   *
+   * @return the communicator
+   */
   public Communicator getCommunicator() {
     return communicator;
   }
 
+  /**
+   * Close everything.
+   */
   public void closeEverything() {
     if (clientSender != null) {
       clientSender.stopRunning();
@@ -65,52 +86,41 @@ public class Client {
     }
   }
 
+  /**
+   * Sets race selection logic.
+   */
   public void setRaceSelectionLogic() {
     clientLogic.setRaceSelectionLogic();
   }
 
+  /**
+   * Sets encounter logic.
+   */
   public void setEncounterLogic() {
     clientLogic.setEncounterLogic();
   }
 
+  /**
+   * Sets body logic.
+   */
   public void setBodyLogic() {
     clientLogic.setBodyLogic();
   }
 
+  /**
+   * Sets database logic.
+   */
   public void setDatabaseLogic() {
     clientLogic.setDatabaseLogic();
   }
 
+  /**
+   * Gets is started.
+   *
+   * @return the is started
+   */
   public boolean getIsStarted() {
     return isStarted;
   }
 
-  //  public static void main(String argv[]) throws Exception {
-  //    ClientReceiver clientReceiver = new ClientReceiver();
-  //    ClientSender clientSender = new ClientSender(clientReceiver);
-  //
-  //    clientReceiver.start();
-  //    clientSender.start();
-  //
-  //    //    Thread.sleep(5000);
-  //
-  //    clientSender.sendMessage("connected");
-  //    Thread.sleep(500);
-  //    clientSender.sendMessage("This is a message sent just after the game has started");
-  // String sentence;
-  // String modifiedSentence;
-
-  // BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-  // Socket clientSocket = new Socket(packet.getAddress(), 4446);
-  // DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-  // DataInputStream inFromServer = new DataInputStream(clientSocket.getInputStream());
-
-  // sentence = "hello server\n";
-  // outToServer.writeUTF(sentence);
-  // outToServer.flush();
-  // System.out.println("Sent hello to server.");
-  // modifiedSentence = inFromServer.readUTF();
-  // System.out.println("FROM SERVER: " + modifiedSentence);
-  // clientSocket.close();
-  //  }
 }

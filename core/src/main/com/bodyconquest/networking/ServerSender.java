@@ -9,16 +9,24 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/** Server thread responsible for sending out messages */
+/**
+ * Server thread responsible for sending out messages
+ */
 public class ServerSender extends Thread {
+  /**
+   * The Connected clients.
+   */
   public CopyOnWriteArrayList<InetAddress> connectedClients;
+  /**
+   * The Socket.
+   */
   public DatagramSocket socket;
   private boolean run;
 
   /**
    * ServerSender initialization
    *
-   * @throws SocketException
+   * @throws SocketException the socket exception
    */
   public ServerSender() throws SocketException {
     connectedClients = new CopyOnWriteArrayList<InetAddress>();
@@ -48,6 +56,11 @@ public class ServerSender extends Thread {
     }
   }
 
+  /**
+   * Send object updates.
+   *
+   * @param message the message
+   */
   public void sendObjectUpdates(String message){
     String header = MessageMaker.OBJECT_UPDATE_HEADER;
     String fullMessage = header + message;
@@ -58,6 +71,9 @@ public class ServerSender extends Thread {
     while (run) {}
   }
 
+  /**
+   * Stop running.
+   */
   public void stopRunning(){
     run = false;
     socket.close();

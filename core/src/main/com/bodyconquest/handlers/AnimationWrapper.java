@@ -4,8 +4,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/** The type Animation wrapper. */
 public class AnimationWrapper {
 
+  /**
+   * Gets sprite sheet.
+   *
+   * @param frameCols the frame cols
+   * @param frameRows the frame rows
+   * @param frameDuration the frame duration
+   * @param texturePath the texture path
+   * @return the sprite sheet
+   */
   public static Animation<TextureRegion> getSpriteSheet(
       int frameCols, int frameRows, float frameDuration, String texturePath) {
 

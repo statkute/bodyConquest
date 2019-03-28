@@ -9,15 +9,34 @@ import main.com.bodyconquest.networking.utilities.MessageMaker;
 
 import java.util.HashMap;
 
-/** Server Thread responsible for dealing with game logic based on incoming messages */
+/**
+ * Server Thread responsible for dealing with game logic based on incoming messages
+ */
 public class ServerLogic extends Thread {
 
-  /** Possible Server Logics. */
+  /**
+   * Possible Server Logics.
+   */
   public enum LogicType {
+    /**
+     * Race selection logic logic type.
+     */
     RACE_SELECTION_LOGIC,
+    /**
+     * Body logic logic type.
+     */
     BODY_LOGIC,
+    /**
+     * Encounter logic logic type.
+     */
     ENCOUNTER_LOGIC,
+    /**
+     * Database logic logic type.
+     */
     DATABASE_LOGIC,
+    /**
+     * Waiting logic logic type.
+     */
     WAITING_LOGIC
   }
 
@@ -44,6 +63,7 @@ public class ServerLogic extends Thread {
    * Constructor.
    *
    * @param serverReceiver The ServerReceiver thread of the same Server.
+   * @param serverSender   the server sender
    */
   public ServerLogic(ServerReceiver serverReceiver, ServerSender serverSender) {
     this.serverReceiver = serverReceiver;
@@ -337,72 +357,53 @@ public class ServerLogic extends Thread {
     }
   }
 
+  /**
+   * Sets encounter logic.
+   *
+   * @param encounterState the encounter state
+   */
   public void setEncounterLogic(EncounterState encounterState) {
     this.encounterState = encounterState;
     currentLogicType = LogicType.ENCOUNTER_LOGIC;
   }
 
+  /**
+   * Sets race selection logic.
+   *
+   * @param game the game
+   */
   public void setRaceSelectionLogic(Game game) {
     this.game = game;
     currentLogicType = LogicType.RACE_SELECTION_LOGIC;
   }
 
+  /**
+   * Sets body logic.
+   */
   public void setBodyLogic() {
     currentLogicType = LogicType.BODY_LOGIC;
   }
 
+  /**
+   * Sets database logic.
+   *
+   * @param game the game
+   */
   public void setDatabaseLogic(Game game) {
     currentLogicType = LogicType.DATABASE_LOGIC;
     this.game = game;
   }
 
+  /**
+   * Sets waiting logic.
+   */
   public void setWaitingLogic() { currentLogicType = LogicType.WAITING_LOGIC; }
 
+  /**
+   * Stop running.
+   */
   public void stopRunning() {
     run = false;
   }
 
-//  private class RaceSelectionLogic implements Logic{
-//
-//    private boolean topPlayerConfirmed;
-//    private boolean bottomPlayerConfirmed;
-//
-//    RaceSelectionLogic(){
-//      topPlayerConfirmed = false;
-//      bottomPlayerConfirmed = false;
-//    }
-//
-//    @Override
-//    public void interpret(String message) {
-//      if (message.startsWith(MessageMaker.RACE_HEADER)) {
-//        Disease disease;
-//        PlayerType playerType;
-//
-//        int pointer = MessageMaker.RACE_HEADER.length();
-//
-//        String encodedDisease = message.substring(pointer, pointer + Disease.getEncodedLength());
-//        disease = Disease.decode(encodedDisease);
-//        pointer += Disease.getEncodedLength() + 1;
-//
-//        String encodedPlayerType =
-//                message.substring(pointer, pointer + PlayerType.getEncodedLength());
-//        playerType = PlayerType.decode(encodedPlayerType);
-//
-//        if (playerType == PlayerType.PLAYER_TOP) game.setPlayerTop(disease);
-//        if (playerType == PlayerType.PLAYER_BOTTOM) game.setPlayerBottom(disease);
-//
-//        // Response message for the other player to receive so they can update the other player's
-//        // selection on their screen
-//        String responseMessage = MessageMaker.diseaseMessage(disease, playerType);
-//        serverSender.sendMessage(responseMessage);
-//
-//        // Does nothing for player type AI as of now
-//        // if(playerType == PlayerType.AI)          playerTop = new Player(playerType, disease);
-//      } else if (message.equals(MessageMaker.CONFIRM_RACE)) {
-//
-//      } else {
-//        System.err.println("[ERROR] This message doesn't conform to the current logic.");
-//      }
-//    }
-//  }
 }

@@ -10,44 +10,70 @@ import main.com.bodyconquest.constants.Assets;
 import main.com.bodyconquest.constants.GameType;
 import main.com.bodyconquest.rendering.BodyConquest;
 
-/** The type Databases screen. */
+/**
+ * The type Databases screen.
+ */
 public abstract class DatabasesScreen extends AbstractGameScreen {
 
-  /** The username. */
+  /**
+   * The username.
+   */
   protected String textUsername;
 
-  /** The password. */
+  /**
+   * The password.
+   */
   protected String textPassword;
 
-  /** The Texture for password. */
+  /**
+   * The Texture for password.
+   */
   protected Texture password;
 
-  /** The Texture for Username. */
+  /**
+   * The Texture for Username.
+   */
   protected Texture username;
-  /** The Skin. */
+  /**
+   * The Skin.
+   */
   protected Skin skin;
 
-  /** The Textfield for username. */
+  /**
+   * The Textfield for username.
+   */
   protected TextField txfUsername;
 
-  /** The Textfield for password. */
+  /**
+   * The Textfield for password.
+   */
   protected TextField txfPassword;
 
-  /** The Password image. */
+  /**
+   * The Password image.
+   */
   protected Image passwordImage;
 
-  /** The Username image. */
+  /**
+   * The Username image.
+   */
   protected Image usernameImage;
 
-  /** The Stage. */
+  /**
+   * The Stage.
+   */
   protected Stage stage;
 
+  /**
+   * The Game type.
+   */
   protected GameType gameType;
 
   /**
    * Instantiates a new Database screen.
    *
-   * @param game the game
+   * @param game     the game
+   * @param gameType the game type
    */
   public DatabasesScreen(BodyConquest game, GameType gameType) {
     super(game);
@@ -94,7 +120,9 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
     password = manager.get(Assets.enterPasswordText, Texture.class);
   }
 
-  /** Process registration. */
+  /**
+   * Process registration.
+   */
   public void processRegistration() {
     dispose();
   }
@@ -106,7 +134,9 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
     stage.dispose();
   }
 
-  /** Setting positions in the batch and stage. */
+  /**
+   * Setting positions in the batch and stage.
+   */
   public void settingPositions() {
     usernameImage.setPosition(
         BodyConquest.V_WIDTH / 2.0f - usernameImage.getWidth() / 2.0f, 347.0f);
@@ -116,7 +146,9 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
     txfPassword.setPosition(BodyConquest.V_WIDTH / 2.0f - txfPassword.getWidth() / 2.0f, 200.0f);
   }
 
-  /** Adding actors to Stage. */
+  /**
+   * Adding actors to Stage.
+   */
   public void adding() {
     stage.addActor(passwordImage);
     stage.addActor(usernameImage);
@@ -124,7 +156,9 @@ public abstract class DatabasesScreen extends AbstractGameScreen {
     stage.addActor(txfPassword);
   }
 
-  /** Setting sizes in the batch and stage. */
+  /**
+   * Setting sizes in the batch and stage.
+   */
   public void settingSizes() {
     txfUsername.setSize(300, 40);
     txfPassword.setSize(300, 40);

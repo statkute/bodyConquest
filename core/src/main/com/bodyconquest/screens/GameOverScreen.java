@@ -15,6 +15,9 @@ import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.awt.*;
 
+/**
+ * The type Game over screen.
+ */
 public class GameOverScreen extends AbstractGameScreen implements Screen {
 
   private String usernameTop;
@@ -30,6 +33,12 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
   private Server server;
   private Communicator communicator;
 
+  /**
+   * Instantiates a new Game over screen.
+   *
+   * @param game     the game
+   * @param gameType the game type
+   */
   public GameOverScreen(BodyConquest game, GameType gameType) {
     super(game);
     this.gameType = gameType;
@@ -95,11 +104,17 @@ public class GameOverScreen extends AbstractGameScreen implements Screen {
     backButton = manager.get(Assets.backButton, Texture.class);
   }
 
+  /**
+   * Draw username.
+   */
   public void drawUsername() {
     game.gameFont.draw(game.batch, usernameBottom, BodyConquest.V_WIDTH / 5.0f, 320.0f);
     game.gameFont.draw(game.batch, usernameTop, BodyConquest.V_WIDTH / 5.0f, 280.0f);
   }
 
+  /**
+   * Draw score.
+   */
   public void drawScore() {
     game.gameFont.draw(
         game.batch, Integer.toString(scoreBottom), BodyConquest.V_WIDTH / 5.0f * 4.0f, 320.0f);
