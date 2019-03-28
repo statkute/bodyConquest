@@ -94,6 +94,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
   /**
    * Add buttons.
    */
+  /** Add buttons. */
   public void addButtons() {
     submitImage.addListener(
         new ClickListener() {
@@ -108,7 +109,7 @@ public class LoginScreen extends DatabasesScreen implements Screen {
             String message = MessageMaker.loginMessage(textUsername, hashedPassword);
 
             game.getClient().clientSender.sendMessage(message);
-            System.out.println(textUsername + " " + textPassword);
+            //System.out.println(textUsername + " " + textPassword);
             processRegistration();
           }
         });

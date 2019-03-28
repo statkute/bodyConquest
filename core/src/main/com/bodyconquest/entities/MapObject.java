@@ -451,12 +451,12 @@ public abstract class MapObject {
   protected void moveTowards(double x, double y) {
     double relX = x - this.getCentreX();
     double relY = y - this.getCentreY();
-    double angle = Math.atan((y - this.getCentreY()) / (x - this.getCentreX()));
-    if (relX < 0 && relY >= 0) {
-      angle = angle - Math.PI;
-    } else if (relY <= 0 && relX <= 0) {
+    double angle = Math.atan(relY / relX); // Top right
+    if (relX < 0 && relY >= 0) { // Top Left
       angle += Math.PI;
-    } else if (relY < 0 && relX >= 0) {
+    } else if (relY < 0 && relX < 0) { // Bottom Left
+      angle -= Math.PI;
+    } else if (relY < 0 && relX >= 0) { // Bottom Right
       angle = (2 * Math.PI) - angle;
     }
     setDirection(angle);

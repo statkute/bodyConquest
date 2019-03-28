@@ -72,14 +72,13 @@ public class EncounterScreen implements Screen {
    */
   public static GameType gameType;
 
-  /**
-   * The constant BLINK_TIME_AFTER_DMG.
-   */
+  /** The constant BLINK_TIME_AFTER_DMG. */
   public static final float BLINK_TIME_AFTER_DMG = 0.07f;
 
   /**
    * The constant BLINK_TIME_AFTER_DMG_BACTERIAS.
    */
+  /** The constant BLINK_TIME_AFTER_DMG_BACTERIAS. */
   public static final float BLINK_TIME_AFTER_DMG_BACTERIAS = 200f;
 
   private final OrthographicCamera gameCamera;
