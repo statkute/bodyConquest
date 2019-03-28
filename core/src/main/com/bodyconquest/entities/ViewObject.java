@@ -163,6 +163,15 @@ public class ViewObject extends Actor {
 
         }
 
+        if (playerType == PlayerType.PLAYER_TOP && bo.getY() == Assets.baseBottomY) {
+            if (EncounterScreen.getTimeAlive() < EncounterScreen.getTimeOfDmgTakenBottom() + EncounterScreen.BLINK_TIME_AFTER_DMG) {
+                float t = (EncounterScreen.getTimeAlive() - EncounterScreen.getTimeOfDmgTakenBottom()) / EncounterScreen.BLINK_TIME_AFTER_DMG;
+                t = t * t;
+                setColor(1, 0, 0, t);
+            }
+
+        }
+
     }
 
     public void commonDraw(Batch batch, float parentAlpha) {
