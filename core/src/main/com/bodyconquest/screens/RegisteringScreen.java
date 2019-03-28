@@ -12,7 +12,9 @@ import main.com.bodyconquest.networking.utilities.Hasher;
 import main.com.bodyconquest.networking.utilities.MessageMaker;
 import main.com.bodyconquest.rendering.BodyConquest;
 
-/** The type Registering screen. */
+/**
+ * The type Registering screen.
+ */
 public class RegisteringScreen extends DatabasesScreen implements Screen {
 
   private Texture register;
@@ -27,7 +29,8 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
   /**
    * Instantiates a new Registering screen.
    *
-   * @param game the game
+   * @param game     the game
+   * @param gameType the game type
    */
   public RegisteringScreen(BodyConquest game, GameType gameType) {
     super(game, gameType);
@@ -64,6 +67,9 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
     t_login = manager.get(Assets.loginButtonLow, Texture.class);
   }
 
+  /**
+   * Add buttons.
+   */
   public void addButtons() {
     submitImage.addListener(
         new ClickListener() {

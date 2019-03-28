@@ -13,12 +13,27 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * The type Client logic.
+ */
 public class ClientLogic extends Thread {
 
   private enum Logic {
+    /**
+     * Body logic logic.
+     */
     BODY_LOGIC,
+    /**
+     * Race selection logic logic.
+     */
     RACE_SELECTION_LOGIC,
+    /**
+     * Encounter logic logic.
+     */
     ENCOUNTER_LOGIC,
+    /**
+     * Database logic logic.
+     */
     DATABASE_LOGIC
   }
 
@@ -28,6 +43,12 @@ public class ClientLogic extends Thread {
   private Communicator communicator;
   private boolean run;
 
+  /**
+   * Instantiates a new Client logic.
+   *
+   * @param clientReceiver the client receiver
+   * @param communicator   the communicator
+   */
   public ClientLogic(ClientReceiver clientReceiver, Communicator communicator) {
     this.clientReceiver = clientReceiver;
     this.communicator = communicator;
@@ -318,22 +339,37 @@ public class ClientLogic extends Thread {
     }
   }
 
+  /**
+   * Sets race selection logic.
+   */
   public void setRaceSelectionLogic() {
     currentLogic = Logic.RACE_SELECTION_LOGIC;
   }
 
+  /**
+   * Sets body logic.
+   */
   public void setBodyLogic() {
     currentLogic = Logic.BODY_LOGIC;
   }
 
+  /**
+   * Sets encounter logic.
+   */
   public void setEncounterLogic() {
     currentLogic = Logic.ENCOUNTER_LOGIC;
   }
 
+  /**
+   * Sets database logic.
+   */
   public void setDatabaseLogic() {
     currentLogic = Logic.DATABASE_LOGIC;
   }
 
+  /**
+   * Stop running.
+   */
   public void stopRunning() {
     run = false;
   }

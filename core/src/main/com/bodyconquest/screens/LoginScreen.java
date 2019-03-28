@@ -17,7 +17,9 @@ import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.io.IOException;
 
-/** The type Login screen. */
+/**
+ * The type Login screen.
+ */
 public class LoginScreen extends DatabasesScreen implements Screen {
 
   private Texture login;
@@ -26,6 +28,9 @@ public class LoginScreen extends DatabasesScreen implements Screen {
   // private GameType gameType;
   private int counter;
 
+  /**
+   * The Player type.
+   */
   protected PlayerType playerType;
   private Texture t_submit;
   private Image submitImage;
@@ -35,7 +40,9 @@ public class LoginScreen extends DatabasesScreen implements Screen {
   /**
    * Instantiates a new Login screen.
    *
-   * @param game the game
+   * @param game     the game
+   * @param gameType the game type
+   * @param counter  the counter
    */
   public LoginScreen(BodyConquest game, GameType gameType, int counter) {
     super(game, gameType);
@@ -84,6 +91,9 @@ public class LoginScreen extends DatabasesScreen implements Screen {
     t_register = manager.get(Assets.registerButtonLow, Texture.class);
   }
 
+  /**
+   * Add buttons.
+   */
   public void addButtons() {
     submitImage.addListener(
         new ClickListener() {
@@ -141,13 +151,6 @@ public class LoginScreen extends DatabasesScreen implements Screen {
       }
 
     } else {
-      // else go back to login screen
-      // loginBtn.setText("Bad details!");
-      //            try {
-      //                Thread.sleep(10000);
-      //            } catch (InterruptedException e) {
-      //                e.printStackTrace();
-      //            }
       game.getClient().getCommunicator().setLoggedIsSet(false);
       counter++;
       game.setScreen(new LoginScreen(game, gameType, counter));

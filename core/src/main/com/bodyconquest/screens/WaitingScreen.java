@@ -12,6 +12,9 @@ import main.com.bodyconquest.rendering.BodyConquest;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * The type Waiting screen.
+ */
 public class WaitingScreen extends AbstractGameScreen implements Screen {
 
 
@@ -25,7 +28,8 @@ public class WaitingScreen extends AbstractGameScreen implements Screen {
     /**
      * Instantiates a new Abstract game screen.
      *
-     * @param game the game
+     * @param game     the game
+     * @param gameType the game type
      */
     public WaitingScreen(BodyConquest game, GameType gameType) {
         super(game);
@@ -57,7 +61,7 @@ public class WaitingScreen extends AbstractGameScreen implements Screen {
     @Override
     public void loadAssets() {
         super.loadAssets();
-        manager.load(Assets.waitingTextNew, Texture.class);
+        manager.load(Assets.waitingTextNew,  Texture.class);
         manager.load(Assets.continueTextBig, Texture.class);
         manager.finishLoading();
     }
@@ -66,7 +70,7 @@ public class WaitingScreen extends AbstractGameScreen implements Screen {
     public void getAssets() {
         super.getAssets();
 
-        waiting = manager.get(Assets.waitingTextNew, Texture.class);
+        waiting = manager.get(Assets.waitingTextNew,         Texture.class);
         continueButton = manager.get(Assets.continueTextBig, Texture.class);
     }
 

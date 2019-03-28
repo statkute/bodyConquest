@@ -14,22 +14,38 @@ import main.com.bodyconquest.networking.Server;
 import main.com.bodyconquest.rendering.BodyConquest;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
-/** The type Abstract game screen. */
+/**
+ * The type Abstract game screen.
+ */
 public abstract class AbstractGameScreen implements Screen {
 
-  /** The Game. */
+  /**
+   * The Game.
+   */
   protected BodyConquest game;
-  /** The Viewport. */
+  /**
+   * The Viewport.
+   */
   protected Viewport viewport;
-  /** The Camera. */
+  /**
+   * The Camera.
+   */
   protected Camera camera;
-  /** The Manager. */
+  /**
+   * The Manager.
+   */
   protected AssetManager manager;
-  /** The Background. */
+  /**
+   * The Background.
+   */
   protected Texture background;
-  /** The vector */
+  /**
+   * The vector
+   */
   protected Vector3 tmp;
-  /** The Server. */
+  /**
+   * The Server.
+   */
   protected Server server;
 
   /**
@@ -99,27 +115,37 @@ public abstract class AbstractGameScreen implements Screen {
     manager.dispose();
   }
 
-  /** Check if any button or texture was pressed. */
+  /**
+   * Check if any button or texture was pressed.
+   */
   public void checkPressed() {
     tmp = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
     camera.unproject(tmp);
   }
 
-  /** Play button sound. */
+  /**
+   * Play button sound.
+   */
   public void playButtonSound() {
     game.audioPlayer.playSFX("button_click");
   }
 
-  /** Load assets through asset manager. */
+  /**
+   * Load assets through asset manager.
+   */
   public void loadAssets() {
     manager.load(Assets.menuBackground, Texture.class);
   }
 
-  /** Gets assets so that asset manager could use them. */
+  /**
+   * Gets assets so that asset manager could use them.
+   */
   public void getAssets() {
     background = manager.get(Assets.menuBackground, Texture.class);
   }
 
-  /** Sets rectangles to get the bounds of the textures or images. */
+  /**
+   * Sets rectangles to get the bounds of the textures or images.
+   */
   public void setRectangles() {}
 }

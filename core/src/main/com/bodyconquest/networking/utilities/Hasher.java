@@ -4,11 +4,23 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * The type Hasher.
+ */
 public class Hasher {
 
+    /**
+     * Instantiates a new Hasher.
+     */
     public Hasher() {
     }
 
+    /**
+     * Hash string.
+     *
+     * @param message the message
+     * @return the string
+     */
     public String hash(String message) {
         String sha3_256hex = "";
 

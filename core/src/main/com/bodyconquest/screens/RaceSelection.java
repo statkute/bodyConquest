@@ -16,7 +16,9 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.io.IOException;
 
-/** The type Race selection. */
+/**
+ * The type Race selection.
+ */
 public class RaceSelection extends AbstractGameScreen implements Screen {
 
   private Texture header;
@@ -56,7 +58,7 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   /**
    * Instantiates a new Race selection screen.
    *
-   * @param game the game
+   * @param game     the game
    * @param gameType the game type
    * @throws IOException the io exception
    */
@@ -86,21 +88,6 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         .sendMessage(
             MessageMaker.usernameMessage(
                 playerType, game.getClient().getCommunicator().getUsername(playerType)));
-    /*
-    game.getClient().startClient();
-
-    if (gameType != GameType.MULTIPLAYER_JOIN) {
-        playerType = PlayerType.PLAYER_BOTTOM;
-    } else {
-        playerType = PlayerType.PLAYER_TOP;
-    }
-
-    game.getClient().clientSender.sendMessage(MessageMaker.usernameMessage(playerType,game.getUsername()));
-    communicator = game.getClient().getCommunicator();
-
-    communicator.setPlayerType(playerType);
-    game.getClient().setRaceSelectionLogic();
-    */
 
   }
 
@@ -204,10 +191,6 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
         System.out.println("continue is pressed");
         playButtonSound();
 
-        // Should actually start the encounter state once all players have confirmed their Disease
-        // <<<<<<< HEAD
-        //        if (gameType != GameType.MULTIPLAYER_JOIN) g.startEncounterState();
-        //        game.setScreen(new EncounterScreen(game, gameType,username));
 
         game.getClient().clientSender.sendMessage(MessageMaker.confirmRaceMessage(playerType));
       }
@@ -215,17 +198,6 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
       if (communicator.isPicker()) {
         checkSelection();
       }
-
-      //      if (backBounds.contains(tmp.x, tmp.y)) {
-      //        System.out.println("back pressed");
-      //        playButtonSound();
-      //        if (server != null) {
-      //          server.closeEverything();
-      //        }
-      //        game.getClient().closeEverything();
-      //        game.setScreen(new MenuScreen(game));
-      //        dispose();
-      //      }
     }
   }
 
@@ -254,23 +226,23 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   @Override
   public void loadAssets() {
     super.loadAssets();
-    manager.load(Assets.raceHeader, Texture.class);
-    manager.load(Assets.raceBlueVirus, Texture.class);
-    manager.load(Assets.raceGreenVirus, Texture.class);
-    manager.load(Assets.raceYellowVirus, Texture.class);
-    manager.load(Assets.raceBlueVirusSelected, Texture.class);
-    manager.load(Assets.raceGreenVirusSelected, Texture.class);
-    manager.load(Assets.raceYellowVirusSelected, Texture.class);
-    manager.load(Assets.raceBlueVirusOpponent, Texture.class);
-    manager.load(Assets.raceGreenVirusOpponent, Texture.class);
-    manager.load(Assets.raceYellowVirusOpponent, Texture.class);
-    manager.load(Assets.raceBlueDescription, Texture.class);
-    manager.load(Assets.raceGreenDescription, Texture.class);
-    manager.load(Assets.raceYellowDescription, Texture.class);
-    manager.load(Assets.raceContinueText, Texture.class);
-    manager.load(Assets.waitingText, Texture.class);
-    manager.load(Assets.selectDiseaseText, Texture.class);
-    manager.load(Assets.raceBackButton, Texture.class);
+    manager.load(Assets.raceHeader,               Texture.class);
+    manager.load(Assets.raceBlueVirus,            Texture.class);
+    manager.load(Assets.raceGreenVirus,           Texture.class);
+    manager.load(Assets.raceYellowVirus,          Texture.class);
+    manager.load(Assets.raceBlueVirusSelected,    Texture.class);
+    manager.load(Assets.raceGreenVirusSelected,   Texture.class);
+    manager.load(Assets.raceYellowVirusSelected,  Texture.class);
+    manager.load(Assets.raceBlueVirusOpponent,    Texture.class);
+    manager.load(Assets.raceGreenVirusOpponent,   Texture.class);
+    manager.load(Assets.raceYellowVirusOpponent,  Texture.class);
+    manager.load(Assets.raceBlueDescription,      Texture.class);
+    manager.load(Assets.raceGreenDescription,     Texture.class);
+    manager.load(Assets.raceYellowDescription,    Texture.class);
+    manager.load(Assets.raceContinueText,         Texture.class);
+    manager.load(Assets.waitingText,              Texture.class);
+    manager.load(Assets.selectDiseaseText,        Texture.class);
+    manager.load(Assets.raceBackButton,           Texture.class);
     manager.finishLoading();
   }
 
@@ -278,22 +250,22 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
   @Override
   public void getAssets() {
     super.getAssets();
-    header = manager.get(Assets.raceHeader, Texture.class);
-    continueText = manager.get(Assets.raceContinueText, Texture.class);
-    waitingText = manager.get(Assets.waitingText, Texture.class);
-    selectText = manager.get(Assets.selectDiseaseText, Texture.class);
-    blueVirus = manager.get(Assets.raceBlueVirus, Texture.class);
-    greenVirus = manager.get(Assets.raceGreenVirus, Texture.class);
-    yellowVirus = manager.get(Assets.raceYellowVirus, Texture.class);
-    blueVirusSelected = manager.get(Assets.raceBlueVirusSelected, Texture.class);
-    greenVirusSelected = manager.get(Assets.raceGreenVirusSelected, Texture.class);
+    header =              manager.get(Assets.raceHeader,              Texture.class);
+    continueText =        manager.get(Assets.raceContinueText,        Texture.class);
+    waitingText =         manager.get(Assets.waitingText,             Texture.class);
+    selectText =          manager.get(Assets.selectDiseaseText,       Texture.class);
+    blueVirus =           manager.get(Assets.raceBlueVirus,           Texture.class);
+    greenVirus =          manager.get(Assets.raceGreenVirus,          Texture.class);
+    yellowVirus =         manager.get(Assets.raceYellowVirus,         Texture.class);
+    blueVirusSelected =   manager.get(Assets.raceBlueVirusSelected,   Texture.class);
+    greenVirusSelected =  manager.get(Assets.raceGreenVirusSelected,  Texture.class);
     yellowVirusSelected = manager.get(Assets.raceYellowVirusSelected, Texture.class);
-    blueVirusOpponent = manager.get(Assets.raceBlueVirusOpponent, Texture.class);
-    greenVirusOpponent = manager.get(Assets.raceGreenVirusOpponent, Texture.class);
+    blueVirusOpponent =   manager.get(Assets.raceBlueVirusOpponent,   Texture.class);
+    greenVirusOpponent =  manager.get(Assets.raceGreenVirusOpponent,  Texture.class);
     yellowVirusOpponent = manager.get(Assets.raceYellowVirusOpponent, Texture.class);
-    blueDescription = manager.get(Assets.raceBlueDescription, Texture.class);
-    greenDescription = manager.get(Assets.raceGreenDescription, Texture.class);
-    yellowDescription = manager.get(Assets.raceYellowDescription, Texture.class);
+    blueDescription =     manager.get(Assets.raceBlueDescription,     Texture.class);
+    greenDescription =    manager.get(Assets.raceGreenDescription,    Texture.class);
+    yellowDescription =   manager.get(Assets.raceYellowDescription,   Texture.class);
   }
 
   /** {@inheritDoc} */
@@ -350,7 +322,9 @@ public class RaceSelection extends AbstractGameScreen implements Screen {
             yellowDescription.getHeight() / 2.0f);
   }
 
-  /** Check selection of the virus of the user. */
+  /**
+   * Check selection of the virus of the user.
+   */
   public void checkSelection() {
 
     if (blueVirusBounds.contains(tmp.x, tmp.y) || blueDescriptionBounds.contains(tmp.x, tmp.y)) {

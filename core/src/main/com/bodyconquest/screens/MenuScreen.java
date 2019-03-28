@@ -10,7 +10,9 @@ import main.com.bodyconquest.rendering.BodyConquest;
 
 import java.io.IOException;
 
-/** The type Menu screen. */
+/**
+ * The type Menu screen.
+ */
 public class MenuScreen extends AbstractGameScreen implements Screen {
 
   private Texture title;
@@ -27,7 +29,9 @@ public class MenuScreen extends AbstractGameScreen implements Screen {
   private Rectangle exitBounds;
   private Rectangle leaderboardBounds;
 
-  /** The constant timeOfServer which shows how long the server is running. */
+  /**
+   * The constant timeOfServer which shows how long the server is running.
+   */
   public static long timeOfServer;
 
   private String username;

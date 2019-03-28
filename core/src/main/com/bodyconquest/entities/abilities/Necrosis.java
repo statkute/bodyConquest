@@ -8,20 +8,41 @@ import main.com.bodyconquest.gamestates.EncounterState;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * The type Necrosis.
+ */
 public class Necrosis extends Ability {
 
+  /**
+   * The constant SUGARS_COST.
+   */
   public static final int SUGARS_COST = 60;
+  /**
+   * The constant PROTEINS_COST.
+   */
   public static final int PROTEINS_COST = 40;
+  /**
+   * The constant LIPIDS_COST.
+   */
   public static final int LIPIDS_COST = 80;
 
   private Lane lane;
 
   private int damage;
 
+  /**
+   * Instantiates a new Necrosis.
+   */
   public Necrosis() {
     super(PlayerType.PLAYER_TOP);
   }
 
+  /**
+   * Instantiates a new Necrosis.
+   *
+   * @param lane       the lane
+   * @param playerType the player type
+   */
   public Necrosis(Lane lane, PlayerType playerType) {
     super(playerType);
     this.lane = lane; // Should always be Lane.ALL

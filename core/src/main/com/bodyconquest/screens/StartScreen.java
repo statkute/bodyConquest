@@ -14,7 +14,9 @@ import main.com.bodyconquest.rendering.BodyConquest;
 import java.io.IOException;
 import java.net.SocketException;
 
-/** The type Start screen. */
+/**
+ * The type Start screen.
+ */
 public class StartScreen extends AbstractGameScreen implements Screen {
 
   private Texture title;
@@ -42,7 +44,8 @@ public class StartScreen extends AbstractGameScreen implements Screen {
   /**
    * Instantiates a new Start screen.
    *
-   * @param game the game
+   * @param game     the game
+   * @param gameType the game type
    */
   public StartScreen(BodyConquest game, GameType gameType) {
     super(game);
@@ -144,10 +147,10 @@ public class StartScreen extends AbstractGameScreen implements Screen {
   @Override
   public void loadAssets() {
     super.loadAssets();
-    manager.load(Assets.startTitle, Texture.class);
-    manager.load(Assets.startLogin, Texture.class);
+    manager.load(Assets.startTitle,    Texture.class);
+    manager.load(Assets.startLogin,    Texture.class);
     manager.load(Assets.startRegister, Texture.class);
-    manager.load(Assets.exitButton, Texture.class);
+    manager.load(Assets.exitButton,    Texture.class);
     manager.finishLoading();
   }
 
@@ -155,10 +158,10 @@ public class StartScreen extends AbstractGameScreen implements Screen {
   @Override
   public void getAssets() {
     super.getAssets();
-    title = manager.get(Assets.startTitle, Texture.class);
-    login = manager.get(Assets.startLogin, Texture.class);
+    title = manager.get(Assets.startTitle,       Texture.class);
+    login = manager.get(Assets.startLogin,       Texture.class);
     register = manager.get(Assets.startRegister, Texture.class);
-    exitButton = manager.get(Assets.exitButton, Texture.class);
+    exitButton = manager.get(Assets.exitButton,  Texture.class);
   }
 
   /** {@inheritDoc} */

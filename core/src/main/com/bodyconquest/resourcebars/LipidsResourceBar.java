@@ -6,8 +6,14 @@ import main.com.bodyconquest.constants.Resource;
 import main.com.bodyconquest.handlers.AnimationWrapper;
 import main.com.bodyconquest.rendering.BodyConquest;
 
+/**
+ * The type Lipids resource bar.
+ */
 public class LipidsResourceBar extends ResourceBar {
 
+    /**
+     * Instantiates a new Lipids resource bar.
+     */
     public LipidsResourceBar() {
         setResourceType(Resource.LIPID);
         setOutline(new TextureRegion(new Texture("core/assets/lipid_outline.png")));

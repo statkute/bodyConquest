@@ -233,13 +233,27 @@ public class AudioPlayer {
         return mutedMusic;
     }
 
+    /**
+     * Gets music volume.
+     *
+     * @return the music volume
+     */
     public float getMusicVolume() {
         return MUSIC_VOLUME;
     }
 
+    /**
+     * The constant MUSIC_FADE_STEP.
+     */
     public final static float MUSIC_FADE_STEP = 0.001f;
 
+    /**
+     * The constant MUSIC_FADE_STEP_UP.
+     */
     public final static float MUSIC_FADE_STEP_UP = 0.0008f;
 
+    /**
+     * The constant MUSIC_FADE_RATE.
+     */
     public final static float MUSIC_FADE_RATE = 0.005f;
 }
