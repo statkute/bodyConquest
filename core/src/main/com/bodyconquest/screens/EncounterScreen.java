@@ -317,7 +317,7 @@ public class EncounterScreen implements Screen {
 
       if (screenMakingCounter == 1) {
 
-        if (organNumber == 1) {
+        if (organNumber == 6) {
 
           switchScreen(game, new GameOverScreen(game, gameType));
         } else {

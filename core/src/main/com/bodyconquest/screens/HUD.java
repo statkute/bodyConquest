@@ -261,6 +261,7 @@ public class HUD {
               payload.setDragActor(dragImage);
               System.out.println("DRAGGING");
 
+
               //            if(spawnableClass.getSuperclass().equals(Troop.class)) {
               //              payload.setDragActor(new
               // Image(spawnableButton.getImage().getDrawable()));
@@ -295,6 +296,7 @@ public class HUD {
       e.printStackTrace();
     }
     //    dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
+
   }
 
   public Stage getStage() {
