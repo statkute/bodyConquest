@@ -14,6 +14,27 @@ import main.com.bodyconquest.gamestates.EncounterState;
 public class MeaslesFungus extends Fungus {
 
     /**
+     * The constant MAX_HEALTH.
+     */
+    public static final int MAX_HEALTH = 250;
+    /**
+     * The constant MAX_SPEED.
+     */
+    public static final double MAX_SPEED = 0.6;
+    /**
+     * The COOLDOWN till the next hit.
+     */
+    public static final long COOLDOWN = 1800;
+    /**
+     * The constant RANGE.
+     */
+    public static final int RANGE = 110;
+    /**
+     * The DAMAGE is deals.
+     */
+    public static final int DAMAGE = 45;
+
+    /**
      * The constant SUGARS_COST.
      */
     public static final int SUGARS_COST = 20;
@@ -75,13 +96,13 @@ public class MeaslesFungus extends Fungus {
         setCSize(85, 85);
 
         // Troop Stats
-        health = maxHealth = 250;
+        health = MAX_HEALTH;
         health = (int) (health * healthMult);
-        maxSpeed = 0.6 * (double) speedMult;
-        cooldown = (int) (1800 * attackSpeedMult); // Milliseconds
+        maxSpeed = MAX_SPEED * (double) speedMult;
+        cooldown = (int) (COOLDOWN * attackSpeedMult); // Milliseconds
         lastAttack = 0;
-        range = 50;
-        damage = (int) (45 * damageMult);
+        range = RANGE;
+        damage = (int) (DAMAGE * damageMult);
         mapObjectType = UnitType.FUNGUS;
 
         lipidsCost = LIPIDS_COST;
@@ -97,12 +118,12 @@ public class MeaslesFungus extends Fungus {
         setCSize(85, 85);
 
         // Troop Stats
-        health = maxHealth = 250;
-        maxSpeed = 0.6;
-        cooldown = 1800; // Milliseconds
+        health = MAX_HEALTH;
+        maxSpeed = MAX_SPEED;
+        cooldown = COOLDOWN; // Milliseconds
         lastAttack = 0;
-        range = 110;
-        damage = 45;
+        range = RANGE;
+        damage = DAMAGE;
         mapObjectType = UnitType.FUNGUS;
 
         lipidsCost = LIPIDS_COST;

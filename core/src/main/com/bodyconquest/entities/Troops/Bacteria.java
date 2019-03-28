@@ -84,10 +84,10 @@ public class Bacteria extends Troop {
 
         // Troop Stats
         health = maxHealth = MAX_HEALTH;
-        maxSpeed = 1;
-        cooldown = 1000; // Milliseconds
-        range = 50;
-        damage = 30;
+        maxSpeed = MAX_SPEED;
+        cooldown = COOLDOWN; // Milliseconds
+        range = RANGE;
+        damage = DAMAGE;
         mapObjectType = UnitType.BACTERIA;
 
         lipidsCost = LIPIDS_COST;
@@ -105,10 +105,10 @@ public class Bacteria extends Troop {
         // Troop Stats
         health = maxHealth = MAX_HEALTH;
         health = (int) (health * healthMult);
-        maxSpeed = 1 * (double) speedMult;
-        cooldown = (int) (1000 * attackSpeedMult); // Milliseconds
-        range = 50;
-        damage = (int) (30 * damageMult);
+        maxSpeed = MAX_SPEED * (double) speedMult;
+        cooldown = (int) (COOLDOWN * attackSpeedMult); // Milliseconds
+        range = RANGE;
+        damage = (int) (DAMAGE * damageMult);
         mapObjectType = UnitType.BACTERIA;
 
         lipidsCost = LIPIDS_COST;

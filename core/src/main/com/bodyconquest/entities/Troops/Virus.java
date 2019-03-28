@@ -12,6 +12,27 @@ import main.com.bodyconquest.gamestates.EncounterState;
 public class Virus extends Troop {
 
     /**
+     * The constant MAX_HEALTH.
+     */
+    public static final int MAX_HEALTH = 70;
+    /**
+     * The constant MAX_SPEED.
+     */
+    public static final double MAX_SPEED = 2;
+    /**
+     * The COOLDOWN till the next hit.
+     */
+    public static final long COOLDOWN = 3000;
+    /**
+     * The constant RANGE.
+     */
+    public static final int RANGE = 200;
+    /**
+     * The DAMAGE is deals.
+     */
+    public static final int DAMAGE = 40;
+
+    /**
      * The constant SUGARS_COST.
      */
     public static final int SUGARS_COST = 80;
@@ -66,16 +87,16 @@ public class Virus extends Troop {
         setSize(50, 50);
         setCSize(50, 50);
         // Troop Stats
-        health = maxHealth = 70;
+        health = MAX_HEALTH;
         health = (int) (health * healthMult);
-        maxSpeed = 2 * (double) speedMult;
+        maxSpeed = MAX_SPEED * (double) speedMult;
         attackable = true;
         moving = true;
         attacking = false;
-        cooldown = (int) (3000 * attackSpeedMult); // Milliseconds
+        cooldown = (int) (COOLDOWN * attackSpeedMult); // Milliseconds
         lastAttack = 0;
-        range = 200;
-        damage = (int) (40 * damageMult);
+        range = RANGE;
+        damage = (int) (DAMAGE * damageMult);
 
         mapObjectType = UnitType.VIRUS;
 
@@ -109,15 +130,15 @@ public class Virus extends Troop {
         setSize(50, 50);
         setCSize(50, 50);
         // Troop Stats
-        health = maxHealth = 70;
-        maxSpeed = 2;
+        health = MAX_HEALTH;
+        maxSpeed = MAX_SPEED;
         attackable = true;
         moving = true;
         attacking = false;
-        cooldown = 3000; // Milliseconds
+        cooldown = COOLDOWN; // Milliseconds
         lastAttack = 0;
-        range = 200;
-        damage = 40;
+        range = RANGE;
+        damage = DAMAGE;
         ranged = true;
 
         mapObjectType = UnitType.VIRUS;
