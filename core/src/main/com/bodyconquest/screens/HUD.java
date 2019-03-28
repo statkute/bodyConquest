@@ -136,6 +136,7 @@ public class HUD {
 
   private void setUpDragAndDrop() {
     dragAndDrop = new DragAndDrop();
+    final Image sourceImage = new Image(new Texture("core/assets/bacteria_blue_button.png"));
     dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
     // Bottom player spawn points
     if (playerType == PlayerType.PLAYER_BOTTOM) {
@@ -290,7 +291,9 @@ public class HUD {
     } catch (InstantiationException | IllegalAccessException e) {
       e.printStackTrace();
     }
-    dragAndDrop.setDragActorPosition(-(sourceImage.getWidth()/2), sourceImage.getHeight()/2);
+
+    final Image sourceImage = new Image(new Texture("core/assets/virus_blue_button.png"));
+    dragAndDrop.setDragActorPosition((sourceImage.getWidth()/2), 0);
   }
 
   public Stage getStage() {
