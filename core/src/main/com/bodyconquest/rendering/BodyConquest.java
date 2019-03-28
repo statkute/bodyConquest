@@ -60,6 +60,7 @@ public class BodyConquest extends com.badlogic.gdx.Game {
     gameFont = new BitmapFont(Gdx.files.internal(Assets.gameFont));
     audioPlayer.loadSFX("button_click", Assets.buttonSoundPath);
     audioPlayer.loadMusic("music", Assets.music);
+    audioPlayer.loadMusic("heartbeat",Assets.heartbeat);
     audioPlayer.playMusicLoop("music");
     difficultyLevel = DifficultyLevel.EASY;
     client = new Client();

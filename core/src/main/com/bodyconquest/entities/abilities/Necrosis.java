@@ -63,7 +63,7 @@ public class Necrosis extends Ability {
 
   @Override
   public String getPortraitLocation() {
-    return "core/assets/Default Sprite (Green).png";
+    return "core/assets/necrosis.png";
   }
 
   @Override

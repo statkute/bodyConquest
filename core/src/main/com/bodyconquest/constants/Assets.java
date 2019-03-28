@@ -412,4 +412,6 @@ public class Assets {
 
   /** The constant pathBorder. */
   public static String pathBorder = pathAssets + "bordernewest2.png";
+
+  public static String heartbeat =  "core/assets/heartbeat.wav";
 }
