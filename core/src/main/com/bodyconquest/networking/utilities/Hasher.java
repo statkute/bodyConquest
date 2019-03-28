@@ -13,7 +13,7 @@ public class Hasher {
         String sha3_256hex = "";
 
         try {
-            final MessageDigest digest = MessageDigest.getInstance("SHA3_256");
+            final MessageDigest digest = MessageDigest.getInstance("SHA-1");
             final byte[] hashbytes = digest.digest(
                     message.getBytes(StandardCharsets.UTF_8));
             sha3_256hex = bytesToHex(hashbytes);

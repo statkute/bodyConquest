@@ -71,9 +71,12 @@ public class RegisteringScreen extends DatabasesScreen implements Screen {
             playButtonSound();
             textPassword = txfPassword.getText();
             textUsername = txfUsername.getText();
+            //String message = MessageMaker.registerMessage(textUsername, textPassword);
+
             Hasher hasher = new Hasher();
             String hashedPassword = hasher.hash(textPassword);
-            String message = MessageMaker.loginMessage(textUsername, hashedPassword);
+            String message = MessageMaker.registerMessage(textUsername, hashedPassword);
+
             game.getClient().clientSender.sendMessage(message);
             System.out.println(textUsername + " " + textPassword);
             processRegistration();
