@@ -6,59 +6,59 @@ package main.com.bodyconquest.constants;
 // Player types
 public enum PlayerType implements Encodable {
 
-  /**
-   * Player top player type.
-   */
-  PLAYER_TOP("PT"),
-  /**
-   * Player bottom player type.
-   */
-  PLAYER_BOTTOM("PB"),
-  /**
-   * Ai player type.
-   */
-  AI("AI");
+    /**
+     * Player top player type.
+     */
+    PLAYER_TOP("PT"),
+    /**
+     * Player bottom player type.
+     */
+    PLAYER_BOTTOM("PB"),
+    /**
+     * Ai player type.
+     */
+    AI("AI");
 
-  private static final int ENCODED_LENGTH = 2;
+    private static final int ENCODED_LENGTH = 2;
 
-  private static final String ENCODED_PLAYER_TOP = "PT";
-  private static final String ENCODED_PLAYER_BOTTOM = "PB";
-  private static final String ENCODED_AI = "AI";
+    private static final String ENCODED_PLAYER_TOP = "PT";
+    private static final String ENCODED_PLAYER_BOTTOM = "PB";
+    private static final String ENCODED_AI = "AI";
 
-  private final String encodedPlayerType;
+    private final String encodedPlayerType;
 
-  PlayerType(String encodedPlayerType) {
-    if (encodedPlayerType.length() != ENCODED_LENGTH)
-      System.err.println("[ERROR] Incorrect playerType encoding length");
-    this.encodedPlayerType = encodedPlayerType;
-  }
+    PlayerType(String encodedPlayerType) {
+        if (encodedPlayerType.length() != ENCODED_LENGTH)
+            System.err.println("[ERROR] Incorrect playerType encoding length");
+        this.encodedPlayerType = encodedPlayerType;
+    }
 
-  /**
-   * Decode player type.
-   *
-   * @param playerString the player string
-   * @return the player type
-   */
-  public static PlayerType decode(String playerString) {
-    PlayerType playerType = null;
+    /**
+     * Decode player type String.
+     *
+     * @param playerString the player string
+     * @return the player type
+     */
+    public static PlayerType decode(String playerString) {
+        PlayerType playerType = null;
 
-    if (playerString.equals(ENCODED_PLAYER_BOTTOM)) playerType = PLAYER_BOTTOM;
-    if (playerString.equals(ENCODED_PLAYER_TOP)) playerType = PLAYER_TOP;
-    if (playerString.equals(ENCODED_AI)) playerType = AI;
+        if (playerString.equals(ENCODED_PLAYER_BOTTOM)) playerType = PLAYER_BOTTOM;
+        if (playerString.equals(ENCODED_PLAYER_TOP)) playerType = PLAYER_TOP;
+        if (playerString.equals(ENCODED_AI)) playerType = AI;
 
-    return playerType;
-  }
+        return playerType;
+    }
 
-  public String getEncoded() {
-    return encodedPlayerType;
-  }
+    public String getEncoded() {
+        return encodedPlayerType;
+    }
 
-  /**
-   * Gets encoded length.
-   *
-   * @return the encoded length
-   */
-  public static int getEncodedLength() {
-    return ENCODED_LENGTH;
-  }
+    /**
+     * Gets the encoded String's length.
+     *
+     * @return the encoded length
+     */
+    public static int getEncodedLength() {
+        return ENCODED_LENGTH;
+    }
 }

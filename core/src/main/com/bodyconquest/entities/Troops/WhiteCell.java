@@ -4,21 +4,51 @@ import main.com.bodyconquest.constants.Lane;
 import main.com.bodyconquest.constants.PlayerType;
 import main.com.bodyconquest.constants.UnitType;
 
+/**
+ * The type White cell.
+ */
 public class WhiteCell extends Troop {
 
+    /**
+     * The constant MAX_HEALTH.
+     */
     public static final int MAX_HEALTH = 150;
+    /**
+     * The constant MAX_SPEED.
+     */
     public static final double MAX_SPEED = 0.6;
+    /**
+     * The constant COOLDOWN.
+     */
     public static final long COOLDOWN = 1500;
+    /**
+     * The constant RANGE.
+     */
     public static final int RANGE = 50;
+    /**
+     * The constant DAMAGE.
+     */
     public static final int DAMAGE = 45;
 
+    /**
+     * The constant COST - as this unit is an AI unit, cost is only required for inheritance reasons.
+     */
     public static final int COST = 20;
 
+    /**
+     * Instantiates a new White cell.
+     */
     public WhiteCell() {
         super(Lane.BOTTOM, PlayerType.PLAYER_BOTTOM);
         init();
     }
 
+    /**
+     * Instantiates a new White cell.
+     *
+     * @param lane       the lane it is in
+     * @param playerType the player type it is assigned to
+     */
     public WhiteCell(Lane lane, PlayerType playerType) {
         super(lane, playerType);
         init();

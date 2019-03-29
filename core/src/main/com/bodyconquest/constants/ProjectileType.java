@@ -1,17 +1,33 @@
 package main.com.bodyconquest.constants;
 
+/**
+ * The enum Projectile type.
+ */
 public enum ProjectileType implements MapObjectType {
-  VIRUS_PROJECTILE, FUNGUS_PROJECTILE;
+    /**
+     * Virus projectile projectile type.
+     */
+    VIRUS_PROJECTILE,
+    /**
+     * Fungus projectile projectile type.
+     */
+    FUNGUS_PROJECTILE;
 
-  @SuppressWarnings("unchecked")
-  public <T extends Enum & MapObjectType> T getMapObjectType() {
-    return (T) this;
-  }
-
-  public static boolean isProjectileType(MapObjectType mot) {
-    for(ProjectileType pt : values()) {
-      if(pt == mot) return true;
+    @SuppressWarnings("unchecked")
+    public <T extends Enum & MapObjectType> T getMapObjectType() {
+        return (T) this;
     }
-    return false;
-  }
+
+    /**
+     * Is projectile type boolean.
+     *
+     * @param mot the MapObjectType
+     * @return true if it is a projectile, false otherwise
+     */
+    public static boolean isProjectileType(MapObjectType mot) {
+        for (ProjectileType pt : values()) {
+            if (pt == mot) return true;
+        }
+        return false;
+    }
 }

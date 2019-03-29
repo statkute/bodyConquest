@@ -1,6 +1,5 @@
 package main.com.bodyconquest.database;
 
-import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+/**
+ * The type Database manager.
+ */
 public class DatabaseManager {
 
     private String url = "jdbc:postgresql://achievementsdb.c1dv9wmfmc0j.us-east-2.rds.amazonaws.com:5432/cauldronDB";
@@ -16,47 +18,18 @@ public class DatabaseManager {
     private String password = "Cauldr()n";
     private String driver = "org.postgresql.Driver";
     private Connection dbConn;
-    private BufferedReader lineReader;
 
+    /**
+     * Instantiates a new Database manager.
+     */
     public DatabaseManager() {
         connect();
-        //resetDB();
-        //createTables();
-
-        /*
-        insertAchievement("Infectonator", 666);
-        insertAchievement("John", 20);
-        insertAchievement("Chris", 40);
-        insertAchievement("Bob", 60);
-        insertAchievement("Mark", 32);
-        insertAchievement("NotAI", 99);
-        */
     }
 
     /**
      * Attempts to connect to the DB
      */
     public void connect() {
-
-        /*
-        Properties props = new Properties();
-        this.url = "";
-        this.user = "";
-        this.password = "";
-        String driver = "";
-
-        try (FileInputStream propsReader = new FileInputStream("Database.Properties")) { // load database properties
-            props.load(propsReader); // connect to the database
-            this.url = props.getProperty("database.url");
-            this.user = props.getProperty("username");
-            this.password = props.getProperty("password");
-            driver = props.getProperty("jdbc.drivers");
-        } catch (FileNotFoundException e1) {
-            System.out.println("Database.Properties file not provided");
-        } catch (IOException e2) {
-            System.out.println("Error while reading Properties file");
-        }
-        */
 
         try {
             Class.forName(driver);
@@ -77,6 +50,8 @@ public class DatabaseManager {
     }
 
     /**
+     * Add user method.
+     *
      * @param username the username to be inserted in the database
      * @param password the password paired with that username to be inserted
      * @return true if the insertion was successful; false otherwise (if username is already taken)
@@ -106,6 +81,8 @@ public class DatabaseManager {
     }
 
     /**
+     * Check whether user is in the database method.
+     *
      * @param username the username to be checked in the database
      * @param password the password given by the user for that username to be checked
      * @return true if the username password pair exists in the database; false otherwise
@@ -132,6 +109,8 @@ public class DatabaseManager {
     }
 
     /**
+     * Gets leaderboard.
+     *
      * @return all username - points pairs from the leaderboard table in the database as a HashMap
      */
     public HashMap<String, Integer> getLeaderboard() {
@@ -157,7 +136,7 @@ public class DatabaseManager {
     }
 
     /**
-     * Tries to insert a new highscore for a user; In case the user already has a larger score in the DB, keep it
+     * Tries to insert a new high score for a user; In case the user already has a larger score in the DB, keep it
      *
      * @param username the user whose score is to be inserted
      * @param points   the score to be inserted for that user
@@ -208,7 +187,7 @@ public class DatabaseManager {
     }
 
     /**
-     * Creates the Leaderborad table in the DB
+     * Creates the Leaderboard table in the DB
      *
      * @return True if the table was created successfully; False if not
      */
