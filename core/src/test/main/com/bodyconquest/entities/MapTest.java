@@ -36,7 +36,7 @@ public class MapTest {
 
     @Test
     public void testPaths(){
-        assertEquals(map.getPath(), path);
+        assertEquals(map.getTexturePath(), path);
     }
 
     @Test

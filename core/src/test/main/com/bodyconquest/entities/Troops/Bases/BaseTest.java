@@ -39,7 +39,7 @@ public class BaseTest {
     }
 
     @Test
-    public void maxHeealth(){
+    public void maxHealth(){
         assertEquals(b.getMaxHealth(), health);
     }
 
@@ -78,7 +78,7 @@ public class BaseTest {
     public static Collection<Object[]> testData(){
         Object[][] data = new Object[][]{
                 {new InfluenzaBase(PlayerType.PLAYER_BOTTOM),1000, 3,  130, BaseType.INFLUENZA_BASE},
-                {new MeaslesBase(PlayerType.PLAYER_BOTTOM),  75,   8,  0,   BaseType.MEASLES_BASE},
+                {new MeaslesBase(PlayerType.PLAYER_BOTTOM),  750,   8,  0,   BaseType.MEASLES_BASE},
                 {new RotavirusBase(PlayerType.PLAYER_BOTTOM),1000,   10, 0,   BaseType.ROTAVIRUS_BASE}};
         return Arrays.asList(data);
     }
