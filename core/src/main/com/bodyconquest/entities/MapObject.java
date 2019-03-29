@@ -192,6 +192,19 @@ public abstract class MapObject {
     }
 
     /**
+     * Get the euclidean distance between the centre of this MapObject and the given co-ordinate.
+     *
+     * @param x The x value of the co-ordinate.
+     * @param y The y value of the co-ordinate.
+     * @return The euclidean distance between this MapObject and the given co-ordinate.
+     */
+    protected double distFrom(double x, double y) {
+        double xDif = this.getCentreX() - x;
+        double yDif = this.getCentreY() - y;
+        return Math.sqrt(Math.pow(xDif, 2) + Math.pow(yDif, 2));
+    }
+
+    /**
      * Method that calculates the difference between 2 objects.
      *
      * @param mapObject the map object
@@ -215,20 +228,6 @@ public abstract class MapObject {
         corners.add(new Point2D.Double(x + cwidth, y + cheight));
 
         return corners;
-    }
-
-
-    /**
-     * Get the euclidean distance between the centre of this MapObject and the given co-ordinate.
-     *
-     * @param x The x value of the co-ordinate.
-     * @param y The y value of the co-ordinate.
-     * @return The euclidean distance between this MapObject and the given co-ordinate.
-     */
-    protected double distFrom(double x, double y) {
-        double xDif = this.getCentreX() - x;
-        double yDif = this.getCentreY() - y;
-        return Math.sqrt(Math.pow(xDif, 2) + Math.pow(yDif, 2));
     }
 
     /**

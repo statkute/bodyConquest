@@ -6,31 +6,20 @@ import java.util.Enumeration;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Client thread responsible for receiving messages from the server
- */
+/** Client thread responsible for receiving messages from the server */
 public class ClientReceiver extends Thread {
 
-  /**
-   * The Address.
-   */
+  /** The Address. */
   public InetAddress address;
-  /**
-   * The Socket.
-   */
+  /** The Socket. */
   public DatagramSocket socket;
-  /**
-   * The Group.
-   */
+  /** The Group. */
   public InetAddress group;
-  /**
-   * The Id.
-   */
+  /** The Id. */
   public AtomicInteger id;
-  /**
-   * The Received messages.
-   */
+  /** The Received messages. */
   public LinkedBlockingQueue<String> receivedMessages;
+
   private boolean run;
 
   /**
@@ -78,14 +67,15 @@ public class ClientReceiver extends Thread {
     while (run) {
       try {
         byte[] buf = new byte[1000000];
-        //byte[] buf = new byte[16000];
+        // byte[] buf = new byte[16000];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
-        if (run){
+        if (run) {
           socket.receive(packet);
         }
         String received = new String(packet.getData()).trim();
-//        System.out.println(
-//            "Client received -> " + received.trim() + " ------ from: " + packet.getAddress());
+        //        System.out.println(
+        //            "Client received -> " + received.trim() + " ------ from: " +
+        // packet.getAddress());
         receivedMessages.put(received.trim());
       } catch (IOException | InterruptedException e) {
         e.printStackTrace();
@@ -93,9 +83,7 @@ public class ClientReceiver extends Thread {
     }
   }
 
-  /**
-   * Receives and assigns this client an ID from the server and waits for the game to start
-   */
+  /** Receives and assigns this client an ID from the server and waits for the game to start */
   public void gameSetup() {
     String received = "";
     while (!received.equals("start game")) {
@@ -142,10 +130,8 @@ public class ClientReceiver extends Thread {
     }
   }
 
-  /**
-   * Stop running.
-   */
-  public void stopRunning(){
+  /** Stop running. */
+  public void stopRunning() {
     run = false;
     socket.close();
   }
