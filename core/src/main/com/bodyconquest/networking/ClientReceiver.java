@@ -111,8 +111,8 @@ public class ClientReceiver extends Thread {
   /**
    * Joins a multicast group
    *
-   * @param socket
-   * @param group
+   * @param socket the MultiCast socket
+   * @param group the InetAddress group
    * @throws IOException
    */
   private static void joinGroup(MulticastSocket socket, InetAddress group) throws IOException {
