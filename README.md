@@ -14,3 +14,21 @@ One of the main reasons why we chose to designe this type of game is that, as a 
 To play the game:
 * compile the project
 * run 'bodyConquest/desktop/src/main/bodyconquest/desktop/DesktopLauncher.java' with the following -VM option: "-Djava.net.preferIPv4Stack=true"
+
+
+## Screenshots
+![mainmenu](https://user-images.githubusercontent.com/20503207/68618007-54bb1480-04c0-11ea-90b6-5944ecabdff5.PNG)
+
+![VirusSelection](https://user-images.githubusercontent.com/20503207/68618030-60a6d680-04c0-11ea-9974-3bf937e5d183.PNG)
+
+![OrganConquered](https://user-images.githubusercontent.com/20503207/68618047-6997a800-04c0-11ea-8338-e7efae90b5c6.PNG)
+
+![EyeEncounter](https://user-images.githubusercontent.com/20503207/68618068-73211000-04c0-11ea-8201-a5c614d8a781.PNG)
+
+![Encounter](https://user-images.githubusercontent.com/20503207/68618076-787e5a80-04c0-11ea-9650-b6262f2e66f6.PNG)
+
+![Leaderboard (1)](https://user-images.githubusercontent.com/20503207/68618087-7ddba500-04c0-11ea-9a12-ef94db33bcb8.PNG)
+
+
+## Component Diagram
+![component_diagram (2)](https://user-images.githubusercontent.com/20503207/68617896-19204a80-04c0-11ea-913e-89bc43f580cf.png)
